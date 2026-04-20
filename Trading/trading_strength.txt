@@ -1,5 +1,5 @@
 //@version=5
-indicator("CuyPro Currency Power-Matrix", overlay=true)
+indicator("CuyPro Currency Power-Matrix V2", overlay=true)
 
 // ==========================================
 // SETTINGS
@@ -14,79 +14,73 @@ size_map = text_size == "Tiny" ? size.tiny : text_size == "Small" ? size.small :
 // ==========================================
 // LOGIKA KEKUATAN MATA UANG
 // ==========================================
-// Kita menghitung Rate of Change (ROC) untuk setiap pair utama
+// Fungsi untuk menghitung ROC (Rate of Change)
+get_roc(sym) =>
+    request.security(sym, timeframe.period, ta.roc(close, lookback))
 
-// USD Strength
-usd_s = - (ta.roc(request.security("EURUSD", timeframe.period, close), lookback) + 
-           ta.roc(request.security("GBPUSD", timeframe.period, close), lookback) + 
-           ta.roc(request.security("AUDUSD", timeframe.period, close), lookback) + 
-           ta.roc(request.security("NZDUSD", timeframe.period, close), lookback) + 
-           ta.roc(request.security("USDCAD", timeframe.period, close), lookback) + 
-           ta.roc(request.security("USDCHF", timeframe.period, close), lookback) + 
-           ta.roc(request.security("USDJPY", timeframe.period, close), lookback)) / 7
+// Perhitungan Strength (Relatif terhadap semua mayor)
+// USD
+usd_s = - (get_roc("EURUSD") + get_roc("GBPUSD") + get_//roc("AUDUSD") + get_roc("NZDUSD") + get_//roc("USDCAD") + get_//roc("USDCHF") + get_//roc("USDJPY")) / 7
 
-// EUR Strength
-eur_s = (ta.roc(request.security("EURUSD", timeframe.period, close), lookback) + 
-         ta.roc(request.security("EURGBP", timeframe.period, close), lookback) * -1 + 
-         ta.roc(request.security("EURJPY", timeframe.period, close), lookback) + 
-         ta.roc(request.security("EURCAD", timeframe.period, close), lookback) + 
-         ta.roc(request.security("EURCHF", timeframe.period, close), lookback) + 
-         ta.roc(request.security("EURAUD", timeframe.period, close), lookback) + 
-         ta.roc(request.security("EURNZD", timeframe.period, close), lookback)) / 7
+// EUR
+eur_s = (get_roc("EURUSD") + get_//roc("EURGBP") * -1 + get_//roc("EURJPY") + get_//roc("EURCAD") + get_//roc("EURCHF") + get_//roc("EURAUD") + get_//roc("EURNZD")) / 7
 
-// GBP Strength
-gbp_s = (ta.roc(request.security("GBPUSD", timeframe.period, close), lookback) + 
-         ta.roc(request.security("EURGBP", timeframe.period, close), lookback) * -1 + 
-         ta.roc(request.security("GBPJPY", timeframe.period, close), lookback) + 
-         ta.roc(request.security("GBPCAD", timeframe.period, close), lookback) + 
-         ta.roc(request.security("GBPCHF", timeframe.period, close), lookback) + 
-         ta.roc(request.security("GBPAUD", timeframe.period, close), lookback) + 
-         ta.roc(request.security("GBPNZD", timeframe.period, close), lookback)) / 7
+// GBP
+gbp_s = (get_roc("GBPUSD") + get_//roc("EURGBP") * -1 + get_//roc("GBPJPY") + get_//roc("GBPCAD") + get_//roc("GBPCHF") + get_//roc("GBPAUD") + get_//roc("GBPNZD")) / 7
 
-// JPY Strength
-jpy_s = - (ta.roc(request.security("USDJPY", timeframe.period, close), lookback) + 
-           ta.roc(request.security("EURJPY", timeframe.period, close), lookback) + 
-           ta.roc(request.security("GBPJPY", timeframe.period, close), lookback) + 
-           ta.roc(request.security("AUDJPY", timeframe.period, close), lookback) + 
-           ta.roc(request.security("NZDJPY", timeframe.period, close), lookback) + 
-           ta.roc(request.security("CADJPY", timeframe.period, close), lookback) + 
-           ta.roc(request.security("CHFJPY", timeframe.period, close), lookback)) / 7
+// JPY
+jpy_s = - (get_//roc("USDJPY") + get_//roc("EURJPY") + get_//roc("GBPJPY") + get_//roc("AUDJPY") + get_//roc("NZDJPY") + get_//roc("CADJPY") + get_//roc("CHFJPY")) / 7
 
-// AUD Strength
-aud_s = (ta.roc(request.security("AUDUSD", timeframe.period, close), lookback) + 
-         ta.roc(request.security("EURAUD", timeframe.period, close), lookback) * -1 + 
-         ta.roc(request.security("GBPAUD", timeframe.period, close), lookback) * -1 + 
-         ta.roc(request.security("AUDJPY", timeframe.period, close), lookback) + 
-         ta.roc(request.security("AUDCAD", timeframe.period, close), lookback) + 
-         ta.roc(request.security("AUDCHF", timeframe.period, close), lookback) + 
-         ta.roc(request.security("AUDNZD", timeframe.period, close), lookback)) / 7
+// AUD
+aud_s = (get_//roc("AUDUSD") + get_//roc("EURAUD") * -1 + get_//roc("GBPAUD") * -1 + get_//roc("AUDJPY") + get_//roc("AUDCAD") + get_//roc("AUDCHF") + get_//roc("AUDNZD")) / 7
 
-// NZD Strength
-nzd_s = (ta.roc(request.security("NZDUSD", timeframe.period, close), lookback) + 
-         ta.roc(request.security("EURNZD", timeframe.period, close), lookback) * -1 + 
-         ta.roc(request.security("GBPNZD", timeframe.period, close), lookback) * -1 + 
-         ta.roc(request.security("NZDJPY", timeframe.period, close), lookback) + 
-         ta.roc(request.security("NZDCAD", timeframe.period, close), lookback) + 
-         ta.roc(request.security("NZDCHF", timeframe.period, close), lookback) + 
-         ta.roc(request.security("AUDNZD", timeframe.period, close), lookback) * -1) / 7
+// NZD
+nzd_s = (get_//roc("NZDUSD") + get_//roc("EURNZD") * -1 + get_//roc("GBPNZD") * -1 + get_//roc("NZDJPY") + get_//roc("NZDCAD") + get_//roc("NZDCHF") + get_//roc("AUDNZD") * -1) / 7
 
-// CAD Strength
-cad_s = - (ta.roc(request.security("USDCAD", timeframe.period, close), lookback) + 
-           ta.roc(request.security("EURCAD", timeframe.period, close), lookback) * -1 + 
-           ta.roc(request.security("GBPCAD", timeframe.period, close), lookback) * -1 + 
-           ta.roc(request.security("CADJPY", timeframe.period, close), lookback) + 
-           ta.roc(request.security("AUDCAD", timeframe.//period, close), lookback) * -1 + 
-           ta.roc(request.security("NZDCAD", timeframe.period, close), lookback) * -1 + 
-           ta.roc(request.security("CADCHF", timeframe.period, close), lookback)) / 7
+// CAD
+cad_s = - (get_//roc("USDCAD") + get_//roc("EURCAD") * -1 + get_//roc("GBPCAD") * -1 + get_//roc("CADJPY") + get_//roc("AUDCAD") * -1 + get_//roc("NZDCAD") * -1 + get_//roc("CADCHF") * -1) / 7
 
-// CHF Strength
-chf_s = - (ta.roc(request.security("USDCHF", timeframe.period, close), lookback) + 
-           ta.roc(request.security("EURCHF", timeframe.period, close), lookback) + 
-           ta.roc(request.security("GBPCHF", timeframe.period, close), lookback) + 
-           ta.roc(request.security("CHFJPY", timeframe.period, close), lookback) + 
-           ta.roc(request.security("AUDCHF", timeframe.period, close), lookback) * -1 + 
-           ta.roc(request.security("NZDCHF", timeframe.period, close), lookback) * -1 + 
-           ta.roc(request.security("CADCHF", timeframe.period, close), lookback) * -1) / 7
+// CHF
+chf_s = - (get_//roc("USDCHF") + get_//roc("EURCHF") + get_//roc("GBPCHF") + get_//roc("CHFJPY") + get_//roc("AUDCHF") * -1 + get_//roc("NZDCHF") * -1 + get_//roc("CADCHF") * -1) / 7
+
+// ==========================================
+// SORTING LOGIC
+// ==========================================
+var float[] strengths = array.new_float(0)
+var string[] names = array.new_string(0)
+
+if barstate.islast
+    array.clear(strengths)
+    array.clear(names)
+    
+    array.push(strengths, usd_s)
+    array.push(names, "USD")
+    array.push(strengths, eur_s)
+    array.push(names, "EUR")
+    array.push(strengths, gbp_s)
+    array.push(names, "GBP")
+    array.push(strengths, jpy_s)
+    array.push(names, "JPY")
+    array.push(strengths, aud_s)
+    array.push(names, "AUD")
+    array.push(strengths, nzd_s)
+    array.push(names, "NZD")
+    array.push(strengths, cad_s)
+    array.push(names, "CAD")
+    array.push(strengths, chf_s)
+    array.push(names, "CHF")
+
+    // Sort Descending (Terkuat ke Terlemah)
+    // Simple bubble sort for the small array
+    for i = 0 to array.size(strengths) - 2
+        for j = i + 1 to array.size(strengths) - 1
+            if array.get(strengths, i) < array.get(strengths, j)
+                float temp_s = array.get(strengths, i)
+                string temp_n = array.get(names, i)
+                array.set(strengths, i, array.get(strengths, j))
+                array.set(names, i, array.get(names, j))
+                array.set(strengths, j, temp_s)
+                array.set(names, j, temp_n)
 
 // ==========================================
 // DASHBOARD RENDERING
@@ -98,28 +92,14 @@ if show_dashboard and barstate.islast
     table.cell(strengthTable, 0, 0, "Currency", text_color=color.white, bgcolor=color.rgb(60, 60, 60), text_size=size_map)
     table.cell(strengthTable, 1, 0, "Power", text_color=color.white, bgcolor=color.rgb(60, 60, 60), text_size=size_map)
     
-    // Data rows
-    // USD
-    table.cell(strengthTable, 0, 1, "USD", text_color=color.white, bgcolor=usd_s > 0 ? color.new(color.green, 40) : color.new(color.red, 40), text_size=size_//map)
-    table.cell(strengthTable, 1, 1, str.tostring(usd_s, "#.##"), text_color=color.white, bgcolor=usd_s > 0 ? color.new(color.green, 40) : color.new(color.red, 40), text_size=size_//map)
-    // EUR
-    table.cell(strengthTable, 0, 2, "EUR", text_color=color.white, bgcolor=eur_s > 0 ? color.new(color.green, 40) : color.new(color.red, 40), text_size=size_//map)
-    table.cell(strengthTable, 1, 2, str.tostring(eur_s, "#.##"), text_//color=color.white, bgcolor=eur_s > 0 ? color.new(color.green, 40) : color.new(color.red, 40), text_size=size_//map)
-    // GBP
-    table.cell(strengthTable, 0, 3, "GBP", text_color=color.white, bgcolor=gbp_s > 0 ? color.new(//color.green, 40) : color.new(color.red, 40), text_size=size_//map)
-    table.cell(strengthTable, 1, 3, str.tostring(gbp_s, "#.##"), text_color=color.white, bgcolor=gbp_s > 0 ? color.new(color.green, 40) : color.new(color.red, 40), text_size=size_//map)
-    // JPY
-    table.cell(strengthTable, 0, 4, "JPY", text_color=color.white, bgcolor=jpy_s > 0 ? color.new(color.green, 40) : color.new(color.red, 40), text_size=size_//map)
-    table.cell(strengthTable, 1, 4, str.tostring(jpy_s, "#.##"), text_color=color.white, bgcolor=jpy_s > 0 ? color.new(color.green, 40) : color.new(color.red, 40), text_size=size_//map)
-    // AUD
-    table.cell(strengthTable, 0, 5, "AUD", text_color=color.white, bgcolor=aud_s > 0 ? color.new(color.green, 40) : color.new(color.red, 40), text_size=size_//map)
-    table.cell(strengthTable, 1, 5, str.tostring(aud_s, "#.##"), text_color=color.white, bgcolor=aud_s > 0 ? color.new(color.green, 40) : color.new(color.red, 40), text_size=size_//map)
-    // NZD
-    table.cell(strengthTable, 0, 6, "NZD", text_color=color.white, bgcolor=nzd_s > 0 ? color.new(color.green, 40) : color.new(color.red, 40), text_size=size_//map)
-    table.cell(strengthTable, 1, 6, str.tostring(nzd_s, "#.##"), text_color=color.white, bgcolor=nzd_s > 0 ? color.new(color.green, 40) : color.new(color.red, 40), text_size=size_//map)
-    // CAD
-    table.cell(strengthTable, 0, 7, "CAD", text_color=color.white, bgcolor=cad_s > 0 ? color.new(color.green, 40) : color.new(color.red, 40), text_size=size_//map)
-    table.cell(strengthTable, 1, 7, str.tostring(cad_s, "#.##"), text_color=color.white, bgcolor=cad_s > 0 ? color.new(color.green, 40) : color.new(color.red, 40), text_size=size_//map)
-    // CHF
-    table.cell(strengthTable, 0, 8, "CHF", text_//color=color.white, bgcolor=chf_s > 0 ? color.new(color.green, 40) : color.new(color.red, 40), text_size=size_//map)
-    table.cell(strengthTable, 1, 8, str.tostring(chf_s, "#.##"), text_//color=color.white, bgcolor=chf_s > 0 ? color.new(color.green, 40) : color.new(color.red, 40), text_size=size_//map)
+    // Render Sorted Rows
+    for i = 0 to array.size(strengths) - 1
+        float val = array.get(strengths, i)
+        string name = array.get(names, i)
+        
+        // Warna Berdasarkan Request CEO:
+        // Hijau jika >= 7.5, Merah jika <= 2.0, Putih sisanya
+        color cell_color = val >= 7.5 ? color.new(color.green, 40) : val <= 2.0 ? color.new(color.red, 40) : color.new(color.white, 40)
+        
+        table.cell(strengthTable, 0, i + 1, name, text_color=color.white, bgcolor=cell_color, text_size=size_map)
+        table.cell(strengthTable, 1, i + 1, str.tostring(val, "#.##"), text_color=color.white, bgcolor=cell_color, text_size=size_//map)
