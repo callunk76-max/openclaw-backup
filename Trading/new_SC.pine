@@ -1,5 +1,5 @@
 //@version=5
-indicator("CuyPro New SC-Giraia V2", overlay=true)
+indicator("CuyPro New SC-Giraia V3", overlay=true)
 
 // ==========================================
 // SETTINGS (Giraia Style)
@@ -10,7 +10,7 @@ text_size = input.string("Small", "Ukuran Teks", options=["Tiny", "Small", "Norm
 
 // Threshold Colors based on callunk.mq4
 color_strong = input.color(color.new(color.green, 40), "Strong Color (>= 7.0)")
-color_weak = input.color(color.new(color.red, 40), "Weak Color (<= 0.0)")
+color_weak = input.color(color.new(color.red, 40), "Weak Color (<= 2.0)")
 color_neutral = input.color(color.new(color.white, 40), "Neutral Color")
 
 // Konversi ukuran teks
@@ -50,24 +50,59 @@ get_strength_val(sym) =>
         strength := 0
     strength
 
-// CORRECTED SUMMATION LOGIC
-// In MQL4 Giraia: Base gets 'strength', Quote gets '9 - strength'
-// We use the 7 most common pairs for each currency to calculate the average.
+// ==========================================
+// ACCUMULATIVE STRENGTH CALCULATION
+// ==========================================
+// In callunk.mq4, strengths are summed across pairs.
+// Base currency gets 'strength', Quote currency gets '9 - strength'.
 
-usd_s = ( (9 - get_strength_val("EURUSD")) + (9 - get_strength_val("GBPUSD")) + (9 - get_strength_val("AUDUSD")) + (9 - get_strength_val("NZDUSD")) + get_strength_val("USDCAD") + get_strength_val("USDCHF") + get_strength_val("USDJPY") ) / 7
-eur_s = ( get_strength_val("EURUSD") + (9 - get_strength_val("EURGBP")) + get_strength_val("EURJPY") + get_strength_val("EURCAD") + get_strength_val("EURCHF") + get_strength_val("EURAUD") + get_strength_val("EURNZD") ) / 7
-gbp_s = ( get_strength_val("GBPUSD") + get_strength_val("EURGBP") + get_strength_val("GBPJPY") + get_strength_val("GBPCAD") + get_strength_val("GBPCHF") + get_strength_val("GBPAUD") + get_strength_val("GBPNZD") ) / 7
-// Note: for EURGBP, if EUR is base, GBP is quote. In the mq4 logic, the loop handles this. 
-// Let's re-verify: if get_s("EURGBP") is 9, EUR is strong (9), GBP is weak (0).
-// So for GBP, we need (9 - get_strength_val("EURGBP")). Corrected below.
+// We define a list of common pairs for each currency to calculate total points.
+// USD: EURUSD, GBPUSD, AUDUSD, NZDUSD, USDCAD, USDCHF, USDJPY
+float usd_total = (9 - get_strength_val("EURUSD")) + (9 - get_strength_val("GBPUSD")) + (9 - get_strength_val("AUDUSD")) + (9 - get_strength_val("NZDUSD")) + get_strength_val("USDCAD") + get_strength_val("USDCHF") + get_strength_val("USDJPY")
 
-gbp_s := ( get_strength_val("GBPUSD") + (9 - get_strength_val("EURGBP")) + get_strength_val("GBPJPY") + get_strength_val("GBPCAD") + get_strength_val("GBPCHF") + get_strength_val("GBPAUD") + get_strength_val("GBPNZD") ) / 7
+// EUR: EURUSD, EURGBP, EURJPY, EURCAD, EURCHF, EURAUD, EURNZD
+float eur_total = get_strength_val("EURUSD") + (9 - get_strength_val("EURGBP")) + get_strength_val("EURJPY") + get_strength_val("EURCAD") + get_strength_val("EURCHF") + get_strength_val("EURAUD") + get_strength_val("EURNZD")
 
-jpy_s = ( (9 - get_strength_val("USDJPY")) + (9 - get_//strength_val("EURJPY")) + (9 - get_strength_val("GBPJPY")) + (9 - get_strength_val("AUDJPY")) + (9 - get_strength_val("NZDJPY")) + (9 - get_strength_val("CADJPY")) + (9 - get_strength_val("CHFJPY")) ) / 7
-aud_s = ( get_strength_val("AUDUSD") + (9 - get_strength_val("EURAUD")) + (9 - get_strength_val("GBPAUD")) + get_strength_val("AUDJPY") + get_strength_val("AUDCAD") + get_strength_val("AUDCHF") + get_strength_val("AUDNZD") ) / 7
-nzd_s = ( get_strength_val("NZDUSD") + (9 - get_strength_val("EURNZD")) + (9 - get_strength_val("GBPNZD")) + get_strength_val("NZDJPY") + get_strength_val("NZDCAD") + get_strength_val("NZDCHF") + (9 - get_strength_val("AUDNZD")) ) / 7
-cad_s = ( (9 - get_strength_val("USDCAD")) + (9 - get_strength_val("EURCAD")) + (9 - get_strength_val("GBPCAD")) + get_strength_val("CADJPY") + (9 - get_strength_val("AUDCAD")) + (9 - get_strength_val("NZDCAD")) + (9 - get_strength_val("CADCHF")) ) / 7
-chf_s = ( (9 - get_strength_val("USDCHF")) + (9 - get_strength_val("EURCHF")) + (9 - get_strength_val("GBPCHF")) + get_strength_val("CHFJPY") + (9 - get_strength_val("AUDCHF")) + (9 - get_strength_val("NZDCHF")) + (9 - get_strength_val("CADCHF")) ) / 7
+// GBP: GBPUSD, EURGBP, GBPJPY, GBPCAD, GBPCHF, GBPAUD, GBPNZD
+float gbp_total = get_strength_val("GBPUSD") + get_strength_val("EURGBP") + get_strength_val("GBPJPY") + get_strength_val("GBPCAD") + get_strength_val("GBPCHF") + get_strength_val("GBPAUD") + get_strength_val("GBPNZD")
+// Correction for EURGBP: If EUR is base, GBP is quote.
+// Let's be more explicit:
+float gbp_sum = get_strength_val("GBPUSD") + (9 - get_strength_val("EURGBP")) + get_strength_val("GBPJPY") + get_strength_val("GBPCAD") + get_strength_val("GBPCHF") + get_strength_val("GBPAUD") + get_strength_val("GBPNZD")
+
+// JPY: USDJPY, EURJPY, GBPJPY, AUDJPY, NZDJPY, CADJPY, CHFJPY
+float jpy_total = (9 - get_strength_val("USDJPY")) + (9 - get_strength_val("EURJPY")) + (9 - get_strength_val("GBPJPY")) + (9 - get_strength_val("AUDJPY")) + (9 - get_strength_val("NZDJPY")) + (9 - get_strength_val("CADJPY")) + (9 - get_strength_val("CHFJPY"))
+
+// AUD: AUDUSD, EURAUD, GBPAUD, AUDJPY, AUDCAD, AUDCHF, AUDNZD
+float aud_total = get_strength_val("AUDUSD") + (9 - get_strength_val("EURAUD")) + (9 - get_strength_val("GBPAUD")) + get_strength_val("AUDJPY") + get_strength_val("AUDCAD") + get_strength_val("AUDCHF") + get_strength_val("AUDNZD")
+
+// NZD: NZDUSD, EURNZD, GBPNZD, NZDJPY, NZDCAD, NZDCHF, AUDNZD
+float nzd_total = get_strength_val("NZDUSD") + (9 - get_strength_val("EURNZD")) + (9 - get_strength_val("GBPNZD")) + get_strength_val("NZDJPY") + get_strength_val("NZDCAD") + get_strength_val("NZDCHF") + (9 - get_strength_val("AUDNZD"))
+
+// CAD: USDCAD, EURCAD, GBPCAD, CADJPY, AUDCAD, NZDCAD, CADCHF
+float cad_total = (9 - get_strength_val("USDCAD")) + (9 - get_strength_val("EURCAD")) + (9 - get_strength_val("GBPCAD")) + get_strength_val("CADJPY") + (9 - get_strength_val("AUDCAD")) + (9 - get_strength_val("NZDCAD")) + (9 - get_strength_val("CADCHF"))
+
+// CHF: USDCHF, EURCHF, GBPCHF, CHFJPY, AUDCHF, NZDCHF, CADCHF
+float chf_total = (9 - get_strength_val("USDCHF")) + (9 - get_strength_val("EURCHF")) + (9 - get_strength_val("GBPCHF")) + get_strength_val("CHFJPY") + (9 - get_strength_val("AUDCHF")) + (9 - get_strength_val("NZDCHF")) + (9 - get_strength_val("CADCHF"))
+
+// ==========================================
+// NORMALIZATION (To maintain 0-9 range while avoiding extremes)
+// ==========================================
+// Instead of simple average (total/7), we use a min-max normalization 
+// based on the current distribution of all currencies.
+float max_s = math.max(usd_total, eur_total, gbp_sum, jpy_total, aud_total, nzd_total, cad_total, chf_total)
+float min_s = math.min(usd_total, eur_total, gbp_sum, jpy_total, aud_total, nzd_total, cad_total, chf_total)
+
+normalize(val, min, max) =>
+    (max - min == 0) ? 4.5 : ((val - min) / (max - min)) * 9
+
+usd_final = normalize(usd_total, min_s, max_s)
+eur_final = normalize(eur_total, min_s, max_s)
+gbp_final = normalize(gbp_sum, min_s, max_s)
+jpy_final = normalize(jpy_total, min_s, max_s)
+aud_final = normalize(aud_total, min_s, max_s)
+nzd_final = normalize(nzd_total, min_s, max_s)
+cad_final = normalize(cad_total, min_s, max_s)
+chf_final = normalize(chf_total, min_s, max_s)
 
 // ==========================================
 // SORTING & DASHBOARD
@@ -78,14 +113,14 @@ var string[] names = array.new_string(0)
 if barstate.islast
     array.clear(strengths)
     array.clear(names)
-    array.push(strengths, usd_s), array.push(names, "USD")
-    array.push(strengths, eur_s), array.push(names, "EUR")
-    array.push(strengths, gbp_s), array.push(names, "GBP")
-    array.push(strengths, jpy_s), array.push(names, "JPY")
-    array.push(strengths, aud_s), array.push(names, "AUD")
-    array.push(strengths, nzd_s), array.push(names, "NZD")
-    array.push(strengths, cad_s), array.push(names, "CAD")
-    array.push(strengths, chf_s), array.push(names, "CHF")
+    array.push(strengths, usd_final), array.push(names, "USD")
+    array.push(strengths, eur_final), array.push(names, "EUR")
+    array.push(strengths, gbp_final), array.push(names, "GBP")
+    array.push(strengths, jpy_final), array.push(names, "JPY")
+    array.push(strengths, aud_final), array.push(names, "AUD")
+    array.push(strengths, nzd_final), array.push(names, "NZD")
+    array.push(strengths, cad_final), array.push(names, "CAD")
+    array.push(strengths, chf_final), array.push(names, "CHF")
 
     for i = 0 to array.size(strengths) - 2
         for j = i + 1 to array.size(strengths) - 1
@@ -105,6 +140,6 @@ if show_dashboard and barstate.islast
     for i = 0 to array.size(strengths) - 1
         float val = array.get(strengths, i)
         string name = array.get(names, i)
-        color c = val >= 7.0 ? color_strong : val <= 0.0 ? color_weak : color_neutral
+        color c = val >= 7.0 ? color_strong : val <= 2.0 ? color_weak : color_neutral
         table.cell(st, 0, i + 1, name, text_color=color.white, bgcolor=c, text_size=size_map)
         table.cell(st, 1, i + 1, str.tostring(val, "#.##"), text_color=color.white, bgcolor=c, text_size=size_map)
