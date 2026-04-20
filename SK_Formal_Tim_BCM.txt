@@ -1,0 +1,64 @@
+KEPUTUSAN [KEPALA DINAS/PEJABAT BERWENANG]
+KABUPATEN BULUKUMBA
+Nomor: [Isi Nomor SK]
+
+TENTANG
+PENETAPAN TIM KELANGSUNGAN LAYANAN (BUSINESS CONTINUITY MANAGEMENT)
+LPSE KABUPATEN BULUKUMBA
+
+[KEPALA DINAS/PEJABAT BERWENANG] KABUPATEN BULUKUMBA,
+
+Menimbang:
+a. Bahwa dalam rangka menjamin ketersediaan dan keberlangsungan layanan pengadaan barang/jasa pemerintah secara elektronik di Kabupaten Bulukumba, diperlukan langkah-langkah mitigasi terhadap risiko gangguan infrastruktur dan bencana;
+b. Bahwa untuk melaksanakan pengelolaan kelangsungan layanan secara efektif dan terkoordinasi, perlu dibentuk tim kerja yang memiliki tanggung jawab khusus dalam penanganan situasi darurat;
+c. Bahwa berdasarkan pertimbangan sebagaimana dimaksud dalam huruf a dan huruf b, perlu menetapkan Keputusan [Kepala Dinas/Pejabat Berwenang] tentang Penetapan Tim Kelangsungan Layanan (Business Continuity Management) LPSE Kabupaten Bulukumba.
+
+Mengingat:
+1. Undang-Undang Nomor 23 Tahun 2014 tentang Pemerintahan Daerah;
+2. Peraturan Presiden Nomor 12 Tahun 2021 tentang Perubahan atas Peraturan Presiden Nomor 16 Tahun 2018 tentang Pengadaan Barang/Jasa Pemerintah;
+3. Peraturan LKPP Nomor 10 Tahun 2021 tentang Unit Kerja Pengadaan Barang/Jasa Pemerintah;
+4. Keputusan Deputi Bidang Monitoring-Evaluasi dan Pengembangan Sistem Informasi Nomor 153 Tahun 2022 tentang Penerapan Standar dan Kriteria Standar Layanan Pengadaan Secara Elektronik.
+
+MEMUTUSKAN:
+
+Menetapkan:
+KESATU: Membentuk Tim Kelangsungan Layanan (Business Continuity Management) LPSE Kabupaten Bulukumba dengan susunan keanggotaan sebagaimana tercantum dalam Lampiran yang merupakan bagian tidak terpisahkan dari Keputusan ini.
+
+KEDUA: Tim sebagaimana dimaksud dalam Diktum KESATU memiliki tugas dan tanggung jawab sebagai berikut:
+1. Menyusun dan memelihara rencana kelangsungan layanan (Business Continuity Plan) LPSE Kabupaten Bulukumba.
+2. Melakukan pemetaan risiko terhadap infrastruktur server, jaringan, dan sumber daya manusia.
+3. Mengelola pelaksanaan backup data secara berkala dan melakukan uji coba restorasi data secara rutin.
+4. Memimpin proses pemulihan layanan (recovery) saat terjadi gangguan berat atau bencana.
+5. Menyusun laporan analisis pasca-insiden dan memberikan rekomendasi perbaikan infrastruktur.
+
+KETIGA: Dalam melaksanakan tugasnya, Tim Kelangsungan Layanan bertanggung jawab langsung kepada [Kepala Dinas/Pejabat Berwenang].
+
+KEEMPAT: Segala biaya yang timbul sebagai akibat ditetapkannya Keputusan ini dibebankan pada Anggaran Pendapatan dan Belanja Daerah (APBD) Kabupaten Bulukumba melalui DPA [Nama Dinas].
+
+KELIMA: Keputusan ini mulai berlaku pada tanggal ditetapkan dengan ketentuan apabila dikemudian hari terdapat kekeliruan dalam penetapannya, akan diadakan perbaikan sebagaimana mestinya.
+
+Ditetapkan di: Bulukumba
+Pada tanggal: [Isi Tanggal]
+
+[Jabatan Atasan],
+
+(Tanda Tangan & Stempel)
+
+[Nama Lengkap Atasan]
+NIP. [Nomor Induk Pegawai]
+
+---------------------------------------------------------
+LAMPIRAN KEPUTUSAN [KEPALA DINAS/PEJABAT BERWENANG]
+NOMOR: [Isi Nomor SK]
+TANGGAL: [Isi Tanggal]
+
+SUSUNAN TIM KELANGSUNGAN LAYANAN (BCM)
+LPSE KABUPATEN BULUKUMBA
+
+1. Pengarah: [Nama Kepala Dinas] (Kepala Dinas ...)
+2. Ketua Tim: [Nama Pejabat/Kabid] (Kabid/Kasubag ...)
+3. Koordinator Teknis: [Nama Kamu] (Administrator LPSE)
+4. Anggota: 
+   a. [Nama Staf 1] (Staf Infrastruktur/Jaringan)
+   b. [Nama Staf 2] (Staf Helpdesk)
+   c. [Nama Staf 3] (Staf Administrasi)

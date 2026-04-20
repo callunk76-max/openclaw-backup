@@ -1,0 +1,23 @@
+SOP MANAJEMEN KELANGSUNGAN LAYANAN (BCM)
+LPSE KABUPATEN BULUKUMBA
+
+1. TUJUAN
+Menjamin ketersediaan layanan pengadaan secara elektronik (SPSE) di Kabupaten Bulukumba agar tetap berjalan meskipun terjadi gangguan infrastruktur atau keadaan darurat.
+
+2. KATEGORI GANGGUAN
+a. Gangguan Ringan: Masalah aplikasi, bug software, atau kesalahan user. (Penanganan oleh Helpdesk).
+b. Gangguan Sedang: Server down, koneksi internet terputus, atau kegagalan hardware ringan. (Penanganan oleh Tim Infrastruktur).
+c. Gangguan Berat: Bencana alam, kebakaran, atau pemadaman listrik total jangka panjang. (Aktivasi Tim BCM).
+
+3. PROSEDUR PENANGANAN
+a. Deteksi: Tim monitoring menemukan adanya gangguan layanan.
+b. Pelaporan: Laporan gangguan diteruskan kepada Koordinator BCM.
+c. Aktivasi BCM: Jika masuk kategori Gangguan Berat, Tim BCM mengaktifkan prosedur pemulihan.
+d. Pemulihan: Mengalihkan layanan ke server backup atau mengaktifkan DRC (Disaster Recovery Center).
+e. Verifikasi: Memastikan layanan sudah dapat diakses kembali oleh pengguna.
+f. Dokumentasi: Mencatat kronologi kejadian dan langkah penanganan dalam Log Insiden.
+
+4. DOKUMEN TERKAIT
+- SK Tim BCM
+- Log Insiden Layanan
+- Daftar Nomor Telepon Darurat

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Admin - MokiDonut</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-900">
+    <nav class="bg-white shadow-sm p-4 sticky top-0 z-50 flex justify-between items-center">
+        <h1 class="text-xl font-bold text-pink-600">Admin Panel MokiDonut 🍩</h1>
+        <a href="/logout" class="text-sm text-red-500 hover:underline">Logout</a>
+    </nav>
+
+    <div class="container mx-auto py-10 px-4">
+        <!-- Shop Settings Section -->
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 mb-10">
+            <h2 class="text-2xl font-bold mb-6 text-center text-pink-600">Pengaturan Toko</h2>
+            <form action="/admin/update_shop" method="POST" class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+                <div>
+                    <label class="block text-xs font-bold mb-1">Nama Toko</label>
+                    <input type="text" name="shop_name" value="{{ settings.shop_name }}" class="w-full p-2 border rounded-lg text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold mb-1">Logo (Emoji/Icon)</label>
+                    <input type="text" name="shop_logo" value="{{ settings.shop_logo }}" class="w-full p-2 border rounded-lg text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold mb-1">Nomor WhatsApp</label>
+                    <input type="text" name="whatsapp" value="{{ settings.whatsapp }}" class="w-full p-2 border rounded-lg text-sm">
+                </div>
+                <div class="md:col-span-3 flex justify-end">
+                    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-blue-700 transition">Simpan Pengaturan Toko</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Add Product Section -->
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 mb-10">
+            <h2 class="text-2xl font-bold mb-6 text-center text-pink-600">Tambah Produk Baru</h2>
+            <form action="/admin/add" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+                <div>
+                    <label class="block text-xs font-bold mb-1">Nama Donat</label>
+                    <input type="text" name="name" class="w-full p-2 border rounded-lg text-sm" required>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold mb-1">Harga</label>
+                    <input type="text" name="price" class="w-full p-2 border rounded-lg text-sm" required>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold mb-1">Upload Gambar/URL</label>
+                    <div class="flex flex-col gap-2">
+                        <input type="file" name="img_file" class="text-xs">
+                        <input type="text" name="img" class="w-full p-2 border rounded-lg text-xs" placeholder="URL gambar">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold mb-1">Deskripsi</label>
+                    <input type="text" name="desc" class="w-full p-2 border rounded-lg text-sm" required>
+                </div>
+                <div class="md:col-span-4 flex justify-end">
+                    <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-green-700 transition">Tambah Produk</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Edit Product Section -->
+        <h2 class="text-2xl font-bold mb-6 text-center text-pink-600">Kelola Menu Donat</h2>
+        <div class="grid grid-cols-1 gap-6">
+            {% for donut in donuts %}
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                <form action="/admin/update" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+                    <input type="hidden" name="id" value="{{ donut.id }}">
+                    <div>
+                        <label class="block text-xs font-bold mb-1">Nama Donat</label>
+                        <input type="text" name="name" value="{{ donut.name }}" class="w-full p-2 border rounded-lg text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold mb-1">Harga</label>
+                        <input type="text" name="price" value="{{ donut.price }}" class="w-full p-2 border rounded-lg text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold mb-1">Upload Gambar/URL</label>
+                        <div class="flex flex-col gap-2">
+                            <input type="file" name="img_//file" class="text-xs">
+                            <input type="text" name="img" value="{{ donut.img }}" class="w-//full p-2 border rounded-lg text-xs" placeholder="URL gambar">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold mb-1">Deskripsi</label>
+                        <input type="text" name="desc" value="{{ donut.desc }}" class="w-full p-2 border rounded-lg text-sm">
+                    </div>
+                    <div class="md:col-span-4 flex justify-end">
+                        <button type="submit" class="bg-pink-600 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-pink-700 transition">Simpan Perubahan</button>
+                    </div>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="mt-10 text-center">
+            <a href="/" target="_blank" class="text-blue-600 underline">Lihat Hasil di Website Utama</a>
+        </div>
+    </div>
+</body>
+</html>

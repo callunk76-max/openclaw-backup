@@ -1,0 +1,40 @@
+KEPUTUSAN [KEPALA DINAS/PEJABAT BERWENANG]
+KABUPATEN BULUKUMBA
+Nomor: [Isi Nomor SK]
+
+TENTANG
+PENETAPAN TIM KELANGSUNGAN LAYANAN (BUSINESS CONTINUITY MANAGEMENT)
+LPSE KABUPATEN BULUKUMBA
+
+Menimbang: 
+a. Bahwa untuk menjaga stabilitas dan ketersediaan layanan pengadaan secara elektronik...
+b. Bahwa perlu ditetapkan tim yang bertanggung jawab atas pemulihan layanan saat terjadi bencana...
+
+Mengingat: 
+1. Peraturan LKPP Nomor 10 Tahun 2021...
+2. Keputusan Deputi Bidang Monitoring-Evaluasi dan Pengembangan Sistem Informasi Nomor 153 Tahun 2022...
+
+MEMUTUSKAN
+
+Menetapkan:
+Pertama: Membentuk Tim Kelangsungan Layanan LPSE Kabupaten Bulukumba dengan susunan sebagai berikut:
+- Ketua: [Nama Atasan/Kepala Dinas]
+- Koordinator Teknis: [Nama Kamu/Admin IT]
+- Anggota: [Nama Staf 1], [Nama Staf 2], [Nama Staf 3]
+
+Kedua: Tim sebagaimana dimaksud dalam Diktum Pertama memiliki tugas:
+1. Melakukan backup data rutin secara berkala.
+2. Memantau kestabilan server dan jaringan.
+3. Mengambil langkah cepat pemulihan layanan saat terjadi gangguan berat.
+4. Menyusun laporan insiden pasca-gangguan.
+
+Ketiga: Keputusan ini berlaku sejak tanggal ditetapkan.
+
+Ditetapkan di: Bulukumba
+Pada tanggal: [Isi Tanggal]
+
+[Jabatan Atasan],
+
+(Tanda Tangan & Stempel)
+[Nama Atasan]
+NIP. [Nomor Induk Pegawai]

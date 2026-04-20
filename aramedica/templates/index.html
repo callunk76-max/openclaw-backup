@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aramedica Farma - Solusi Kesehatan Terpercaya</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .service-card:hover { transform: scale(1.05); transition: all 0.3s ease; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900">
+
+    <!-- Navbar -->
+    <nav class="bg-white shadow-sm p-4 sticky top-0 z-50 border-b border-blue-100">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <span class="text-2xl">💊</span>
+                <h1 class="text-xl font-bold text-blue-700">Aramedica Farma</h1>
+            </div>
+            <a href="https://wa.me/6281241453322?text=Halo%20Aramedica%20Farma,%20saya%20ingin%20konsultasi%20obat" target="_blank" class="bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition flex items-center gap-2">
+                <span>Chat Apoteker</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="bg-gradient-to-r from-blue-600 to-blue-800 py-20 px-4 text-center text-white">
+        <h2 class="text-4xl md:text-5xl font-extrabold mb-4">Kesehatan Anda, Prioritas Kami</h2>
+        <p class="text-lg opacity-90 mb-8 max-w-2xl mx-auto">Menyediakan obat-obatan berkualitas, layanan konsultasi apoteker, dan pengiriman cepat untuk kebutuhan medis Anda.</p>
+        <div class="flex justify-center gap-4">
+            <a href="#katalog" class="bg-white text-blue-700 px-6 py-3 rounded-full font-bold hover:bg-blue-50 transition shadow-lg">Lihat Katalog Obat</a>
+            <a href="https://wa.me/6281241453322?text=Halo%20Aramedica%20Farma,%20saya%20ingin%20menebus%20resep" target="_blank" class="bg-blue-500 text-white px-6 py-3 rounded-full font-bold hover:bg-blue-400 transition shadow-lg">Tebus Resep Online</a>
+        </div>
+    </header>
+
+    <!-- Services Section -->
+    <section class="container mx-auto py-16 px-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="service-card bg-white p-8 rounded-2xl shadow-sm border border-slate-200 text-center">
+                <div class="text-4xl mb-4">📄</div>
+                <h3 class="text-xl font-bold mb-2">Tebus Resep</h3>
+                <p class="text-gray-600 text-sm">Kirim foto resep dokter Anda via WhatsApp, kami siapkan obatnya.</p>
+            </div>
+            <div class="service-card bg-white p-8 rounded-2xl shadow-sm border border-slate-200 text-center">
+                <div class="text-4xl mb-4">💬</div>
+                <h3 class="text-xl font-bold mb-2">Konsultasi Gratis</h3>
+                <p class="text-gray-600 text-sm">Tanyakan dosis dan efek samping obat langsung kepada apoteker kami.</p>
+            </div>
+            <div class="service-card bg-white p-8 rounded-2xl shadow-sm border border-slate-200 text-center">
+                <div class="text-4xl mb-4">🚚</div>
+                <h3 class="text-xl font-bold mb-2">Antar Jemput</h3>
+                <p class="text-gray-600 text-sm">Layanan pengiriman obat sampai depan pintu rumah Anda.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Catalog Section -->
+    <section id="katalog" class="container mx-auto py-16 px-4 bg-slate-100 rounded-3xl mb-16">
+        <h3 class="text-3xl font-bold text-center text-slate-800 mb-12">💊 Katalog Produk</h3>
+        
+        {% for category, items in categories.items() %}
+        <div class="mb-12">
+            <h4 class="text-2xl font-semibold text-blue-700 mb-6 border-l-4 border-blue-600 pl-3">{{ category }}</h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for item in items %}
+                <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 flex justify-between items-center">
+                    <div>
+                        <h5 class="font-bold text-slate-800">{{ item.name }}</h5>
+                        <p class="text-xs text-gray-500 mb-2">{{ item.desc }}</p>
+                        <span class="text-blue-600 font-bold">{{ item.price }}</span>
+                    </div>
+                    <a href="https://wa.me/6281241453322?text=Halo%20Aramedica%20Farma,%20saya%20ingin%20membeli%20{{ item.name }}" target="_blank" class="bg-blue-100 text-blue-700 p-2 rounded-lg hover:bg-blue-200 transition">
+                        🛒
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-white py-12 px-4 text-center">
+        <div class="container mx-auto">
+            <h2 class="text-2xl font-bold mb-4">Aramedica Farma</h2>
+            <p class="opacity-60 text-sm mb-6">Melayani dengan Hati, Menyembuhkan dengan Kualitas.</p>
+            <div class="text-xs opacity-40">
+                &copy; 2026 Aramedica Farma. Developed by CuyPro for Callunk.
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

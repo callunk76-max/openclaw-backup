@@ -1,0 +1,54 @@
+STANDAR OPERASIONAL PROSEDUR (SOP)
+MANAJEMEN KELANGSUNGAN LAYANAN (BUSINESS CONTINUITY MANAGEMENT)
+LPSE KABUPATEN BULUKUMBA
+
+NOMOR DOKUMEN: SOP/LPSE-BULK/BCM/001
+TANGGAL TERBIT: [Isi Tanggal]
+REVISI: 00
+
+1. TUJUAN
+Memberikan kerangka kerja yang terstruktur untuk menjamin ketersediaan layanan pengadaan secara elektronik (SPSE) di Kabupaten Bulukumba agar tetap dapat beroperasi pada tingkat yang dapat diterima setelah terjadinya gangguan berat atau bencana, sehingga proses pengadaan barang/jasa pemerintah tidak terhenti.
+
+2. RUANG LINGKUP
+SOP ini meliputi proses identifikasi risiko gangguan, penetapan strategi pemulihan, aktivasi tim tanggap darurat, hingga proses restorasi layanan ke kondisi normal di lingkungan LPSE Kabupaten Bulukumba.
+
+3. REFERENSI / DASAR HUKUM
+a. ISO 22301 tentang Business Continuity Management Systems.
+b. Keputusan Deputi Bidang Monitoring-Evaluasi dan Pengembangan Sistem Informasi Nomor 153 Tahun 2022 tentang Penerapan Standar dan Kriteria Standar Layanan Pengadaan Secara Elektronik.
+c. Peraturan LKPP terkait pengelolaan infrastruktur SPSE.
+
+4. DEFINISI
+a. Business Continuity Management (BCM) adalah proses berkelanjutan untuk membangun, menerapkan, dan memelihara kemampuan organisasi untuk melanjutkan pengiriman layanan setelah terjadi gangguan.
+b. Disaster Recovery adalah proses pemulihan infrastruktur IT setelah terjadinya bencana.
+c. Recovery Time Objective (RTO) adalah target waktu maksimal untuk memulihkan layanan setelah gangguan terjadi.
+
+5. PROSEDUR KERJA
+5.1 Klasifikasi dan Deteksi Gangguan
+a. Tim monitoring melakukan pengawasan 24/7 terhadap ketersediaan server dan jaringan.
+b. Gangguan diklasifikasikan menjadi:
+   - Ringan: Gangguan aplikasi/user error (Selesaikan via Helpdesk).
+   - Sedang: Gangguan jaringan/server down sebagian (Selesaikan via Tim Infrastruktur).
+   - Berat: Bencana alam, kebakaran, kegagalan total data center, atau mati listrik total jangka panjang (Aktivasi BCM).
+
+5.2 Aktivasi Prosedur Darurat
+a. Saat terdeteksi gangguan berat, Koordinator BCM segera menginformasikan kepada Ketua Tim BCM dan Pimpinan Instansi.
+b. Ketua Tim BCM mendeklarasikan kondisi darurat dan mengaktifkan Tim Kelangsungan Layanan.
+
+5.3 Strategi Pemulihan Layanan
+a. Tim Teknis melakukan pengecekan terhadap ketersediaan backup data terbaru.
+b. Jika server utama tidak dapat digunakan, dilakukan pengalihan layanan ke server backup atau Disaster Recovery Center (DRC) sesuai konfigurasi teknis.
+c. Memastikan konektivitas jaringan alternatif tersedia untuk akses administrator dan pengguna.
+
+5.4 Restorasi dan Normalisasi
+a. Setelah sumber gangguan teratasi, Tim BCM melakukan sinkronisasi data dari server backup kembali ke server utama.
+b. Melakukan pengujian fungsi layanan secara menyeluruh sebelum dibuka kembali untuk publik.
+c. Mengalihkan kembali traffic layanan ke infrastruktur utama.
+
+5.5 Evaluasi Pasca-Insiden
+a. Tim BCM menyusun "Laporan Insiden Layanan" yang berisi kronologi, penyebab, langkah penanganan, dan rekomendasi pencegahan agar kejadian serupa tidak terulang.
+b. Laporan diserahkan kepada Pimpinan untuk diketahui dan ditindaklanjuti.
+
+6. DOKUMEN TERKAIT
+a. SK Tim Kelangsungan Layanan (BCM)
+b. Log Insiden Layanan
+c. Daftar Kontak Darurat (Lampiran)

@@ -1,0 +1,17 @@
+LAMPIRAN 1: TABEL DAFTAR REGULASI KEPATUHAN
+LPSE KABUPATEN BULUKUMBA
+
+Petunjuk Pengisian:
+- Gunakan tabel ini untuk mencatat semua aturan yang menjadi dasar operasional LPSE.
+- Pastikan kolom "Status Pemenuhan" diisi dengan: [Terpenuhi / Sedang Proses / Belum Terpenuhi].
+
+| No | Nama Peraturan/Regulasi | Nomor & Tahun | Instansi Penerbit | Status Pemenuhan | Keterangan / Bukti Implementasi |
+|:---:|:---|:---:|:---:|:---:|:---|
+| 1 | Peraturan LKPP tentang UKPBJ | No 10 / 2021 | LKPP | Terpenuhi | Sesuai dengan SK Struktur Organisasi |
+| 2 | Penerapan Standar Layanan LPSE | No 153 / 2022 | LKPP | Sedang Proses | Pemenuhan 17 Standar (Progres 9/17) |
+| 3 | Peraturan Presiden tentang Pengadaan Barang/Jasa Pemerintah | No 12 / 2021 | Presiden | Terpenuhi | Acuan utama seluruh proses pengadaan |
+| 4 | UU tentang Administrasi Pemerintahan | No 30 / 2014 | Pemerintah | Terpenuhi | Implementasi dalam tata kelola administrasi |
+| 5 | Peraturan Bupati Bulukumba tentang [Sebutkan Perbup terkait LPSE] | [No/Tahun] | Pemkab Bulukumba | Terpenuhi | Dasar hukum pembentukan LPSE Daerah |
+| 6 | [Tambahkan Regulasi Lain] | ... | ... | ... | ... |
+
+Catatan: Tabel ini harus diperbarui minimal setiap bulan atau setiap kali ada regulasi baru yang terbit.

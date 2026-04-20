@@ -1,0 +1,14 @@
+DAFTAR NOMOR TELEPON DARURAT (EMERGENCY CONTACTS)
+LPSE KABUPATEN BULUKUMBA
+
+INTERNAL:
+- Koordinator BCM / Admin IT: [Nama] - [Nomor HP]
+- Kepala Dinas / Atasan: [Nama] - [Nomor HP]
+- Bagian Umum / Sarpras: [Nama] - [Nomor HP]
+
+EKSTERNAL:
+- Helpdesk LKPP Pusat: [Nomor/Email]
+- Provider Internet (ISP): [Nama ISP] - [Nomor Support]
+- PLN Area Bulukumba: [Nomor Telepon]
+- Dinas Pemadam Kebakaran: [Nomor Telepon]
+- Kepolisian Sektor Terdekat: [Nomor Telepon]
