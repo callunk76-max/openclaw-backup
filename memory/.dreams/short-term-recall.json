@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-04-20T09:28:54.870Z",
+  "updatedAt": "2026-04-24T04:47:38.468Z",
   "entries": {
     "memory:memory/2026-04-17.md:1:32": {
       "key": "memory:memory/2026-04-17.md:1:32",
@@ -9,19 +9,26 @@
       "endLine": 32,
       "source": "memory",
       "snippet": "## 2026-04-17 - Session Summary ### 👑 Identity & Preferences - Name: Cuy - Vibe: Relaxed but professional (Santai tapi pro) - Emoji: 👑 - User: Callunk (GMT+8) - Preference: Detailed and efficient. ### 🏛️ LPSE Bulukumba Standardization - Goal: Reach 17/17 standards (Current: 9/17). - Action: Created formal SOPs and SKs for Std 16 (Compliance) and Std 12 (BCM). - Next: Std 14 (Support Services). ### 🤖 Automation: dikerja.com - Goal: Automate daily work logs. - Credentials and workflow stored in `memory/automation-dikerja.md`. - Technical status: Browser automation (Chrome) is experiencing timeouts on the VPS. Discussed using a standalone Playwright Python script as an alternative. ###",
-      "recallCount": 2,
+      "recallCount": 7,
       "dailyCount": 0,
       "groundedCount": 0,
-      "totalScore": 0.8274255424737931,
-      "maxScore": 0.4144446700811386,
+      "totalScore": 2.847606083750725,
+      "maxScore": 0.43531466126441953,
       "firstRecalledAt": "2026-04-20T05:19:05.628Z",
-      "lastRecalledAt": "2026-04-20T09:28:54.870Z",
+      "lastRecalledAt": "2026-04-24T04:47:38.468Z",
       "queryHashes": [
         "2046cb27eb9e",
-        "838260c75283"
+        "838260c75283",
+        "4ef266770e09",
+        "c8606bc3832c",
+        "c7e6d83bc49b",
+        "45eacc387ab7",
+        "30be31a2939a"
       ],
       "recallDays": [
-        "2026-04-20"
+        "2026-04-20",
+        "2026-04-22",
+        "2026-04-24"
       ],
       "conceptTags": [
         "17/17",
@@ -32,6 +39,78 @@
         "identity",
         "preferences",
         "name"
+      ]
+    },
+    "memory:memory/2026-04-22.md:22:33": {
+      "key": "memory:memory/2026-04-22.md:22:33",
+      "path": "memory/2026-04-22.md",
+      "startLine": 22,
+      "endLine": 33,
+      "source": "memory",
+      "snippet": "- Implemented a professional Currency Strength Meter based on the **Giraia-Matrix** logic (`new_SC.pine`). - **Robot Engine (`trading_signal.py`):** - **Data Source:** Migrated from Yahoo Finance to **Twelve Data API** for professional-grade accuracy and synchronization with TradingView. - **Logic:** Calculates currency power using Daily Range ratios (High/Low/Close). - **Signal Delivery:** Top 3 pairs with the largest strength gap, delivered every 15 minutes via Telegram. - **Position Tracking:** Added `positions.json` to monitor open trades with **HOLD/CUT** alerts based on power fading. - **Directionality:** Corrected pair naming and BUY/SELL direction logic to match o",
+      "recallCount": 5,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 2.1026740341813506,
+      "maxScore": 0.4851546823413312,
+      "firstRecalledAt": "2026-04-22T12:49:20.358Z",
+      "lastRecalledAt": "2026-04-24T04:47:38.468Z",
+      "queryHashes": [
+        "4ef266770e09",
+        "c8606bc3832c",
+        "c7e6d83bc49b",
+        "45eacc387ab7",
+        "30be31a2939a"
+      ],
+      "recallDays": [
+        "2026-04-22",
+        "2026-04-24"
+      ],
+      "conceptTags": [
+        "giraia-matrix",
+        "new-sc.pine",
+        "trading-signal.py",
+        "professional-grade",
+        "high/low/close",
+        "positions.json",
+        "hold/cut",
+        "buy/sell"
+      ]
+    },
+    "memory:memory/2026-04-22.md:1:25": {
+      "key": "memory:memory/2026-04-22.md:1:25",
+      "path": "memory/2026-04-22.md",
+      "startLine": 1,
+      "endLine": 25,
+      "source": "memory",
+      "snippet": "## 2026-04-22 - Session Summary ### 🛠️ System Maintenance - **OpenClaw Gateway:** Fixed a crash loop in `openclaw-gateway.service` by clearing a ghost process on port 18789. Restored stability to \"Immortal Mode\". ### 🛍️ App Development: Toko Dewi - Created a full-featured e-commerce webapp for **Toko Dewi** (Port 5002). - Features: Admin panel, CRUD product management, image uploads, WhatsApp checkout integration, and store settings. - Deployment: Configured as a persistent `systemd` service. ### 🏥 App Upgrade: Aramedica Farma - Transformed basic pharmacy app into a professional management system (Port 5003). - **Data Migration:** Migrated from JSON to **SQLite** for transactional inte",
+      "recallCount": 5,
+      "dailyCount": 0,
+      "groundedCount": 0,
+      "totalScore": 2.075698463344646,
+      "maxScore": 0.43314087986946104,
+      "firstRecalledAt": "2026-04-22T12:49:20.358Z",
+      "lastRecalledAt": "2026-04-24T04:47:38.468Z",
+      "queryHashes": [
+        "4ef266770e09",
+        "c8606bc3832c",
+        "c7e6d83bc49b",
+        "45eacc387ab7",
+        "30be31a2939a"
+      ],
+      "recallDays": [
+        "2026-04-22",
+        "2026-04-24"
+      ],
+      "conceptTags": [
+        "gateway",
+        "openclaw-gateway.service",
+        "full-featured",
+        "e-commerce",
+        "summary",
+        "system",
+        "maintenance",
+        "openclaw"
       ]
     }
   }

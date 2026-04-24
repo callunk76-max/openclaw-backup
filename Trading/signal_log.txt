@@ -1,0 +1,2485 @@
+--- Running Signal at Wed Apr 22 09:00:01 AM CST 2026 ---
+Signal Result: 🕒 09.00 | 🚀 SIGNAL: JPYEUR
+⚡ Power: JPY (7.71) vs EUR (0.00)
+📈 Action: STRONG BUY
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+/root/.openclaw/workspace/Trading/send_signal.sh: line 9: /usr/bin/openclaw: No such file or directory
+Message sent status: 127
+--- Running Signal at Wed Apr 22 09:26:03 AM CST 2026 ---
+Signal Result: 🕒 09.26 | 🚀 NEW SIGNAL: JPYEUR
+⚡ Power: JPY (7.71) vs EUR (0.00)
+📈 Action: STRONG BUY
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 825
+Message sent status: 0
+--- Running Signal at Wed Apr 22 09:30:01 AM CST 2026 ---
+Signal Result: 🕒 09.30 | 🚀 NEW SIGNAL: JPYEUR
+⚡ Power: JPY (7.71) vs EUR (0.00)
+📈 Action: STRONG BUY
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+/usr/bin/env: ‘node’: No such file or directory
+Message sent status: 127
+--- Running Signal at Wed Apr 22 09:32:50 AM CST 2026 ---
+Signal Result: 🕒 09.32 | 🚀 NEW SIGNAL: JPYEUR
+⚡ Power: JPY (7.71) vs EUR (0.00)
+📈 Action: STRONG BUY
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 829
+Message sent status: 0
+--- Running Signal at Wed Apr 22 09:45:01 AM CST 2026 ---
+Signal Result: 🕒 09.45 | 🚀 NEW SIGNAL: JPYEUR
+⚡ Power: JPY (7.71) vs EUR (0.00)
+📈 Action: STRONG BUY
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 830
+Message sent status: 0
+--- Running Signal at Wed Apr 22 10:00:01 AM CST 2026 ---
+Signal Result: 🕒 10.00 | 🚀 NEW SIGNAL: EURJPY
+⚡ Power: JPY (7.71) vs EUR (0.00)
+📈 Action: STRONG BUY
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 836
+Message sent status: 0
+--- Running Signal at Wed Apr 22 10:15:01 AM CST 2026 ---
+Signal Result: 🕒 10.15 | 🚀 TOP 3 GAP SIGNALS
+
+1. EURJPY
+⚡ Power: JPY (7.71) vs EUR (0.00)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. EURCHF
+⚡ Power: CHF (7.71) vs EUR (0.00)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EURCAD
+⚡ Power: CAD (6.43) vs EUR (0.00)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 841
+Message sent status: 0
+--- Running Signal at Wed Apr 22 10:30:01 AM CST 2026 ---
+Signal Result: 🕒 10.30 | 🚀 NEW SIGNAL: GBPJPY
+⚡ Power: JPY (9.00) vs GBP (1.29)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 849
+Message sent status: 0
+--- Running Signal at Wed Apr 22 10:45:01 AM CST 2026 ---
+Signal Result: 🕒 10.45 | 🚀 TOP 3 GAP SIGNALS
+
+1. EURJPY
+⚡ Power: JPY (9.00) vs EUR (1.29)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBPJPY
+⚡ Power: JPY (9.00) vs GBP (1.29)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EURCAD
+⚡ Power: CAD (7.71) vs EUR (1.29)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 854
+Message sent status: 0
+--- Running Signal at Wed Apr 22 11:00:01 AM CST 2026 ---
+Signal Result: 🕒 11.00 | 🚀 TOP 3 GAP SIGNALS
+
+1. EURJPY
+⚡ Power: JPY (9.00) vs EUR (1.29)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBPJPY
+⚡ Power: JPY (9.00) vs GBP (1.29)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EURCAD
+⚡ Power: CAD (7.71) vs EUR (1.29)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 857
+Message sent status: 0
+--- Running Signal at Wed Apr 22 11:15:01 AM CST 2026 ---
+Signal Result: 🕒 11.15 | 🚀 TOP 3 GAP SIGNALS
+
+1. EURJPY
+⚡ Power: JPY (9.00) vs EUR (1.29)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBPJPY
+⚡ Power: JPY (9.00) vs GBP (1.29)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EURCAD
+⚡ Power: CAD (7.71) vs EUR (1.29)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 858
+Message sent status: 0
+--- Running Signal at Wed Apr 22 11:30:01 AM CST 2026 ---
+Signal Result: 🕒 11.30 | 🚀 TOP 3 GAP SIGNALS
+
+1. EURJPY
+⚡ Power: JPY (9.00) vs EUR (1.29)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBPJPY
+⚡ Power: JPY (9.00) vs GBP (1.29)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EURCAD
+⚡ Power: CAD (7.71) vs EUR (1.29)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 865
+Message sent status: 0
+--- Running Signal at Wed Apr 22 11:45:01 AM CST 2026 ---
+Signal Result: Traceback (most recent call last):
+  File "/root/.openclaw/workspace/Trading/trading_signal.py", line 198, in <module>
+    print(generate_signal())
+          ^^^^^^^^^^^^^^^^^
+  File "/root/.openclaw/workspace/Trading/trading_signal.py", line 104, in generate_signal
+    sorted_powers, all_powers = calculate_powers()
+                                ^^^^^^^^^^^^^^^^^^
+  File "/root/.openclaw/workspace/Trading/trading_signal.py", line 87, in calculate_powers
+    jpy_t = (9-p["USD/JPY"]) + (9-p["EUR/JPY"]) + (9-p["GBPJPY"]) + (9-p["AUD/JPY"]) + (9-p["NZD/JPY"]) + (9-p["CAD/JPY"]) + (9-p["CHF/JPY"])
+                                                     ~^^^^^^^^^^
+KeyError: 'GBPJPY'
+✅ Sent via Telegram. Message ID: 870
+Message sent status: 0
+--- Running Signal at Wed Apr 22 12:00:01 PM CST 2026 ---
+Signal Result: Traceback (most recent call last):
+  File "/root/.openclaw/workspace/Trading/trading_signal.py", line 198, in <module>
+    print(generate_signal())
+          ^^^^^^^^^^^^^^^^^
+  File "/root/.openclaw/workspace/Trading/trading_signal.py", line 104, in generate_signal
+    sorted_powers, all_powers = calculate_powers()
+                                ^^^^^^^^^^^^^^^^^^
+  File "/root/.openclaw/workspace/Trading/trading_signal.py", line 87, in calculate_powers
+    jpy_t = (9-p["USD/JPY"]) + (9-p["EUR/JPY"]) + (9-p["GBPJPY"]) + (9-p["AUD/JPY"]) + (9-p["NZD/JPY"]) + (9-p["CAD/JPY"]) + (9-p["CHF/JPY"])
+                                                     ~^^^^^^^^^^
+KeyError: 'GBPJPY'
+✅ Sent via Telegram. Message ID: 871
+Message sent status: 0
+--- Running Signal at Wed Apr 22 12:15:01 PM CST 2026 ---
+Signal Result: Traceback (most recent call last):
+  File "/root/.openclaw/workspace/Trading/trading_signal.py", line 198, in <module>
+    print(generate_signal())
+          ^^^^^^^^^^^^^^^^^
+  File "/root/.openclaw/workspace/Trading/trading_signal.py", line 104, in generate_signal
+    sorted_powers, all_powers = calculate_powers()
+                                ^^^^^^^^^^^^^^^^^^
+  File "/root/.openclaw/workspace/Trading/trading_signal.py", line 87, in calculate_powers
+    jpy_t = (9-p["USD/JPY"]) + (9-p["EUR/JPY"]) + (9-p["GBPJPY"]) + (9-p["AUD/JPY"]) + (9-p["NZD/JPY"]) + (9-p["CAD/JPY"]) + (9-p["CHF/JPY"])
+                                                     ~^^^^^^^^^^
+KeyError: 'GBPJPY'
+✅ Sent via Telegram. Message ID: 872
+Message sent status: 0
+--- Running Signal at Wed Apr 22 12:30:01 PM CST 2026 ---
+Signal Result: Traceback (most recent call last):
+  File "/root/.openclaw/workspace/Trading/trading_signal.py", line 198, in <module>
+    print(generate_signal())
+          ^^^^^^^^^^^^^^^^^
+  File "/root/.openclaw/workspace/Trading/trading_signal.py", line 104, in generate_signal
+    sorted_powers, all_powers = calculate_powers()
+                                ^^^^^^^^^^^^^^^^^^
+  File "/root/.openclaw/workspace/Trading/trading_signal.py", line 87, in calculate_powers
+    jpy_t = (9-p["USD/JPY"]) + (9-p["EUR/JPY"]) + (9-p["GBPJPY"]) + (9-p["AUD/JPY"]) + (9-p["NZD/JPY"]) + (9-p["CAD/JPY"]) + (9-p["CHF/JPY"])
+                                                     ~^^^^^^^^^^
+KeyError: 'GBPJPY'
+✅ Sent via Telegram. Message ID: 873
+Message sent status: 0
+--- Running Signal at Wed Apr 22 12:45:01 PM CST 2026 ---
+Signal Result: Traceback (most recent call last):
+  File "/root/.openclaw/workspace/Trading/trading_signal.py", line 198, in <module>
+    print(generate_signal())
+          ^^^^^^^^^^^^^^^^^
+  File "/root/.openclaw/workspace/Trading/trading_signal.py", line 104, in generate_signal
+    sorted_powers, all_powers = calculate_powers()
+                                ^^^^^^^^^^^^^^^^^^
+  File "/root/.openclaw/workspace/Trading/trading_signal.py", line 87, in calculate_powers
+    jpy_t = (9-p["USD/JPY"]) + (9-p["EUR/JPY"]) + (9-p["GBPJPY"]) + (9-p["AUD/JPY"]) + (9-p["NZD/JPY"]) + (9-p["CAD/JPY"]) + (9-p["CHF/JPY"])
+                                                     ~^^^^^^^^^^
+KeyError: 'GBPJPY'
+✅ Sent via Telegram. Message ID: 874
+Message sent status: 0
+--- Running Signal at Wed Apr 22 01:00:01 PM CST 2026 ---
+Signal Result: Traceback (most recent call last):
+  File "/root/.openclaw/workspace/Trading/trading_signal.py", line 171, in <module>
+    print(generate_signal())
+          ^^^^^^^^^^^^^^^^^
+  File "/root/.openclaw/workspace/Trading/trading_signal.py", line 145, in generate_signal
+    base = actual_pair.split('/')[0] if '/' in actual_//pair else actual_//pair[:3]
+                                               ^^^^^^^
+NameError: name 'actual_' is not defined
+✅ Sent via Telegram. Message ID: 876
+Message sent status: 0
+--- Running Signal at Wed Apr 22 01:15:01 PM CST 2026 ---
+Signal Result: 🕒 13.15 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (8.14) vs EUR (1.71)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+2. GBP/JPY
+⚡ Power: JPY (8.14) vs GBP (2.14)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+3. EUR/CAD
+⚡ Power: CAD (7.14) vs EUR (1.71)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 881
+Message sent status: 0
+--- Running Signal at Wed Apr 22 01:30:01 PM CST 2026 ---
+Signal Result: 🕒 13.30 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (8.43) vs EUR (2.00)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+2. GBP/JPY
+⚡ Power: JPY (8.43) vs GBP (2.29)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+3. USD/JPY
+⚡ Power: JPY (8.43) vs USD (2.71)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 882
+Message sent status: 0
+--- Running Signal at Wed Apr 22 01:45:01 PM CST 2026 ---
+Signal Result: 🕒 13.45 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (8.29) vs EUR (1.86)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+2. GBP/JPY
+⚡ Power: JPY (8.29) vs GBP (2.29)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+3. EUR/CAD
+⚡ Power: CAD (7.29) vs EUR (1.86)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 883
+Message sent status: 0
+--- Running Signal at Wed Apr 22 02:00:01 PM CST 2026 ---
+Signal Result: 🕒 14.00 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (8.29) vs EUR (1.86)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+2. GBP/JPY
+⚡ Power: JPY (8.29) vs GBP (2.29)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+3. EUR/CHF
+⚡ Power: CHF (7.29) vs EUR (1.86)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 884
+Message sent status: 0
+--- Running Signal at Wed Apr 22 02:15:01 PM CST 2026 ---
+Signal Result: 🕒 14.15 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (8.29) vs EUR (1.86)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+2. GBP/JPY
+⚡ Power: JPY (8.29) vs GBP (2.14)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+3. EUR/CHF
+⚡ Power: CHF (7.14) vs EUR (1.86)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 885
+Message sent status: 0
+--- Running Signal at Wed Apr 22 02:30:01 PM CST 2026 ---
+Signal Result: 🕒 14.30 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (8.29) vs EUR (1.86)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+2. GBP/JPY
+⚡ Power: JPY (8.29) vs GBP (2.14)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+3. EUR/CHF
+⚡ Power: CHF (7.29) vs EUR (1.86)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 886
+Message sent status: 0
+--- Running Signal at Wed Apr 22 02:45:01 PM CST 2026 ---
+Signal Result: 🕒 14.45 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (8.29) vs EUR (1.71)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+2. GBP/JPY
+⚡ Power: JPY (8.29) vs GBP (2.00)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+3. EUR/CAD
+⚡ Power: CAD (7.14) vs EUR (1.71)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 887
+Message sent status: 0
+--- Running Signal at Wed Apr 22 03:00:01 PM CST 2026 ---
+Signal Result: 🕒 15.00 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (8.43) vs EUR (1.71)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+2. GBP/JPY
+⚡ Power: JPY (8.43) vs GBP (2.00)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+3. EUR/CHF
+⚡ Power: CHF (7.14) vs EUR (1.71)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 888
+Message sent status: 0
+--- Running Signal at Wed Apr 22 03:15:01 PM CST 2026 ---
+Signal Result: 🕒 15.15 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (8.29) vs EUR (1.57)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+2. GBP/JPY
+⚡ Power: JPY (8.29) vs GBP (1.86)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+3. EUR/CHF
+⚡ Power: CHF (7.29) vs EUR (1.57)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 889
+Message sent status: 0
+--- Running Signal at Wed Apr 22 03:30:01 PM CST 2026 ---
+Signal Result: 🕒 15.30 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (9.00) vs EUR (1.86)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (9.00) vs GBP (2.14)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+3. USD/JPY
+⚡ Power: JPY (9.00) vs USD (3.14)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 890
+Message sent status: 0
+--- Running Signal at Wed Apr 22 03:45:01 PM CST 2026 ---
+Signal Result: 🕒 15.45 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (8.14) vs EUR (1.71)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+2. GBP/JPY
+⚡ Power: JPY (8.14) vs GBP (2.00)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+3. EUR/CHF
+⚡ Power: CHF (7.14) vs EUR (1.71)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 891
+Message sent status: 0
+--- Running Signal at Wed Apr 22 04:00:01 PM CST 2026 ---
+Signal Result: 🕒 16.00 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (8.29) vs EUR (2.00)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+2. GBP/JPY
+⚡ Power: JPY (8.29) vs GBP (2.29)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+3. USD/JPY
+⚡ Power: JPY (8.29) vs USD (3.00)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 892
+Message sent status: 0
+--- Running Signal at Wed Apr 22 04:15:01 PM CST 2026 ---
+Signal Result: 🕒 16.15 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (8.29) vs EUR (1.86)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+2. GBP/JPY
+⚡ Power: JPY (8.29) vs GBP (2.14)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+3. USD/JPY
+⚡ Power: JPY (8.29) vs USD (2.71)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 893
+Message sent status: 0
+--- Running Signal at Wed Apr 22 04:30:01 PM CST 2026 ---
+Signal Result: 🕒 16.30 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (8.14) vs EUR (2.00)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+2. GBP/JPY
+⚡ Power: JPY (8.14) vs GBP (2.29)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+3. EUR/CAD
+⚡ Power: CAD (7.29) vs EUR (2.00)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 894
+Message sent status: 0
+--- Running Signal at Wed Apr 22 04:45:01 PM CST 2026 ---
+Signal Result: 🕒 16.45 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (8.14) vs EUR (1.86)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+2. GBP/JPY
+⚡ Power: JPY (8.14) vs GBP (2.29)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+3. EUR/CAD
+⚡ Power: CAD (7.29) vs EUR (1.86)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 897
+Message sent status: 0
+--- Running Signal at Wed Apr 22 05:00:01 PM CST 2026 ---
+Signal Result: Fetching data from TradingView...
+Navigating to REPLACE_WITH_YOUR_TRADINGVIEW_CHART_URL...
+Scraper Error: Page.goto: Protocol error (Page.navigate): Cannot navigate to invalid URL
+Call log:
+  - navigating to "REPLACE_WITH_YOUR_TRADINGVIEW_CHART_URL", waiting until "networkidle"
+
+Scraper failed or data incomplete. Falling back to Yahoo Finance...
+❌ Error: Could not fetch data from TradingView. Please check the Chart URL.
+✅ Sent via Telegram. Message ID: 900
+Message sent status: 0
+--- Running Signal at Wed Apr 22 05:15:01 PM CST 2026 ---
+Signal Result: Fetching data from TradingView...
+Navigating to REPLACE_WITH_YOUR_TRADINGVIEW_CHART_URL...
+Scraper Error: Page.goto: Protocol error (Page.navigate): Cannot navigate to invalid URL
+Call log:
+  - navigating to "REPLACE_WITH_YOUR_TRADINGVIEW_CHART_URL", waiting until "networkidle"
+
+Scraper failed or data incomplete. Falling back to Yahoo Finance...
+❌ Error: Could not fetch data from TradingView. Please check the Chart URL.
+✅ Sent via Telegram. Message ID: 901
+Message sent status: 0
+--- Running Signal at Wed Apr 22 05:30:01 PM CST 2026 ---
+Signal Result: Fetching data from TradingView...
+Navigating to REPLACE_WITH_YOUR_TRADINGVIEW_CHART_URL...
+Scraper Error: Page.goto: Protocol error (Page.navigate): Cannot navigate to invalid URL
+Call log:
+  - navigating to "REPLACE_WITH_YOUR_TRADINGVIEW_CHART_URL", waiting until "networkidle"
+
+Scraper failed or data incomplete. Falling back to Yahoo Finance...
+❌ Error: Could not fetch data from TradingView. Please check the Chart URL.
+✅ Sent via Telegram. Message ID: 902
+Message sent status: 0
+--- Running Signal at Wed Apr 22 05:45:01 PM CST 2026 ---
+Signal Result: Fetching data from TradingView...
+Navigating to REPLACE_WITH_YOUR_TRADINGVIEW_CHART_URL...
+Scraper Error: Page.goto: Protocol error (Page.navigate): Cannot navigate to invalid URL
+Call log:
+  - navigating to "REPLACE_WITH_YOUR_TRADINGVIEW_CHART_URL", waiting until "networkidle"
+
+Scraper failed or data incomplete. Falling back to Yahoo Finance...
+❌ Error: Could not fetch data from TradingView. Please check the Chart URL.
+✅ Sent via Telegram. Message ID: 903
+Message sent status: 0
+--- Running Signal at Wed Apr 22 06:00:02 PM CST 2026 ---
+Signal Result: Fetching data from TradingView...
+Navigating to REPLACE_WITH_YOUR_TRADINGVIEW_CHART_URL...
+Scraper Error: Page.goto: Protocol error (Page.navigate): Cannot navigate to invalid URL
+Call log:
+  - navigating to "REPLACE_WITH_YOUR_TRADINGVIEW_CHART_URL", waiting until "networkidle"
+
+Scraper failed or data incomplete. Falling back to Yahoo Finance...
+❌ Error: Could not fetch data from TradingView. Please check the Chart URL.
+✅ Sent via Telegram. Message ID: 906
+Message sent status: 0
+--- Running Signal at Wed Apr 22 06:15:01 PM CST 2026 ---
+Signal Result: Fetching data from TradingView...
+Navigating to REPLACE_WITH_YOUR_TRADINGVIEW_CHART_URL...
+Scraper Error: Page.goto: Protocol error (Page.navigate): Cannot navigate to invalid URL
+Call log:
+  - navigating to "REPLACE_WITH_YOUR_TRADINGVIEW_CHART_URL", waiting until "networkidle"
+
+Scraper failed or data incomplete. Falling back to Yahoo Finance...
+❌ Error: Could not fetch data from TradingView. Please check the Chart URL.
+✅ Sent via Telegram. Message ID: 907
+Message sent status: 0
+--- Running Signal at Wed Apr 22 06:30:01 PM CST 2026 ---
+Signal Result: Fetching data from TradingView...
+Navigating to https://www.tradingview.com/chart/sIXNurXP/?symbol=CRYPTO%3ABTCUSD...
+Waiting for indicator to render...
+Scraper failed or data incomplete. Falling back to Yahoo Finance...
+❌ Error: Could not fetch data from TradingView. Please check the Chart URL.
+✅ Sent via Telegram. Message ID: 910
+Message sent status: 0
+--- Running Signal at Wed Apr 22 06:45:01 PM CST 2026 ---
+Signal Result: Fetching data from TradingView...
+Navigating to https://www.tradingview.com/chart/sIXNurXP/?symbol=CRYPTO%3ABTCUSD...
+Waiting for indicator to render...
+Scraper failed or data incomplete. Falling back to Yahoo Finance...
+❌ Error: Could not fetch data from TradingView. Please check the Chart URL.
+✅ Sent via Telegram. Message ID: 915
+Message sent status: 0
+--- Running Signal at Wed Apr 22 09:03:58 PM CST 2026 ---
+Signal Result: 🕒 21.04 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (9.00) vs EUR (1.29)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (9.00) vs GBP (1.29)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/CAD
+⚡ Power: CAD (7.71) vs EUR (1.29)
+📈 Action: STRONG SELL
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 938
+Message sent status: 0
+--- Running Signal at Wed Apr 22 09:15:01 PM CST 2026 ---
+Signal Result: 🕒 21.15 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (9.00) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (9.00) vs GBP (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/CAD
+⚡ Power: CAD (7.71) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 943
+Message sent status: 0
+--- Running Signal at Wed Apr 22 09:30:01 PM CST 2026 ---
+Signal Result: 🕒 21.30 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (9.00) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (9.00) vs GBP (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/CAD
+⚡ Power: CAD (7.71) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 945
+Message sent status: 0
+--- Running Signal at Wed Apr 22 09:45:01 PM CST 2026 ---
+Signal Result: 🕒 21.45 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (9.00) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (9.00) vs GBP (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/CAD
+⚡ Power: CAD (7.71) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 952
+Message sent status: 0
+--- Running Signal at Wed Apr 22 10:00:01 PM CST 2026 ---
+Signal Result: 🕒 22.00 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (9.00) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (9.00) vs GBP (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/CAD
+⚡ Power: CAD (7.71) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 959
+Message sent status: 0
+--- Running Signal at Thu Apr 23 08:00:01 AM CST 2026 ---
+Signal Result: 🕒 08.00 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (8.00) vs EUR (1.14)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+2. GBP/JPY
+⚡ Power: JPY (8.00) vs GBP (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+3. EUR/USD
+⚡ Power: USD (7.00) vs EUR (1.14)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 970
+Message sent status: 0
+--- Running Signal at Thu Apr 23 08:15:01 AM CST 2026 ---
+Signal Result: 🕒 08.15 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/USD
+⚡ Power: USD (8.43) vs EUR (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/USD
+⚡ Power: USD (8.43) vs GBP (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/JPY
+⚡ Power: JPY (7.71) vs EUR (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 973
+Message sent status: 0
+--- Running Signal at Thu Apr 23 08:30:01 AM CST 2026 ---
+Signal Result: 🕒 08.30 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (8.14) vs EUR (1.14)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (8.14) vs GBP (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+3. EUR/CAD
+⚡ Power: CAD (6.71) vs EUR (1.14)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 982
+Message sent status: 0
+--- Running Signal at Thu Apr 23 08:45:01 AM CST 2026 ---
+Signal Result: 🕒 08.45 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (8.14) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+2. GBP/JPY
+⚡ Power: JPY (8.14) vs GBP (1.43)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+3. EUR/CAD
+⚡ Power: CAD (6.86) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 987
+Message sent status: 0
+--- Running Signal at Thu Apr 23 09:00:01 AM CST 2026 ---
+Signal Result: 🕒 09.00 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (8.43) vs EUR (1.43)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (8.43) vs GBP (1.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+3. EUR/CAD
+⚡ Power: CAD (6.86) vs EUR (1.43)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 993
+Message sent status: 0
+--- Running Signal at Thu Apr 23 09:15:01 AM CST 2026 ---
+Signal Result: 🕒 09.15 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (8.29) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (8.29) vs GBP (1.43)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+3. EUR/CAD
+⚡ Power: CAD (6.71) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 997
+Message sent status: 0
+--- Running Signal at Thu Apr 23 09:30:01 AM CST 2026 ---
+Signal Result: 🕒 09.30 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (8.29) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (8.29) vs GBP (1.43)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+3. EUR/CAD
+⚡ Power: CAD (6.86) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1000
+Message sent status: 0
+--- Running Signal at Thu Apr 23 09:45:01 AM CST 2026 ---
+Signal Result: 🕒 09.45 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (8.29) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (8.29) vs GBP (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/CAD
+⚡ Power: CAD (6.86) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1005
+Message sent status: 0
+--- Running Signal at Thu Apr 23 10:00:01 AM CST 2026 ---
+Signal Result: 🕒 10.00 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (8.29) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (8.29) vs GBP (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/CAD
+⚡ Power: CAD (6.71) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1009
+Message sent status: 0
+--- Running Signal at Thu Apr 23 10:15:01 AM CST 2026 ---
+Signal Result: 🕒 10.15 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (8.00) vs EUR (1.14)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+2. GBP/JPY
+⚡ Power: JPY (8.00) vs GBP (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+3. EUR/USD
+⚡ Power: USD (7.14) vs EUR (1.14)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1010
+Message sent status: 0
+--- Running Signal at Thu Apr 23 10:30:01 AM CST 2026 ---
+Signal Result: 🕒 10.30 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (8.00) vs EUR (1.14)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+2. GBP/JPY
+⚡ Power: JPY (8.00) vs GBP (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+3. EUR/USD
+⚡ Power: USD (7.14) vs EUR (1.14)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1015
+Message sent status: 0
+--- Running Signal at Thu Apr 23 10:45:01 AM CST 2026 ---
+Signal Result: 🕒 10.45 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (8.00) vs EUR (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (8.00) vs GBP (1.14)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+3. EUR/USD
+⚡ Power: USD (7.57) vs EUR (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1018
+Message sent status: 0
+--- Running Signal at Thu Apr 23 11:00:01 AM CST 2026 ---
+Signal Result: 🕒 11.00 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/USD
+⚡ Power: USD (8.43) vs EUR (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/USD
+⚡ Power: USD (8.43) vs GBP (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/JPY
+⚡ Power: JPY (7.86) vs EUR (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1020
+Message sent status: 0
+--- Running Signal at Thu Apr 23 11:15:01 AM CST 2026 ---
+Signal Result: 🕒 11.15 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/USD
+⚡ Power: USD (8.86) vs EUR (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/USD
+⚡ Power: USD (8.86) vs GBP (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/JPY
+⚡ Power: JPY (7.86) vs EUR (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1023
+Message sent status: 0
+--- Running Signal at Thu Apr 23 11:30:01 AM CST 2026 ---
+Signal Result: 🕒 11.30 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/USD
+⚡ Power: USD (8.71) vs EUR (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/USD
+⚡ Power: USD (8.71) vs GBP (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/JPY
+⚡ Power: JPY (8.00) vs EUR (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+✅ Sent via Telegram. Message ID: 1031
+Message sent status: 0
+--- Running Signal at Thu Apr 23 11:45:01 AM CST 2026 ---
+Signal Result: 🕒 11.45 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/USD
+⚡ Power: USD (8.71) vs EUR (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/USD
+⚡ Power: USD (8.71) vs GBP (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/JPY
+⚡ Power: JPY (8.00) vs EUR (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+✅ Sent via Telegram. Message ID: 1033
+Message sent status: 0
+--- Running Signal at Thu Apr 23 12:00:01 PM CST 2026 ---
+Signal Result: 🕒 12.00 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/USD
+⚡ Power: USD (8.86) vs EUR (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/USD
+⚡ Power: USD (8.86) vs GBP (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/JPY
+⚡ Power: JPY (7.86) vs EUR (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1034
+Message sent status: 0
+--- Running Signal at Thu Apr 23 12:15:01 PM CST 2026 ---
+Signal Result: 🕒 12.15 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/USD
+⚡ Power: USD (8.86) vs EUR (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/USD
+⚡ Power: USD (8.86) vs GBP (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/JPY
+⚡ Power: JPY (7.86) vs EUR (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1035
+Message sent status: 0
+--- Running Signal at Thu Apr 23 12:30:02 PM CST 2026 ---
+Signal Result: 🕒 12.30 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/USD
+⚡ Power: USD (8.57) vs EUR (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/USD
+⚡ Power: USD (8.57) vs GBP (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/JPY
+⚡ Power: JPY (8.00) vs EUR (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+✅ Sent via Telegram. Message ID: 1036
+Message sent status: 0
+--- Running Signal at Thu Apr 23 12:45:01 PM CST 2026 ---
+Signal Result: 🕒 12.45 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/USD
+⚡ Power: USD (8.57) vs EUR (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/USD
+⚡ Power: USD (8.57) vs GBP (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/JPY
+⚡ Power: JPY (7.86) vs EUR (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1040
+Message sent status: 0
+--- Running Signal at Thu Apr 23 01:00:02 PM CST 2026 ---
+Signal Result: 🕒 13.00 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/USD
+⚡ Power: USD (8.43) vs EUR (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/USD
+⚡ Power: USD (8.43) vs GBP (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/JPY
+⚡ Power: JPY (7.86) vs EUR (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1041
+Message sent status: 0
+--- Running Signal at Thu Apr 23 01:15:01 PM CST 2026 ---
+Signal Result: 🕒 13.15 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/USD
+⚡ Power: USD (8.43) vs EUR (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/USD
+⚡ Power: USD (8.43) vs GBP (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/JPY
+⚡ Power: JPY (7.86) vs EUR (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1046
+Message sent status: 0
+--- Running Signal at Thu Apr 23 01:30:01 PM CST 2026 ---
+Signal Result: 🕒 13.30 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/USD
+⚡ Power: USD (8.86) vs EUR (0.86)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/USD
+⚡ Power: USD (8.86) vs GBP (0.86)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/JPY
+⚡ Power: JPY (7.71) vs EUR (0.86)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1049
+Message sent status: 0
+--- Running Signal at Thu Apr 23 01:45:01 PM CST 2026 ---
+Signal Result: 🕒 13.45 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/USD
+⚡ Power: USD (8.57) vs EUR (0.86)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/USD
+⚡ Power: USD (8.57) vs GBP (0.86)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/JPY
+⚡ Power: JPY (7.71) vs EUR (0.86)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1050
+Message sent status: 0
+--- Running Signal at Thu Apr 23 02:00:01 PM CST 2026 ---
+Signal Result: 🕒 14.00 | 🚀 TOP 3 GAP SIGNALS
+
+1. GBP/USD
+⚡ Power: USD (7.86) vs GBP (0.86)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (7.86) vs GBP (0.86)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/USD
+⚡ Power: USD (7.86) vs EUR (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1051
+Message sent status: 0
+--- Running Signal at Thu Apr 23 02:15:01 PM CST 2026 ---
+Signal Result: 🕒 14.15 | 🚀 TOP 3 GAP SIGNALS
+
+1. GBP/USD
+⚡ Power: USD (8.14) vs GBP (0.86)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. EUR/USD
+⚡ Power: USD (8.14) vs EUR (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. GBP/JPY
+⚡ Power: JPY (7.71) vs GBP (0.86)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1052
+Message sent status: 0
+--- Running Signal at Thu Apr 23 02:30:01 PM CST 2026 ---
+Signal Result: 🕒 14.30 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/USD
+⚡ Power: USD (8.43) vs EUR (0.86)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/USD
+⚡ Power: USD (8.43) vs GBP (0.86)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/JPY
+⚡ Power: JPY (7.71) vs EUR (0.86)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1054
+Message sent status: 0
+--- Running Signal at Thu Apr 23 02:45:01 PM CST 2026 ---
+Signal Result: 🕒 14.45 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/USD
+⚡ Power: USD (7.86) vs EUR (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+2. GBP/USD
+⚡ Power: USD (7.86) vs GBP (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+3. EUR/JPY
+⚡ Power: JPY (7.71) vs EUR (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1060
+Message sent status: 0
+--- Running Signal at Thu Apr 23 03:00:01 PM CST 2026 ---
+Signal Result: 🕒 15.00 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/USD
+⚡ Power: USD (8.00) vs EUR (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/USD
+⚡ Power: USD (8.00) vs GBP (1.14)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+3. EUR/JPY
+⚡ Power: JPY (7.71) vs EUR (1.00)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1062
+Message sent status: 0
+--- Running Signal at Thu Apr 23 03:15:01 PM CST 2026 ---
+Signal Result: 🕒 15.15 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (9.00) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (9.00) vs GBP (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/CAD
+⚡ Power: CAD (7.71) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1063
+Message sent status: 0
+--- Running Signal at Thu Apr 23 03:30:01 PM CST 2026 ---
+Signal Result: 🕒 15.30 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (9.00) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (9.00) vs GBP (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/CAD
+⚡ Power: CAD (7.71) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1064
+Message sent status: 0
+--- Running Signal at Thu Apr 23 03:45:02 PM CST 2026 ---
+Signal Result: 🕒 15.45 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (9.00) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (9.00) vs GBP (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/CAD
+⚡ Power: CAD (7.71) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1065
+Message sent status: 0
+--- Running Signal at Thu Apr 23 04:00:02 PM CST 2026 ---
+Signal Result: 🕒 16.00 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (9.00) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (9.00) vs GBP (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/CAD
+⚡ Power: CAD (7.71) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1070
+Message sent status: 0
+--- Running Signal at Thu Apr 23 04:15:01 PM CST 2026 ---
+Signal Result: 🕒 16.15 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (9.00) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (9.00) vs GBP (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/CAD
+⚡ Power: CAD (7.71) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1071
+Message sent status: 0
+--- Running Signal at Thu Apr 23 04:30:01 PM CST 2026 ---
+Signal Result: 🕒 16.30 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (9.00) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (9.00) vs GBP (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/CAD
+⚡ Power: CAD (7.71) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1072
+Message sent status: 0
+--- Running Signal at Thu Apr 23 04:45:01 PM CST 2026 ---
+Signal Result: 🕒 16.45 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (9.00) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (9.00) vs GBP (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/CAD
+⚡ Power: CAD (7.71) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1073
+Message sent status: 0
+--- Running Signal at Thu Apr 23 05:00:01 PM CST 2026 ---
+Signal Result: 🕒 17.00 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (9.00) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (9.00) vs GBP (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/CAD
+⚡ Power: CAD (7.71) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1074
+Message sent status: 0
+--- Running Signal at Thu Apr 23 05:15:01 PM CST 2026 ---
+Signal Result: 🕒 17.15 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (9.00) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (9.00) vs GBP (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/CAD
+⚡ Power: CAD (7.71) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1075
+Message sent status: 0
+--- Running Signal at Thu Apr 23 05:30:01 PM CST 2026 ---
+Signal Result: 🕒 17.30 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (9.00) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (9.00) vs GBP (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/CAD
+⚡ Power: CAD (7.71) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1076
+Message sent status: 0
+--- Running Signal at Thu Apr 23 05:45:01 PM CST 2026 ---
+Signal Result: 🕒 17.45 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (9.00) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (9.00) vs GBP (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/CAD
+⚡ Power: CAD (7.71) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1077
+Message sent status: 0
+--- Running Signal at Thu Apr 23 06:00:01 PM CST 2026 ---
+Signal Result: 🕒 18.00 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (9.00) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (9.00) vs GBP (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/CAD
+⚡ Power: CAD (7.71) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1078
+Message sent status: 0
+--- Running Signal at Thu Apr 23 06:15:01 PM CST 2026 ---
+Signal Result: 🕒 18.15 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (9.00) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (9.00) vs GBP (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/CAD
+⚡ Power: CAD (7.71) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1079
+Message sent status: 0
+--- Running Signal at Thu Apr 23 06:30:01 PM CST 2026 ---
+Signal Result: 🕒 18.30 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (9.00) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (9.00) vs GBP (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/CAD
+⚡ Power: CAD (7.71) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1080
+Message sent status: 0
+--- Running Signal at Thu Apr 23 06:45:02 PM CST 2026 ---
+Signal Result: 🕒 18.45 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (9.00) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (9.00) vs GBP (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/CAD
+⚡ Power: CAD (7.71) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1084
+Message sent status: 0
+--- Running Signal at Thu Apr 23 07:00:01 PM CST 2026 ---
+Signal Result: 🕒 19.00 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (9.00) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (9.00) vs GBP (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/CAD
+⚡ Power: CAD (7.71) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1091
+Message sent status: 0
+--- Running Signal at Thu Apr 23 07:15:01 PM CST 2026 ---
+Signal Result: 🕒 19.15 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (9.00) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (9.00) vs GBP (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/CAD
+⚡ Power: CAD (7.71) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1107
+Message sent status: 0
+--- Running Signal at Thu Apr 23 07:30:01 PM CST 2026 ---
+Signal Result: 🕒 19.30 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (9.00) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (9.00) vs GBP (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/CAD
+⚡ Power: CAD (7.71) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1108
+Message sent status: 0
+--- Running Signal at Thu Apr 23 07:45:01 PM CST 2026 ---
+Signal Result: 🕒 19.45 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (9.00) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (9.00) vs GBP (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/CAD
+⚡ Power: CAD (7.71) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1116
+Message sent status: 0
+--- Running Signal at Thu Apr 23 08:00:01 PM CST 2026 ---
+Signal Result: 🕒 20.00 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (9.00) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (9.00) vs GBP (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/CAD
+⚡ Power: CAD (7.71) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1122
+Message sent status: 0
+--- Running Signal at Thu Apr 23 08:15:01 PM CST 2026 ---
+Signal Result: 🕒 20.15 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (9.00) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (9.00) vs GBP (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/CAD
+⚡ Power: CAD (7.71) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1125
+Message sent status: 0
+--- Running Signal at Thu Apr 23 08:30:01 PM CST 2026 ---
+Signal Result: 🕒 20.30 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (9.00) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (9.00) vs GBP (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/CAD
+⚡ Power: CAD (7.71) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1129
+Message sent status: 0
+--- Running Signal at Thu Apr 23 08:45:02 PM CST 2026 ---
+Signal Result: 🕒 20.45 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (9.00) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (9.00) vs GBP (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/CAD
+⚡ Power: CAD (7.71) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1132
+Message sent status: 0
+--- Running Signal at Thu Apr 23 09:00:01 PM CST 2026 ---
+Signal Result: 🕒 21.00 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (9.00) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (9.00) vs GBP (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/CAD
+⚡ Power: CAD (7.71) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1133
+Message sent status: 0
+--- Running Signal at Thu Apr 23 09:15:01 PM CST 2026 ---
+Signal Result: 🕒 21.15 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (9.00) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (9.00) vs GBP (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/CAD
+⚡ Power: CAD (7.71) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1138
+Message sent status: 0
+--- Running Signal at Thu Apr 23 09:30:01 PM CST 2026 ---
+Signal Result: 🕒 21.30 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (9.00) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (9.00) vs GBP (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/CAD
+⚡ Power: CAD (7.71) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1141
+Message sent status: 0
+--- Running Signal at Thu Apr 23 09:45:01 PM CST 2026 ---
+Signal Result: 🕒 21.45 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (9.00) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (9.00) vs GBP (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/CAD
+⚡ Power: CAD (7.71) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1144
+Message sent status: 0
+--- Running Signal at Thu Apr 23 10:00:01 PM CST 2026 ---
+Signal Result: 🕒 22.00 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (9.00) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (9.00) vs GBP (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/CAD
+⚡ Power: CAD (7.71) vs EUR (1.29)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1146
+Message sent status: 0
+--- Running Signal at Fri Apr 24 08:00:01 AM CST 2026 ---
+Signal Result: 🕒 08.00 | 🚀 TOP 3 GAP SIGNALS
+
+1. GBP/JPY
+⚡ Power: JPY (8.00) vs GBP (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. EUR/JPY
+⚡ Power: JPY (8.00) vs EUR (0.71)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. GBP/USD
+⚡ Power: USD (6.71) vs GBP (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1178
+Message sent status: 0
+--- Running Signal at Fri Apr 24 08:15:01 AM CST 2026 ---
+Signal Result: 🕒 08.15 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (8.00) vs EUR (0.71)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (8.00) vs GBP (0.71)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/CAD
+⚡ Power: CAD (6.86) vs EUR (0.71)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1184
+Message sent status: 0
+--- Running Signal at Fri Apr 24 08:30:01 AM CST 2026 ---
+Signal Result: 🕒 08.30 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (8.00) vs EUR (0.71)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (8.00) vs GBP (0.71)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/CAD
+⚡ Power: CAD (6.86) vs EUR (0.71)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1206
+Message sent status: 0
+--- Running Signal at Fri Apr 24 08:45:01 AM CST 2026 ---
+Signal Result: 🕒 08.45 | 🚀 TOP 3 GAP SIGNALS
+
+1. GBP/JPY
+⚡ Power: JPY (8.00) vs GBP (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. EUR/JPY
+⚡ Power: JPY (8.00) vs EUR (0.71)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. GBP/USD
+⚡ Power: USD (6.71) vs GBP (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1207
+Message sent status: 0
+--- Running Signal at Fri Apr 24 09:00:02 AM CST 2026 ---
+Signal Result: 🕒 09.00 | 🚀 TOP 3 GAP SIGNALS
+
+1. GBP/JPY
+⚡ Power: JPY (7.86) vs GBP (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. EUR/JPY
+⚡ Power: JPY (7.86) vs EUR (0.71)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. GBP/USD
+⚡ Power: USD (6.86) vs GBP (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1214
+Message sent status: 0
+--- Running Signal at Fri Apr 24 09:15:02 AM CST 2026 ---
+Signal Result: 🕒 09.15 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (8.00) vs EUR (0.71)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (8.00) vs GBP (0.71)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/CAD
+⚡ Power: CAD (6.86) vs EUR (0.71)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1222
+Message sent status: 0
+--- Running Signal at Fri Apr 24 09:30:01 AM CST 2026 ---
+Signal Result: 🕒 09.30 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (8.00) vs EUR (0.71)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (8.00) vs GBP (0.71)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/CAD
+⚡ Power: CAD (6.86) vs EUR (0.71)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1223
+Message sent status: 0
+--- Running Signal at Fri Apr 24 09:45:01 AM CST 2026 ---
+Signal Result: 🕒 09.45 | 🚀 TOP 3 GAP SIGNALS
+
+1. GBP/JPY
+⚡ Power: JPY (8.00) vs GBP (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. EUR/JPY
+⚡ Power: JPY (8.00) vs EUR (0.71)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. GBP/CAD
+⚡ Power: CAD (6.86) vs GBP (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1233
+Message sent status: 0
+--- Running Signal at Fri Apr 24 10:00:01 AM CST 2026 ---
+Signal Result: 🕒 10.00 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (8.00) vs EUR (0.71)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (8.00) vs GBP (0.71)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/CHF
+⚡ Power: CHF (6.86) vs EUR (0.71)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1234
+Message sent status: 0
+--- Running Signal at Fri Apr 24 10:15:01 AM CST 2026 ---
+Signal Result: 🕒 10.15 | 🚀 TOP 3 GAP SIGNALS
+
+1. GBP/JPY
+⚡ Power: JPY (8.00) vs GBP (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. EUR/JPY
+⚡ Power: JPY (8.00) vs EUR (0.71)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. GBP/USD
+⚡ Power: USD (6.86) vs GBP (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1235
+Message sent status: 0
+--- Running Signal at Fri Apr 24 10:30:01 AM CST 2026 ---
+Signal Result: 🕒 10.30 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (8.00) vs EUR (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (8.00) vs GBP (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/USD
+⚡ Power: USD (7.00) vs EUR (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1238
+Message sent status: 0
+--- Running Signal at Fri Apr 24 10:45:01 AM CST 2026 ---
+Signal Result: 🕒 10.45 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (8.00) vs EUR (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (8.00) vs GBP (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/USD
+⚡ Power: USD (7.00) vs EUR (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1239
+Message sent status: 0
+--- Running Signal at Fri Apr 24 11:00:01 AM CST 2026 ---
+Signal Result: 🕒 11.00 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (8.00) vs EUR (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (8.00) vs GBP (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/USD
+⚡ Power: USD (7.43) vs EUR (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1240
+Message sent status: 0
+--- Running Signal at Fri Apr 24 11:15:01 AM CST 2026 ---
+Signal Result: 🕒 11.15 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (7.86) vs EUR (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (7.86) vs GBP (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/USD
+⚡ Power: USD (7.57) vs EUR (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+✅ Sent via Telegram. Message ID: 1241
+Message sent status: 0
+--- Running Signal at Fri Apr 24 11:30:01 AM CST 2026 ---
+Signal Result: 🕒 11.30 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/USD
+⚡ Power: USD (8.43) vs EUR (0.43)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/USD
+⚡ Power: USD (8.43) vs GBP (0.43)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/JPY
+⚡ Power: JPY (7.86) vs EUR (0.43)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+✅ Sent via Telegram. Message ID: 1247
+Message sent status: 0
+--- Running Signal at Fri Apr 24 11:45:01 AM CST 2026 ---
+Signal Result: 🕒 11.45 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (7.86) vs EUR (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (7.86) vs GBP (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/USD
+⚡ Power: USD (7.71) vs EUR (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+✅ Sent via Telegram. Message ID: 1253
+Message sent status: 0
+--- Running Signal at Fri Apr 24 12:00:01 PM CST 2026 ---
+Signal Result: 🕒 12.00 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (7.86) vs EUR (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (7.86) vs GBP (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/USD
+⚡ Power: USD (7.57) vs EUR (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+✅ Sent via Telegram. Message ID: 1259
+Message sent status: 0
+--- Running Signal at Fri Apr 24 12:15:01 PM CST 2026 ---
+Signal Result: 🕒 12.15 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (8.00) vs EUR (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (8.00) vs GBP (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/USD
+⚡ Power: USD (7.43) vs EUR (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1262
+Message sent status: 0
+--- Running Signal at Fri Apr 24 12:30:01 PM CST 2026 ---
+Signal Result: 🕒 12.30 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (8.00) vs EUR (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (8.00) vs GBP (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/USD
+⚡ Power: USD (7.43) vs EUR (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1263
+Message sent status: 0
+--- Running Signal at Fri Apr 24 12:45:01 PM CST 2026 ---
+Signal Result: 🕒 12.45 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (8.00) vs EUR (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (8.00) vs GBP (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/USD
+⚡ Power: USD (7.43) vs EUR (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1266
+Message sent status: 0
+--- Running Signal at Fri Apr 24 01:00:01 PM CST 2026 ---
+Signal Result: 🕒 13.00 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (8.00) vs EUR (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. GBP/JPY
+⚡ Power: JPY (8.00) vs GBP (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. EUR/USD
+⚡ Power: USD (7.29) vs EUR (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1268
+Message sent status: 0

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ settings.shop_name }} - Surga Donat Lembut</title>
+    <link rel="icon" href="data:;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchS7wAAAABJRU5ErkJggg==">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -39,14 +40,14 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {% for donut in donuts %}
             <div class="donut-card bg-white rounded-2xl shadow-lg overflow-hidden border border-amber-100">
-                <img src="{{ donut.img }}" alt="{{ donut.name }}" class="w-full h-56 object-cover bg-gray-200" onerror="this.src='https://via.placeholder.com/300x200?text=Donut+Image'">
+                <img src="{{ donut.img }}" alt="{{ donut.name }}" class="w-full h-56 object-cover bg-gray-200" onerror="this.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HEqualsAAAADUlEQVR42mP8/5+hHgAHggJ/PchS7wAAAABJRU5ErkJggg=='">
                 <div class="p-6">
                     <div class="flex justify-between items-center mb-2">
                         <h4 class="text-xl font-bold text-gray-800">{{ donut.name }}</h4>
                         <span class="text-amber-700 font-bold">{{ donut.price }}</span>
                     </div>
                     <p class="text-gray-600 text-sm mb-6">{{ donut.desc }}</p>
-                    <a href="https://wa.me/{{ settings.whatsapp }}?text=Halo%20{{ settings.shop_name }},%20saya%20ingin%20pesan%20{{ donut.name }}" target="_blank" class="block text-center bg-//amber-700 text-white py-2 rounded-lg font-semibold hover:bg-amber-800 transition">Pesan via WhatsApp</a>
+                    <a href="https://wa.me/{{ settings.whatsapp }}?text=Halo%20{{ settings.shop_name }},%20saya%20ingin%20pesan%20{{ donut.name }}" target="_blank" class="block text-center bg-amber-700 text-white py-2 rounded-lg font-semibold hover:bg-amber-800 transition">Pesan via WhatsApp</a>
                 </div>
             </div>
             {% endfor %}

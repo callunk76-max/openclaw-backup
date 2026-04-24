@@ -15,30 +15,30 @@
     },
     {
         "id": 3,
-        "name": "Strawberry Dream",
-        "price": "Rp 15.000",
-        "img": "https://images.unsplash.com/photo-1612240496661-7770967a7de4?auto=format&fit=crop&w=300&q=80",
+        "name": "Savory",
+        "price": "Rp 35.000",
+        "img": "/static/uploads/Savory.jpeg",
         "desc": "Sensasi stroberi segar dengan topping creamy."
     },
     {
         "id": 4,
-        "name": "Matcha Zen",
+        "name": "Kue",
         "price": "Rp 17.000",
-        "img": "https://images.unsplash.com/photo-1551024508-1570aef0ae34?auto=format&fit=crop&w=300&q=80",
+        "img": "/static/uploads/Kue.jpeg",
         "desc": "Teh hijau Jepang asli untuk ketenangan jiwa."
     },
     {
         "id": 5,
         "name": "Tiramisu Bliss",
         "price": "Rp 18.000",
-        "img": "https://images.unsplash.com/photo-1527515637462-c75095ed6f7c?auto=format&fit=crop&w=300&q=80",
+        "img": "https://i.gojekapi.com/darkroom/gofood-indonesia/v2/images/uploads/b1d7cd8c-8d8c-4786-8b05-b966c8b1872b_Go-Biz_20230501_104154.jpeg",
         "desc": "Kombinasi kopi dan keju yang mewah."
     },
     {
         "id": 6,
         "name": "Rainbow Party",
         "price": "Rp 15.000",
-        "img": "https://images.unsplash.com/photo-1533910535049-ed7d7da86774?auto=format&fit=crop&w=300&q=80",
+        "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZ6ehi6NkLzHN1RrRDP0PTdhbPNq9ZmVB5YA&s",
         "desc": "Warna-warni ceria untuk hari yang spesial."
     }
 ]

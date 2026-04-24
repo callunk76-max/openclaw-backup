@@ -10,9 +10,9 @@ app.secret_key = "mokidonut_secret_key_123"
 ADMIN_USER = "admin"
 ADMIN_PASS = "mokidonate123"
 
-DATA_FILE = '/root/.openclaw/workspace/mokidonut/donuts.json'
-SETTINGS_FILE = '/root/.openclaw/workspace/mokidonut/settings.json'
-UPLOAD_FOLDER = '/root/.openclaw/workspace/mokidonut/static/uploads'
+DATA_FILE = '/root/.openclaw/workspace/App/mokidonut/donuts.json'
+SETTINGS_FILE = '/root/.openclaw/workspace/App/mokidonut/settings.json'
+UPLOAD_FOLDER = '/root/.openclaw/workspace/App/mokidonut/static/uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def load_donuts():
@@ -88,13 +88,15 @@ def add_donut():
     donuts = load_donuts()
     
     file = request.files.get('img_file')
-    img_url = request.form.get('img')
+    img_url_from_form = request.form.get('img')
     
     if file and file.filename != '':
         filename = secure_filename(file.filename)
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(filepath)
         img_url = f"/static/uploads/{filename}"
+    else:
+        img_url = img_url_from_form
     
     new_id = max([d['id'] for d in donuts]) + 1 if donuts else 1
     new_donut = {
@@ -116,14 +118,16 @@ def update():
     donuts = load_donuts()
     donut_id = int(request.form.get('id'))
     
-    file = request.files.get('img_//file')
-    img_url = request.form.get('img')
+    file = request.files.get('img_file')
+    img_url_from_form = request.form.get('img')
     
     if file and file.filename != '':
         filename = secure_filename(file.filename)
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(filepath)
         img_url = f"/static/uploads/{filename}"
+    else:
+        img_url = img_url_from_form
     
     for donut in donuts:
         if donut['id'] == donut_id:

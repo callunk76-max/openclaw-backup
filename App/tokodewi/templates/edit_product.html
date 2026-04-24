@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Produk - Toko Dewi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow">
+                    <div class="card-header fw-bold">Edit Produk</div>
+                    <div class="card-body">
+                        <form action="/admin/product/edit/{{ product.id }}" method="POST" enctype="multipart/form-data">
+                            <div class="mb-3">
+                                <label class="form-label">Nama Produk</label>
+                                <input type="text" name="name" class="form-control" value="{{ product.name }}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Kategori</label>
+                                <select name="category" class="form-select">
+                                    <option value="Pakaian" {{ 'selected' if product.category == 'Pakaian' }}>👕 Pakaian</option>
+                                    <option value="Bahan Makanan" {{ 'selected' if product.category == 'Bahan Makanan' }}>🍎 Bahan Makanan</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Harga</label>
+                                <input type="text" name="price" class="form-control" value="{{ product.price }}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Deskripsi</label>
+                                <textarea name="desc" class="form-control">{{ product.desc }}</textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Foto Produk</label>
+                                <input type="file" name="image" class="form-control">
+                                <input type="text" name="image_url" class="form-control mt-2" placeholder="Atau masukkan URL gambar" value="{{ product.image }}">
+                            </div>
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-success w-100">Simpan Perubahan</button>
+                                <a href="/admin" class="btn btn-secondary w-100">Batal</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

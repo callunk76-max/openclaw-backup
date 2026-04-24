@@ -1,0 +1,1 @@
+*/15 * * * * /root/.openclaw/workspace/Trading/send_signal.sh
