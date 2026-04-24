@@ -1,14 +1,12 @@
 import asyncio
 from playwright.async_api import async_playwright
-from playwright_stealth import stealth_async
+import playwright_stealth
 import json
 import time
 from tqdm import tqdm
 
 async def run():
     async with async_playwright() as p:
-        # headless=True agar berjalan di background.
-        # Ubah ke False jika ingin melihat browsernya terbuka.
         browser = await p.chromium.launch(headless=True) 
         context = await browser.new_context(
             user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
@@ -16,12 +14,16 @@ async def run():
         
         page = await context.new_page()
         
-        # Mengaktifkan stealth mode
+        # STRATEGI ANTI-ERROR: Deteksi otomatis fungsi stealth
         try:
-            await stealth_async(page)
-        except Exception:
-            from playwright_stealth import stealth
-            await stealth(page)
+            if hasattr(playwright_stealth, 'stealth_async'):
+                await playwright_stealth.stealth_async(page)
+            elif hasattr(playwright_stealth, 'stealth'):
+                await playwright_stealth.stealth(page)
+            else:
+                print("⚠️ Warning: Fungsi stealth tidak ditemukan, mencoba tanpa stealth...")
+        except Exception as e:
+            print(f"⚠️ Stealth warning: {e}")
         
         instansi = "D411"
         tahun = 2026
@@ -31,7 +33,6 @@ async def run():
         
         print(f"🚀 Memulai penarikan data Inaproc untuk {instansi} tahun {tahun}...")
         
-        # Request pertama untuk mendapatkan total data
         try:
             url_init = f"https://data.inaproc.id/api/tender?instansi={instansi}&jenis=4&limit={limit}&offset=0&tahun={tahun}"
             response = await page.goto(url_init, wait_until="networkidle")
@@ -50,10 +51,8 @@ async def run():
 
         print(f"📊 Total data yang ditemukan: {total_data}")
         
-        # Inisialisasi Progres Bar
         pbar = tqdm(total=total_data, desc="Downloading Data", unit="pkg")
         
-        # Masukkan data dari request pertama
         first_items = initial_data.get('data', [])
         semua_data.extend(first_items)
         pbar.update(len(first_items))
@@ -70,7 +69,7 @@ async def run():
                 
                 text = await page.inner_text('body')
                 json_data = json.loads(text)
-                items = json_data.get('data', [])
+                items = json_//data.get('data', [])
                 
                 if not items:
                     break
@@ -88,7 +87,6 @@ async def run():
             
         pbar.close()
         
-        # Simpan hasil ke file JSON
         with open(f"tender_{instansi}_{tahun}.json", "w", encoding="utf-8") as f:
             json.dump(semua_data, f, ensure_ascii=False, indent=2)
             
