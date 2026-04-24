@@ -8,9 +8,10 @@ async def run():
     print("🛠️ Menginisialisasi Playwright...")
     async with async_playwright() as p:
         try:
-            # Gunakan headless=True agar tidak tergantung pada Display/X11 di WSL
-            browser = await p.chromium.launch(headless=True) 
-            print("✅ Browser berhasil diluncurkan.")
+            # SETTING: Ubah ke headless=False agar Anda bisa melihat browsernya!
+            # Jika Anda menggunakan WSL, pastikan X-Server (seperti GWSL atau VcXsrv) sudah aktif.
+            browser = await p.chromium.launch(headless=False) 
+            print("✅ Browser berhasil diluncurkan (Mode Visual).")
             
             context = await browser.new_context(
                 user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
@@ -22,30 +23,42 @@ async def run():
             url = "https://data.inaproc.id/rup?jenis_klpd=4&instansi=D411"
             print(f"🌐 Mencoba mengakses: {url} ...")
             
-            # Gunakan domcontentloaded agar lebih cepat dan tidak menunggu semua asset
-            response = await page.goto(url, wait_until="domcontentloaded", timeout=60000)
-            print(f"✅ Halaman terbuka dengan status: {response.status}")
+            # PERBAIKAN: Gunakan 'commit' atau 'domcontentloaded' agar tidak hang menunggu networkidle
+            try:
+                response = await page.goto(url, wait_until="domcontentloaded", timeout=60000)
+                print(f"✅ Page load selesai. Status: {response.status}")
+            except Exception as e:
+                print(f"⚠️ Timeout/Error saat loading: {e}. Mencoba lanjut...")
             
-            # Beri waktu untuk render JS
-            await asyncio.sleep(5)
+            # Beri waktu tambahan untuk render JS
+            print("⏳ Menunggu 10 detik untuk render konten & Cloudflare...")
+            await asyncio.sleep(10)
             
             # Cek apakah ada tabel
             if not await page.query_selector("table"):
-                print("❌ Tabel tidak ditemukan. Kemungkinan terblokir Cloudflare atau halaman kosong.")
-                await browser.close()
-                return
+                print("❌ Tabel tidak ditemukan. Kemungkinan terblokir Cloudflare.")
+                print("💡 SILAKAN CEK JENDELA BROWSER: Jika ada centang 'I am human', mohon dicentang manual!")
+                # Tunggu user membantu menyelesaikan challenge
+                try:
+                    print("Waiting for user to solve challenge (60s timeout)...")
+                    await page.wait_for_selector("table", timeout=60000)
+                    print("✅ Tabel terdeteksi setelah challenge selesai!")
+                except:
+                    print("❌ Timeout: Tabel tetap tidak muncul.")
+                    await browser.close()
+                    return
             
             print("📊 Tabel ditemukan! Mulai ekstraksi data...")
             
-            # Atur entri per halaman ke 100 jika memungkinkan
+            # Atur entri per halaman ke 100
             try:
                 entry_dropdown = await page.query_selector("select")
                 if entry_dropdown:
                     await entry_dropdown.select_option("100")
-                    await asyncio.sleep(3)
                     print("✅ Berhasil mengubah entri ke 100.")
+                    await asyncio.sleep(3)
             except:
-                print("⚠️ Gagal mengubah entri per halaman, menggunakan default.")
+                print("⚠️ Gagal mengubah entri per halaman.")
 
             semua_data = []
             page_num = 1
@@ -63,12 +76,11 @@ async def run():
                         if len(cols) >= 3:
                             semua_data.append({
                                 "package_name": await cols[1].inner_text(),
-                                "satker": await cols[2].inner_//text(),
+                                "satker": await cols[2].inner_text(),
                                 "budget": await cols[3].inner_text(),
                                 "page": page_num
                             })
                     
-                    # Cari tombol Next
                     next_button = await page.query_selector("a:has-text('Berikutnya'), button:has-text('Berikutnya'), a:has-text('>')")
                     if next_button:
                         await next_button.click()
