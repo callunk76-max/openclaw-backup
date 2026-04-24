@@ -39,11 +39,11 @@ def index():
     conn = get_db_connection()
     
     # Stats
-    stats_query = "SELECT COUNT(*) as total, SUM(CAST(REPLACE(REPLACE(budget, 'Rp ', ''), ',', '') AS REAL)) as total_budget FROM procurement"
+    stats_query = "SELECT COUNT(*) as total, SUM(CAST(REPLACE(REPLACE(budget, 'Rp ', ''), ',', '') AS REAL)) as total_budget FROM procurement WHERE satker LIKE '%Bulukumba%' AND (satker LIKE '%Kab.%' OR satker LIKE '%Kabupaten%')"
     stats = conn.execute(stats_query).fetchone()
     
     # Filter Logic
-    query = "SELECT * FROM procurement WHERE 1=1"
+    query = "SELECT * FROM procurement WHERE satker LIKE '%Bulukumba%' AND (satker LIKE '%Kab.%' OR satker LIKE '%Kabupaten%')"
     params = []
     
     if search_query:
@@ -64,7 +64,7 @@ def index():
     total_filtered_count = len(total_filtered)
     
     # Calculate Filtered Total Budget
-    filtered_budget_query = f"SELECT SUM(CAST(REPLACE(REPLACE(budget, 'Rp ', ''), ',', '') AS REAL)) FROM procurement WHERE 1=1"
+    filtered_budget_query = f"SELECT SUM(CAST(REPLACE(REPLACE(budget, 'Rp ', ''), ',', '') AS REAL)) FROM procurement WHERE satker LIKE '%Bulukumba%' AND (satker LIKE '%Kab.%' OR satker LIKE '%Kabupaten%')"
     filtered_params = []
     if search_query:
         filtered_budget_query += " AND (package_name LIKE ? OR satker LIKE ? OR work_description LIKE ?)"
@@ -92,8 +92,8 @@ def index():
     
     # Suggestions
     suggestions = {
-        "package_names": conn.execute("SELECT DISTINCT package_name FROM procurement").fetchall(),
-        "satkers": conn.execute("SELECT DISTINCT satker FROM procurement").fetchall()
+        "package_names": conn.execute("SELECT DISTINCT package_name FROM procurement WHERE satker LIKE '%Bulukumba%' AND (satker LIKE '%Kab.%' OR satker LIKE '%Kabupaten%')").fetchall(),
+        "satkers": conn.execute("SELECT DISTINCT satker FROM procurement WHERE satker LIKE '%Bulukumba%' AND (satker LIKE '%Kab.%' OR satker LIKE '%Kabupaten%')").fetchall()
     }
     
     methods = conn.execute("SELECT DISTINCT procurement_method FROM procurement WHERE procurement_method IS NOT NULL").fetchall()
@@ -128,7 +128,7 @@ def export():
     file_format = request.args.get('format', 'csv')
     
     conn = get_db_connection()
-    query = "SELECT * FROM procurement WHERE 1=1"
+    query = "SELECT * FROM procurement WHERE satker LIKE '%Bulukumba%'"
     params = []
     
     if search_query:
