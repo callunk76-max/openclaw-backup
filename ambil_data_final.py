@@ -5,8 +5,8 @@ import time
 from tqdm import tqdm
 
 async def run():
-    print("🛠️ Menginisialisasi Playwright (Mode Ultra-Stable)...")
-    async with async_//playwright() as p:
+    print("🐢 Menginisialisasi Mode Siput (Sangat Lambat & Stabil)...")
+    async with async_playwright() as p:
         try:
             browser = await p.chromium.launch(headless=True) 
             context = await browser.new_context(
@@ -23,39 +23,30 @@ async def run():
             })
             
             url = "https://data.inaproc.id/rup?jenis_klpd=4&instansi=D411"
-            print(f"🌐 Menghubungi server Inaproc...")
+            print(f"🌐 Menghubungi server Inaproc: {url}")
             
             try:
                 await page.goto(url, wait_until="domcontentloaded", timeout=60000)
-                print(f"✅ Koneksi berhasil.")
+                print(f"✅ Halaman utama terbuka.")
             except Exception as e:
                 print(f"⚠️ Timeout awal: {e}. Mencoba lanjut...")
             
-            await asyncio.sleep(10)
+            print("⏳ Menunggu render awal (15 detik)...")
+            await asyncio.sleep(15)
             
             if not await page.query_selector("table"):
                 print("❌ Tabel tidak ditemukan. Kemungkinan terblokir Cloudflare.")
                 await browser.close()
                 return
             
-            print("📊 Tabel terdeteksi! Memulai ekstraksi data...")
+            print("📊 Tabel terdeteksi! Memulai penarikan data mode siput...")
             
-            try:
-                dropdown = await page.query_selector("select")
-                if dropdown:
-                    await dropdown.select_option("100")
-                    await asyncio.sleep(3)
-                    print("✅ Entri diubah ke 100.")
-            except:
-                print("⚠️ Menggunakan entri default.")
-
             semua_data = []
             page_num = 1
             
             while True:
                 print(f"📄 Mengambil data halaman {page_num}...", end="\r")
                 
-                # RETRY MECHANISM: Coba sampai 3 kali jika halaman gagal load
                 success = False
                 for attempt in range(3):
                     try:
@@ -71,30 +62,36 @@ async def run():
                                         "budget": await cols[3].inner_text(),
                                         "page": page_num
                                     })
+                            
+                            # SIMPAN SETIAP HALAMAN (Sangat Aman)
+                            with open("rup_bulukumba_final.json", "w", encoding="utf-8") as f:
+                                json.dump(semua_data, f, ensure_ascii=False, indent=2)
+                            
                             success = True
                             break
                     except Exception as e:
                         print(f"\n⚠️ Percobaan {attempt+1}/3 gagal di hal {page_num}: {e}")
-                        await asyncio.sleep(5 * (attempt + 1))
-                        await page.reload(wait_until="domcontentloaded")
+                        await asyncio.sleep(10 * (attempt + 1))
+                        try:
+                            await page.reload(wait_until="domcontentloaded")
+                        except:
+                            pass
                 
                 if not success:
-                    print(f"\n❌ Gagal mengambil halaman {page_num} setelah 3 kali coba. Melewati halaman ini...")
+                    print(f"\n❌ Gagal total di halaman {page_num}. Berhenti untuk mengamankan data.")
+                    break
                 
-                # SIMPAN PERIODIK: Simpan setiap 5 halaman agar data tidak hilang jika crash
-                if page_num % 5 == 0:
-                    with open("rup_bulukumba_backup.json", "w", encoding="utf-8") as f:
-                        json.dump(semua_data, f, ensure_ascii=False, indent=2)
-                
-                next_btn = await page.query_selector("a:has-text('Berikutnya'), button:has-text('Berikutnya'), a:has-text('>')")
-                if next_btn:
-                    await next_btn.click()
+                next_button = await page.query_selector("a:has-text('Berikutnya'), button:has-text('Berikutnya'), a:has-text('>')")
+                if next_button:
+                    await next_button.click()
                     page_num += 1
-                    await asyncio.sleep(5) # Jeda lebih lama agar lebih stabil
+                    # JEDA SANGAT LAMA
+                    await asyncio.sleep(15) 
                 else:
                     print("\n✅ Sudah mencapai halaman terakhir.")
                     break
             
+            # Final save
             with open("rup_bulukumba_final.json", "w", encoding="utf-8") as f:
                 json.dump(semua_data, f, ensure_ascii=False, indent=2)
                 
@@ -107,3 +104,4 @@ async def run():
 
 if __name__ == "__main__":
     asyncio.run(run())
+EOF
