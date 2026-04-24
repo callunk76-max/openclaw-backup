@@ -2527,3 +2527,25 @@ Signal Result: 🕒 13.30 | 🚀 TOP 3 GAP SIGNALS
 🎯 Decision: WAIT FOR DIP
 ✅ Sent via Telegram. Message ID: 1275
 Message sent status: 0
+--- Running Signal at Fri Apr 24 01:45:01 PM CST 2026 ---
+Signal Result: 🕒 13.45 | 🚀 TOP 3 GAP SIGNALS
+
+1. GBP/JPY
+⚡ Power: JPY (8.00) vs GBP (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+2. EUR/JPY
+⚡ Power: JPY (8.00) vs EUR (0.71)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: ENTER NOW
+
+3. GBP/USD
+⚡ Power: USD (6.71) vs GBP (0.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 1276
+Message sent status: 0
