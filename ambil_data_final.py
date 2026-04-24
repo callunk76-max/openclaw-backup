@@ -6,7 +6,7 @@ from tqdm import tqdm
 
 async def run():
     print("🐢 Menginisialisasi Mode Siput (Sangat Lambat & Stabil)...")
-    async with async_playwright() as p:
+    async with async_//playwright() as p:
         try:
             browser = await p.chromium.launch(headless=True) 
             context = await browser.new_context(
@@ -39,7 +39,7 @@ async def run():
                 await browser.close()
                 return
             
-            print("📊 Tabel terdeteksi! Memulai penarikan data mode siput...")
+            print("📊 Tabel terdeteksi! Memulai ekstraksi data presisi...")
             
             semua_data = []
             page_num = 1
@@ -55,15 +55,21 @@ async def run():
                         if rows:
                             for row in rows:
                                 cols = await row.query_selector_all("td")
-                                if len(cols) >= 3:
+                                # Mapping kolom sesuai permintaan User:
+                                # Col 2: Satker, 4: Cara, 5: Metode, 6: Jenis, 7: Nama, 8: Kode RUP, 11: Nilai
+                                if len(cols) >= 12:
                                     semua_data.append({
-                                        "package_name": await cols[1].inner_text(),
                                         "satker": await cols[2].inner_text(),
-                                        "budget": await cols[3].inner_text(),
+                                        "cara_pengadaan": await cols[4].inner_text(),
+                                        "metode": await cols[5].inner_text(),
+                                        "jenis": await cols[6].inner_text(),
+                                        "package_name": await cols[7].inner_text(),
+                                        "kode_rup": await cols[8].inner_text(),
+                                        "budget": await cols[11].inner_text(),
                                         "page": page_num
                                     })
                             
-                            # SIMPAN SETIAP HALAMAN (Sangat Aman)
+                            # SIMPAN SETIAP HALAMAN
                             with open("rup_bulukumba_final.json", "w", encoding="utf-8") as f:
                                 json.dump(semua_data, f, ensure_ascii=False, indent=2)
                             
@@ -85,14 +91,12 @@ async def run():
                 if next_button:
                     await next_button.click()
                     page_num += 1
-                    # JEDA SANGAT LAMA
                     await asyncio.sleep(15) 
                 else:
                     print("\n✅ Sudah mencapai halaman terakhir.")
                     break
             
-            # Final save
-            with open("rup_bulukumba_final.json", "w", encoding="utf-8") as f:
+            with open("rup_//bulukumba_final.json", "w", encoding="utf-8") as f:
                 json.dump(semua_data, f, ensure_ascii=False, indent=2)
                 
             print(f"\n🎉 SELESAI! Total {len(semua_data)} data tersimpan di rup_bulukumba_final.json")
