@@ -49,10 +49,14 @@
                     <div class="space-y-3">
                         <p id="modal-package-name" class="text-lg font-bold text-slate-800 leading-tight"></p>
                         <p id="modal-satker" class="text-sm font-semibold text-slate-600"></p>
-                        <div class="flex flex-wrap gap-2 text-xs font-medium">
+                        <div class="flex flex-col gap-1 mt-2">
+                            <span class="text-[10px] uppercase text-slate-400 font-bold">Kode RUP</span>
+                            <span class="font-mono text-sm font-semibold text-slate-700" id="modal-kode-rup"></span>
+                        </div>
+                        <div class="flex flex-wrap gap-2 text-xs font-medium mt-2">
                             <span class="px-2 py-1 bg-indigo-100 text-indigo-700 rounded-full" id="modal-method"></span>
                             <span class="px-2 py-1 bg-indigo-100 text-indigo-700 rounded-full" id="modal-type"></span>
-                            <span class="px-2 py-1 bg-amber-100 text-amber-700 rounded-full" id="modal-budget"></span>
+                            <span class="px-3 py-1 bg-amber-100 text-amber-800 rounded-full font-extrabold text-sm border border-amber-200" id="modal-budget"></span>
                         </div>
                     </div>
                     
@@ -67,7 +71,7 @@
         </div>
 
         <!-- Stats Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8 items-start">
+        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-8 items-start">
             <!-- Total Paket -->
             <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col h-full">
                 <div class="flex items-center gap-4 mb-4">
@@ -102,7 +106,7 @@
                 <div class="flex items-center gap-4 mb-4">
                     <div class="bg-green-100 p-3 rounded-full text-green-600 text-2xl shrink-0">💰</div>
                     <div>
-                        <p class="text-sm text-slate-500 font-medium leading-tight">Total Anggaran</p>
+                        <p class="text-sm text-slate-500 font-medium leading-tight">Total Pagu RUP</p>
                         <p class="text-xl font-bold text-slate-800 truncate">Rp {{ "{:,.0f}".format(total_budget) if total_budget else 0 }}</p>
                     </div>
                 </div>
@@ -122,6 +126,35 @@
                     <div class="flex justify-between text-[11px]">
                         <span class="text-slate-500 truncate mr-2">Lainnya:</span>
                         <span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(budget_lainnya) }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Realisasi -->
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-emerald-200 flex flex-col h-full bg-emerald-50/30">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="bg-emerald-100 p-3 rounded-full text-emerald-600 text-2xl shrink-0">✅</div>
+                    <div>
+                        <p class="text-sm text-slate-500 font-medium leading-tight">Total Realisasi</p>
+                        <p class="text-xl font-bold text-emerald-700 truncate">Rp {{ "{:,.0f}".format(real_total) if real_total else 0 }}</p>
+                    </div>
+                </div>
+                <div class="mt-auto space-y-1.5 pt-3 border-t border-emerald-200/50">
+                    <div class="flex justify-between text-[11px]">
+                        <span class="text-slate-500 truncate mr-2">E-Purchasing:</span>
+                        <span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(real_epurchasing) }}</span>
+                    </div>
+                    <div class="flex justify-between text-[11px]">
+                        <span class="text-slate-500 truncate mr-2">P. Langsung:</span>
+                        <span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(real_pl) }}</span>
+                    </div>
+                    <div class="flex justify-between text-[11px]">
+                        <span class="text-slate-500 truncate mr-2">Dikecualikan:</span>
+                        <span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(real_dikecualikan) }}</span>
+                    </div>
+                    <div class="flex justify-between text-[11px]">
+                        <span class="text-slate-500 truncate mr-2">Lainnya:</span>
+                        <span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(real_lainnya) }}</span>
                     </div>
                 </div>
             </div>
@@ -353,12 +386,12 @@
         function openPackageModal(p) {
             document.getElementById('modal-package-name').textContent = p.package_name || '-';
             document.getElementById('modal-satker').textContent = p.satker || '-';
+            document.getElementById('modal-kode-rup').textContent = p.id || '-';
             document.getElementById('modal-method').textContent = p.procurement_method || '-';
             document.getElementById('modal-type').textContent = p.procurement_type || '-';
             
             const budgetVal = p.budget ? p.budget.replace('Rp ', '').replace(/,/g, '') : '0';
             document.getElementById('modal-budget').textContent = 'Pagu RUP: Rp ' + Number(budgetVal).toLocaleString('id-ID');
-            document.getElementById('modal-budget').className = 'px-3 py-1 bg-amber-100 text-amber-800 rounded-full font-extrabold text-sm border border-amber-200';
             
             document.getElementById('packageModal').classList.remove('hidden');
             document.body.style.overflow = 'hidden';
@@ -534,11 +567,27 @@
         // 3. Instant Table Filter (Client-side)
         tableFilter.addEventListener('input', function() {
             const term = this.value.toLowerCase();
-            const rows = document.querySelectorAll('tbody tr');
+            const rows = document.querySelectorAll('.package-row');
             
             rows.forEach(row => {
                 const text = row.innerText.toLowerCase();
-                row.style.display = text.includes(term) ? '' : 'none';
+                let kodeRup = '';
+                
+                try {
+                    const dataAttr = row.getAttribute('data-package');
+                    if (dataAttr) {
+                        const data = JSON.parse(dataAttr);
+                        // Make sure to parse it correctly, handling integers safely.
+                        kodeRup = String(data.id || '').toLowerCase();
+                    }
+                } catch(e) {}
+                
+                // Cari di teks tabel ATAU di dalam data tersembunyi (Kode RUP)
+                if (text.includes(term) || kodeRup.includes(term)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
             });
         });
         

@@ -64,6 +64,13 @@ def index():
     lainnya_budget_query = "SELECT SUM(CAST(REPLACE(REPLACE(budget, 'Rp ', ''), ',', '') AS REAL)) FROM procurement WHERE procurement_method NOT IN ('E-Purchasing', 'Pengadaan Langsung', 'Dikecualikan') OR procurement_method IS NULL"
     budget_lainnya = conn.execute(lainnya_budget_query).fetchone()[0] or 0
     
+    # Realisasi Global
+    real_total = conn.execute('SELECT SUM("Total Nilai (Rp)") FROM realisasi').fetchone()[0] or 0
+    real_epurchasing = conn.execute('SELECT SUM("Total Nilai (Rp)") FROM realisasi WHERE "Metode Pengadaan" = \'E-Purchasing\'').fetchone()[0] or 0
+    real_pl = conn.execute('SELECT SUM("Total Nilai (Rp)") FROM realisasi WHERE "Metode Pengadaan" = \'Pengadaan Langsung\'').fetchone()[0] or 0
+    real_dikecualikan = conn.execute('SELECT SUM("Total Nilai (Rp)") FROM realisasi WHERE "Metode Pengadaan" = \'Dikecualikan\'').fetchone()[0] or 0
+    real_lainnya = conn.execute('SELECT SUM("Total Nilai (Rp)") FROM realisasi WHERE ("Metode Pengadaan" NOT IN (\'E-Purchasing\', \'Pengadaan Langsung\', \'Dikecualikan\') OR "Metode Pengadaan" IS NULL)').fetchone()[0] or 0
+
     # Filter Logic
     query = """
     SELECT p.*, 
@@ -76,8 +83,8 @@ def index():
     params = []
     
     if search_query:
-        query += " AND (package_name LIKE ? OR satker LIKE ? OR work_description LIKE ?)"
-        params.extend([f'%{search_query}%', f'%{search_query}%', f'%{search_query}%'])
+        query += " AND (package_name LIKE ? OR satker LIKE ? OR work_description LIKE ? OR id LIKE ?)"
+        params.extend([f'%{search_query}%', f'%{search_query}%', f'%{search_query}%', f'%{search_query}%'])
     
     if m_filter:
         query += " AND procurement_method = ?"
@@ -96,8 +103,8 @@ def index():
     filtered_budget_query = "SELECT SUM(CAST(REPLACE(REPLACE(budget, 'Rp ', ''), ',', '') AS REAL)) FROM procurement WHERE 1=1"
     filtered_params = []
     if search_query:
-        filtered_budget_query += " AND (package_name LIKE ? OR satker LIKE ? OR work_description LIKE ?)"
-        filtered_params.extend([f'%{search_query}%', f'%{search_query}%', f'%{search_query}%'])
+        filtered_budget_query += " AND (package_name LIKE ? OR satker LIKE ? OR work_description LIKE ? OR id LIKE ?)"
+        filtered_params.extend([f'%{search_query}%', f'%{search_query}%', f'%{search_query}%', f'%{search_query}%'])
     if m_filter:
         filtered_budget_query += " AND procurement_method = ?"
         filtered_params.append(m_filter)
@@ -124,8 +131,8 @@ def index():
     dynamic_condition = ""
     dynamic_params = []
     if search_query:
-        dynamic_condition += " AND (package_name LIKE ? OR satker LIKE ? OR work_description LIKE ?)"
-        dynamic_params.extend([f'%{search_query}%', f'%{search_query}%', f'%{search_query}%'])
+        dynamic_condition += " AND (package_name LIKE ? OR satker LIKE ? OR work_description LIKE ? OR id LIKE ?)"
+        dynamic_params.extend([f'%{search_query}%', f'%{search_query}%', f'%{search_query}%', f'%{search_query}%'])
     if m_filter:
         dynamic_condition += " AND procurement_method = ?"
         dynamic_params.append(m_filter)
@@ -195,6 +202,11 @@ def index():
                            budget_pl=budget_pl,
                            budget_dikecualikan=budget_dikecualikan,
                            budget_lainnya=budget_lainnya,
+                           real_total=real_total,
+                           real_epurchasing=real_epurchasing,
+                           real_pl=real_pl,
+                           real_dikecualikan=real_dikecualikan,
+                           real_lainnya=real_lainnya,
                            # Stats Filtered Details
                            f_total_epurchasing=f_total_epurchasing,
                            f_total_pl=f_total_pl,
@@ -218,8 +230,8 @@ def export():
     params = []
     
     if search_query:
-        query += " AND (package_name LIKE ? OR satker LIKE ? OR work_description LIKE ?)"
-        params.extend([f'%{search_query}%', f'%{search_query}%', f'%{search_query}%'])
+        query += " AND (package_name LIKE ? OR satker LIKE ? OR work_description LIKE ? OR id LIKE ?)"
+        params.extend([f'%{search_query}%', f'%{search_query}%', f'%{search_query}%', f'%{search_query}%'])
     
     if m_filter:
         query += " AND procurement_method = ?"
