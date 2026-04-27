@@ -5,10 +5,25 @@
  * Running on http://127.0.0.1:5005
  * Running on http://10.3.9.153:5005
 [33mPress CTRL+C to quit[0m
-180.249.34.132 - - [23/Apr/2026 19:44:21] "GET / HTTP/1.1" 200 -
-180.249.34.132 - - [23/Apr/2026 19:44:22] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
-180.249.34.132 - - [23/Apr/2026 19:45:31] "GET /?search=&method=E-Purchasing&type=Barang HTTP/1.1" 200 -
-180.249.34.132 - - [23/Apr/2026 19:46:58] "GET /?search=Sekertariat+daerah&method=E-Purchasing&type=Barang HTTP/1.1" 200 -
-180.249.34.132 - - [23/Apr/2026 19:47:10] "GET /?search=Sekretariat+daerah&method=E-Purchasing&type=Barang HTTP/1.1" 200 -
-180.249.34.132 - - [23/Apr/2026 19:48:00] "GET /?search=Sekretariat+daerah&method=E-Purchasing&type=Barang HTTP/1.1" 200 -
-180.249.34.132 - - [23/Apr/2026 19:54:07] "GET /?search=Dinas+kesehatan&method=E-Purchasing&type=Barang HTTP/1.1" 200 -
+127.0.0.1 - - [27/Apr/2026 14:29:38] "GET /penyedia HTTP/1.1" 200 -
+127.0.0.1 - - [27/Apr/2026 14:30:56] "GET /penyedia HTTP/1.0" 200 -
+127.0.0.1 - - [27/Apr/2026 14:31:04] "POST /penyedia/upload HTTP/1.0" 200 -
+127.0.0.1 - - [27/Apr/2026 14:31:06] "GET /penyedia HTTP/1.0" 200 -
+127.0.0.1 - - [27/Apr/2026 14:34:57] "GET / HTTP/1.0" 200 -
+127.0.0.1 - - [27/Apr/2026 14:34:59] "[31m[1mPROPFIND / HTTP/1.0[0m" 405 -
+127.0.0.1 - - [27/Apr/2026 14:35:10] "GET /penyedia?verif=verified HTTP/1.0" 200 -
+127.0.0.1 - - [27/Apr/2026 14:35:46] "GET /penyedia/export?search=&verif=verified&format=xlsx HTTP/1.0" 200 -
+127.0.0.1 - - [27/Apr/2026 14:36:28] "GET /penyedia/export?search=&verif=verified&format=pdf HTTP/1.0" 200 -
+127.0.0.1 - - [27/Apr/2026 14:38:53] "GET /penyedia?search=&verif=&page=2 HTTP/1.0" 200 -
+127.0.0.1 - - [27/Apr/2026 14:42:33] "GET /penyedia?search=&verif=&page=3 HTTP/1.0" 200 -
+127.0.0.1 - - [27/Apr/2026 14:43:10] "GET /penyedia?verif=verified HTTP/1.0" 200 -
+114.125.215.170 - - [27/Apr/2026 14:45:38] "GET / HTTP/1.1" 200 -
+114.125.215.170 - - [27/Apr/2026 14:45:48] "GET /?search=DINAS+LINGKUNGAN+HIDUP+DAN+KEHUTANAN+KAB.+BULUKUMBA+-+2.11.3.28.0.00.01.0000&method=&type= HTTP/1.1" 200 -
+127.0.0.1 - - [27/Apr/2026 14:45:51] "[33mGET /robots.txt HTTP/1.0[0m" 404 -
+127.0.0.1 - - [27/Apr/2026 14:45:53] "GET /?page=16 HTTP/1.0" 200 -
+114.125.215.170 - - [27/Apr/2026 14:45:58] "GET /?search=DINAS+LINGKUNGAN+HIDUP+DAN+KEHUTANAN+KAB.+BULUKUMBA+-+2.11.3.28.0.00.01.0000&method=Pengadaan+Langsung&type= HTTP/1.1" 200 -
+114.125.215.170 - - [27/Apr/2026 14:46:05] "GET /?search=DINAS+LINGKUNGAN+HIDUP+DAN+KEHUTANAN+KAB.+BULUKUMBA+-+2.11.3.28.0.00.01.0000&method=Pengadaan+Langsung&type=Pekerjaan+Konstruksi HTTP/1.1" 200 -
+114.125.215.170 - - [27/Apr/2026 14:46:19] "GET /?search=DINAS+LINGKUNGAN+HIDUP+DAN+KEHUTANAN+KAB.+BULUKUMBA+-+2.11.3.28.0.00.01.0000&method=Pengadaan+Langsung&type=Pekerjaan+Konstruksi HTTP/1.1" 200 -
+114.125.215.170 - - [27/Apr/2026 14:46:31] "GET / HTTP/1.1" 200 -
+114.125.215.170 - - [27/Apr/2026 14:46:40] "GET /?search=DINAS+LINGKUNGAN+HIDUP+DAN+KEHUTANAN+KAB.+BULUKUMBA+-+2.11.3.28.0.00.01.0000&method=&type= HTTP/1.1" 200 -
+114.125.215.170 - - [27/Apr/2026 14:47:06] "GET /api/package_details?id=65889622&package_name=Penimbunan%20Hutan%20Kota&satker=DINAS%20LINGKUNGAN%20HIDUP%20DAN%20KEHUTANAN%20KAB.%20BULUKUMBA%20-%202.11.3.28.0.00.01.0000 HTTP/1.1" 200 -
