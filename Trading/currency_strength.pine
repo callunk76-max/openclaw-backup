@@ -1,0 +1,86 @@
+//@version=5
+indicator("Currency Strength (Callunk Logic)", shorttitle="Callunk CS", overlay=false)
+
+// Function to calculate score based on MQ4 logic
+f_pair_score(sym) =>
+    [c, h, l] = request.security(sym, "D", [close, high, low], ignore_invalid_symbol=true)
+    ratio = (h - l) == 0 ? 0 : (c - l) / (h - l)
+    score = ratio >= 0.97 ? 9 :
+             ratio >= 0.90 ? 8 :
+             ratio >= 0.75 ? 7 :
+             ratio >= 0.60 ? 6 :
+             ratio >= 0.50 ? 5 :
+             ratio >= 0.40 ? 4 :
+             ratio >= 0.25 ? 3 :
+             ratio >= 0.10 ? 2 :
+             ratio >= 0.03 ? 1 : 0
+    score
+
+// Fetch scores for all 28 pairs (using OANDA broker as standard)
+s_GBPUSD = f_pair_score("OANDA:GBPUSD")
+s_USDCHF = f_pair_score("OANDA:USDCHF")
+s_EURUSD = f_pair_score("OANDA:EURUSD")
+s_USDJPY = f_pair_score("OANDA:USDJPY")
+s_USDCAD = f_pair_score("OANDA:USDCAD")
+s_NZDUSD = f_pair_score("OANDA:NZDUSD")
+s_AUDUSD = f_pair_score("OANDA:AUDUSD")
+
+s_AUDNZD = f_pair_score("OANDA:AUDNZD")
+s_AUDCAD = f_pair_score("OANDA:AUDCAD")
+s_AUDCHF = f_pair_score("OANDA:AUDCHF")
+s_AUDJPY = f_pair_score("OANDA:AUDJPY")
+
+s_CADJPY = f_pair_score("OANDA:CADJPY")
+s_CHFJPY = f_pair_score("OANDA:CHFJPY")
+s_EURGBP = f_pair_score("OANDA:EURGBP")
+s_EURAUD = f_pair_score("OANDA:EURAUD")
+s_EURCHF = f_pair_score("OANDA:EURCHF")
+s_EURJPY = f_pair_score("OANDA:EURJPY")
+s_EURNZD = f_pair_score("OANDA:EURNZD")
+s_EURCAD = f_pair_score("OANDA:EURCAD")
+
+s_GBPCHF = f_pair_score("OANDA:GBPCHF")
+s_GBPAUD = f_pair_score("OANDA:GBPAUD")
+s_GBPCAD = f_pair_score("OANDA:GBPCAD")
+s_GBPJPY = f_pair_score("OANDA:GBPJPY")
+s_GBPNZD = f_pair_score("OANDA:GBPNZD")
+
+s_NZDJPY = f_pair_score("OANDA:NZDJPY")
+s_NZDCAD = f_pair_score("OANDA:NZDCAD")
+s_CHFCAD = f_pair_score("OANDA:CHFCAD")
+s_NZDCHF = f_pair_score("OANDA:NZDCHF")
+
+
+// Calculate sums
+sum_USD = (9 - s_GBPUSD) + s_USDCHF + (9 - s_EURUSD) + s_USDJPY + s_USDCAD + (9 - s_NZDUSD) + (9 - s_AUDUSD)
+sum_EUR = s_EURUSD + s_EURGBP + s_EURAUD + s_EURCHF + s_EURJPY + s_EURNZD + s_EURCAD
+sum_GBP = s_GBPUSD + (9 - s_EURGBP) + s_GBPCHF + s_GBPAUD + s_GBPCAD + s_GBPJPY + s_GBPNZD
+sum_CHF = (9 - s_USDCHF) + (9 - s_AUDCHF) + s_CHFJPY + (9 - s_EURCHF) + (9 - s_GBPCHF) + s_CHFCAD + (9 - s_NZDCHF)
+sum_CAD = (9 - s_USDCAD) + (9 - s_AUDCAD) + s_CADJPY + (9 - s_EURCAD) + (9 - s_GBPCAD) + (9 - s_NZDCAD) + (9 - s_CHFCAD)
+sum_AUD = s_AUDUSD + s_AUDNZD + s_AUDCAD + s_AUDCHF + s_AUDJPY + (9 - s_EURAUD) + (9 - s_GBPAUD)
+sum_JPY = (9 - s_USDJPY) + (9 - s_AUDJPY) + (9 - s_CADJPY) + (9 - s_CHFJPY) + (9 - s_EURJPY) + (9 - s_GBPJPY) + (9 - s_NZDJPY)
+sum_NZD = s_NZDUSD + (9 - s_AUDNZD) + (9 - s_EURNZD) + (9 - s_GBPNZD) + s_NZDJPY + s_NZDCAD + s_NZDCHF
+
+// Averages
+str_USD = sum_USD / 7
+str_EUR = sum_EUR / 7
+str_GBP = sum_GBP / 7
+str_CHF = sum_CHF / 7
+str_CAD = sum_CAD / 7
+str_AUD = sum_AUD / 7
+str_JPY = sum_JPY / 7
+str_NZD = sum_NZD / 7
+
+// Plotting
+plot(str_USD, title="USD", color=color.gray, linewidth=2)
+plot(str_EUR, title="EUR", color=color.blue, linewidth=2)
+plot(str_GBP, title="GBP", color=color.red, linewidth=2)
+plot(str_CHF, title="CHF", color=color.teal, linewidth=2)
+plot(str_CAD, title="CAD", color=color.orange, linewidth=2)
+plot(str_AUD, title="AUD", color=color.green, linewidth=2)
+plot(str_JPY, title="JPY", color=color.fuchsia, linewidth=2)
+plot(str_NZD, title="NZD", color=color.maroon, linewidth=2)
+
+// Draw Overbought/Oversold lines
+hline(7.0, "Strong Threshold", color=color.green, linestyle=hline.style_dashed)
+hline(2.0, "Weak Threshold", color=color.red, linestyle=hline.style_dashed)

@@ -3275,3 +3275,313 @@ Signal Result: 🕒 22.00 | 🚀 TOP 3 GAP SIGNALS
 🎯 Decision: WAIT FOR DIP
 ✅ Sent via Telegram. Message ID: 1415
 Message sent status: 0
+--- Running Signal at Mon Apr 27 08:00:01 AM CST 2026 ---
+Signal Result: 🕒 08.00 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (8.00) vs EUR (1.43)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+2. GBP/JPY
+⚡ Power: JPY (8.00) vs GBP (1.57)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+3. EUR/CAD
+⚡ Power: CAD (6.86) vs EUR (1.43)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 2107
+Message sent status: 0
+--- Running Signal at Mon Apr 27 08:15:02 AM CST 2026 ---
+Signal Result: 🕒 08.15 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (8.00) vs EUR (1.43)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+2. GBP/JPY
+⚡ Power: JPY (8.00) vs GBP (1.43)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+3. EUR/CAD
+⚡ Power: CAD (6.86) vs EUR (1.43)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 2112
+Message sent status: 0
+--- Running Signal at Mon Apr 27 08:30:01 AM CST 2026 ---
+Signal Result: 🕒 08.30 | 🚀 TOP 3 GAP SIGNALS
+
+1. EUR/JPY
+⚡ Power: JPY (8.00) vs EUR (1.43)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+2. GBP/JPY
+⚡ Power: JPY (8.00) vs GBP (1.43)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+
+3. EUR/CAD
+⚡ Power: CAD (7.00) vs EUR (1.43)
+📈 Action: 🔴 STRONG SELL ⬇️
+🛠 Conf: H1 ✅ | M15 ✅ | M5 ✅
+🎯 Decision: WAIT FOR DIP
+✅ Sent via Telegram. Message ID: 2120
+Message sent status: 0
+--- Running Signal at Mon Apr 27 08:45:01 AM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 08:45 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 JPY : 9.00
+🥈 CHF : 7.71
+🥉 CAD : 6.43
+🔹 USD : 5.14
+🔹 NZD : 3.86
+🔹 AUD : 2.57
+🔹 GBP : 1.29
+💀 EUR : 0.00
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 TRADING OPPORTUNITIES**
+1️⃣ **EUR/JPY**
+⚡ Power : EUR (0.00) vs JPY (9.00)
+📉 Gap   : 9.00 Pts
+📈 Action: 🔴 STRONG SELL ⬇️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **EUR/CHF**
+⚡ Power : EUR (0.00) vs CHF (7.71)
+📉 Gap   : 7.71 Pts
+📈 Action: 🔴 STRONG SELL ⬇️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **GBP/JPY**
+⚡ Power : GBP (1.29) vs JPY (9.00)
+📉 Gap   : 7.71 Pts
+📈 Action: 🔴 STRONG SELL ⬇️
+🎯 Status: ✅ ENTER NOW 🔥
+✅ Sent via Telegram. Message ID: 2130
+Message sent status: 0
+--- Running Signal at Mon Apr 27 09:00:01 AM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 09:00 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 6.71
+🥈 NZD : 6.29
+🥉 EUR : 4.71
+🔹 GBP : 4.57
+🔹 CAD : 4.14
+🔹 CHF : 3.86
+🔹 USD : 3.00
+💀 JPY : 2.71
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 TRADING OPPORTUNITIES**
+1️⃣ **AUD/JPY**
+⚡ Power : AUD (6.71) vs JPY (2.71)
+📉 Gap   : 4.00 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ⚠️ WATCH CLOSELY 👀
+
+2️⃣ **AUD/USD**
+⚡ Power : AUD (6.71) vs USD (3.00)
+📉 Gap   : 3.71 Pts
+📈 Action: ⚪ NEUTRAL ↔️
+🎯 Status: 🛑 AVOID / CHOPPY ❌
+
+3️⃣ **NZD/JPY**
+⚡ Power : NZD (6.29) vs JPY (2.71)
+📉 Gap   : 3.57 Pts
+📈 Action: ⚪ NEUTRAL ↔️
+🎯 Status: 🛑 AVOID / CHOPPY ❌
+✅ Sent via Telegram. Message ID: 2138
+Message sent status: 0
+--- Running Signal at Mon Apr 27 09:15:01 AM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 09:15 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 6.71
+🥈 NZD : 6.57
+🥉 EUR : 5.00
+🔹 GBP : 4.71
+🔹 CHF : 4.14
+🔹 CAD : 4.00
+🔹 JPY : 2.86
+💀 USD : 2.00
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 TRADING OPPORTUNITIES**
+1️⃣ **AUD/USD**
+⚡ Power : AUD (6.71) vs USD (2.00)
+📉 Gap   : 4.71 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ⚠️ WATCH CLOSELY 👀
+
+2️⃣ **NZD/USD**
+⚡ Power : NZD (6.57) vs USD (2.00)
+📉 Gap   : 4.57 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ⚠️ WATCH CLOSELY 👀
+
+3️⃣ **AUD/JPY**
+⚡ Power : AUD (6.71) vs JPY (2.86)
+📉 Gap   : 3.86 Pts
+📈 Action: ⚪ NEUTRAL ↔️
+🎯 Status: 🛑 AVOID / CHOPPY ❌
+✅ Sent via Telegram. Message ID: 2139
+Message sent status: 0
+--- Running Signal at Mon Apr 27 09:30:01 AM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 09:30 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 8.29
+🥈 NZD : 7.57
+🥉 GBP : 6.14
+🔹 EUR : 4.29
+🔹 CAD : 4.00
+🔹 JPY : 2.43
+🔹 CHF : 2.43
+💀 USD : 0.86
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 TRADING OPPORTUNITIES**
+1️⃣ **AUD/USD**
+⚡ Power : AUD (8.29) vs USD (0.86)
+📉 Gap   : 7.43 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **NZD/USD**
+⚡ Power : NZD (7.57) vs USD (0.86)
+📉 Gap   : 6.71 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ☑️ WAIT FOR DIP ⏳
+
+3️⃣ **AUD/JPY**
+⚡ Power : AUD (8.29) vs JPY (2.43)
+📉 Gap   : 5.86 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ☑️ WAIT FOR DIP ⏳
+✅ Sent via Telegram. Message ID: 2142
+Message sent status: 0
+--- Running Signal at Mon Apr 27 09:45:01 AM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 09:45 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 8.14
+🥈 NZD : 8.00
+🥉 GBP : 6.00
+🔹 EUR : 4.29
+🔹 CAD : 3.86
+🔹 JPY : 2.57
+🔹 CHF : 2.29
+💀 USD : 0.86
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 TRADING OPPORTUNITIES**
+1️⃣ **AUD/USD**
+⚡ Power : AUD (8.14) vs USD (0.86)
+📉 Gap   : 7.29 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **NZD/USD**
+⚡ Power : NZD (8.00) vs USD (0.86)
+📉 Gap   : 7.14 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **AUD/CHF**
+⚡ Power : AUD (8.14) vs CHF (2.29)
+📉 Gap   : 5.86 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ☑️ WAIT FOR DIP ⏳
+✅ Sent via Telegram. Message ID: 2143
+Message sent status: 0
+--- Running Signal at Mon Apr 27 10:00:01 AM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 10:00 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 8.14
+🥈 NZD : 8.00
+🥉 GBP : 6.00
+🔹 EUR : 4.14
+🔹 CAD : 4.00
+🔹 JPY : 2.71
+🔹 CHF : 2.43
+💀 USD : 0.57
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 TRADING OPPORTUNITIES**
+1️⃣ **AUD/USD**
+⚡ Power : AUD (8.14) vs USD (0.57)
+📉 Gap   : 7.57 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **NZD/USD**
+⚡ Power : NZD (8.00) vs USD (0.57)
+📉 Gap   : 7.43 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **AUD/CHF**
+⚡ Power : AUD (8.14) vs CHF (2.43)
+📉 Gap   : 5.71 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ☑️ WAIT FOR DIP ⏳
+✅ Sent via Telegram. Message ID: 2146
+Message sent status: 0
+--- Running Signal at Mon Apr 27 10:15:01 AM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 10:15 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 8.14
+🥈 NZD : 8.00
+🥉 GBP : 6.00
+🔹 EUR : 4.14
+🔹 CAD : 3.57
+🔹 JPY : 2.86
+🔹 CHF : 2.57
+💀 USD : 0.71
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+💼 **OPEN POSITIONS MANAGER**
+📌 AUD/USD [BUY] : HOLD ✅
+   └ Power: AUD (8.14) vs USD (0.71) | Gap: 7.43
+📌 NZD/USD [BUY] : HOLD ✅
+   └ Power: NZD (8.00) vs USD (0.71) | Gap: 7.29
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 TRADING OPPORTUNITIES**
+1️⃣ **AUD/USD**
+⚡ Power : AUD (8.14) vs USD (0.71)
+📉 Gap   : 7.43 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **NZD/USD**
+⚡ Power : NZD (8.00) vs USD (0.71)
+📉 Gap   : 7.29 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **AUD/CHF**
+⚡ Power : AUD (8.14) vs CHF (2.57)
+📉 Gap   : 5.57 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ☑️ WAIT FOR DIP ⏳
+✅ Sent via Telegram. Message ID: 2156
+Message sent status: 0
