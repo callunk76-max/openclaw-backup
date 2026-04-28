@@ -1,0 +1,126 @@
+//@version=5
+indicator("Currency Strength Table (Callunk Logic)", shorttitle="CS Table", overlay=true)
+
+// Table Settings
+table_pos = input.string("Top Right", "Table Position", options=["Top Right", "Top Left", "Bottom Right", "Bottom Left"])
+pos = table_pos == "Top Right" ? position.top_right : table_pos == "Top Left" ? position.top_left : table_pos == "Bottom Right" ? position.bottom_right : position.bottom_left
+
+// Function to calculate score based on MQ4 logic
+f_pair_score(sym) =>
+    // close = current real-time price, high[1] = yesterday's high, low[1] = yesterday's low
+    [c, h, l] = request.security(sym, "D", [close, high[1], low[1]], ignore_invalid_symbol=true)
+    ratio = (h - l) == 0 ? 0 : (c - l) / (h - l)
+    score = ratio >= 0.97 ? 9 : ratio >= 0.90 ? 8 : ratio >= 0.75 ? 7 : ratio >= 0.60 ? 6 : ratio >= 0.50 ? 5 : ratio >= 0.40 ? 4 : ratio >= 0.25 ? 3 : ratio >= 0.10 ? 2 : ratio >= 0.03 ? 1 : 0
+    score
+
+// Fetch scores for all 28 pairs (OANDA data)
+s_GBPUSD = f_pair_score("OANDA:GBPUSD")
+s_USDCHF = f_pair_score("OANDA:USDCHF")
+s_EURUSD = f_pair_score("OANDA:EURUSD")
+s_USDJPY = f_pair_score("OANDA:USDJPY")
+s_USDCAD = f_pair_score("OANDA:USDCAD")
+s_NZDUSD = f_pair_score("OANDA:NZDUSD")
+s_AUDUSD = f_pair_score("OANDA:AUDUSD")
+
+s_AUDNZD = f_pair_score("OANDA:AUDNZD")
+s_AUDCAD = f_pair_score("OANDA:AUDCAD")
+s_AUDCHF = f_pair_score("OANDA:AUDCHF")
+s_AUDJPY = f_pair_score("OANDA:AUDJPY")
+
+s_CADJPY = f_pair_score("OANDA:CADJPY")
+s_CHFJPY = f_pair_score("OANDA:CHFJPY")
+s_EURGBP = f_pair_score("OANDA:EURGBP")
+s_EURAUD = f_pair_score("OANDA:EURAUD")
+s_EURCHF = f_pair_score("OANDA:EURCHF")
+s_EURJPY = f_pair_score("OANDA:EURJPY")
+s_EURNZD = f_pair_score("OANDA:EURNZD")
+s_EURCAD = f_pair_score("OANDA:EURCAD")
+
+s_GBPCHF = f_pair_score("OANDA:GBPCHF")
+s_GBPAUD = f_pair_score("OANDA:GBPAUD")
+s_GBPCAD = f_pair_score("OANDA:GBPCAD")
+s_GBPJPY = f_pair_score("OANDA:GBPJPY")
+s_GBPNZD = f_pair_score("OANDA:GBPNZD")
+
+s_NZDJPY = f_pair_score("OANDA:NZDJPY")
+s_NZDCAD = f_pair_score("OANDA:NZDCAD")
+s_CHFCAD = f_pair_score("OANDA:CHFCAD")
+s_NZDCHF = f_pair_score("OANDA:NZDCHF")
+
+// Calculate sums
+sum_USD = (9 - s_GBPUSD) + s_USDCHF + (9 - s_EURUSD) + s_USDJPY + s_USDCAD + (9 - s_NZDUSD) + (9 - s_AUDUSD)
+sum_EUR = s_EURUSD + s_EURGBP + s_EURAUD + s_EURCHF + s_EURJPY + s_EURNZD + s_EURCAD
+sum_GBP = s_GBPUSD + (9 - s_EURGBP) + s_GBPCHF + s_GBPAUD + s_GBPCAD + s_GBPJPY + s_GBPNZD
+sum_CHF = (9 - s_USDCHF) + (9 - s_AUDCHF) + s_CHFJPY + (9 - s_EURCHF) + (9 - s_GBPCHF) + s_CHFCAD + (9 - s_NZDCHF)
+sum_CAD = (9 - s_USDCAD) + (9 - s_AUDCAD) + s_CADJPY + (9 - s_EURCAD) + (9 - s_GBPCAD) + (9 - s_NZDCAD) + (9 - s_CHFCAD)
+sum_AUD = s_AUDUSD + s_AUDNZD + s_AUDCAD + s_AUDCHF + s_AUDJPY + (9 - s_EURAUD) + (9 - s_GBPAUD)
+sum_JPY = (9 - s_USDJPY) + (9 - s_AUDJPY) + (9 - s_CADJPY) + (9 - s_CHFJPY) + (9 - s_EURJPY) + (9 - s_GBPJPY) + (9 - s_NZDJPY)
+sum_NZD = s_NZDUSD + (9 - s_AUDNZD) + (9 - s_EURNZD) + (9 - s_GBPNZD) + s_NZDJPY + s_NZDCAD + s_NZDCHF
+
+// Averages
+str_USD = sum_USD / 7
+str_EUR = sum_EUR / 7
+str_GBP = sum_GBP / 7
+str_CHF = sum_CHF / 7
+str_CAD = sum_CAD / 7
+str_AUD = sum_AUD / 7
+str_JPY = sum_JPY / 7
+str_NZD = sum_NZD / 7
+
+// --- Table Drawing Logic ---
+var tb = table.new(pos, 2, 9, bgcolor=color.new(color.black, 100), border_width=1, border_color=color.black)
+
+if barstate.islast
+    // Create arrays for sorting
+    names = array.new_string(0)
+    vals = array.new_float(0)
+    
+    array.push(names, "USD")
+    array.push(vals, str_USD)
+    array.push(names, "EUR")
+    array.push(vals, str_EUR)
+    array.push(names, "GBP")
+    array.push(vals, str_GBP)
+    array.push(names, "CHF")
+    array.push(vals, str_CHF)
+    array.push(names, "CAD")
+    array.push(vals, str_CAD)
+    array.push(names, "AUD")
+    array.push(vals, str_AUD)
+    array.push(names, "JPY")
+    array.push(vals, str_JPY)
+    array.push(names, "NZD")
+    array.push(vals, str_NZD)
+    
+    // Sort arrays (descending)
+    size = array.size(vals)
+    for i = 0 to size - 2
+        for j = i + 1 to size - 1
+            if array.get(vals, i) < array.get(vals, j)
+                // Swap values
+                temp_val = array.get(vals, i)
+                array.set(vals, i, array.get(vals, j))
+                array.set(vals, j, temp_val)
+                // Swap names
+                temp_name = array.get(names, i)
+                array.set(names, i, array.get(names, j))
+                array.set(names, j, temp_name)
+    
+    // Set Headers
+    table.cell(tb, 0, 0, "Currency", text_color=color.white, bgcolor=color.new(#2e323b, 0), text_size=size.normal, text_halign=text.align_center)
+    table.cell(tb, 1, 0, "Power", text_color=color.white, bgcolor=color.new(#2e323b, 0), text_size=size.normal, text_halign=text.align_center)
+    
+    // Populate Table
+    for i = 0 to 7
+        val = array.get(vals, i)
+        name = array.get(names, i)
+        
+        // Colors similar to your screenshot
+        bg_color = color.new(#8a8d94, 0) // default light gray
+        if i == 0
+            bg_color := color.new(#3e8048, 0) // Green for top 1
+        else if i == 7
+            bg_color := color.new(#b33842, 0) // Red for bottom 1
+            
+        table.cell(tb, 0, i+1, name, text_color=color.white, bgcolor=bg_color, text_size=size.normal, text_halign=text.align_center)
+        table.cell(tb, 1, i+1, str.tostring(val, "#.##"), text_color=color.white, bgcolor=bg_color, text_size=size.normal, text_halign=text.align_center)

@@ -1,0 +1,34 @@
+[
+    {
+        "id": 1,
+        "name": "Baju Sekolah SMA",
+        "category": "Pakaian",
+        "price": "Rp. 70.000",
+        "desc": "Baju kemeja putih lengan pendek ukuran L dengan bahan katun murni untuk anak SMA",
+        "image": "/static/uploads/images.jpeg"
+    },
+    {
+        "id": 2,
+        "name": "Sambal Penja",
+        "category": "Bahan Makanan",
+        "price": "Rp 25.000",
+        "desc": "Sambal Penja dengan suwir ayam",
+        "image": "/static/uploads/Screenshot_2026-04-21-22-15-59-651-edit_com.whatsapp.jpg"
+    },
+    {
+        "id": 3,
+        "name": "Celana Abu SMA",
+        "category": "Pakaian",
+        "price": "Rp 90.000",
+        "desc": "Celana panjang sekolah ukuran L dgn panjang 80 cm, bahan katun conbad untuk anak SMA",
+        "image": "/static/uploads/images_1.jpeg"
+    },
+    {
+        "id": 4,
+        "name": "Bolu Kukus",
+        "category": "Bahan Makanan",
+        "price": "Rp 30.000",
+        "desc": "Kue jajanan traditional dengan bahan baku Pisang yg dipetik Dari kebun sendiri",
+        "image": "/static/uploads/photo.webp"
+    }
+]

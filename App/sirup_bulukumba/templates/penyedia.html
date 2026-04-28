@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Penyedia Bulukumba</title>
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-emerald-700 to-teal-600 text-white py-8 px-4 shadow-lg">
+        <div class="container mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div>
+                    <p class="text-emerald-200 text-sm font-bold">LPSE UKPBJ Setda Kab. Bulukumba</p>
+                    <h1 class="text-3xl font-extrabold tracking-tight">DATABASE PENYEDIA</h1>
+                    <p class="text-emerald-100 opacity-80">Data Penyedia Terverifikasi Kabupaten Bulukumba</p>
+                </div>
+                <div class="flex gap-2">
+                    <a href="/penyedia/export?search={{ search_query }}&verif={{ verif_filter }}&format=xlsx" 
+                       class="bg-white text-emerald-700 px-3 py-2 rounded-lg font-bold hover:bg-emerald-50 transition flex items-center gap-1.5 shadow-md text-sm">
+                       <span>📊</span> Excel
+                    </a>
+                    <a href="/penyedia/export?search={{ search_query }}&verif={{ verif_filter }}&format=pdf" 
+                       class="bg-white text-emerald-700 px-3 py-2 rounded-lg font-bold hover:bg-emerald-50 transition flex items-center gap-1.5 shadow-md text-sm">
+                       <span>📄</span> PDF
+                    </a>
+                    <a href="/" class="bg-white text-emerald-700 px-3 py-2 rounded-lg font-bold hover:bg-emerald-50 transition flex items-center gap-1.5 shadow-md text-sm">
+                        <span>🏠</span> SIRUP
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto py-8 px-4">
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <a href="/penyedia" class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex items-center gap-4 hover:shadow-md hover:border-indigo-300 transition cursor-pointer">
+                <div class="bg-indigo-100 p-3 rounded-full text-indigo-600 text-xl">🏢</div>
+                <div>
+                    <p class="text-xs text-slate-500 font-medium">Total Penyedia</p>
+                    <p class="text-2xl font-black text-slate-800">{{ "{:,}".format(total_vendors) }}</p>
+                </div>
+            </a>
+            <a href="/penyedia?verif=pt" class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex items-center gap-4 hover:shadow-md hover:border-blue-300 transition cursor-pointer">
+                <div class="bg-blue-100 p-3 rounded-full text-blue-600 text-xl">🏛️</div>
+                <div>
+                    <p class="text-xs text-slate-500 font-medium">PT / CV</p>
+                    <p class="text-2xl font-black text-slate-800">{{ "{:,}".format(total_pt) }}</p>
+                </div>
+            </a>
+            <a href="/penyedia?verif=perorangan" class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex items-center gap-4 hover:shadow-md hover:border-emerald-300 transition cursor-pointer">
+                <div class="bg-emerald-100 p-3 rounded-full text-emerald-600 text-xl">👤</div>
+                <div>
+                    <p class="text-xs text-slate-500 font-medium">Perorangan</p>
+                    <p class="text-2xl font-black text-slate-800">{{ "{:,}".format(total_perorangan) }}</p>
+                </div>
+            </a>
+            <a href="/penyedia?verif=verified" class="bg-white p-4 rounded-xl shadow-sm border border-emerald-200 flex items-center gap-4 bg-emerald-50/30 hover:shadow-md hover:border-emerald-400 transition cursor-pointer">
+                <div class="bg-emerald-100 p-3 rounded-full text-emerald-600 text-xl">✅</div>
+                <div>
+                    <p class="text-xs text-slate-500 font-medium">Terverifikasi</p>
+                    <p class="text-2xl font-black text-emerald-700">{{ "{:,}".format(total_verified) if total_verified is defined else "0" }}</p>
+                </div>
+            </a>
+        </div>
+
+        <!-- Search & Filters -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-6">
+            <form method="GET" action="/penyedia" class="space-y-4">
+                <div class="relative">
+                    <input type="text" name="search" value="{{ search_query }}"
+                           placeholder="Cari nama penyedia, NPWP, jenis usaha, atau alamat..."
+                           class="w-full p-4 pl-12 border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition shadow-sm text-base">
+                    <span class="absolute left-4 top-4 text-slate-400 text-xl">🔍</span>
+                    <button type="submit" class="absolute right-3 top-2 bg-emerald-600 text-white px-5 py-2 rounded-lg font-bold hover:bg-emerald-700 transition">Cari</button>
+                </div>
+                <div class="flex gap-4 text-sm">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="radio" name="verif" value="" {{ 'checked' if not verif_filter or verif_filter == '' }} onchange="this.form.submit()" class="text-emerald-600">
+                        <span>Semua</span>
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="radio" name="verif" value="verified" {{ 'checked' if verif_filter == 'verified' }} onchange="this.form.submit()" class="text-emerald-600">
+                        <span>✅ Terverifikasi</span>
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="radio" name="verif" value="unverified" {{ 'checked' if verif_filter == 'unverified' }} onchange="this.form.submit()" class="text-emerald-600">
+                        <span class="text-red-600">⬜ Belum Terverifikasi</span>
+                    </label>
+                </div>
+                {% if search_query %}
+                <div class="flex items-center gap-2">
+                    <span class="text-sm text-slate-500">Hasil untuk: <b>{{ search_query }}</b></span>
+                    <a href="/penyedia" class="text-xs text-red-500 hover:text-red-700 font-bold">✕ Reset</a>
+                </div>
+                {% endif %}
+            </form>
+        </div>
+
+        <!-- Results Info -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden mb-6">
+            <div class="px-6 py-4 border-b border-slate-200 bg-slate-50/50 flex justify-between items-center">
+                <h2 class="font-bold text-slate-700">📋 Daftar Penyedia</h2>
+                <p class="text-sm text-slate-500">Menampilkan <b>{{ vendors|length }}</b> dari <b>{{ "{:,}".format(total_count) }}</b> data</p>
+            </div>
+
+            <!-- Vendor Cards -->
+            <div class="divide-y divide-slate-100">
+                {% for v in vendors %}
+                <div class="p-5 hover:bg-emerald-50/30 transition cursor-pointer" onclick="toggleVendor('v-{{ v.id }}')">
+                    <div class="flex justify-between items-start gap-4">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-3 flex-wrap">
+                                <h3 class="font-bold text-slate-800 text-lg">{{ v.nama }}</h3>
+                                {% if v.terverifikasi == 1 %}
+                                <span class="px-2.5 py-0.5 bg-emerald-100 text-emerald-700 rounded-full text-[10px] font-bold border border-emerald-200 flex items-center gap-1">
+                                    ✅ Terverifikasi
+                                </span>
+                                {% else %}
+                                <span class="px-2.5 py-0.5 bg-red-100 text-red-700 rounded-full text-[10px] font-bold border border-red-200">
+                                    ⬜ Belum Terverifikasi
+                                </span>
+                                {% endif %}
+                            </div>
+                            <div class="flex flex-wrap gap-2 mt-2">
+                                <span class="px-2.5 py-1 bg-indigo-100 text-indigo-700 rounded-full text-xs font-bold">NPWP: {{ v.npwp }}</span>
+                                {% if v.jenis_usaha and v.jenis_usaha != '-' %}
+                                <span class="px-2.5 py-1 bg-indigo-100 text-indigo-700 rounded-full text-xs font-bold">{{ v.jenis_usaha }}</span>
+                                {% endif %}
+                                {% if v.tanggal_daftar and v.tanggal_daftar != '-' %}
+                                <span class="px-2.5 py-1 bg-slate-100 text-slate-600 rounded-full text-xs">📅 {{ v.tanggal_daftar }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="text-emerald-600 text-xl transition" id="arrow-{{ v.id }}">▶</div>
+                    </div>
+                    
+                    <!-- Collapsible Detail -->
+                    <div class="hidden mt-4 pt-4 border-t border-emerald-100/50" id="v-{{ v.id }}">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                            {% if v.email and v.email != '-' %}
+                            <div>
+                                <span class="text-[10px] uppercase font-bold text-slate-400">Email</span>
+                                <p class="font-semibold text-slate-700">{{ v.email }}</p>
+                            </div>
+                            {% endif %}
+                            {% if v.telepon %}
+                            <div>
+                                <span class="text-[10px] uppercase font-bold text-slate-400">Telepon</span>
+                                <p class="font-semibold text-slate-700">{{ v.telepon }}</p>
+                            </div>
+                            {% endif %}
+                            {% if v.alamat %}
+                            <div class="md:col-span-2">
+                                <span class="text-[10px] uppercase font-bold text-slate-400">Alamat</span>
+                                <p class="font-semibold text-slate-700">{{ v.alamat }}</p>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="p-10 text-center">
+                    <span class="text-5xl">📭</span>
+                    <p class="text-slate-500 mt-4">Tidak ada data penyedia ditemukan.</p>
+                    {% if search_query %}
+                    <a href="/penyedia" class="text-emerald-600 font-bold hover:underline mt-2 inline-block">Reset pencarian</a>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        {% if total_count > per_page %}
+        <div class="flex justify-center gap-2">
+            {% set total_pages = (total_count // per_page) + (1 if total_count % per_page > 0 else 0) %}
+            {% if page > 1 %}
+            <a href="?search={{ search_query }}&verif={{ verif_filter }}&page={{ page - 1 }}" class="px-4 py-2 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 font-bold">← Sebelumnya</a>
+            {% endif %}
+            <span class="px-4 py-2 bg-emerald-600 text-white rounded-lg font-bold">Halaman {{ page }}</span>
+            {% if page < total_pages %}
+            <a href="?search={{ search_query }}&verif={{ verif_filter }}&page={{ page + 1 }}" class="px-4 py-2 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 font-bold">Selanjutnya →</a>
+            {% endif %}
+        </div>
+        {% endif %}
+
+    </main>
+
+    <!-- Upload Modal Verifikasi -->
+    <div id="uploadModal" class="hidden fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-6 relative">
+            <button onclick="document.getElementById('uploadModal').classList.add('hidden')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-2xl">&times;</button>
+            <h3 class="text-xl font-bold text-slate-800 mb-1">📤 Upload Data Terverifikasi</h3>
+            <p class="text-sm text-slate-500 mb-4">Upload file Excel/CSV berisi daftar penyedia yang sudah diverifikasi LPSE Bulukumba. Data akan dicocokkan dengan database.</p>
+            <form id="uploadVerifForm" enctype="multipart/form-data">
+                <div class="border-2 border-dashed border-slate-300 rounded-xl p-6 text-center mb-4 hover:border-emerald-400 transition cursor-pointer" onclick="document.getElementById('verifFileInput').click()">
+                    <div class="text-4xl mb-2">📁</div>
+                    <p class="text-sm font-bold text-slate-600">Klik untuk pilih file</p>
+                    <p class="text-xs text-slate-400 mt-1">Format: .xlsx, .xls, atau .csv</p>
+                    <input type="file" id="verifFileInput" name="file" accept=".xlsx,.xls,.csv" class="hidden">
+                    <p id="verifFileName" class="text-xs text-emerald-600 font-bold mt-2"></p>
+                </div>
+                <p class="text-xs text-slate-400 mb-4">💡 Pastikan kolom pertama = <b>Nama Penyedia</b>, kolom kedua = <b>NPWP</b></p>
+                <button type="submit" id="verifUploadBtn" class="w-full bg-emerald-600 text-white py-3 rounded-xl font-bold hover:bg-emerald-700 transition flex items-center justify-center gap-2 shadow-md">
+                    <span>🚀</span> Upload & Verifikasi
+                </button>
+            </form>
+            <div id="verifUploadStatus" class="mt-4 hidden p-4 rounded-xl text-sm font-bold"></div>
+        </div>
+    </div>
+
+    <footer class="bg-slate-100 py-6 border-t border-slate-200 text-center">
+        <p class="text-slate-500 text-sm font-medium cursor-pointer hover:text-emerald-600 transition" onclick="document.getElementById('uploadModal').classList.remove('hidden')">by callunk@2026</p>
+    </footer>
+
+    <script>
+        function toggleVendor(id) {
+            const el = document.getElementById(id);
+            const arrow = document.getElementById('arrow-' + id.split('-')[1]);
+            if (el.classList.contains('hidden')) {
+                el.classList.remove('hidden');
+                arrow.style.transform = 'rotate(90deg)';
+                arrow.style.transition = 'transform 0.2s';
+            } else {
+                el.classList.add('hidden');
+                arrow.style.transform = 'rotate(0deg)';
+            }
+        }
+        
+        function openAdminModal() {
+            document.getElementById('adminModal').classList.remove('hidden');
+            document.getElementById('step-password').classList.remove('hidden');
+            document.getElementById('step-upload').classList.add('hidden');
+            document.getElementById('admin-password').value = '';
+            document.getElementById('password-error').classList.add('hidden');
+            document.getElementById('upload-status').classList.add('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeAdminModal() {
+            document.getElementById('adminModal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+        
+        function verifyPassword() {
+            const pwd = document.getElementById('admin-password').value;
+            if(pwd === 'Callunk13') {
+                document.getElementById('step-password').classList.add('hidden');
+                document.getElementById('step-upload').classList.remove('hidden');
+                document.getElementById('password-error').classList.add('hidden');
+            } else {
+                document.getElementById('password-error').classList.remove('hidden');
+            }
+        }
+        
+        function submitAdminForm(e) {
+            e.preventDefault();
+            const status = document.getElementById('upload-status');
+            status.className = 'text-center text-sm font-bold mt-2 bg-blue-50 text-blue-700 p-2 rounded';
+            status.textContent = '⏳ Mengupload...';
+            status.classList.remove('hidden');
+            
+            const formData = new FormData(document.getElementById('adminUploadForm'));
+            fetch('/upload', { method: 'POST', body: formData })
+            .then(res => res.json())
+            .then(data => {
+                if(data.success) {
+                    status.className = 'text-center text-sm font-bold mt-2 bg-green-50 text-green-700 p-2 rounded';
+                    status.textContent = '✅ ' + data.message;
+                    setTimeout(() => location.reload(), 1500);
+                } else {
+                    status.className = 'text-center text-sm font-bold mt-2 bg-red-50 text-red-700 p-2 rounded';
+                    status.textContent = '❌ ' + data.message;
+                }
+            })
+            .catch(err => {
+                status.className = 'text-center text-sm font-bold mt-2 bg-red-50 text-red-700 p-2 rounded';
+                status.textContent = '❌ Gagal terhubung ke server';
+            });
+        }
+        document.getElementById('verifFileInput').addEventListener('change', function() {
+            const name = this.files[0] ? this.files[0].name : '';
+            document.getElementById('verifFileName').textContent = name ? '📎 ' + name : '';
+        });
+        
+        document.getElementById('uploadVerifForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const fileInput = document.getElementById('verifFileInput');
+            if (!fileInput.files[0]) {
+                const st = document.getElementById('verifUploadStatus');
+                st.className = 'mt-4 p-4 rounded-xl text-sm font-bold bg-red-50 text-red-700';
+                st.textContent = '❌ Pilih file terlebih dahulu!';
+                st.classList.remove('hidden'); return;
+            }
+            const btn = document.getElementById('verifUploadBtn');
+            btn.disabled = true; btn.innerHTML = '<span class="animate-spin">⏳</span> Memproses...';
+            const fd = new FormData(); fd.append('file', fileInput.files[0]);
+            try {
+                const res = await fetch('/penyedia/upload', { method: 'POST', body: fd });
+                const data = await res.json();
+                const st = document.getElementById('verifUploadStatus');
+                st.className = 'mt-4 p-4 rounded-xl text-sm font-bold ' + (data.success ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-700');
+                st.textContent = data.success ? '✅ ' + data.message : '❌ ' + data.message;
+                st.classList.remove('hidden');
+                if(data.success) setTimeout(() => location.reload(), 2000);
+            } catch(err) {
+                const st = document.getElementById('verifUploadStatus');
+                st.className = 'mt-4 p-4 rounded-xl text-sm font-bold bg-red-50 text-red-700';
+                st.textContent = '❌ Gagal mengupload file'; st.classList.remove('hidden');
+            }
+            btn.disabled = false; btn.innerHTML = '<span>🚀</span> Upload & Verifikasi';
+        });
+    </script>
+</body>
+</html>

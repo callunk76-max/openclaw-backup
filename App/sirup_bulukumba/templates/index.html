@@ -1,0 +1,951 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIRUP Bulukumba Explorer 🚀</title>
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-indigo-700 text-white py-8 px-4 shadow-lg">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div>
+                <h1 class="text-3xl font-extrabold tracking-tight">LPSE UKPBJ Setda Kab. Bulukumba present:</h1>
+                <h2 class="text-2xl font-bold text-indigo-200">SIRUP Bulukumba Explorer 🚀</h2>
+                <p class="text-indigo-100 opacity-80">Analisis Data Pengadaan Kabupaten Bulukumba</p>
+<p class="text-indigo-200 text-[11px] font-medium tracking-wide mt-1">terakhir update: {{ last_update }}</p>
+            </div>
+            <div class="flex gap-3">
+                <a href="/export?format=pdf&search={{ search_query }}&method={{ m_filter }}&type={{ type_filter }}" 
+                   class="bg-white text-indigo-700 px-4 py-2 rounded-lg font-bold hover:bg-indigo-50 transition flex items-center gap-2">
+                   <span>📄</span> PDF
+                </a>
+                <a href="/export?format=xlsx&search={{ search_query }}&method={{ m_filter }}&type={{ type_filter }}" 
+                   class="bg-white text-indigo-700 px-4 py-2 rounded-lg font-bold hover:bg-indigo-50 transition flex items-center gap-2">
+                   <span>📊</span> Excel
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto py-8 px-4">
+        
+        <!-- Package Detail Modal -->
+        <div id="packageModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col overflow-hidden transform transition-all">
+                <div class="bg-indigo-700 px-6 py-4 flex justify-between items-center text-white shrink-0">
+                    <h3 class="text-xl font-bold">Detail Paket Pengadaan</h3>
+                    <button onclick="closePackageModal()" class="text-white hover:text-indigo-200 transition text-2xl">&times;</button>
+                </div>
+                <div class="p-6 space-y-6 overflow-y-auto">
+                    <!-- Basic Info -->
+                    <div class="space-y-3">
+                        <p id="modal-package-name" class="text-lg font-bold text-slate-800 leading-tight"></p>
+                        <p id="modal-satker" class="text-sm font-semibold text-slate-600"></p>
+                        <div class="flex flex-col gap-1 mt-2">
+                            <span class="text-[10px] uppercase text-slate-400 font-bold">Kode RUP</span>
+                            <span class="font-mono text-sm font-semibold text-slate-700" id="modal-kode-rup"></span>
+                        </div>
+                        <div class="flex flex-wrap gap-2 text-xs font-medium mt-2">
+                            <span class="px-2 py-1 bg-indigo-100 text-indigo-700 rounded-full" id="modal-method"></span>
+                            <span class="px-2 py-1 bg-indigo-100 text-indigo-700 rounded-full" id="modal-type"></span>
+                            <span class="px-3 py-1 bg-amber-100 text-amber-800 rounded-full font-extrabold text-sm border border-amber-200" id="modal-budget"></span>
+                            <span class="px-3 py-1 bg-cyan-100 text-cyan-800 rounded-full font-extrabold text-sm border border-cyan-200 hidden" id="modal-sisa-pagu"></span>
+                        </div>
+                    </div>
+                    
+                    <!-- Realisasi Info -->
+                    <div class="border-t border-slate-100 pt-4" id="realisasi-section">
+                        <div id="realisasi-content">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chart Modal -->
+        <div id="chartModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] flex flex-col overflow-hidden transform transition-all">
+                <div class="bg-indigo-700 px-6 py-4 flex justify-between items-center text-white shrink-0">
+                    <h3 class="text-xl font-bold" id="chartModalTitle">Statistik</h3>
+                    <button onclick="closeChartModal()" class="text-white hover:text-indigo-200 transition text-2xl">&times;</button>
+                </div>
+                <div class="p-6 overflow-y-auto" id="chartModalBody">
+                    <div id="chartContent" class="space-y-8">
+                        <!-- Dynamic charts -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-8 items-start">
+            <!-- Total Paket -->
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col h-full cursor-pointer hover:shadow-md hover:border-indigo-300 transition" onclick="openChartModal('packages')">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="bg-indigo-100 p-3 rounded-full text-indigo-600 text-2xl shrink-0">📦</div>
+                    <div>
+                        <p class="text-xs text-slate-500 font-medium leading-tight">Total Paket</p>
+                        <p class="text-2xl font-bold text-slate-800">{{ "{:,}".format(total_count) if total_count else 0 }}</p>
+                    </div>
+                </div>
+                <div class="mt-auto space-y-1.5 pt-3 border-t border-slate-100">
+                    <div class="flex justify-between text-[11px]">
+                        <span class="text-slate-500">E-Purchasing:</span>
+                        <span class="font-semibold text-slate-700">{{ "{:,}".format(total_epurchasing) }}</span>
+                    </div>
+                    <div class="flex justify-between text-[11px]">
+                        <span class="text-slate-500">P. Langsung:</span>
+                        <span class="font-semibold text-slate-700">{{ "{:,}".format(total_pl) }}</span>
+                    </div>
+                    <div class="flex justify-between text-[11px]">
+                        <span class="text-slate-500">Dikecualikan:</span>
+                        <span class="font-semibold text-slate-700">{{ "{:,}".format(total_dikecualikan) }}</span>
+                    </div>
+                    <div class="flex justify-between text-[11px]">
+                        <span class="text-slate-500">Lainnya/Kosong:</span>
+                        <span class="font-semibold text-slate-700">{{ "{:,}".format(total_lainnya) }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Anggaran -->
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col h-full cursor-pointer hover:shadow-md hover:border-green-300 transition" onclick="openChartModal('budget')">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="bg-green-100 p-3 rounded-full text-green-600 text-2xl shrink-0">💰</div>
+                    <div>
+                        <p class="text-xs text-slate-500 font-medium leading-tight">Total Pagu RUP</p>
+                        <p class="text-xl font-bold text-slate-800 truncate">Rp {{ "{:,.0f}".format(total_budget) if total_budget else 0 }}</p>
+                    </div>
+                </div>
+                <div class="mt-auto space-y-1.5 pt-3 border-t border-slate-100">
+                    <div class="flex justify-between text-[11px]">
+                        <span class="text-slate-500 truncate mr-2">E-Purchasing:</span>
+                        <span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(budget_epurchasing) }}</span>
+                    </div>
+                    <div class="flex justify-between text-[11px]">
+                        <span class="text-slate-500 truncate mr-2">P. Langsung:</span>
+                        <span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(budget_pl) }}</span>
+                    </div>
+                    <div class="flex justify-between text-[11px]">
+                        <span class="text-slate-500 truncate mr-2">Dikecualikan:</span>
+                        <span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(budget_dikecualikan) }}</span>
+                    </div>
+                    <div class="flex justify-between text-[11px]">
+                        <span class="text-slate-500 truncate mr-2">Lainnya:</span>
+                        <span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(budget_lainnya) }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Realisasi -->
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-emerald-200 flex flex-col h-full bg-emerald-50/30 cursor-pointer hover:shadow-md hover:border-emerald-400 transition" onclick="openChartModal('realisasi')">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="bg-emerald-100 p-3 rounded-full text-emerald-600 text-2xl shrink-0">✅</div>
+                    <div>
+                        <p class="text-xs text-slate-500 font-medium leading-tight">Total Realisasi ({{ "{:,}".format(count_realized) if count_realized else 0 }} paket)</p>
+                        <p class="text-xl font-bold text-emerald-700 truncate">Rp {{ "{:,.0f}".format(real_total) if real_total else 0 }} <span class="text-xs font-normal text-slate-500 ml-1">({{ "%.2f"|format((real_total/total_budget)*100) if total_budget and total_budget > 0 else 0 }}%)</span></p>
+                    </div>
+                </div>
+                <div class="mt-auto space-y-1.5 pt-3 border-t border-emerald-200/50">
+                    <div class="flex justify-between text-[11px]">
+                        <span class="text-slate-500 truncate mr-2">E-Purchasing:</span>
+                        <span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(real_epurchasing) }}</span>
+                    </div>
+                    <div class="flex justify-between text-[11px]">
+                        <span class="text-slate-500 truncate mr-2">P. Langsung:</span>
+                        <span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(real_pl) }}</span>
+                    </div>
+                    <div class="flex justify-between text-[11px]">
+                        <span class="text-slate-500 truncate mr-2">Dikecualikan:</span>
+                        <span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(real_dikecualikan) }}</span>
+                    </div>
+                    <div class="flex justify-between text-[11px]">
+                        <span class="text-slate-500 truncate mr-2">Lainnya:</span>
+                        <span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(real_lainnya) }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Anggaran Filter -->
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col h-full border-l-4 border-l-indigo-500">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="bg-indigo-50 p-3 rounded-full text-indigo-500 text-2xl shrink-0">🎯</div>
+                    <div>
+                        <p class="text-xs text-slate-500 font-medium leading-tight">Hasil Filter ({{ "{:,}".format(filtered_count) }} pkt)</p>
+                        <p class="text-xl font-bold text-indigo-700 truncate">Rp {{ "{:,.0f}".format(filtered_total_budget) if filtered_total_budget else 0 }}</p>
+                    </div>
+                </div>
+                <div class="mt-auto space-y-1.5 pt-3 border-t border-slate-100">
+                    <div class="flex justify-between text-[11px]">
+                        <span class="text-slate-500 truncate mr-2">E-Purchasing:</span>
+                        <span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(f_budget_epurchasing) }}</span>
+                    </div>
+                    <div class="flex justify-between text-[11px]">
+                        <span class="text-slate-500 truncate mr-2">P. Langsung:</span>
+                        <span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(f_budget_pl) }}</span>
+                    </div>
+                    <div class="flex justify-between text-[11px]">
+                        <span class="text-slate-500 truncate mr-2">Dikecualikan:</span>
+                        <span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(f_budget_dikecualikan) }}</span>
+                    </div>
+                    <div class="flex justify-between text-[11px]">
+                        <span class="text-slate-500 truncate mr-2">Lainnya:</span>
+                        <span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(f_budget_lainnya) }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Anggaran Halaman -->
+            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col h-full border-l-4 border-l-amber-500">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="bg-amber-50 p-3 rounded-full text-amber-500 text-2xl shrink-0">📄</div>
+                    <div>
+                        <p class="text-xs text-slate-500 font-medium leading-tight">Total Halaman Ini</p>
+                        <p class="text-xl font-bold text-amber-700 truncate">Rp {{ "{:,.0f}".format(page_total_budget) if page_total_budget else 0 }}</p>
+                    </div>
+                </div>
+                <div class="mt-auto pt-3 border-t border-slate-100 flex items-center justify-center">
+                    <p class="text-xs text-slate-400 italic text-center">Tampil dari baris {{ (page - 1) * per_page + 1 }} - {{ (page - 1) * per_page + (packages|length) }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filters Section -->
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 mb-8">
+            <form method="GET" action="/" class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+                <div class="md:col-span-2 relative">
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Cari Paket / Satker</label>
+                    <input type="text" name="search" id="search-input" value="{{ search_query }}" 
+                           placeholder="Ketik nama paket atau dinas..." 
+                           class="w-full p-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none transition">
+                    
+                    <!-- Suggestions Dropdown -->
+                    <div id="suggestions" class="hidden absolute z-10 w-full bg-white border border-slate-200 rounded-lg shadow-xl mt-1 max-h-60 overflow-y-auto">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Metode</label>
+                    <select name="method" class="w-full p-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none transition">
+                        <option value="">Semua Metode</option>
+                        {% for m in methods %}
+                        <option value="{{ m[0] }}" {% if m[0] == m_filter %}selected{% endif %}>{{ m[0] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Tipe</label>
+                    <select name="type" class="w-full p-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none transition">
+                        <option value="">Semua Tipe</option>
+                        {% for t in types %}
+                        <option value="{{ t[0] }}" {% if t[0] == type_filter %}selected{% endif %}>{{ t[0] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="md:col-span-4 flex justify-end gap-2">
+                    <a href="/" class="px-4 py-2 text-slate-500 hover:text-slate-700 font-medium transition">Reset</a>
+                    <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-indigo-700 transition shadow-md">Terapkan Filter</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Data Table -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="px-6 py-4 border-b border-slate-200 bg-slate-50/50 space-y-4">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                    <h2 class="font-bold text-slate-700 text-lg">Hasil Pencarian</h2>
+                    <p class="text-sm text-slate-500">Menampilkan <b>{{ (packages|length) }}</b> dari <b>{{ "{:,}".format(filtered_count) }}</b> data</p>
+                </div>
+                <div class="relative max-w-md">
+                    <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1 ml-1">Quick Search Page</label>
+                    <div class="relative">
+                        <input type="text" id="table-filter" 
+                               placeholder="Cari cepat di halaman ini..." 
+                               class="w-full p-2 pl-9 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none transition shadow-sm text-sm">
+                        <span class="absolute left-3 top-2.5 text-slate-400 text-sm">🔍</span>
+                    </div>
+                </div>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-xs">
+                    <thead class="bg-slate-50 border-b border-slate-200">
+                        <tr>
+                            <th class="p-3 text-[10px] font-bold text-slate-500 uppercase w-16 cursor-pointer hover:text-indigo-600 transition" 
+                                onclick="window.location.href='?search={{ search_query }}&method={{ m_filter }}&type={{ type_filter }}&sort_by=id&sort_dir={{ 'ASC' if sort_dir == 'DESC' else 'DESC' }}'">
+                                # {% if sort_by == 'id' %}{{ '▲' if sort_dir == 'ASC' else '▼' }}{% endif %}
+                            </th>
+                            <th class="p-3 text-[10px] font-bold text-slate-500 uppercase cursor-pointer hover:text-indigo-600 transition" 
+                                onclick="window.location.href='?search={{ search_query }}&method={{ m_filter }}&type={{ type_filter }}&sort_by=package_name&sort_dir={{ 'ASC' if sort_dir == 'DESC' else 'DESC' }}'">
+                                Paket {% if sort_by == 'package_name' %}{{ '▲' if sort_dir == 'ASC' else '▼' }}{% endif %}
+                            </th>
+                            <th class="p-3 text-[10px] font-bold text-slate-500 uppercase cursor-pointer hover:text-indigo-600 transition" 
+                                onclick="window.location.href='?search={{ search_query }}&method={{ m_filter }}&type={{ type_filter }}&sort_by=satker&sort_dir={{ 'ASC' if sort_dir == 'DESC' else 'DESC' }}'">
+                                Satker {% if sort_by == 'satker' %}{{ '▲' if sort_dir == 'ASC' else '▼' }}{% endif %}
+                            </th>
+                            <th class="p-3 text-[10px] font-bold text-slate-500 uppercase">Metode</th>
+                            <th class="p-3 text-[10px] font-bold text-slate-500 uppercase cursor-pointer hover:text-indigo-600 transition" 
+                                onclick="window.location.href='?search={{ search_query }}&method={{ m_filter }}&type={{ type_filter }}&sort_by=budget&sort_dir={{ 'ASC' if sort_dir == 'DESC' else 'DESC' }}'">
+                                Anggaran {% if sort_by == 'budget' %}{{ '▲' if sort_dir == 'ASC' else '▼' }}{% endif %}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                        {% for p in packages %}
+                        <tr class="cursor-pointer transition package-row {% if p['has_realisasi'] %}bg-emerald-50/60 hover:bg-emerald-100/80{% else %}hover:bg-indigo-50{% endif %}" 
+                            data-package='{{ p | tojson }}'>
+                            <td class="p-3 text-sm {% if p['has_realisasi'] %}text-emerald-600{% else %}text-slate-400{% endif %} font-mono">
+                                {{ (page - 1) * per_page + loop.index }}
+                                {% if p['has_realisasi'] and p['realisasi_persen'] > 0 %}
+                                <span class="block text-[10px] font-bold mt-1 {% if p['realisasi_persen'] > 100 %}text-red-500{% else %}text-emerald-500{% endif %}">Realisasi ({{ p['realisasi_persen'] }}%)</span>
+                                {% endif %}
+                            </td>
+                            <td class="p-3">
+                                <div class="font-semibold text-slate-800">{{ p['package_name'] }}</div>
+                                <div class="text-xs text-slate-400 truncate max-w-xs">{{ p['work_description'] }}</div>
+                            </td>
+                            <td class="p-3 text-xs text-slate-600">{{ p['satker'] }}</td>
+                            <td class="p-3">
+                                <span class="px-2 py-1 text-xs font-medium rounded-full bg-indigo-100 text-indigo-700 border border-indigo-200">
+                                    {{ p['procurement_method'] }}
+                                </span>
+                            </td>
+                            <td class="p-3 font-mono text-xs font-semibold text-slate-800">
+                                Rp {{ "{:,.0f}".format(p['budget']|replace('Rp ', '')|replace(',', '')|float if p['budget'] else 0) }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        {% if not packages %}
+                        <tr>
+                            <td colspan="6" class="p-12 text-center text-slate-400 italic">
+                                Tidak ada data yang cocok dengan filter.
+                            </td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="flex justify-center mt-8 gap-2">
+            {% if page > 1 %}
+            <a href="?page={{ page - 1 }}&search={{ search_query }}&method={{ m_filter }}&type={{ type_filter }}" 
+               class="px-4 py-2 bg-white border border-slate-300 rounded-lg hover:bg-slate-100 transition font-medium">
+               Prev
+            </a>
+            {% endif %}
+            <span class="px-4 py-2 bg-indigo-600 text-white rounded-lg font-bold">Halaman {{ page }} dari {{ total_pages }}</span>
+            {% if filtered_count > (page * per_page) %}
+            <a href="?page={{ page + 1 }}&search={{ search_query }}&method={{ m_filter }}&type={{ type_filter }}" 
+               class="px-4 py-2 bg-white border border-slate-300 rounded-lg hover:bg-slate-100 transition font-medium">
+               Next
+            </a>
+            {% endif %}
+        </div>
+    </main>
+
+    <footer class="bg-slate-100 py-6 border-t border-slate-200 text-center">
+        <p class="text-slate-500 text-sm font-medium cursor-pointer hover:text-indigo-600 transition inline-block" onclick="openAdminModal()">by callunk@2026</p>
+        <p class="text-slate-400 text-[10px] font-mono mt-1">Total Visit : {{ "{:,.0f}".format(total_visits)|replace(",", ".") }}</p>
+    </footer>
+
+    <!-- Admin Modal -->
+    <div id="adminModal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden transform transition-all">
+            <div class="bg-indigo-700 px-6 py-4 flex justify-between items-center text-white">
+                <h3 class="text-xl font-bold">Admin Panel Update Data</h3>
+                <button onclick="closeAdminModal()" class="text-white hover:text-indigo-200 transition text-2xl">&times;</button>
+            </div>
+            <div class="p-6">
+                <form id="adminUploadForm" onsubmit="submitAdminForm(event)">
+                    <div id="step-password">
+                        <label class="block text-xs font-bold text-slate-700 mb-2">Password Verifikasi</label>
+                        <input type="password" id="admin-password" name="password" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none transition mb-4" required>
+                        <button type="button" onclick="verifyPassword()" class="w-full bg-indigo-600 text-white py-3 rounded-lg font-bold hover:bg-indigo-700 transition">Verifikasi</button>
+                        <p id="password-error" class="text-red-500 text-sm hidden mt-2">Password salah!</p>
+                    </div>
+                    
+                    <div id="step-upload" class="hidden space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">File CSV Data RUP</label>
+                            <input type="file" id="rup_file" name="rup_file" class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">File CSV Data Realisasi</label>
+                            <input type="file" id="realisasi_file" name="realisasi_file" class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
+                        </div>
+                        <button type="submit" id="btn-upload" class="w-full bg-green-600 text-white py-3 rounded-lg font-bold hover:bg-green-700 transition flex justify-center items-center gap-2">
+                            <span>🚀</span> Update Database
+                        </button>
+                        <p id="upload-status" class="text-center text-sm font-bold mt-2 hidden"></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const searchInput = document.getElementById('search-input');
+        const suggestionsBox = document.getElementById('suggestions');
+        const tableFilter = document.getElementById('table-filter');
+        const filterForm = document.querySelector('form');
+        
+        // --- Modal Functions ---
+        function openPackageModal(p) {
+            document.getElementById('modal-package-name').textContent = p.package_name || '-';
+            document.getElementById('modal-satker').textContent = p.satker || '-';
+            document.getElementById('modal-kode-rup').textContent = p.id || '-';
+            document.getElementById('modal-method').textContent = p.procurement_method || '-';
+            document.getElementById('modal-type').textContent = p.procurement_type || '-';
+            
+            const budgetVal = p.budget ? p.budget.replace('Rp ', '').replace(/,/g, '') : '0';
+            document.getElementById('modal-budget').textContent = 'Pagu RUP: Rp ' + Number(budgetVal).toLocaleString('id-ID');
+            
+            document.getElementById('packageModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+
+            // Fetch realisasi data
+            const rSection = document.getElementById('realisasi-section');
+            const rContent = document.getElementById('realisasi-content');
+            rSection.classList.remove('hidden');
+            rContent.innerHTML = '<p class="text-slate-500 italic text-sm">Memuat data realisasi...</p>';
+            
+            const sisaPaguEl = document.getElementById('modal-sisa-pagu');
+            sisaPaguEl.classList.add('hidden');
+            
+            fetch(`/api/package_details?id=${encodeURIComponent(p.id || '')}&package_name=${encodeURIComponent(p.package_name || '')}&satker=${encodeURIComponent(p.satker || '')}`)
+                .then(res => res.json())
+                .then(result => {
+                    if(result.success && result.data.length > 0) {
+                        let html = '<div>';
+                        let totalRealisasiNum = 0;
+                        result.data.forEach((r, idx) => {
+                            const valNum = r['Total Nilai (Rp)'] ? Number(r['Total Nilai (Rp)']) : 0;
+                            const valRp = valNum.toLocaleString('id-ID');
+                            const pdnNum = r['Nilai PDN (Rp)'] ? Number(r['Nilai PDN (Rp)']) : 0;
+                            const pdnRp = pdnNum.toLocaleString('id-ID');
+                            const penyedia = r['Nama Penyedia'] || r['Penyedia'] || 'Penyedia Tidak Diketahui';
+                            totalRealisasiNum += valNum;
+                            
+                            // Check if this realisasi is a strict match or a fallback match
+                            const isStrictMatch = (p.id && r['Kode RUP'] && String(p.id) === String(r['Kode RUP']));
+                            
+                            let warningBadges = '';
+                            if (!isStrictMatch) {
+                                warningBadges += '<div class="px-2 py-1 mt-2 bg-amber-100 text-amber-800 text-[10px] font-bold rounded border border-amber-200">⚠️ Info: Realisasi dicocokkan berdasarkan Nama Paket (Kode RUP berbeda/kosong).</div>';
+                            }
+                            
+                            let statusBadgeColor = "bg-emerald-100 border-emerald-200 text-emerald-800";
+                            let statusText = r['Status Paket'] || r['Status'] || 'ON PROCESS';
+                            if(statusText.toUpperCase() === 'SELESAI') statusBadgeColor = "bg-emerald-100 border-emerald-200 text-emerald-800";
+                            else if(statusText.toUpperCase().includes('BATAL')) statusBadgeColor = "bg-red-100 border-red-200 text-red-800";
+                            
+                            const tahun = r['Tahun Anggaran'] || '2026';
+                            const sumberDana = r['Sumber Dana'] || 'APBD';
+                            const sumberTransaksi = r['Sumber Transaksi'] || '-';
+                            
+                            html += `
+                            <div class="bg-emerald-50/30 border border-emerald-100 p-4 rounded-xl text-sm text-slate-700 space-y-3 relative mb-3 shadow-sm">
+                                
+                                <div class="mb-1">
+                                    <div class="flex items-center justify-between">
+                                        <h3 class="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">DATA REALISASI PENYEDIA</h3>
+                                        <span class="text-[10px] font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full border border-slate-200">#${idx + 1}</span>
+                                    </div>
+                                    <h4 class="font-extrabold text-slate-800 text-base leading-snug uppercase">${penyedia}</h4>
+                                    <div class="text-xl font-black text-emerald-600 mt-1">Rp ${valRp}</div>
+                                </div>
+                                
+                                <div class="flex flex-wrap gap-2 text-[10px] font-bold mt-2">
+                                    <span class="px-2 py-1 ${statusBadgeColor} rounded border">Status: ${statusText}</span>
+                                    <span class="px-2 py-1 bg-white text-slate-600 rounded border border-slate-200">Tahun ${tahun}</span>
+                                    <span class="px-2 py-1 bg-blue-50 text-blue-700 rounded border border-blue-200">${sumberDana}</span>
+                                    <span class="px-2 py-1 bg-purple-50 text-purple-700 rounded border border-purple-200">${sumberTransaksi}</span>
+                                </div>
+                                
+                                <div class="grid grid-cols-1 gap-1 mt-3 pt-3 border-t border-emerald-100/70">
+                                    <div class="flex flex-col"><span class="text-[10px] uppercase text-slate-400 font-bold">KODE RUP</span> <span class="font-mono text-xs text-slate-600">${r['Kode RUP'] || p.id || '-'}</span></div>
+                                    <div class="flex flex-col mt-1"><span class="text-[10px] uppercase text-slate-400 font-bold">KODE PAKET</span> <span class="font-mono text-xs text-slate-600">${r['Kode Paket'] || '-'}</span></div>
+                                    <div class="flex flex-col mt-1"><span class="text-[10px] uppercase text-slate-400 font-bold">NILAI PDN (Rp)</span> <span class="font-mono text-xs text-slate-600">${pdnRp || '0'}</span></div>
+                                </div>
+                                
+                                ${warningBadges}
+                            </div>
+                            `;
+                        });
+                        html += '</div>';
+                        rContent.innerHTML = html;
+                        
+                        // Sisa Pagu: pagu - total realisasi
+                        const budgetNum = parseFloat(budgetVal) || 0;
+                        const sisa = budgetNum - totalRealisasiNum;
+                        const sisaFormatted = sisa.toLocaleString('id-ID');
+                        if (sisa < 0) {
+                            sisaPaguEl.textContent = 'Sisa Pagu: -Rp ' + Math.abs(sisa).toLocaleString('id-ID');
+                            sisaPaguEl.className = 'px-3 py-1 bg-red-100 text-red-800 rounded-full font-extrabold text-sm border border-red-200';
+                        } else {
+                            sisaPaguEl.textContent = 'Sisa Pagu: Rp ' + sisaFormatted;
+                            sisaPaguEl.className = 'px-3 py-1 bg-cyan-100 text-cyan-800 rounded-full font-extrabold text-sm border border-cyan-200';
+                        }
+                        sisaPaguEl.classList.remove('hidden');
+                    } else {
+                        rContent.innerHTML = `
+                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 text-center">
+                                <p class="text-slate-500 font-medium">Belum ada data realisasi / penyedia untuk paket ini.</p>
+                            </div>
+                        `;
+                        sisaPaguEl.classList.add('hidden');
+                    }
+                })
+                .catch(err => {
+                    rContent.innerHTML = '<p class="text-red-500 italic">Gagal memuat data realisasi.</p>';
+                });
+        }
+
+        function closePackageModal() {
+            document.getElementById('packageModal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        // Use Event Delegation for package rows to avoid timing issues
+        document.addEventListener('click', (e) => {
+            const row = e.target.closest('.package-row');
+            if (row) {
+                try {
+                    const dataAttr = row.getAttribute('data-package');
+                    if (dataAttr) {
+                        const data = JSON.parse(dataAttr);
+                        openPackageModal(data);
+                    }
+                } catch (err) {
+                    console.error("Error parsing package data:", err);
+                }
+            }
+        });
+        // -----------------------
+
+        // Admin Flow Functions
+        function openAdminModal() {
+            document.getElementById('adminModal').classList.remove('hidden');
+            document.getElementById('step-password').classList.remove('hidden');
+            document.getElementById('step-upload').classList.add('hidden');
+            document.getElementById('admin-password').value = '';
+            document.getElementById('password-error').classList.add('hidden');
+            document.getElementById('upload-status').classList.add('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAdminModal() {
+            document.getElementById('adminModal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        function verifyPassword() {
+            const pwd = document.getElementById('admin-password').value;
+            if(pwd === 'Callunk13') {
+                document.getElementById('step-password').classList.add('hidden');
+                document.getElementById('step-upload').classList.remove('hidden');
+                document.getElementById('password-error').classList.add('hidden');
+            } else {
+                document.getElementById('password-error').classList.remove('hidden');
+            }
+        }
+
+        async function submitAdminForm(e) {
+            e.preventDefault();
+            const form = document.getElementById('adminUploadForm');
+            const formData = new FormData(form);
+            const btn = document.getElementById('btn-upload');
+            const status = document.getElementById('upload-status');
+            
+            btn.disabled = true;
+            btn.innerHTML = 'Sedang Mengupdate...';
+            status.classList.add('hidden');
+            
+            try {
+                const res = await fetch('/admin/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await res.json();
+                
+                status.classList.remove('hidden');
+                if(data.success) {
+                    status.className = 'text-center text-sm font-bold mt-2 text-green-600';
+                    status.innerText = data.message + ' Merefresh halaman...';
+                    setTimeout(() => window.location.reload(), 1500);
+                } else {
+                    status.className = 'text-center text-sm font-bold mt-2 text-red-600';
+                    status.innerText = data.message;
+                    btn.disabled = false;
+                    btn.innerHTML = '<span>🚀</span> Update Database';
+                }
+            } catch(err) {
+                status.classList.remove('hidden');
+                status.className = 'text-center text-sm font-bold mt-2 text-red-600';
+                status.innerText = 'Terjadi kesalahan sistem.';
+                btn.disabled = false;
+                btn.innerHTML = '<span>🚀</span> Update Database';
+            }
+        }
+
+        // 1. Live Search Debounce (Server-side)
+        let debounceTimer;
+        searchInput.addEventListener('input', function() {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                // Only auto-submit if not currently selecting a suggestion
+                if (!suggestionsBox.classList.contains('hidden')) return;
+                filterForm.submit();
+            }, 600);
+        });
+
+        // 2. Auto-submit on Dropdown Change
+        document.querySelectorAll('select').forEach(select => {
+            select.addEventListener('change', () => filterForm.submit());
+        });
+
+        // 3. Instant Table Filter (Client-side)
+        tableFilter.addEventListener('input', function() {
+            const term = this.value.toLowerCase();
+            const rows = document.querySelectorAll('.package-row');
+            
+            rows.forEach(row => {
+                const text = row.innerText.toLowerCase();
+                let kodeRup = '';
+                
+                try {
+                    const dataAttr = row.getAttribute('data-package');
+                    if (dataAttr) {
+                        const data = JSON.parse(dataAttr);
+                        // Make sure to parse it correctly, handling integers safely.
+                        kodeRup = String(data.id || '').toLowerCase();
+                    }
+                } catch(e) {}
+                
+                // Cari di teks tabel ATAU di dalam data tersembunyi (Kode RUP)
+                if (text.includes(term) || kodeRup.includes(term)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+        
+        // Data sugesti dari server (kita ambil sampel sederhana di sini)
+        const suggestionsData = {
+            packages: {{ suggestions.package_names | map(attribute=0) | list | tojson }},
+            satkers: {{ suggestions.satkers | map(attribute=0) | list | tojson }}
+        };
+
+        searchInput.addEventListener('input', function() {
+            const val = this.value.toLowerCase();
+            suggestionsBox.innerHTML = '';
+            
+            if (val.length < 2) {
+                suggestionsBox.classList.add('hidden');
+                return;
+            }
+
+            const matches = [
+                ...suggestionsData.packages.filter(p => p.toLowerCase().includes(val)),
+                ...suggestionsData.satkers.filter(s => s.toLowerCase().includes(val))
+            ].slice(0, 10);
+
+            if (matches.length > 0) {
+                matches.forEach(text => {
+                    const div = document.createElement('div');
+                    div.className = 'p-2 hover:bg-indigo-50 cursor-pointer text-sm border-b border-slate-100 last:border-0';
+                    div.textContent = text;
+                    div.onclick = () => {
+                        searchInput.value = text;
+                        suggestionsBox.classList.add('hidden');
+                        // Auto submit
+                        filterForm.submit();
+                    };
+                    suggestionsBox.appendChild(div);
+                });
+                suggestionsBox.classList.remove('hidden');
+            } else {
+                suggestionsBox.classList.add('hidden');
+            }
+        });
+
+        // Close suggestions when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!searchInput.contains(e.target) && !suggestionsBox.contains(e.target)) {
+                suggestionsBox.classList.add('hidden');
+            }
+        });
+
+        // ===== CHART DATA (from server) =====
+        const chartData = {
+            packages: {
+                labels: ['E-Purchasing', 'Pengadaan Langsung', 'Dikecualikan', 'Lainnya'],
+                values: [{{ total_epurchasing }}, {{ total_pl }}, {{ total_dikecualikan }}, {{ total_lainnya }}],
+                total: {{ total_count }}
+            },
+            budget: {
+                labels: ['E-Purchasing', 'Pengadaan Langsung', 'Dikecualikan', 'Lainnya'],
+                values: [{{ budget_epurchasing }}, {{ budget_pl }}, {{ budget_dikecualikan }}, {{ budget_lainnya }}],
+                total: {{ total_budget }}
+            },
+            realisasi: {
+                labels: ['E-Purchasing', 'Pengadaan Langsung', 'Dikecualikan', 'Lainnya'],
+                values: [{{ real_epurchasing }}, {{ real_pl }}, {{ real_dikecualikan }}, {{ real_lainnya }}],
+                total: {{ real_total }},
+                pagu: [{{ budget_epurchasing }}, {{ budget_pl }}, {{ budget_dikecualikan }}, {{ budget_lainnya }}]
+            }
+        };
+
+        let chartInstances = {};
+
+        function fmtRp(val) {
+            return 'Rp ' + Number(val).toLocaleString('id-ID');
+        }
+
+        function destroyCharts() {
+            Object.values(chartInstances).forEach(c => { if (c) c.destroy(); });
+            chartInstances = {};
+        }
+
+        function closeChartModal() {
+            document.getElementById('chartModal').classList.add('hidden');
+            document.body.style.overflow = '';
+            destroyCharts();
+        }
+
+        function createCanvas(id) {
+            const c = document.createElement('canvas');
+            c.id = id;
+            return c;
+        }
+
+        const COLORS = ['#4f46e5', '#059669', '#d97706', '#94a3b8'];
+        const COLORS_REAL = ['#818cf8', '#34d399', '#fbbf24', '#cbd5e1'];
+
+        // ===== CHART 1: PAKET =====
+        function renderChartPackages(container) {
+            const d = chartData.packages;
+            
+            // Header
+            container.innerHTML = `
+                <div class="text-center mb-6">
+                    <p class="text-3xl font-black text-indigo-700">${Number(d.total).toLocaleString('id-ID')}</p>
+                    <p class="text-sm text-slate-500 font-medium">Total Paket Pengadaan</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="flex items-center justify-center h-72" id="chartPackDoughnut"></div>
+                    <div class="space-y-4 flex flex-col justify-center">
+                        ${d.labels.map((l, i) => `
+                            <div class="flex items-center gap-3">
+                                <span class="w-3 h-3 rounded-full shrink-0" style="background:${COLORS[i]}"></span>
+                                <span class="text-sm text-slate-600 flex-1">${l}</span>
+                                <span class="font-bold text-slate-800">${d.values[i].toLocaleString('id-ID')}</span>
+                                <span class="text-xs text-slate-400 w-12 text-right">(${d.total > 0 ? ((d.values[i]/d.total)*100).toFixed(1) : 0}%)</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            const ctx = document.getElementById('chartPackDoughnut');
+            const canvas = document.createElement('canvas');
+            ctx.appendChild(canvas);
+            chartInstances.packages = new Chart(canvas.getContext('2d'), {
+                type: 'doughnut',
+                data: {
+                    labels: d.labels,
+                    datasets: [{
+                        data: d.values,
+                        backgroundColor: COLORS,
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '65%',
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: ctx => ctx.parsed + ' paket (' + ((ctx.parsed/d.total)*100).toFixed(1) + '%)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // ===== CHART 2: BUDGET =====
+        function renderChartBudget(container) {
+            const d = chartData.budget;
+            
+            container.innerHTML = `
+                <div class="text-center mb-6">
+                    <p class="text-3xl font-black text-green-700">${fmtRp(d.total)}</p>
+                    <p class="text-sm text-slate-500 font-medium">Total Pagu RUP</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="flex items-center justify-center h-72" id="chartBudDoughnut"></div>
+                    <div class="space-y-4 flex flex-col justify-center">
+                        ${d.labels.map((l, i) => `
+                            <div class="flex items-center gap-3">
+                                <span class="w-3 h-3 rounded-full shrink-0" style="background:${COLORS[i]}"></span>
+                                <span class="text-sm text-slate-600 flex-1">${l}</span>
+                                <span class="font-bold text-green-700 text-sm truncate max-w-[140px]">${fmtRp(d.values[i])}</span>
+                                <span class="text-xs text-slate-400 w-12 text-right">(${d.total > 0 ? ((d.values[i]/d.total)*100).toFixed(1) : 0}%)</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            const ctx = document.getElementById('chartBudDoughnut');
+            const canvas = document.createElement('canvas');
+            ctx.appendChild(canvas);
+            chartInstances.budget = new Chart(canvas.getContext('2d'), {
+                type: 'doughnut',
+                data: {
+                    labels: d.labels,
+                    datasets: [{
+                        data: d.values,
+                        backgroundColor: COLORS,
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '65%',
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: ctx => fmtRp(ctx.parsed) + ' (' + ((ctx.parsed/d.total)*100).toFixed(1) + '%)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // ===== CHART 3: REALISASI =====
+        function renderChartRealisasi(container) {
+            const d = chartData.realisasi;
+            const persen = d.total > 0 ? ((d.total / chartData.budget.total) * 100).toFixed(2) : 0;
+            
+            container.innerHTML = `
+                <div class="text-center mb-6">
+                    <p class="text-3xl font-black text-emerald-700">${fmtRp(d.total)}</p>
+                    <p class="text-sm text-slate-500 font-medium">Total Realisasi (${Number(chartData.packages.values.reduce((a,b)=>a+b,0)).toLocaleString('id-ID')} paket terealisasi)</p>
+                    <p class="text-xs text-slate-400 mt-1">${persen}% dari total Pagu RUP</p>
+                </div>
+                
+                <div class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="flex items-center justify-center h-72" id="chartRealDoughnut"></div>
+                        <div class="flex flex-col justify-center">
+                            <p class="text-xs font-bold text-slate-500 uppercase mb-4">Realisasi per Metode</p>
+                            <div class="space-y-3">
+                                ${d.labels.map((l, i) => `
+                                    <div class="p-3 rounded-lg border" style="border-color:${COLORS[i]}33">
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background:${COLORS[i]}"></span>
+                                            <span class="text-xs font-bold text-slate-600">${l}</span>
+                                        </div>
+                                        <div class="flex justify-between text-sm ml-4">
+                                            <span class="text-emerald-600 font-bold">${fmtRp(d.values[i])}</span>
+                                            <span class="text-slate-400">dari ${fmtRp(d.pagu[i])}</span>
+                                        </div>
+                                        <div class="ml-4 mt-1 w-full bg-slate-100 rounded-full h-1.5">
+                                            <div class="h-1.5 rounded-full transition-all" style="width:${d.pagu[i] > 0 ? Math.min((d.values[i]/d.pagu[i])*100, 100) : 0}%; background:${COLORS[i]}"></div>
+                                        </div>
+                                        <div class="ml-4 text-[10px] font-bold mt-0.5 ${d.pagu[i] > 0 && d.values[i] > d.pagu[i] ? 'text-red-500' : 'text-slate-400'}">
+                                            ${d.pagu[i] > 0 ? ((d.values[i]/d.pagu[i])*100).toFixed(1) + '%' : '0%'}
+                                            ${d.pagu[i] > 0 && d.values[i] > d.pagu[i] ? '⚠️ Over' : ''}
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            const ctx = document.getElementById('chartRealDoughnut');
+            const canvas = document.createElement('canvas');
+            ctx.appendChild(canvas);
+            chartInstances.realisasi = new Chart(canvas.getContext('2d'), {
+                type: 'doughnut',
+                data: {
+                    labels: d.labels,
+                    datasets: [{
+                        data: d.values,
+                        backgroundColor: COLORS_REAL,
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '65%',
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: ctx => fmtRp(ctx.parsed) + ' (' + ((ctx.parsed/d.total)*100).toFixed(1) + '%)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // ===== OPEN MODAL =====
+        function openChartModal(type) {
+            const modal = document.getElementById('chartModal');
+            const title = document.getElementById('chartModalTitle');
+            const container = document.getElementById('chartContent');
+            
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            
+            // Destroy old chart instances
+            destroyCharts();
+            
+            if (type === 'packages') {
+                title.textContent = '📦 Distribusi Paket Pengadaan';
+                renderChartPackages(container);
+            } else if (type === 'budget') {
+                title.textContent = '💰 Distribusi Pagu Anggaran';
+                renderChartBudget(container);
+            } else if (type === 'realisasi') {
+                title.textContent = '✅ Distribusi Realisasi Anggaran';
+                renderChartRealisasi(container);
+            }
+        }
+
+        // Close modal on overlay click
+        document.getElementById('chartModal').addEventListener('click', function(e) {
+            if (e.target === this) closeChartModal();
+        });
+    </script>
+</body>
+</html>

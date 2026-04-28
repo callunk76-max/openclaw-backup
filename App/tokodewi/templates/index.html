@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ settings.shop_name }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root { --primary-color: #ff6b6b; --secondary-color: #f7f7f7; }
+        body { background-color: var(--secondary-color); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .navbar { background-color: var(--primary-color) !important; }
+        .card-product { transition: transform 0.2s; border: none; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .card-product:hover { transform: translateY(-5px); }
+        .btn-primary { background-color: var(--primary-color); border: none; }
+        .btn-primary:hover { background-color: #ee5253; }
+        .category-pill { cursor: pointer; transition: 0.3s; border-radius: 20px; }
+        .active-cat { background-color: var(--primary-color) !important; color: white !important; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a class="navbar-brand fw-bold" href="/">{{ settings.shop_name }} 🛍️</a>
+            <a href="/login" class="btn btn-outline-light btn-sm">Admin ⚙️</a>
+        </div>
+    </nav>
+
+    <div class="container my-4">
+        <div class="text-center mb-5">
+            <h1 class="fw-bold">{{ settings.shop_name }}</h1>
+            <p class="text-muted">{{ settings.description }}</p>
+            
+            <div class="d-flex justify-content-center gap-2 mt-3">
+                <a href="/" class="btn btn-outline-dark category-pill px-4 {{ 'active-cat' if not current_category }}">Semua</a>
+                <a href="/?category=Pakaian" class="btn btn-outline-dark category-pill px-4 {{ 'active-cat' if current_category == 'Pakaian' }}">👕 Pakaian</a>
+                <a href="/?category=Bahan Makanan" class="btn btn-outline-dark category-pill px-4 {{ 'active-cat' if current_category == 'Bahan Makanan' }}">🍎 Bahan Makanan</a>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            {% for p in products %}
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="card card-product h-100">
+                    <img src="{{ p.image if p.image else 'https://via.placeholder.com/300' }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+                    <div class="card-body d-flex flex-column">
+                        <h6 class="card-title fw-bold">{{ p.name }}</h6>
+                        <p class="text-muted small mb-2">{{ p.desc }}</p>
+                        <div class="mt-auto">
+                            <h5 class="text-danger fw-bold mb-3">{{ p.price }}</h5>
+                            <a href="https://wa.me/{{ settings.whatsapp }}?text=Halo {{ settings.shop_name }}, saya mau pesan {{ p.name }} ({{ p.price }})" target="_blank" class="btn btn-primary w-100 btn-sm">Pesan via WA 💬</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

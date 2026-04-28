@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patients - Aramedica Farma</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        body { background-color: #f4f7f6; }
+        .sidebar { min-height: 100vh; background: #2c3e50; color: white; }
+        .sidebar .nav-link { color: #bdc3c7; transition: 0.3s; border-radius: 8px; margin-bottom: 5px; }
+        .sidebar .nav-link:hover, .sidebar .nav-link.active { background: #34495e; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2 sidebar p-3 shadow">
+                <div class="text-center mb-4">
+                    <h4 class="fw-bold">Aramedica 🏥</h4>
+                </div>
+                <nav class="nav flex-column">
+                    <a class="nav-link" href="/dashboard"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a>
+                    <a class="nav-link" href="/pos"><i class="bi bi-cart-plus me-2"></i> POS</a>
+                    <a class="nav-link" href="/inventory"><i class="bi bi-box-seam me-2"></i> Inventory</a>
+                    <a class="nav-link" href="/finance"><i class="bi bi-graph-up-arrow me-2"></i> Finance</a>
+                    <a class="nav-link active" href="/patients"><i class="bi bi-people me-2"></i> Patients</a>
+                    <hr>
+                    <a class="nav-link text-danger" href="/logout"><i class="bi bi-box-arrow-right me-2"></i> Logout</a>
+                </nav>
+            </div>
+
+            <div class="col-md-10 p-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h3 class="fw-bold">Patient Records</h3>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#patientModal"><i class="bi bi-person-plus me-2"></i>Tambah Pasien</button>
+                </div>
+
+                <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nama</th>
+                                    <th>Phone</th>
+                                    <th>Alamat</th>
+                                    <th>Riwayat Medis</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for p in patients %}
+                                <tr>
+                                    <td>{{ p.id }}</td>
+                                    <td class="fw-bold">{{ p.name }}</td>
+                                    <td>{{ p.phone }}</td>
+                                    <td>{{ p.address }}</td>
+                                    <td>{{ p.medical_history }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="patientModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Tambah Data Pasien</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form action="/patients/add" method="POST">
+                    <div class="modal-body">
+                        <div class="mb-3"><label class="form-label">Nama Lengkap</label><input type="text" name="name" class="form-control" required></div>
+                        <div class="mb-3"><label class="form-label">Nomor Telepon</label><input type="text" name="phone" class="form-control"></div>
+                        <div class="mb-3"><label class="form-label">Alamat</label><textarea name="address" class="form-control"></textarea></div>
+                        <div class="mb-3"><label class="form-label">Riwayat Alergi/Medis</label><textarea name="medical_history" class="form-control"></textarea></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan Pasien</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

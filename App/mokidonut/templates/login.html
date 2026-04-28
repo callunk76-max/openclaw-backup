@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Admin - MokiDonut</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-pink-50 flex items-center justify-center h-screen">
+    <div class="bg-white p-8 rounded-2xl shadow-xl w-96 border border-pink-100">
+        <h2 class="text-2xl font-bold text-center text-pink-600 mb-6">Admin Login 🍩</h2>
+        {% if error %}
+        <div class="bg-red-100 text-red-600 p-3 rounded-lg mb-4 text-sm text-center">
+            {{ error }}
+        </div>
+        {% endif %}
+        <form method="POST">
+            <div class="mb-4">
+                <label class="block text-sm font-semibold mb-1">Username</label>
+                <input type="text" name="username" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 outline-none" required>
+            </div>
+            <div class="mb-6">
+                <label class="block text-sm font-semibold mb-1">Password</label>
+                <input type="password" name="password" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 outline-none" required>
+            </div>
+            <button type="submit" class="w-full bg-pink-600 text-white py-2 rounded-lg font-bold hover:bg-pink-700 transition">Login</button>
+        </form>
+    </div>
+</body>
+</html>
