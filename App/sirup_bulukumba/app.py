@@ -258,7 +258,8 @@ def index():
             CASE WHEN procurement_type = 'Jasa Konsultansi' THEN 100000000 ELSE 200000000 END
     """).fetchone()[0] or 0
     pl_anomalies = conn.execute("""
-        SELECT id, package_name, satker, budget, procurement_type,
+        SELECT id, package_name, satker, budget, procurement_type, work_description,
+            'Pengadaan Langsung' as procurement_method,
             CASE WHEN procurement_type = 'Jasa Konsultansi' THEN 100000000 ELSE 200000000 END as threshold
         FROM procurement 
         WHERE procurement_method = 'Pengadaan Langsung'
@@ -277,7 +278,7 @@ def index():
             > CAST(REPLACE(REPLACE(p.budget, 'Rp ', ''), ',', '') AS REAL)
     """).fetchone()[0] or 0
     pagu_anomalies = conn.execute("""
-        SELECT p.id, p.package_name, p.satker, p.budget, 
+        SELECT p.id, p.package_name, p.satker, p.budget, p.procurement_method, p.procurement_type, p.work_description, 
             COALESCE((SELECT SUM(r2."Total Nilai (Rp)") FROM realisasi r2 WHERE r2."Kode RUP" = p.id),
                      (SELECT SUM(r3."Total Nilai (Rp)") FROM realisasi r3 WHERE r3."Nama Paket" = p.package_name AND r3."Nama Satuan Kerja" = p.satker), 0) as realisasi_total
         FROM procurement p

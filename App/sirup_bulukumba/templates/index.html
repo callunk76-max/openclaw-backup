@@ -46,7 +46,7 @@
     <main class="container mx-auto py-8 px-4">
         
         <!-- Package Detail Modal -->
-        <div id="packageModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div id="packageModal" class="fixed inset-0 z-[60] hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
             <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col overflow-hidden transform transition-all">
                 <div class="bg-indigo-700 px-6 py-4 flex justify-between items-center text-white shrink-0">
                     <h3 class="text-xl font-bold">Detail Paket Pengadaan</h3>
@@ -128,7 +128,7 @@
                                 </thead>
                                 <tbody class="divide-y divide-red-50" id="pl-tbody" data-per-page="20">
                                     {% for a in pl_anomalies %}
-                                    <tr class="hover:bg-red-50/50 transition paginated-row">
+                                    <tr class="hover:bg-red-50/50 transition paginated-row cursor-pointer" onclick='openPackageModal({{ a | tojson }})'>
                                         <td class="p-3 text-slate-400 font-mono idx-col">{{ loop.index }}</td>
                                         <td class="p-3 font-semibold text-slate-700 max-w-[250px] truncate">{{ a.package_name }}</td>
                                         <td class="p-3 text-slate-500 max-w-[150px] truncate">{{ a.satker }}</td>
@@ -166,7 +166,7 @@
                                     {% for a in pagu_anomalies %}
                                     {% set _bud = a.budget|replace('Rp ', '')|replace(',', '')|float %}
                                     {% set _over = a.realisasi_total - _bud %}
-                                    <tr class="hover:bg-orange-50/50 transition paginated-row">
+                                    <tr class="hover:bg-orange-50/50 transition paginated-row cursor-pointer" onclick='openPackageModal({{ a | tojson }})'>
                                         <td class="p-3 text-slate-400 font-mono idx-col">{{ loop.index }}</td>
                                         <td class="p-3 font-semibold text-slate-700 max-w-[250px] truncate">{{ a.package_name }}</td>
                                         <td class="p-3 text-slate-500 max-w-[150px] truncate">{{ a.satker }}</td>
