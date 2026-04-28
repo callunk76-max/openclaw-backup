@@ -249,6 +249,46 @@ def index():
     methods = conn.execute("SELECT DISTINCT procurement_method FROM procurement WHERE procurement_method IS NOT NULL").fetchall()
     types = conn.execute("SELECT DISTINCT procurement_type FROM procurement WHERE procurement_type IS NOT NULL").fetchall()
     
+    # ===== ANOMALI =====
+    # 1. PL Over Limit (count all, get top 100)
+    pl_anomaly_count = conn.execute("""
+        SELECT COUNT(*) FROM procurement 
+        WHERE procurement_method = 'Pengadaan Langsung'
+        AND CAST(REPLACE(REPLACE(budget, 'Rp ', ''), ',', '') AS REAL) > 
+            CASE WHEN procurement_type = 'Jasa Konsultansi' THEN 100000000 ELSE 200000000 END
+    """).fetchone()[0] or 0
+    pl_anomalies = conn.execute("""
+        SELECT id, package_name, satker, budget, procurement_type,
+            CASE WHEN procurement_type = 'Jasa Konsultansi' THEN 100000000 ELSE 200000000 END as threshold
+        FROM procurement 
+        WHERE procurement_method = 'Pengadaan Langsung'
+        AND CAST(REPLACE(REPLACE(budget, 'Rp ', ''), ',', '') AS REAL) > 
+            CASE WHEN procurement_type = 'Jasa Konsultansi' THEN 100000000 ELSE 200000000 END
+        ORDER BY CAST(REPLACE(REPLACE(budget, 'Rp ', ''), ',', '') AS REAL) DESC
+        LIMIT 100
+    """).fetchall()
+    
+    # 2. Realisasi Over Pagu (count all, get top 100)
+    pagu_anomaly_count = conn.execute("""
+        SELECT COUNT(*) FROM procurement p
+        WHERE CAST(REPLACE(REPLACE(p.budget, 'Rp ', ''), ',', '') AS REAL) > 0
+        AND COALESCE((SELECT SUM(r2."Total Nilai (Rp)") FROM realisasi r2 WHERE r2."Kode RUP" = p.id),
+                     (SELECT SUM(r3."Total Nilai (Rp)") FROM realisasi r3 WHERE r3."Nama Paket" = p.package_name AND r3."Nama Satuan Kerja" = p.satker), 0) 
+            > CAST(REPLACE(REPLACE(p.budget, 'Rp ', ''), ',', '') AS REAL)
+    """).fetchone()[0] or 0
+    pagu_anomalies = conn.execute("""
+        SELECT p.id, p.package_name, p.satker, p.budget, 
+            COALESCE((SELECT SUM(r2."Total Nilai (Rp)") FROM realisasi r2 WHERE r2."Kode RUP" = p.id),
+                     (SELECT SUM(r3."Total Nilai (Rp)") FROM realisasi r3 WHERE r3."Nama Paket" = p.package_name AND r3."Nama Satuan Kerja" = p.satker), 0) as realisasi_total
+        FROM procurement p
+        WHERE CAST(REPLACE(REPLACE(p.budget, 'Rp ', ''), ',', '') AS REAL) > 0
+        AND COALESCE((SELECT SUM(r2."Total Nilai (Rp)") FROM realisasi r2 WHERE r2."Kode RUP" = p.id),
+                     (SELECT SUM(r3."Total Nilai (Rp)") FROM realisasi r3 WHERE r3."Nama Paket" = p.package_name AND r3."Nama Satuan Kerja" = p.satker), 0) 
+            > CAST(REPLACE(REPLACE(p.budget, 'Rp ', ''), ',', '') AS REAL)
+        ORDER BY realisasi_total DESC
+        LIMIT 100
+    """).fetchall()
+    
     conn.close()
     
     return render_template('index.html', 
@@ -294,7 +334,11 @@ def index():
                            f_budget_dikecualikan=f_budget_dikecualikan,
                            f_budget_lainnya=f_budget_lainnya,
                            total_visits=total_visits,
-                           last_update=last_update
+                           last_update=last_update,
+                           pl_anomalies=[dict(r) for r in pl_anomalies],
+                           pl_anomaly_count=pl_anomaly_count,
+                           pagu_anomalies=[dict(r) for r in pagu_anomalies],
+                           pagu_anomaly_count=pagu_anomaly_count
                            )
 
 @app.route('/export')

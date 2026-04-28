@@ -34,6 +34,11 @@
                    class="bg-white text-indigo-700 px-4 py-2 rounded-lg font-bold hover:bg-indigo-50 transition flex items-center gap-2">
                    <span>📊</span> Excel
                 </a>
+                <button onclick="openAnomalyModal()" 
+                   class="relative bg-white text-red-600 px-4 py-2 rounded-lg font-bold hover:bg-red-50 transition flex items-center gap-2 shadow-md {% if pl_anomaly_count == 0 and pagu_anomaly_count == 0 %}hidden{% endif %}">
+                   <span>⚠️</span> Anomali
+                   <span class="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold shadow-md">{{ pl_anomaly_count + pagu_anomaly_count }}</span>
+                </button>
             </div>
         </div>
     </header>
@@ -84,6 +89,101 @@
                 <div class="p-6 overflow-y-auto" id="chartModalBody">
                     <div id="chartContent" class="space-y-8">
                         <!-- Dynamic charts -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Anomaly Modal -->
+        <div id="anomalyModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] flex flex-col overflow-hidden transform transition-all">
+                <div class="bg-gradient-to-r from-red-600 to-orange-500 px-6 py-4 flex justify-between items-center text-white shrink-0">
+                    <h3 class="text-xl font-bold">⚠️ Anomali Data Pengadaan</h3>
+                    <button onclick="closeAnomalyModal()" class="text-white hover:text-red-200 transition text-2xl">&times;</button>
+                </div>
+                <div class="p-6 overflow-y-auto">
+                    <!-- Tab buttons -->
+                    <div class="flex gap-2 mb-6 border-b border-slate-200 pb-3">
+                        <button onclick="switchAnomalyTab('pl')" id="antab-pl" class="px-5 py-2.5 rounded-lg font-bold text-sm transition flex items-center gap-2 antab-active bg-red-50 text-red-700">
+                            🔴 Pengadaan Langsung melebihi batas <span class="bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-full">{{ pl_anomaly_count }}</span>
+                        </button>
+                        <button onclick="switchAnomalyTab('pagu')" id="antab-pagu" class="px-5 py-2.5 rounded-lg font-bold text-sm transition flex items-center gap-2 bg-slate-100 text-slate-500">
+                            💰 Realisasi melebihi Pagu <span class="bg-orange-500 text-white text-[10px] px-2 py-0.5 rounded-full">{{ pagu_anomaly_count }}</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Tab: PL Over Limit -->
+                    <div id="anomaly-content-pl">
+                        <div class="overflow-x-auto rounded-xl border border-red-100">
+                            <table class="w-full text-left text-xs">
+                                <thead>
+                                    <tr class="bg-red-50 text-slate-600">
+                                        <th class="p-3 font-bold">#</th>
+                                        <th class="p-3 font-bold">Nama Paket</th>
+                                        <th class="p-3 font-bold">Satker</th>
+                                        <th class="p-3 font-bold">Tipe</th>
+                                        <th class="p-3 font-bold">Pagu</th>
+                                        <th class="p-3 font-bold">Batas maks</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-red-50" id="pl-tbody" data-per-page="20">
+                                    {% for a in pl_anomalies %}
+                                    <tr class="hover:bg-red-50/50 transition paginated-row">
+                                        <td class="p-3 text-slate-400 font-mono idx-col">{{ loop.index }}</td>
+                                        <td class="p-3 font-semibold text-slate-700 max-w-[250px] truncate">{{ a.package_name }}</td>
+                                        <td class="p-3 text-slate-500 max-w-[150px] truncate">{{ a.satker }}</td>
+                                        <td class="p-3"><span class="px-2 py-1 bg-red-50 text-red-600 rounded text-[10px] font-bold">{{ a.procurement_type }}</span></td>
+                                        <td class="p-3 font-mono text-red-600 font-bold">{{ a.budget }}</td>
+                                        <td class="p-3 font-mono text-slate-400">Rp {{ "{:,.0f}".format(a.threshold) }}</td>
+                                    </tr>
+                                    {% else %}
+                                    <tr><td colspan="6" class="p-8 text-center text-green-600 font-bold">✅ Semua Pengadaan Langsung sesuai batas</td></tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            <div id="pl-pagination" class="flex items-center justify-center gap-2 mt-4"></div>
+                        </div>
+                        {% if pl_anomaly_count > 100 %}
+                        <p class="text-xs text-slate-400 mt-2 text-center">* Menampilkan 100 data teratas dari {{ pl_anomaly_count }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Tab: Pagu Overspent -->
+                    <div id="anomaly-content-pagu" class="hidden">
+                        <div class="overflow-x-auto rounded-xl border border-orange-100">
+                            <table class="w-full text-left text-xs">
+                                <thead>
+                                    <tr class="bg-orange-50 text-slate-600">
+                                        <th class="p-3 font-bold">#</th>
+                                        <th class="p-3 font-bold">Nama Paket</th>
+                                        <th class="p-3 font-bold">Satker</th>
+                                        <th class="p-3 font-bold">Pagu</th>
+                                        <th class="p-3 font-bold">Realisasi</th>
+                                        <th class="p-3 font-bold">Over</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-orange-50" id="pagu-tbody" data-per-page="20">
+                                    {% for a in pagu_anomalies %}
+                                    {% set _bud = a.budget|replace('Rp ', '')|replace(',', '')|float %}
+                                    {% set _over = a.realisasi_total - _bud %}
+                                    <tr class="hover:bg-orange-50/50 transition paginated-row">
+                                        <td class="p-3 text-slate-400 font-mono idx-col">{{ loop.index }}</td>
+                                        <td class="p-3 font-semibold text-slate-700 max-w-[250px] truncate">{{ a.package_name }}</td>
+                                        <td class="p-3 text-slate-500 max-w-[150px] truncate">{{ a.satker }}</td>
+                                        <td class="p-3 font-mono text-slate-600">{{ a.budget }}</td>
+                                        <td class="p-3 font-mono text-emerald-600 font-bold">Rp {{ "{:,.0f}".format(a.realisasi_total) }}</td>
+                                        <td class="p-3 font-mono text-red-600 font-bold">Rp {{ "{:,.0f}".format(_over) }}</td>
+                                    </tr>
+                                    {% else %}
+                                    <tr><td colspan="6" class="p-8 text-center text-green-600 font-bold">✅ Semua paket dalam batas pagu</td></tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            <div id="pagu-pagination" class="flex items-center justify-center gap-2 mt-4"></div>
+                        </div>
+                        {% if pagu_anomaly_count > 100 %}
+                        <p class="text-xs text-slate-400 mt-2 text-center">* Menampilkan 100 data teratas dari {{ pagu_anomaly_count }}</p>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -317,11 +417,14 @@
                             </td>
                             <td class="p-3 text-xs text-slate-600">{{ p['satker'] }}</td>
                             <td class="p-3">
-                                <span class="px-2 py-1 text-xs font-medium rounded-full bg-indigo-100 text-indigo-700 border border-indigo-200">
+                                {% set _budget_pl = p['budget']|replace('Rp ', '')|replace(',', '')|float if p['budget'] else 0 %}
+                                {% set _threshold_pl = 100000000 if p['procurement_type'] == 'Jasa Konsultansi' else 200000000 %}
+                                {% set is_pl_over = p['procurement_method'] == 'Pengadaan Langsung' and _budget_pl > _threshold_pl %}
+                                <span class="px-2 py-1 text-xs font-medium rounded-full border {% if is_pl_over %}bg-red-50 text-red-700 border-red-200 font-bold{% else %}bg-indigo-100 text-indigo-700 border-indigo-200{% endif %}">
                                     {{ p['procurement_method'] }}
                                 </span>
                             </td>
-                            <td class="p-3 font-mono text-xs font-semibold text-slate-800">
+                            <td class="p-3 font-mono text-xs font-semibold {% if is_pl_over %}text-red-600{% else %}text-slate-800{% endif %}">
                                 Rp {{ "{:,.0f}".format(p['budget']|replace('Rp ', '')|replace(',', '')|float if p['budget'] else 0) }}
                             </td>
                         </tr>
@@ -942,10 +1045,98 @@
             }
         }
 
-        // Close modal on overlay click
-        document.getElementById('chartModal').addEventListener('click', function(e) {
-            if (e.target === this) closeChartModal();
-        });
+        // ===== ANOMALY MODAL =====
+        function openAnomalyModal() {
+            document.getElementById('anomalyModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAnomalyModal() {
+            document.getElementById('anomalyModal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        function paginateTable(tbodyId, paginationId) {
+            const tbody = document.getElementById(tbodyId);
+            const rows = tbody.querySelectorAll('.paginated-row');
+            const perPage = parseInt(tbody.dataset.perPage) || 20;
+            const totalPages = Math.ceil(rows.length / perPage) || 1;
+            let currentPage = 1;
+
+            function showPage(page) {
+                currentPage = page;
+                rows.forEach((row, i) => {
+                    const shouldShow = i >= (page - 1) * perPage && i < page * perPage;
+                    row.style.display = shouldShow ? '' : 'none';
+                    // Update row number
+                    if (shouldShow) {
+                        const idxCell = row.querySelector('.idx-col');
+                        if (idxCell) idxCell.textContent = ((page - 1) * perPage) + (i % perPage) + 1;
+                    }
+                });
+                renderPagination();
+            }
+
+            function renderPagination() {
+                const container = document.getElementById(paginationId);
+                if (totalPages <= 1) { container.innerHTML = ''; return; }
+                
+                let html = '';
+                // Prev button
+                html += `<button onclick="event.stopPropagation();document.getElementById('${tbodyId}').__page=Math.max(1,${currentPage}-1);document.getElementById('${paginationId}').querySelector('[data-page="'+(document.getElementById('${tbodyId}').__page||${currentPage})+'"')`;
+                // Simpler approach - use inline functions
+                container.innerHTML = '';
+                
+                if (currentPage > 1) {
+                    const prev = document.createElement('button');
+                    prev.innerHTML = '‹ Prev';
+                    prev.className = 'px-3 py-1 text-xs font-bold rounded border border-slate-300 hover:bg-slate-100 transition';
+                    prev.onclick = () => showPage(currentPage - 1);
+                    container.appendChild(prev);
+                }
+                
+                for (let p = 1; p <= totalPages; p++) {
+                    const btn = document.createElement('button');
+                    btn.textContent = p;
+                    btn.className = 'px-3 py-1 text-xs font-bold rounded border transition ' + (p === currentPage ? 'bg-indigo-600 text-white border-indigo-600' : 'border-slate-300 hover:bg-slate-100');
+                    btn.onclick = () => showPage(p);
+                    container.appendChild(btn);
+                }
+                
+                if (currentPage < totalPages) {
+                    const next = document.createElement('button');
+                    next.innerHTML = 'Next ›';
+                    next.className = 'px-3 py-1 text-xs font-bold rounded border border-slate-300 hover:bg-slate-100 transition';
+                    next.onclick = () => showPage(currentPage + 1);
+                    container.appendChild(next);
+                }
+            }
+            
+            // Store in dataset
+            tbody.__showPage = showPage;
+            showPage(1);
+        }
+
+        function switchAnomalyTab(tab) {
+            // Toggle tabs
+            document.getElementById('antab-pl').className = 'px-5 py-2.5 rounded-lg font-bold text-sm transition flex items-center gap-2 ' + (tab === 'pl' ? 'bg-red-50 text-red-700 antab-active' : 'bg-slate-100 text-slate-500');
+            document.getElementById('antab-pagu').className = 'px-5 py-2.5 rounded-lg font-bold text-sm transition flex items-center gap-2 ' + (tab === 'pagu' ? 'bg-orange-50 text-orange-700 antab-active' : 'bg-slate-100 text-slate-500');
+            
+            // Toggle content
+            document.getElementById('anomaly-content-pl').classList.toggle('hidden', tab !== 'pl');
+            document.getElementById('anomaly-content-pagu').classList.toggle('hidden', tab !== 'pagu');
+            
+            // Init pagination on visible tab
+            if (tab === 'pl') paginateTable('pl-tbody', 'pl-pagination');
+            else paginateTable('pagu-tbody', 'pagu-pagination');
+        }
+
+        function openAnomalyModal() {
+            document.getElementById('anomalyModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => paginateTable('pl-tbody', 'pl-pagination'), 100);
+        }
+
     </script>
 </body>
 </html>
