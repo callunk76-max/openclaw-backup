@@ -1,0 +1,33 @@
+{
+    "history": {
+        "AUD/CAD": {
+            "consecutive": 1,
+            "stars": 1
+        },
+        "GBP/CAD": {
+            "consecutive": 1,
+            "stars": 0
+        },
+        "AUD/CHF": {
+            "consecutive": 1,
+            "stars": 0
+        },
+        "GBP/USD": {
+            "consecutive": 9,
+            "stars": 0
+        },
+        "EUR/JPY": {
+            "consecutive": 2,
+            "stars": 2
+        },
+        "NZD/USD": {
+            "consecutive": 6,
+            "stars": 0
+        }
+    },
+    "last_pairs": [
+        "AUD/CAD",
+        "GBP/CAD",
+        "AUD/CHF"
+    ]
+}

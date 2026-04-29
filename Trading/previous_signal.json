@@ -1,0 +1,42 @@
+{
+    "strengths": {
+        "USD": 8.43,
+        "EUR": 7.29,
+        "GBP": 6.14,
+        "JPY": 3.43,
+        "AUD": 1.57,
+        "NZD": 0.0,
+        "CAD": 5.0,
+        "CHF": 4.14
+    },
+    "gaps": {
+        "EUR/USD": 1.14,
+        "GBP/USD": 2.29,
+        "USD/JPY": 5.0,
+        "AUD/USD": 6.86,
+        "NZD/USD": 8.43,
+        "USD/CAD": 3.43,
+        "USD/CHF": 4.29,
+        "EUR/GBP": 1.14,
+        "EUR/JPY": 3.86,
+        "EUR/AUD": 5.71,
+        "EUR/NZD": 7.29,
+        "EUR/CAD": 2.29,
+        "EUR/CHF": 3.14,
+        "GBP/JPY": 2.71,
+        "GBP/AUD": 4.57,
+        "GBP/NZD": 6.14,
+        "GBP/CAD": 1.14,
+        "GBP/CHF": 2.0,
+        "AUD/JPY": 1.86,
+        "NZD/JPY": 3.43,
+        "CAD/JPY": 1.57,
+        "CHF/JPY": 0.71,
+        "AUD/NZD": 1.57,
+        "AUD/CAD": 3.43,
+        "AUD/CHF": 2.57,
+        "NZD/CAD": 5.0,
+        "NZD/CHF": 4.14,
+        "CAD/CHF": 0.86
+    }
+}
