@@ -1,0 +1,29 @@
+{
+    "history": {
+        "EUR/NZD": {
+            "consecutive": 24,
+            "stars": 0,
+            "crown_date": "2026-04-29"
+        },
+        "GBP/NZD": {
+            "consecutive": 24,
+            "stars": 0,
+            "crown_date": "2026-04-29"
+        },
+        "NZD/USD": {
+            "consecutive": 22,
+            "stars": 0,
+            "crown_date": "2026-04-29"
+        },
+        "GBP/CAD": {
+            "consecutive": 1,
+            "stars": 0,
+            "crown_date": "2026-04-29"
+        }
+    },
+    "last_pairs": [
+        "EUR/NZD",
+        "GBP/NZD",
+        "NZD/USD"
+    ]
+}

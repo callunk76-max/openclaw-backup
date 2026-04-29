@@ -1,7 +1,109 @@
 import requests
 from datetime import datetime
 import time
+import json
+import os
 from position_manager import load_positions
+
+# Signal history tracking for consecutive numbering
+SIGNAL_HISTORY_FILE = '/root/.openclaw/workspace/Trading/signal_history.json'
+
+def load_signal_history():
+    if os.path.exists(SIGNAL_HISTORY_FILE):
+        with open(SIGNAL_HISTORY_FILE, 'r') as f:
+            data = json.load(f)
+        today = datetime.now().strftime('%Y-%m-%d')
+        # Migrate old format (int values) to new format (dict)
+        if "history" in data:
+            for pair, val in list(data["history"].items()):
+                if isinstance(val, int):
+                    data["history"][pair] = {
+                        "consecutive": val, "stars": 0, "crown_date": today
+                    }
+        return data
+    return {"history": {}, "last_pairs": []}
+
+def update_signal_history(current_pairs):
+    """Track consecutive appearances, stars, and crown for pairs.
+    
+    Same-day logic:
+      👑  = first continuous run (no gaps). Crown stays while present.
+      ⭐  = reappearance after disappearing. Accumulates per gap.
+      num = consecutive appearances within current run.
+    
+    Next day: EVERYTHING resets. All pairs start fresh with 👑.
+    """
+    today = datetime.now().strftime('%Y-%m-%d')
+    history = load_signal_history()
+    last_pairs = set(history.get("last_pairs", []))
+    hist = history.get("history", {})
+    current_set = set(current_pairs)
+
+    updated = {}
+
+    for pair in current_pairs:
+        was_in_last = pair in last_pairs
+        entry = hist.get(pair)
+
+        if entry is None:
+            # Brand new pair — first time ever
+            entry = {"consecutive": 1, "stars": 0, "crown_date": today}
+
+        elif was_in_last:
+            # Ensure crown_date exists (safety for old/migrated entries)
+            entry.setdefault("crown_date", today)
+            # Consecutive appearance — increment
+            entry["consecutive"] = entry.get("consecutive", 0) + 1
+            # Crossing into a new day → full reset
+            if entry.get("crown_date", "") != today:
+                entry["crown_date"] = today
+                entry["stars"] = 0
+                entry["consecutive"] = 1
+
+        else:
+            # Reappearance (was missing last run)
+            crown_date = entry.get("crown_date", "")
+            entry["consecutive"] = 1
+            if crown_date != today:
+                # New day — fresh start
+                entry["stars"] = 0
+                entry["crown_date"] = today
+            else:
+                # Same day — add a star, crown cycle over
+                entry["stars"] = entry.get("stars", 0) + 1
+
+        updated[pair] = entry
+
+    # Keep disappeared pairs in history so star/crown state persists
+    for pair, entry in hist.items():
+        if pair not in current_set:
+            updated[pair] = entry
+
+    history["history"] = updated
+    history["last_pairs"] = current_pairs
+
+    with open(SIGNAL_HISTORY_FILE, 'w') as f:
+        json.dump(history, f, indent=4)
+
+    return updated
+
+def get_pair_display(pair, counts):
+    """Return pair with 👑/⭐/number markings."""
+    data = counts.get(pair, {})
+    consecutive = data.get("consecutive", 0)
+    stars = data.get("stars", 0)
+    crown_date = data.get("crown_date", "")
+    today = datetime.now().strftime('%Y-%m-%d')
+
+    # 👑 mode: no stars, active crown cycle
+    if stars == 0 and crown_date == today:
+        return f"{pair} 👑{consecutive}"
+
+    # ⭐ mode: reappeared after disappearing
+    if stars > 0:
+        return f"{pair} {'⭐' * stars}{consecutive}"
+
+    return pair
 
 # Configuration
 CURRENCIES = ['USD', 'EUR', 'GBP', 'JPY', 'AUD', 'NZD', 'CAD', 'CHF']
@@ -160,7 +262,14 @@ def generate_signal():
                     'conf': conf_emoji
                 })
 
-    top_3 = sorted(all_gaps, key=lambda x: x['gap'], reverse=True)[:3]
+    # Filter by minimum gap 5.5, then take top 3 or fewer
+    MIN_GAP = 5.5
+    top_3 = sorted([g for g in all_gaps if g['gap'] >= MIN_GAP],
+                   key=lambda x: x['gap'], reverse=True)[:3]
+    
+    # Track signal history for consecutive numbering
+    current_pairs = [s['pair'] for s in top_3]
+    signal_counts = update_signal_history(current_pairs) if current_pairs else {}
     
     # ---------------- BUILD MESSAGE ---------------- #
     msg_parts = []
@@ -186,12 +295,21 @@ def generate_signal():
         msg_parts.extend(position_updates)
         msg_parts.append(f"〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️")
 
-    # Top 3
-    msg_parts.append(f"🎯 **TOP 3 TRADING OPPORTUNITIES**")
+    # Top opportunities (minimum gap 5.5)
+    if top_3:
+        count = len(top_3)
+        if count == 1:
+            msg_parts.append(f"🎯 **TOP OPPORTUNITY**")
+        else:
+            msg_parts.append(f"🎯 **TOP {count} OPPORTUNITIES**")
+    else:
+        msg_parts.append(f"🎯 **NO SIGNALS** | Min gap 5.5, none qualified ✅")
+        msg_parts.append(f"   └ Wait for wider spread between currencies")
     for idx, s in enumerate(top_3, 1):
         base, quote = s['pair'].split('/')
         
-        msg_parts.append(f"{idx}️⃣ **{s['pair']}**")
+        display_pair = get_pair_display(s['pair'], signal_counts)
+        msg_parts.append(f"{idx}️⃣ **{display_pair}**")
         msg_parts.append(f"⚡ Power : {base} ({s['base_val']:.2f}) vs {quote} ({s['quote_val']:.2f})")
         msg_parts.append(f"📉 Gap   : {s['gap']:.2f} Pts")
         msg_parts.append(f"📈 Action: {s['action']}")

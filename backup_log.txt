@@ -1319,3 +1319,330 @@ remote: error: GH001: Large files detected. You may want to try Git Large File S
 To github.com:callunk76-max/openclaw-backup.git
  ! [remote rejected] main -> main (pre-receive hook declined)
 error: failed to push some refs to 'github.com:callunk76-max/openclaw-backup.git'
+sending incremental file list
+./
+AGENTS.md
+HEARTBEAT.md
+IDENTITY.md
+SOUL.md
+TOOLS.md
+USER.md
+ambil_data.py
+ambil_data_debug.py
+ambil_data_fast.py
+ambil_data_final.py
+ambil_data_siput.py
+backup_log.txt
+backup_to_github.sh
+check_inaproc.py
+convert_docs.py
+convert_md_to_docx.py
+date_field_debug.png
+debug_dikerja.py
+debug_sirup.py
+dikerja_automation.py
+error_debug.png
+inaproc_content.html
+inaproc_home.png
+make_word.py
+modal_dump.html
+sirup_debug.png
+sirup_debug_content.html
+tender_D411_2026.json
+tender_D411_2026_cloud.json
+.openclaw/
+.openclaw/workspace-state.json
+App/
+App/aramedica/
+App/aramedica/app.log
+App/aramedica/app.py
+App/aramedica/pharmacy.db
+App/aramedica/seed_data.py
+App/aramedica/templates/
+App/aramedica/templates/index.html
+App/aramedica/templates/login.html
+App/aramedica/templates/admin/
+App/aramedica/templates/admin/dashboard.html
+App/aramedica/templates/admin/finance.html
+App/aramedica/templates/admin/inventory.html
+App/aramedica/templates/admin/patients.html
+App/aramedica/templates/admin/pos.html
+App/mokidonut/
+App/mokidonut/app.log
+App/mokidonut/app.py
+App/mokidonut/donuts.json
+App/mokidonut/settings.json
+App/mokidonut/static/
+App/mokidonut/static/uploads/
+App/mokidonut/static/uploads/IMG-20260418-WA0001.jpg
+App/mokidonut/static/uploads/IMG-20260418-WA0002.jpg
+App/mokidonut/static/uploads/Kue.jpeg
+App/mokidonut/static/uploads/Savory.jpeg
+App/mokidonut/templates/
+App/mokidonut/templates/admin.html
+App/mokidonut/templates/index.html
+App/mokidonut/templates/login.html
+App/sirup_buluk uma/
+App/sirup_buluk uma/prepare_db.py
+App/sirup_bulukumba/
+App/sirup_bulukumba/app.log
+App/sirup_bulukumba/app.py
+App/sirup_bulukumba/bulukumba.db
+App/sirup_bulukumba/prepare_db.py
+App/sirup_bulukumba/sync_inaproc.py
+App/sirup_bulukumba/sync_inaproc_cloud.py
+App/sirup_bulukumba/prepare_/
+App/sirup_bulukumba/prepare_/db.py
+App/sirup_bulukumba/templates/
+App/sirup_bulukumba/templates/index.html
+App/tokodewi/
+App/tokodewi/app.py
+App/tokodewi/products.json
+App/tokodewi/settings.json
+App/tokodewi/static/
+App/tokodewi/static/uploads/
+App/tokodewi/static/uploads/Kue.jpeg
+App/tokodewi/static/uploads/Screenshot_2026-04-21-22-15-59-651-edit_com.whatsapp.jpg
+App/tokodewi/static/uploads/images.jpeg
+App/tokodewi/static/uploads/images_1.jpeg
+App/tokodewi/static/uploads/photo.webp
+App/tokodewi/templates/
+App/tokodewi/templates/admin.html
+App/tokodewi/templates/edit_product.html
+App/tokodewi/templates/index.html
+App/tokodewi/templates/login.html
+LPSE/
+LPSE/Contoh_Dokumen_Cuy.docx
+LPSE/Lampiran_Kontak_Darurat.docx
+LPSE/Lampiran_Tabel_Regulasi.docx
+LPSE/Nomor_Darurat.docx
+LPSE/SK_Formal_Tim_BCM.docx
+LPSE/SK_Tim_BCM.docx
+LPSE/SOP_BCM.docx
+LPSE/SOP_Formal_BCM.docx
+LPSE/SOP_Formal_Kepatuhan.docx
+LPSE/SOP_Kepatuhan.docx
+LPSE/Tabel_Regulasi.xlsx
+Trading/
+Trading/callunk.mq4
+Trading/crontab.txt
+Trading/cuypro_trader.pine
+Trading/debug_data.py
+Trading/new_SC.pine
+Trading/position_manager.py
+Trading/send_signal.sh
+Trading/signal_log.txt
+Trading/test_powers.py
+Trading/trading_scraper.py
+Trading/trading_signal.py
+Trading/trading_snapshot.py
+Trading/trading_strength.txt
+Trading/tv_snapshot.jpg
+Trading/trading_/
+Trading/trading_/signal.py
+backup/
+memory/
+memory/2026-04-17.md
+memory/2026-04-22.md
+memory/2026-04-26-0836.md
+memory/2026-04-26-rate-limit.md
+memory/2026-04-26.md
+memory/automation-dikerja.md
+memory/.dreams/
+memory/.dreams/events.jsonl
+memory/.dreams/short-term-recall.json
+nemesis_analysis/
+state/
+
+sent 4,860,327 bytes  received 2,196 bytes  9,725,046.00 bytes/sec
+total size is 4,850,766  speedup is 1.00
+fatal: in unpopulated submodule 'github_backup'
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   ../backup_log.txt
+	modified:   ../memory/.dreams/events.jsonl
+	modified:   ../memory/.dreams/short-term-recall.json
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	../memory/2026-04-26-0836.md
+	../memory/2026-04-26-rate-limit.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+Everything up-to-date
+✅ Sent via Telegram. Message ID: 2106
+sending incremental file list
+./
+backup_log.txt
+fix_badge.py
+fix_html.py
+fix_html2.py
+fix_html_final.py
+fix_modal_final_revert.py
+fix_modal_look.py
+test_scrape.py
+App/
+App/Penyedia_blk.xlsx
+App/sirup_bulukumba/
+App/sirup_bulukumba/app.log
+App/sirup_bulukumba/app.py
+App/sirup_bulukumba/bulukumba.db
+App/sirup_bulukumba/healthcheck.sh
+App/sirup_bulukumba/import_penyedia.py
+App/sirup_bulukumba/templates/
+App/sirup_bulukumba/templates/index.html
+App/sirup_bulukumba/templates/penyedia.html
+LPSE/
+LPSE/Dokumen_Standarisasi_LPSE_Cetak.zip
+LPSE/convert_all.py
+LPSE/Rencana_Standarisasi/AKSI/Standar10/
+LPSE/Rencana_Standarisasi/AKSI/Standar10/Form_Daftar_Informasi.docx
+LPSE/Rencana_Standarisasi/AKSI/Standar10/Form_Pencatatan_Data_Akses.docx
+LPSE/Rencana_Standarisasi/AKSI/Standar10/SOP_Pemberian_Remote_Akses.docx
+LPSE/Rencana_Standarisasi/AKSI/Standar10/SOP_Pengelolaan_Informasi.docx
+LPSE/Rencana_Standarisasi/AKSI/Standar11/
+LPSE/Rencana_Standarisasi/AKSI/Standar11/BA_Pemantauan_Log_Activity.docx
+LPSE/Rencana_Standarisasi/AKSI/Standar11/SOP_Backup_Restore_Data.docx
+LPSE/Rencana_Standarisasi/AKSI/Standar11/SOP_Pengelolaan_Log_Activity.docx
+LPSE/Rencana_Standarisasi/AKSI/Standar12/
+LPSE/Rencana_Standarisasi/AKSI/Standar12/SK_Tim_Kelangsungan_Layanan.docx
+LPSE/Rencana_Standarisasi/AKSI/Standar12/SOP_Pengelolaan_Kelangsungan_Layanan.docx
+LPSE/Rencana_Standarisasi/AKSI/Standar14/
+LPSE/Rencana_Standarisasi/AKSI/Standar14/Form_Daftar_Pendukung_Layanan.docx
+LPSE/Rencana_Standarisasi/AKSI/Standar14/Form_Evaluasi_Pendukung_Layanan.docx
+LPSE/Rencana_Standarisasi/AKSI/Standar14/SOP_Pemantauan_Kinerja_Pendukung_Layanan.docx
+LPSE/Rencana_Standarisasi/AKSI/Standar14/SOP_Pengelolaan_Pendukung_Layanan.docx
+LPSE/Rencana_Standarisasi/AKSI/Standar15/
+LPSE/Rencana_Standarisasi/AKSI/Standar15/Form_Survey_Kepuasan_Pengguna.docx
+LPSE/Rencana_Standarisasi/AKSI/Standar15/Laporan_Hasil_Survey_Kepuasan_Pengguna.docx
+LPSE/Rencana_Standarisasi/AKSI/Standar15/SOP_Pengelolaan_Kepuasan_Pengguna.docx
+LPSE/Rencana_Standarisasi/AKSI/Standar16/
+LPSE/Rencana_Standarisasi/AKSI/Standar16/Daftar_Peraturan_Perundangan.docx
+LPSE/Rencana_Standarisasi/AKSI/Standar16/SOP_Kepatuhan_Peraturan_Perundangan.docx
+LPSE/Rencana_Standarisasi/AKSI/Standar17/
+LPSE/Rencana_Standarisasi/AKSI/Standar17/Program_Jadwal_Audit_Internal.docx
+LPSE/Rencana_Standarisasi/AKSI/Standar17/SK_Tim_Auditor_Internal.docx
+LPSE/Rencana_Standarisasi/AKSI/Standar17/SOP_Audit_Internal.docx
+LPSE/Rencana_Standarisasi/AKSI/Standar17/SOP_Tinjauan_Manajemen.docx
+LPSE/Rencana_Standarisasi/AKSI/Standar9/
+LPSE/Rencana_Standarisasi/AKSI/Standar9/Form_Pencatatan_Penggunaan_Fasilitas.docx
+LPSE/Rencana_Standarisasi/AKSI/Standar9/Laporan_Pengelolaan_Keamanan_Perangkat.docx
+LPSE/Rencana_Standarisasi/AKSI/Standar9/SOP_Penggunaan_Fasilitas_LPSE.docx
+LPSE/Standarisasi_LPSE_2026_Output/
+LPSE/Standarisasi_LPSE_2026_Output/Panduan Pengisian Form dan BA.docx
+LPSE/Standarisasi_LPSE_2026_Output/Panduan Standarisasi LPSE 2022 (Migrasi Basis Data & Aplikasi).docx
+LPSE/Standarisasi_LPSE_2026_Output/Paparan Standarisasi LPSE 2022.pdf
+LPSE/Standarisasi_LPSE_2026_Output/ceklist.xlsx
+LPSE/Standarisasi_LPSE_2026_Output/AKSI/
+LPSE/Standarisasi_LPSE_2026_Output/AKSI/Standar10/
+LPSE/Standarisasi_LPSE_2026_Output/AKSI/Standar10/Form_Daftar_Informasi.docx
+LPSE/Standarisasi_LPSE_2026_Output/AKSI/Standar10/Form_Pencatatan_Data_Akses.docx
+LPSE/Standarisasi_LPSE_2026_Output/AKSI/Standar10/SOP_Pemberian_Remote_Akses.docx
+LPSE/Standarisasi_LPSE_2026_Output/AKSI/Standar10/SOP_Pengelolaan_Informasi.docx
+LPSE/Standarisasi_LPSE_2026_Output/AKSI/Standar11/
+LPSE/Standarisasi_LPSE_2026_Output/AKSI/Standar11/BA_Pemantauan_Log_Activity.docx
+LPSE/Standarisasi_LPSE_2026_Output/AKSI/Standar11/SOP_Backup_Restore_Data.docx
+LPSE/Standarisasi_LPSE_2026_Output/AKSI/Standar11/SOP_Pengelolaan_Log_Activity.docx
+LPSE/Standarisasi_LPSE_2026_Output/AKSI/Standar12/
+LPSE/Standarisasi_LPSE_2026_Output/AKSI/Standar12/SK Kebijakan Keamanan Informasi.docx
+LPSE/Standarisasi_LPSE_2026_Output/AKSI/Standar12/SK_Tim_Kelangsungan_Layanan.docx
+LPSE/Standarisasi_LPSE_2026_Output/AKSI/Standar12/SOP_Pengelolaan_Kelangsungan_Layanan.docx
+LPSE/Standarisasi_LPSE_2026_Output/AKSI/Standar12/Screenshot 2025-10-03 160408.png
+LPSE/Standarisasi_LPSE_2026_Output/AKSI/Standar14/
+LPSE/Standarisasi_LPSE_2026_Output/AKSI/Standar14/Dokumen BCP_DRP.docx
+LPSE/Standarisasi_LPSE_2026_Output/AKSI/Standar14/Form_Daftar_Pendukung_Layanan.docx
+LPSE/Standarisasi_LPSE_2026_Output/AKSI/Standar14/Form_Evaluasi_Pendukung_Layanan.docx
+LPSE/Standarisasi_LPSE_2026_Output/AKSI/Standar14/SOP_Pemantauan_Kinerja_Pendukung_Layanan.docx
+LPSE/Standarisasi_LPSE_2026_Output/AKSI/Standar14/SOP_Pengelolaan_Pendukung_Layanan.docx
+LPSE/Standarisasi_LPSE_2026_Output/AKSI/Standar14/Screenshot 2025-10-03 160532.png
+LPSE/Standarisasi_LPSE_2026_Output/AKSI/Standar15/
+LPSE/Standarisasi_LPSE_2026_Output/AKSI/Standar15/Form_Survey_Kepuasan_Pengguna.docx
+LPSE/Standarisasi_LPSE_2026_Output/AKSI/Standar15/Laporan_Hasil_Survey_Kepuasan_Pengguna.docx
+LPSE/Standarisasi_LPSE_2026_Output/AKSI/Standar15/SOP Helpdesk.docx
+LPSE/Standarisasi_LPSE_2026_Output/AKSI/Standar15/SOP_Pengelolaan_Kepuasan_Pengguna.docx
+LPSE/Standarisasi_LPSE_2026_Output/AKSI/Standar15/Screenshot 2025-10-03 160557.png
+LPSE/Standarisasi_LPSE_2026_Output/AKSI/Standar16/
+LPSE/Standarisasi_LPSE_2026_Output/AKSI/Standar16/Daftar_Peraturan_Perundangan.docx
+LPSE/Standarisasi_LPSE_2026_Output/AKSI/Standar16/SOP_Kepatuhan_Peraturan_Perundangan.docx
+LPSE/Standarisasi_LPSE_2026_Output/AKSI/Standar17/
+LPSE/Standarisasi_LPSE_2026_Output/AKSI/Standar17/Program_Jadwal_Audit_Internal.docx
+LPSE/Standarisasi_LPSE_2026_Output/AKSI/Standar17/SK_Tim_Auditor_Internal.docx
+LPSE/Standarisasi_LPSE_2026_Output/AKSI/Standar17/SOP_Audit_Internal.docx
+LPSE/Standarisasi_LPSE_2026_Output/AKSI/Standar17/SOP_Tinjauan_Manajemen.docx
+LPSE/Standarisasi_LPSE_2026_Output/AKSI/Standar9/
+LPSE/Standarisasi_LPSE_2026_Output/AKSI/Standar9/Form_Pencatatan_Penggunaan_Fasilitas.docx
+LPSE/Standarisasi_LPSE_2026_Output/AKSI/Standar9/Laporan_Pengelolaan_Keamanan_Perangkat.docx
+LPSE/Standarisasi_LPSE_2026_Output/AKSI/Standar9/SOP_Penggunaan_Fasilitas_LPSE.docx
+Trading/positions.json
+Trading/signal_log.txt
+memory/
+memory/2026-04-27.md
+
+sent 22,316,919 bytes  received 1,732 bytes  44,637,302.00 bytes/sec
+total size is 57,202,895  speedup is 2.56
+fatal: in unpopulated submodule 'github_backup'
+On branch main
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   ../App/sirup_bulukumba/app.log
+	deleted:    ../LPSE/Contoh_Dokumen_Cuy.docx
+	deleted:    ../LPSE/Lampiran_Kontak_Darurat.docx
+	deleted:    ../LPSE/Lampiran_Tabel_Regulasi.docx
+	deleted:    ../LPSE/Nomor_Darurat.docx
+	deleted:    ../LPSE/SK_Formal_Tim_BCM.docx
+	deleted:    ../LPSE/SK_Tim_BCM.docx
+	deleted:    ../LPSE/SOP_BCM.docx
+	deleted:    ../LPSE/SOP_Formal_BCM.docx
+	deleted:    ../LPSE/SOP_Formal_Kepatuhan.docx
+	deleted:    ../LPSE/SOP_Kepatuhan.docx
+	deleted:    ../LPSE/Tabel_Regulasi.xlsx
+	modified:   ../Trading/positions.json
+	modified:   ../Trading/signal_log.txt
+	modified:   ../backup_log.txt
+	modified:   ../memory/.dreams/events.jsonl
+	modified:   ../memory/.dreams/short-term-recall.json
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	../App/Penyedia_blk.xlsx
+	../App/sirup_bulukumba/healthcheck.sh
+	../LPSE/Dokumen_Standarisasi_LPSE_Cetak.zip
+	../LPSE/Rencana_Standarisasi/
+	../LPSE/SK LPSE LKPP.pdf
+	../LPSE/Standarisasi_LPSE_2026_Output/
+	../LPSE/convert_all.py
+	../fix_badge.py
+	../fix_html.py
+	../fix_html2.py
+	../fix_html_final.py
+	../fix_modal_final_revert.py
+	../fix_modal_look.py
+	../memory/2026-04-26-0836.md
+	../memory/2026-04-26-rate-limit.md
+	../memory/2026-04-27.md
+	../test_scrape.py
+
+no changes added to commit (use "git add" and/or "git commit -a")
+Everything up-to-date
+✅ Sent via Telegram. Message ID: 2402
+sending incremental file list
+backup_log.txt
+App/sirup_bulukumba/app.py
+App/sirup_bulukumba/visitor_count.json
+App/sirup_bulukumba/templates/index.html
+Trading/signal_log.txt
+memory/
+memory/2026-04-28-default-switch.md
+memory/2026-04-28.md
+
+sent 456,450 bytes  received 214 bytes  913,328.00 bytes/sec
+total size is 57,347,044  speedup is 125.58
+[master d832c18] Daily Backup from Cuy - 2026-04-29 03:00
+ 7 files changed, 900 insertions(+), 6 deletions(-)
+ create mode 100644 memory/2026-04-28-default-switch.md
+ create mode 100644 memory/2026-04-28.md
+error: src refspec main does not match any
+error: failed to push some refs to 'github.com:callunk76-max/openclaw-backup.git'
