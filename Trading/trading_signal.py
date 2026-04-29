@@ -179,6 +179,32 @@ def calculate_powers():
     
     return sorted_powers, normalized
 
+# Previous signal tracking for delta display
+PREV_SIGNAL_FILE = '/root/.openclaw/workspace/Trading/previous_signal.json'
+
+def load_prev_signal():
+    if os.path.exists(PREV_SIGNAL_FILE):
+        try:
+            with open(PREV_SIGNAL_FILE, 'r') as f:
+                return json.load(f)
+        except:
+            return {}
+    return {}
+
+def save_prev_signal(data):
+    with open(PREV_SIGNAL_FILE, 'w') as f:
+        json.dump(data, f, indent=4)
+
+def fmt_delta(current, previous):
+    """Format delta string, e.g. (+0.5) or (-0.3)."""
+    if previous is None:
+        return ''
+    diff = round(current - previous, 1)
+    if diff == 0:
+        return ' (±0.0)'
+    return f' ({diff:+.1f})'
+
+
 def get_decision_label(gap):
     if gap >= 7.0: return "ENTER NOW 🔥", "✅"
     elif gap >= 5.0: return "WAIT FOR DIP ⏳", "☑️"
@@ -271,6 +297,16 @@ def generate_signal():
     current_pairs = [s['pair'] for s in top_3]
     signal_counts = update_signal_history(current_pairs) if current_pairs else {}
     
+    # ---------------- LOAD PREVIOUS STATE FOR DELTAS ---------------- #
+    prev = load_prev_signal()
+    prev_strengths = prev.get('strengths', {})
+    prev_gaps = prev.get('gaps', {})
+
+    # Save current state for next run
+    current_strengths = {c: round(v, 2) for c, v in all_powers.items()}
+    current_gaps = {g['pair']: round(g['gap'], 2) for g in all_gaps}
+    save_prev_signal({'strengths': current_strengths, 'gaps': current_gaps})
+
     # ---------------- BUILD MESSAGE ---------------- #
     msg_parts = []
     msg_parts.append(f"🤖 **CALLUNK AI TRADING AGENT**")
@@ -285,7 +321,9 @@ def generate_signal():
         elif i == 2: emoji = "🥉"
         elif i == len(sorted_powers) - 1: emoji = "💀"
         else: emoji = "🔹"
-        msg_parts.append(f"{emoji} {curr} : {val:.2f}")
+        prev_val = prev_strengths.get(curr)
+        delta = fmt_delta(val, prev_val) if prev_val is not None else ''
+        msg_parts.append(f"{emoji} {curr} : {val:.2f}{delta}")
     
     msg_parts.append(f"〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️")
     
@@ -309,9 +347,11 @@ def generate_signal():
         base, quote = s['pair'].split('/')
         
         display_pair = get_pair_display(s['pair'], signal_counts)
+        prev_gap_val = prev_gaps.get(s['pair'])
+        gap_delta = fmt_delta(s['gap'], prev_gap_val) if prev_gap_val is not None else ''
         msg_parts.append(f"{idx}️⃣ **{display_pair}**")
         msg_parts.append(f"⚡ Power : {base} ({s['base_val']:.2f}) vs {quote} ({s['quote_val']:.2f})")
-        msg_parts.append(f"📉 Gap   : {s['gap']:.2f} Pts")
+        msg_parts.append(f"📉 Gap   : {s['gap']:.2f}{gap_delta} Pts")
         msg_parts.append(f"📈 Action: {s['action']}")
         msg_parts.append(f"🎯 Status: {s['conf']} {s['decision']}")
         if idx < 3: msg_parts.append("")
