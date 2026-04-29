@@ -196,12 +196,12 @@ def save_prev_signal(data):
         json.dump(data, f, indent=4)
 
 def fmt_delta(current, previous):
-    """Format delta string, e.g. (+0.5) or (-0.3)."""
+    """Format delta string, e.g. (+0.5) or (-0.3). Empty if unchanged."""
     if previous is None:
         return ''
     diff = round(current - previous, 1)
     if diff == 0:
-        return ' (±0.0)'
+        return ''
     return f' ({diff:+.1f})'
 
 
