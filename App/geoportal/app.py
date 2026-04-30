@@ -212,6 +212,20 @@ def api_stats():
         'categories': categories
     })
 
+@app.route('/flood')
+def flood_view():
+    return render_template('flood.html',
+        geonode_url=GEONODE_URL,
+        geoserver_url=GEOSERVER_URL
+    )
+
+@app.route('/flood3d')
+def flood3d_view():
+    return render_template('flood3d.html',
+        geonode_url=GEONODE_URL,
+        geoserver_url=GEOSERVER_URL
+    )
+
 @app.route('/maps')
 def maps_view():
     return render_template('maps.html',

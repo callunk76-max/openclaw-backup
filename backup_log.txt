@@ -1647,3 +1647,51 @@ total size is 57,347,044  speedup is 125.58
 error: src refspec main does not match any
 error: failed to push some refs to 'github.com:callunk76-max/openclaw-backup.git'
 sending incremental file list
+backup_log.txt
+App/
+App/geoportal/
+App/geoportal/app.py
+App/geoportal/static/
+App/geoportal/templates/
+App/geoportal/templates/dataset_detail.html
+App/geoportal/templates/datasets.html
+App/geoportal/templates/index.html
+App/geoportal/templates/maps.html
+App/sirup_bulukumba/
+App/sirup_bulukumba/app.log
+App/sirup_bulukumba/app.py
+App/sirup_bulukumba/bulukumba.db
+App/sirup_bulukumba/restart_log.txt
+App/sirup_bulukumba/visitor_count.json
+App/sirup_bulukumba/templates/index.html
+Trading/
+Trading/previous_signal.json
+Trading/signal_history.json
+Trading/signal_history.json.bak
+Trading/signal_log.txt
+Trading/trading_signal.py
+Trading/trading_/
+memory/
+memory/2026-04-28-default-switch.md
+memory/2026-04-29-responsive-card-scale.md
+memory/2026-04-29-table-filter-pagination.md
+
+sent 4,152,677 bytes  received 493 bytes  8,306,340.00 bytes/sec
+total size is 57,541,704  speedup is 13.85
+[master 948408a] Daily Backup from Cuy - 2026-04-30 03:00
+ 20 files changed, 5466 insertions(+), 1141 deletions(-)
+ create mode 100644 App/geoportal/app.py
+ create mode 100644 App/geoportal/templates/dataset_detail.html
+ create mode 100644 App/geoportal/templates/datasets.html
+ create mode 100644 App/geoportal/templates/index.html
+ create mode 100644 App/geoportal/templates/maps.html
+ create mode 100644 Trading/previous_signal.json
+ create mode 100644 Trading/signal_history.json
+ create mode 100644 Trading/signal_history.json.bak
+ create mode 100644 memory/2026-04-29-responsive-card-scale.md
+ create mode 100644 memory/2026-04-29-table-filter-pagination.md
+error: src refspec main does not match any
+error: failed to push some refs to 'github.com:callunk76-max/openclaw-backup.git'
+sending incremental file list
+./
+TOOLS.md

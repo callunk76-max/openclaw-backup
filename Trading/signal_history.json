@@ -1,5 +1,45 @@
 {
     "history": {
+        "USD/JPY": {
+            "consecutive": 18,
+            "stars": 1,
+            "crown_date": "2026-04-30"
+        },
+        "EUR/JPY": {
+            "consecutive": 9,
+            "stars": 1,
+            "crown_date": "2026-04-30"
+        },
+        "USD/CHF": {
+            "consecutive": 2,
+            "stars": 3,
+            "crown_date": "2026-04-30"
+        },
+        "EUR/CHF": {
+            "consecutive": 1,
+            "stars": 0,
+            "crown_date": "2026-04-30"
+        },
+        "AUD/JPY": {
+            "consecutive": 6,
+            "stars": 3,
+            "crown_date": "2026-04-30"
+        },
+        "NZD/JPY": {
+            "consecutive": 1,
+            "stars": 1,
+            "crown_date": "2026-04-30"
+        },
+        "CAD/JPY": {
+            "consecutive": 10,
+            "stars": 0,
+            "crown_date": "2026-04-30"
+        },
+        "NZD/CAD": {
+            "consecutive": 2,
+            "stars": 0,
+            "crown_date": "2026-04-30"
+        },
         "NZD/USD": {
             "consecutive": 50,
             "stars": 0,
@@ -27,8 +67,8 @@
         }
     },
     "last_pairs": [
-        "NZD/USD",
-        "EUR/NZD",
-        "AUD/USD"
+        "USD/JPY",
+        "EUR/JPY",
+        "USD/CHF"
     ]
 }

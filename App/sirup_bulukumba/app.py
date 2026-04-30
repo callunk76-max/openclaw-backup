@@ -752,6 +752,61 @@ def upload_penyedia():
     return jsonify({'success': True, 'message': msg, 'total_verified': total_verified})
 
 
+@app.route('/api/penyedia')
+def api_penyedia():
+    search_query = request.args.get('search', '')
+    verif_filter = request.args.get('verif', '')
+    page = int(request.args.get('page', 1))
+    per_page = 50
+    offset = (page - 1) * per_page
+
+    conn = get_db_connection()
+    count_query = "SELECT COUNT(*) FROM penyedia WHERE 1=1"
+    data_query = "SELECT * FROM penyedia WHERE 1=1"
+    params = []
+    if search_query:
+        count_query += " AND (nama LIKE ? OR npwp LIKE ? OR jenis_usaha LIKE ? OR alamat LIKE ?)"
+        data_query += " AND (nama LIKE ? OR npwp LIKE ? OR jenis_usaha LIKE ? OR alamat LIKE ?)"
+        sq = f'%{search_query}%'
+        params.extend([sq, sq, sq, sq])
+    if verif_filter == 'verified':
+        count_query += " AND terverifikasi = 1"
+        data_query += " AND terverifikasi = 1"
+    elif verif_filter == 'unverified':
+        count_query += " AND (terverifikasi IS NULL OR terverifikasi = 0)"
+        data_query += " AND (terverifikasi IS NULL OR terverifikasi = 0)"
+    elif verif_filter == 'pt':
+        count_query += " AND jenis_usaha LIKE '%PT%'"
+        data_query += " AND jenis_usaha LIKE '%PT%'"
+    elif verif_filter == 'perorangan':
+        count_query += " AND (jenis_usaha LIKE '%Perorangan%' OR jenis_usaha LIKE '%Usaha Perorangan%')"
+        data_query += " AND (jenis_usaha LIKE '%Perorangan%' OR jenis_usaha LIKE '%Usaha Perorangan%')"
+    total_count = conn.execute(count_query, params).fetchone()[0] or 0
+    total_pages = max(1, (total_count + per_page - 1) // per_page)
+    data_query += " ORDER BY nama ASC LIMIT ? OFFSET ?"
+    data_params = params + [per_page, offset]
+    rows = conn.execute(data_query, data_params).fetchall()
+    vendors = [dict(r) for r in rows]
+    total_vendors = conn.execute("SELECT COUNT(*) FROM penyedia").fetchone()[0] or 0
+    total_pt = conn.execute("SELECT COUNT(*) FROM penyedia WHERE jenis_usaha LIKE '%PT%'").fetchone()[0] or 0
+    total_perorangan = conn.execute("SELECT COUNT(*) FROM penyedia WHERE jenis_usaha LIKE '%Perorangan%'").fetchone()[0] or 0
+    total_verified = conn.execute("SELECT COUNT(*) FROM penyedia WHERE terverifikasi = 1").fetchone()[0] or 0
+    conn.close()
+    return jsonify({
+        'vendors': vendors,
+        'total_count': total_count,
+        'total_pages': total_pages,
+        'current_page': page,
+        'per_page': per_page,
+        'total_vendors': total_vendors,
+        'total_pt': total_pt,
+        'total_perorangan': total_perorangan,
+        'total_verified': total_verified,
+        'search_query': search_query,
+        'verif_filter': verif_filter,
+    })
+
+
 @app.route('/api/penyedia_detail')
 def api_penyedia_detail():
     nama = request.args.get('nama', '').strip()

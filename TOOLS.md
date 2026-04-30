@@ -2,6 +2,13 @@
 
 Skills define _how_ tools work. This file is for _your_ specifics — the stuff that's unique to your setup.
 
+## Web Scraping Protocol (per Callunk)
+
+When asked to scrape/extract data from any website, ALWAYS use the **stealth-browser + Tavily search combo**:
+1. **Tavily Search** first — to find relevant pages, URLs, and summary info
+2. **Stealth Browser** (puppeteer-extra + stealth plugin) — to access blocked/protected sites and extract detailed data
+3. Cross-reference results from both for completeness
+
 ## What Goes Here
 
 Things like:
