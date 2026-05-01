@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "skills": {
+    "agent-browser-core": {
+      "version": "1.0.1",
+      "installedAt": 1777522081393
+    },
+    "stealth-browser": {
+      "version": "1.0.0",
+      "installedAt": 1777523343956
+    },
+    "openclaw-tavily-search": {
+      "version": "0.1.0",
+      "installedAt": 1777523401418
+    },
+    "code-quality-guard": {
+      "version": "1.0.0",
+      "installedAt": 1777524979357
+    }
+  }
+}

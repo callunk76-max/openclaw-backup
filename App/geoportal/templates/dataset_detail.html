@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if dataset %}{{ dataset.title }}{% else %}Dataset{% endif %} – GeoPortal Bulukumba</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <script>const BASE_URL = '/geo';</script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #f1f5f9; }
+        #detail-map { height: 400px; border-radius: 12px; overflow: hidden; }
+        .glass { background: rgba(255,255,255,0.9); backdrop-filter: blur(12px); }
+        .stat-card { transition: all 0.2s; }
+        .stat-card:hover { transform: scale(1.03); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { animation: fadeIn 0.4s ease-out; }
+        pre { white-space: pre-wrap; word-break: break-word; }
+    </style>
+</head>
+<body>
+<header class="bg-gradient-to-r from-emerald-700 to-teal-600 text-white px-4 lg:px-8 py-5 shadow-lg">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <a href="/geo/" class="text-xl">🗺️</a>
+            <div>
+                <a href="/geo/datasets" class="text-emerald-200 text-xs font-bold hover:text-white transition">← Kembali ke Katalog</a>
+                <h1 class="text-xl font-extrabold">{% if dataset %}{{ dataset.title }}{% else %}Dataset Tidak Ditemukan{% endif %}</h1>
+            </div>
+        </div>
+        {% if dataset %}
+        <a href="{{ dataset.detail_url }}" target="_blank" class="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-xl text-sm font-bold transition backdrop-blur-sm border border-white/10">🔗 Buka di GeoNode</a>
+        {% endif %}
+    </div>
+</header>
+
+<main class="max-w-6xl mx-auto px-4 lg:px-8 py-6">
+    {% if error %}
+    <div class="text-center py-20">
+        <span class="text-6xl">🔍</span>
+        <p class="text-slate-500 mt-4 text-lg font-bold">{{ error }}</p>
+        <a href="/geo/datasets" class="inline-block mt-4 px-6 py-3 bg-emerald-600 text-white rounded-xl font-bold hover:bg-emerald-500 transition">Kembali ke Katalog</a>
+    </div>
+    {% else %}
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 fade-in">
+        <!-- === MAP === -->
+        <div class="lg:col-span-2">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="p-4 border-b border-slate-100 flex items-center justify-between">
+                    <h2 class="font-bold text-slate-700 text-sm">🗺️ Peta Dataset</h2>
+                    <span class="text-[10px] text-slate-400 font-medium" id="map-status">Memuat peta...</span>
+                </div>
+                <div id="detail-map" class="w-full" style="height:450px"></div>
+            </div>
+
+            <!-- === DOWNLOAD === -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden mt-4">
+                <div class="p-4 border-b border-slate-100">
+                    <h2 class="font-bold text-slate-700 text-sm">📥 Download Data</h2>
+                </div>
+                <div class="p-4" id="download-links">
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-slate-400 text-sm">Memuat tautan download...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- === INFO SIDEBAR === -->
+        <div class="space-y-4">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="p-4 border-b border-slate-100">
+                    <h2 class="font-bold text-slate-700 text-sm">📋 Informasi Dataset</h2>
+                </div>
+                <div class="p-4 space-y-4 text-sm">
+                    <div>
+                        <span class="text-[10px] uppercase font-bold text-slate-400">Nama Layer</span>
+                        <p class="font-mono text-xs font-semibold text-slate-700 mt-0.5" id="info-name">{{ dataset.name }}</p>
+                    </div>
+                    <div>
+                        <span class="text-[10px] uppercase font-bold text-slate-400">Kategori</span>
+                        <p class="font-semibold text-slate-700 mt-0.5" id="info-category">{{ dataset.category.gn_description if dataset.category else 'General' }}</p>
+                    </div>
+                    <div>
+                        <span class="text-[10px] uppercase font-bold text-slate-400">Pengunggah (SKPD)</span>
+                        <p class="font-semibold text-slate-700 mt-0.5" id="info-owner">{{ dataset.owner.username if dataset.owner else 'Unknown' }}</p>
+                    </div>
+                    <div>
+                        <span class="text-[10px] uppercase font-bold text-slate-400">Tipe Data</span>
+                        <p class="font-semibold text-slate-700 mt-0.5" id="info-subtype">
+                            {% if dataset.subtype == 'vector' %}🗺️ Vector (Titik/Garis/Area)
+                            {% elif dataset.subtype == 'raster' %}🖼️ Raster (Citra)
+                            {% else %}{{ dataset.subtype or '—' }}{% endif %}
+                        </p>
+                    </div>
+                    <div>
+                        <span class="text-[10px] uppercase font-bold text-slate-400">Tanggal Upload</span>
+                        <p class="font-semibold text-slate-700 mt-0.5" id="info-date">{{ dataset.created[:10] if dataset.created else '—' }}</p>
+                    </div>
+                    <div>
+                        <span class="text-[10px] uppercase font-bold text-slate-400">Proyeksi</span>
+                        <p class="font-semibold text-slate-700 mt-0.5 font-mono">{{ dataset.srid or 'EPSG:4326' }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="p-4 border-b border-slate-100">
+                    <h2 class="font-bold text-slate-700 text-sm">📝 Abstrak</h2>
+                </div>
+                <div class="p-4">
+                    <p class="text-sm text-slate-600 leading-relaxed">{{ dataset.abstract or dataset.raw_abstract or 'Tidak ada deskripsi' }}</p>
+                </div>
+            </div>
+
+            {% if dataset.keywords %}
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="p-4 border-b border-slate-100">
+                    <h2 class="font-bold text-slate-700 text-sm">🏷️ Kata Kunci</h2>
+                </div>
+                <div class="p-4 flex flex-wrap gap-1.5">
+                    {% for kw in dataset.keywords %}
+                    <span class="px-2.5 py-1 bg-slate-100 text-slate-600 rounded-full text-[10px] font-bold">{{ kw.name }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+</main>
+
+<footer class="bg-white border-t border-slate-200 py-4 mt-8 text-center">
+    <p class="text-slate-400 text-xs font-medium">callunk@2026 · Powered by GeoNode</p>
+</footer>
+
+<script>
+const dataset = {{ dataset | tojson | safe }};
+const geoserverUrl = '{{ geoserver_url }}';
+
+// === MAP ===
+const map = L.map('detail-map', { zoomControl: false }).setView([-5.4, 120.2], 10);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; OSM &copy; CARTO', subdomains: 'abcd', maxZoom: 19
+}).addTo(map);
+L.control.zoom({ position: 'bottomleft' }).addTo(map);
+
+document.getElementById('map-status').textContent = 'Memuat layer...';
+
+// === ADD WMS LAYER ===
+if (dataset && dataset.name) {
+    const wmsLayer = L.tileLayer.wms(`${geoserverUrl}/ows`, {
+        layers: `geonode:${dataset.name}`,
+        format: 'image/png',
+        transparent: true,
+        version: '1.3.0',
+        attribution: dataset.title
+    }).addTo(map);
+
+    wmsLayer.on('load', () => {
+        document.getElementById('map-status').textContent = '✅ Layer dimuat';
+    });
+    wmsLayer.on('tileerror', () => {
+        document.getElementById('map-status').textContent = '⚠️ Layer tidak tersedia di peta';
+    });
+
+    // Fit to dataset extent
+    if (dataset.extent && dataset.extent.coords && dataset.extent.coords.length === 4) {
+        const c = dataset.extent.coords;
+        const bounds = [[c[1], c[0]], [c[3], c[2]]];
+        map.fitBounds(bounds, { padding: [30, 30] });
+    }
+}
+
+// === DOWNLOAD LINKS ===
+if (dataset) {
+    const dlContainer = document.getElementById('download-links');
+    const links = [
+        { label: '🌐 WMS', url: `${geoserverUrl}/ows?service=WMS&version=1.3.0&request=GetCapabilities`, desc: 'Web Map Service' },
+        { label: '🔷 WFS', url: `${geoserverUrl}/ows?service=WFS&version=1.0.0&request=GetCapabilities`, desc: 'Web Feature Service' },
+        { label: '📄 GeoJSON', url: `${geoserverUrl}/ows?service=WFS&version=1.0.0&request=GetFeature&typename=geonode:${dataset.name}&outputFormat=json&srsName=EPSG:4326`, desc: 'GeoJSON' },
+        { label: '📦 Shapefile', url: `${geoserverUrl}/ows?service=WFS&version=1.0.0&request=GetFeature&typename=geonode:${dataset.name}&outputFormat=SHAPE-ZIP`, desc: 'ZIP Shapefile' },
+        { label: '📊 CSV', url: `${geoserverUrl}/ows?service=WFS&version=1.0.0&request=GetFeature&typename=geonode:${dataset.name}&outputFormat=csv`, desc: 'CSV' },
+        { label: '📋 Excel', url: `${geoserverUrl}/ows?service=WFS&version=1.0.0&request=GetFeature&typename=geonode:${dataset.name}&outputFormat=excel`, desc: 'Excel' },
+        { label: '🗺️ KML', url: `${geoserverUrl}/ows?service=WFS&version=1.0.0&request=GetFeature&typename=geonode:${dataset.name}&outputFormat=kml`, desc: 'KML' },
+    ];
+    dlContainer.innerHTML = '<div class="grid grid-cols-2 sm:grid-cols-4 gap-2">' +
+        links.map(l => `
+            <a href="${l.url}" target="_blank"
+               class="flex flex-col items-center justify-center p-3 bg-slate-50 hover:bg-emerald-50 rounded-xl border border-slate-200 hover:border-emerald-300 transition group">
+                <span class="text-lg mb-1">${l.label.split(' ')[0]}</span>
+                <span class="text-[10px] font-bold text-slate-600 group-hover:text-emerald-600">${l.label.split(' ').slice(1).join(' ')}</span>
+                <span class="text-[9px] text-slate-400 mt-0.5">${l.desc}</span>
+            </a>
+        `).join('') +
+    '</div>';
+}
+
+// Update document title
+if (dataset) {
+    document.title = dataset.title + ' – GeoPortal Bulukumba';
+}
+</script>
+</body>
+</html>

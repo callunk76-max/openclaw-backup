@@ -41,7 +41,10 @@ def increment_visitor():
 def get_last_update():
     try:
         mt = os.path.getmtime(DB_PATH)
-        return time.strftime('%d.%m.%y||%H:%M', time.localtime(mt))
+        t = time.localtime(mt)
+        days = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu']
+        day_name = days[t.tm_wday]
+        return f"{day_name}, {time.strftime('%Y.%m.%d jam %H.%M', t)}"
     except:
         return '--/--/--||--:--'
 
@@ -65,9 +68,9 @@ class FilterQuery:
         prefix = f'{alias}.' if alias else ''
 
         if self.search_query:
-            parts.append(f"({prefix}package_name LIKE ? OR {prefix}satker LIKE ?)")
+            parts.append(f"({prefix}package_name LIKE ? OR {prefix}satker LIKE ? OR CAST({prefix}id AS TEXT) LIKE ?)")
             sq = f'%{self.search_query}%'
-            params.extend([sq, sq])
+            params.extend([sq, sq, sq])
 
         if self.m_filter:
             parts.append(f"{prefix}procurement_method = ?")
@@ -119,9 +122,6 @@ def fetch_table_data(conn, search_query, m_filter, type_filter, sort_by='id', so
         COALESCE((
             SELECT SUM(r2."Total Nilai (Rp)") FROM realisasi r2
             WHERE r2."Kode RUP" = p.id
-        ), (
-            SELECT SUM(r3."Total Nilai (Rp)") FROM realisasi r3
-            WHERE r3."Nama Paket" = p.package_name AND r3."Nama Satuan Kerja" = p.satker
         ), 0) as realisasi_total
     FROM procurement p"""
     if where_clause:
@@ -163,7 +163,7 @@ def fetch_table_data(conn, search_query, m_filter, type_filter, sort_by='id', so
     # --- FILTERED BREAKDOWN ---
     f_detail_q = f"""
         SELECT
-            CASE WHEN procurement_method IN ('E-Purchasing', 'Pengadaan Langsung', 'Dikecualikan')
+            CASE WHEN procurement_method IN ('E-Purchasing', 'Pengadaan Langsung', 'Dikecualikan', 'Seleksi')
                  THEN procurement_method ELSE 'Lainnya' END as method_group,
             COUNT(*) as total, SUM({BUDGET_SQL}) as total_budget
         FROM procurement p
@@ -173,12 +173,13 @@ def fetch_table_data(conn, search_query, m_filter, type_filter, sort_by='id', so
     f_detail_q += " GROUP BY method_group"
 
     f_detail = conn.execute(f_detail_q, params).fetchall()
-    fd = {'ep': 0, 'bd_ep': 0, 'pl': 0, 'bd_pl': 0, 'dk': 0, 'bd_dk': 0, 'ln': 0, 'bd_ln': 0}
+    fd = {'ep': 0, 'bd_ep': 0, 'pl': 0, 'bd_pl': 0, 'dk': 0, 'bd_dk': 0, 'sl': 0, 'bd_sl': 0, 'ln': 0, 'bd_ln': 0}
     for row in f_detail:
         g, cnt, bgt = row['method_group'], row['total'], row['total_budget'] or 0
         if g == 'E-Purchasing': fd['ep'] = cnt; fd['bd_ep'] = bgt
         elif g == 'Pengadaan Langsung': fd['pl'] = cnt; fd['bd_pl'] = bgt
         elif g == 'Dikecualikan': fd['dk'] = cnt; fd['bd_dk'] = bgt
+        elif g == 'Seleksi': fd['sl'] = cnt; fd['bd_sl'] = bgt
         else: fd['ln'] = cnt; fd['bd_ln'] = bgt
 
     return {
@@ -213,7 +214,7 @@ def index():
 
     detail_grouped = conn.execute(f"""
         SELECT
-            CASE WHEN procurement_method IN ('E-Purchasing', 'Pengadaan Langsung', 'Dikecualikan')
+            CASE WHEN procurement_method IN ('E-Purchasing', 'Pengadaan Langsung', 'Dikecualikan', 'Seleksi')
                  THEN procurement_method ELSE 'Lainnya' END as method_group,
             COUNT(*) as total, SUM({BUDGET_SQL}) as total_budget
         FROM procurement GROUP BY method_group
@@ -222,12 +223,14 @@ def index():
     total_epurchasing = 0; budget_epurchasing = 0
     total_pl = 0; budget_pl = 0
     total_dikecualikan = 0; budget_dikecualikan = 0
+    total_seleksi = 0; budget_seleksi = 0
     total_lainnya = 0; budget_lainnya = 0
     for row in detail_grouped:
         g, cnt, bgt = row['method_group'], row['total'], row['total_budget'] or 0
         if g == 'E-Purchasing': total_epurchasing = cnt; budget_epurchasing = bgt
         elif g == 'Pengadaan Langsung': total_pl = cnt; budget_pl = bgt
         elif g == 'Dikecualikan': total_dikecualikan = cnt; budget_dikecualikan = bgt
+        elif g == 'Seleksi': total_seleksi = cnt; budget_seleksi = bgt
         else: total_lainnya = cnt; budget_lainnya = bgt
 
     # Realisasi global
@@ -235,15 +238,16 @@ def index():
     count_realized = conn.execute('SELECT COUNT(*) FROM realisasi').fetchone()[0] or 0
 
     real_grouped = conn.execute("""
-        SELECT CASE WHEN "Metode Pengadaan" IN ('E-Purchasing', 'Pengadaan Langsung', 'Dikecualikan') THEN "Metode Pengadaan" ELSE 'Lainnya' END as method_group, SUM("Total Nilai (Rp)") as total_budget
+        SELECT CASE WHEN "Metode Pengadaan" IN ('E-Purchasing', 'Pengadaan Langsung', 'Dikecualikan', 'Seleksi') THEN "Metode Pengadaan" ELSE 'Lainnya' END as method_group, SUM("Total Nilai (Rp)") as total_budget
         FROM realisasi GROUP BY method_group
     """).fetchall()
-    real_epurchasing = 0; real_pl = 0; real_dikecualikan = 0; real_lainnya = 0
+    real_epurchasing = 0; real_pl = 0; real_dikecualikan = 0; real_seleksi = 0; real_lainnya = 0
     for row in real_grouped:
         g, bgt = row['method_group'], row['total_budget'] or 0
         if g == 'E-Purchasing': real_epurchasing = bgt
         elif g == 'Pengadaan Langsung': real_pl = bgt
         elif g == 'Dikecualikan': real_dikecualikan = bgt
+        elif g == 'Seleksi': real_seleksi = bgt
         else: real_lainnya = bgt
 
     # Table data (filtered/paginated)
@@ -260,7 +264,8 @@ def index():
     # Suggestions
     suggestions = {
         "package_names": conn.execute("SELECT DISTINCT package_name FROM procurement").fetchall(),
-        "satkers": conn.execute("SELECT DISTINCT satker FROM procurement").fetchall()
+        "satkers": conn.execute("SELECT DISTINCT satker FROM procurement").fetchall(),
+        "kode_rup": conn.execute("SELECT DISTINCT id FROM procurement ORDER BY id").fetchall()
     }
 
     # Anomalies
@@ -283,24 +288,15 @@ def index():
     pagu_anomaly_count = conn.execute(f"""
         SELECT COUNT(*) FROM procurement p
         WHERE {BUDGET_SQL} > 0
-        AND COALESCE(
-            (SELECT SUM(r2."Total Nilai (Rp)") FROM realisasi r2 WHERE r2."Kode RUP" = p.id),
-            (SELECT SUM(r3."Total Nilai (Rp)") FROM realisasi r3 WHERE r3."Nama Paket" = p.package_name AND r3."Nama Satuan Kerja" = p.satker), 0
-        ) > {BUDGET_SQL}
+        AND (SELECT SUM(r2."Total Nilai (Rp)") FROM realisasi r2 WHERE r2."Kode RUP" = p.id) > {BUDGET_SQL}
     """).fetchone()[0] or 0
 
     pagu_anomalies = conn.execute(f"""
         SELECT p.id, p.package_name, p.satker, p.budget, p.procurement_method, p.procurement_type, p.work_description,
-               COALESCE(
-                   (SELECT SUM(r2."Total Nilai (Rp)") FROM realisasi r2 WHERE r2."Kode RUP" = p.id),
-                   (SELECT SUM(r3."Total Nilai (Rp)") FROM realisasi r3 WHERE r3."Nama Paket" = p.package_name AND r3."Nama Satuan Kerja" = p.satker), 0
-               ) as realisasi_total
+               (SELECT SUM(r2."Total Nilai (Rp)") FROM realisasi r2 WHERE r2."Kode RUP" = p.id) as realisasi_total
         FROM procurement p
         WHERE {BUDGET_SQL} > 0
-        AND COALESCE(
-            (SELECT SUM(r2."Total Nilai (Rp)") FROM realisasi r2 WHERE r2."Kode RUP" = p.id),
-            (SELECT SUM(r3."Total Nilai (Rp)") FROM realisasi r3 WHERE r3."Nama Paket" = p.package_name AND r3."Nama Satuan Kerja" = p.satker), 0
-        ) > {BUDGET_SQL}
+        AND (SELECT SUM(r2."Total Nilai (Rp)") FROM realisasi r2 WHERE r2."Kode RUP" = p.id) > {BUDGET_SQL}
         ORDER BY realisasi_total DESC
     """).fetchall()
 
@@ -313,10 +309,12 @@ def index():
         total_epurchasing=total_epurchasing, budget_epurchasing=budget_epurchasing,
         total_pl=total_pl, budget_pl=budget_pl,
         total_dikecualikan=total_dikecualikan, budget_dikecualikan=budget_dikecualikan,
+        total_seleksi=total_seleksi, budget_seleksi=budget_seleksi,
         total_lainnya=total_lainnya, budget_lainnya=budget_lainnya,
         real_total=real_total, count_realized=count_realized,
         real_epurchasing=real_epurchasing, real_pl=real_pl,
-        real_dikecualikan=real_dikecualikan, real_lainnya=real_lainnya,
+        real_dikecualikan=real_dikecualikan, real_seleksi=real_seleksi,
+        real_lainnya=real_lainnya,
         # Filtered
         packages=td['packages'],
         filtered_count=td['filtered_count'],
@@ -326,6 +324,7 @@ def index():
         f_total_epurchasing=td['ep'], f_budget_epurchasing=td['bd_ep'],
         f_total_pl=td['pl'], f_budget_pl=td['bd_pl'],
         f_total_dikecualikan=td['dk'], f_budget_dikecualikan=td['bd_dk'],
+        f_total_seleksi=td['sl'], f_budget_seleksi=td['bd_sl'],
         f_total_lainnya=td['ln'], f_budget_lainnya=td['bd_ln'],
         # Filters
         search_query=search_query, m_filter=m_filter, type_filter=type_filter,
@@ -369,6 +368,8 @@ def api_table():
         'f_budget_pl': td['bd_pl'],
         'f_total_dikecualikan': td['dk'],
         'f_budget_dikecualikan': td['bd_dk'],
+        'f_total_seleksi': td['sl'],
+        'f_budget_seleksi': td['bd_sl'],
         'f_total_lainnya': td['ln'],
         'f_budget_lainnya': td['bd_ln'],
     })
@@ -480,6 +481,13 @@ def admin_upload():
                 'Sumber Dana': 'funding_source',
                 'Produk Dalam Negeri': 'is_umkm'
             }
+            # Deduplicate by Kode RUP before rename (safe even if rename fails)
+            if 'Kode RUP' in df_rup.columns:
+                before = len(df_rup)
+                df_rup = df_rup.drop_duplicates(subset=['Kode RUP'])
+                after = len(df_rup)
+                if before > after:
+                    print(f'[DEDUP] Removed {before - after} duplicate Kode RUP rows')
             rename_dict = {k: v for k, v in col_map.items() if k in df_rup.columns}
             df_rup = df_rup.rename(columns=rename_dict)
             if 'work_description' not in df_rup.columns:
@@ -492,6 +500,8 @@ def admin_upload():
 
         if realisasi_file and realisasi_file.filename != '':
             df_realisasi = pd.read_csv(realisasi_file, low_memory=False)
+            # No dedup for realisasi — same Kode RUP can have multiple
+            # legitimate entries (different vendors, payment stages, etc.)
             df_realisasi.to_sql('realisasi', conn, if_exists='replace', index=False)
 
         conn.close()
@@ -511,15 +521,68 @@ def package_details():
         package_id = str(p_id) if p_id else ""
         query = 'SELECT * FROM realisasi WHERE "Kode RUP" = ?'
         realisasi = conn.execute(query, (package_id,)).fetchall()
-        if len(realisasi) == 0:
-            query_fb = 'SELECT * FROM realisasi WHERE "Nama Paket" = ? AND "Nama Satuan Kerja" = ?'
-            realisasi = conn.execute(query_fb, (package_name, satker)).fetchall()
+
         result = [dict(row) for row in realisasi]
         return jsonify({'success': True, 'data': result})
     except Exception as e:
         return jsonify({'success': False, 'message': str(e)})
     finally:
         conn.close()
+
+
+@app.route('/api/anomalies/pagu')
+def api_anomalies_pagu():
+    """Return pagu anomalies filtered by mode: default|strict|threshold|both"""
+    mode = request.args.get('mode', 'default')
+    conn = get_db_connection()
+
+    # Base: match realisasi_sum for each procurement
+    strict_real = f'(SELECT SUM(r."Total Nilai (Rp)") FROM realisasi r WHERE r."Kode RUP" = p.id)'
+    fallback_real = f'(SELECT SUM(r2."Total Nilai (Rp)") FROM realisasi r2 WHERE r2."Nama Paket" = p.package_name AND r2."Nama Satuan Kerja" = p.satker)'
+
+    if mode == 'strict':
+        real_sum = strict_real
+        match_label = 'Kode RUP'
+    elif mode == 'both':
+        real_sum = strict_real
+        match_label = 'Kode RUP'
+    else:
+        real_sum = f'COALESCE({strict_real}, {fallback_real}, 0)'
+        match_label = 'Kode RUP + Nama Paket'
+
+    # Build WHERE
+    where_over = f'{real_sum} > {BUDGET_SQL}'
+    params = []
+
+    if mode in ('threshold', 'both'):
+        where_over = f'''(
+            {real_sum} - {BUDGET_SQL} > CAST({BUDGET_SQL} * 0.1 AS REAL)
+            AND
+            {real_sum} - {BUDGET_SQL} > 1000000
+        )'''
+
+    count_q = f'''SELECT COUNT(*) FROM procurement p
+        WHERE {BUDGET_SQL} > 0 AND {where_over}'''
+    count = conn.execute(count_q, params).fetchone()[0] or 0
+
+    data_q = f'''SELECT p.id, p.package_name, p.satker, p.budget,
+            p.procurement_method, p.procurement_type, p.work_description,
+            p."Cara Pengadaan",
+            {real_sum} as realisasi_total
+        FROM procurement p
+        WHERE {BUDGET_SQL} > 0 AND {where_over}
+        ORDER BY realisasi_total DESC'''
+
+    rows = [dict(r) for r in conn.execute(data_q, params).fetchall()]
+    conn.close()
+
+    return jsonify({
+        'success': True,
+        'count': count,
+        'data': rows,
+        'mode': mode,
+        'match_label': match_label
+    })
 
 
 @app.route('/penyedia/export')
@@ -750,6 +813,61 @@ def upload_penyedia():
     if unmatched:
         msg += f'\n⚠️ {len(unmatched)} penyedia tidak ditemukan di database (periksa ejaan nama): {unmatched[:5]}{".." if len(unmatched) > 5 else ""}'
     return jsonify({'success': True, 'message': msg, 'total_verified': total_verified})
+
+
+@app.route('/api/penyedia')
+def api_penyedia():
+    search_query = request.args.get('search', '')
+    verif_filter = request.args.get('verif', '')
+    page = int(request.args.get('page', 1))
+    per_page = 50
+    offset = (page - 1) * per_page
+
+    conn = get_db_connection()
+    count_query = "SELECT COUNT(*) FROM penyedia WHERE 1=1"
+    data_query = "SELECT * FROM penyedia WHERE 1=1"
+    params = []
+    if search_query:
+        count_query += " AND (nama LIKE ? OR npwp LIKE ? OR jenis_usaha LIKE ? OR alamat LIKE ?)"
+        data_query += " AND (nama LIKE ? OR npwp LIKE ? OR jenis_usaha LIKE ? OR alamat LIKE ?)"
+        sq = f'%{search_query}%'
+        params.extend([sq, sq, sq, sq])
+    if verif_filter == 'verified':
+        count_query += " AND terverifikasi = 1"
+        data_query += " AND terverifikasi = 1"
+    elif verif_filter == 'unverified':
+        count_query += " AND (terverifikasi IS NULL OR terverifikasi = 0)"
+        data_query += " AND (terverifikasi IS NULL OR terverifikasi = 0)"
+    elif verif_filter == 'pt':
+        count_query += " AND jenis_usaha LIKE '%PT%'"
+        data_query += " AND jenis_usaha LIKE '%PT%'"
+    elif verif_filter == 'perorangan':
+        count_query += " AND (jenis_usaha LIKE '%Perorangan%' OR jenis_usaha LIKE '%Usaha Perorangan%')"
+        data_query += " AND (jenis_usaha LIKE '%Perorangan%' OR jenis_usaha LIKE '%Usaha Perorangan%')"
+    total_count = conn.execute(count_query, params).fetchone()[0] or 0
+    total_pages = max(1, (total_count + per_page - 1) // per_page)
+    data_query += " ORDER BY nama ASC LIMIT ? OFFSET ?"
+    data_params = params + [per_page, offset]
+    rows = conn.execute(data_query, data_params).fetchall()
+    vendors = [dict(r) for r in rows]
+    total_vendors = conn.execute("SELECT COUNT(*) FROM penyedia").fetchone()[0] or 0
+    total_pt = conn.execute("SELECT COUNT(*) FROM penyedia WHERE jenis_usaha LIKE '%PT%'").fetchone()[0] or 0
+    total_perorangan = conn.execute("SELECT COUNT(*) FROM penyedia WHERE jenis_usaha LIKE '%Perorangan%'").fetchone()[0] or 0
+    total_verified = conn.execute("SELECT COUNT(*) FROM penyedia WHERE terverifikasi = 1").fetchone()[0] or 0
+    conn.close()
+    return jsonify({
+        'vendors': vendors,
+        'total_count': total_count,
+        'total_pages': total_pages,
+        'current_page': page,
+        'per_page': per_page,
+        'total_vendors': total_vendors,
+        'total_pt': total_pt,
+        'total_perorangan': total_perorangan,
+        'total_verified': total_verified,
+        'search_query': search_query,
+        'verif_filter': verif_filter,
+    })
 
 
 @app.route('/api/penyedia_detail')

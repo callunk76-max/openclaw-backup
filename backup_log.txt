@@ -1646,3 +1646,158 @@ total size is 57,347,044  speedup is 125.58
  create mode 100644 memory/2026-04-28.md
 error: src refspec main does not match any
 error: failed to push some refs to 'github.com:callunk76-max/openclaw-backup.git'
+sending incremental file list
+backup_log.txt
+App/
+App/geoportal/
+App/geoportal/app.py
+App/geoportal/static/
+App/geoportal/templates/
+App/geoportal/templates/dataset_detail.html
+App/geoportal/templates/datasets.html
+App/geoportal/templates/index.html
+App/geoportal/templates/maps.html
+App/sirup_bulukumba/
+App/sirup_bulukumba/app.log
+App/sirup_bulukumba/app.py
+App/sirup_bulukumba/bulukumba.db
+App/sirup_bulukumba/restart_log.txt
+App/sirup_bulukumba/visitor_count.json
+App/sirup_bulukumba/templates/index.html
+Trading/
+Trading/previous_signal.json
+Trading/signal_history.json
+Trading/signal_history.json.bak
+Trading/signal_log.txt
+Trading/trading_signal.py
+Trading/trading_/
+memory/
+memory/2026-04-28-default-switch.md
+memory/2026-04-29-responsive-card-scale.md
+memory/2026-04-29-table-filter-pagination.md
+
+sent 4,152,677 bytes  received 493 bytes  8,306,340.00 bytes/sec
+total size is 57,541,704  speedup is 13.85
+[master 948408a] Daily Backup from Cuy - 2026-04-30 03:00
+ 20 files changed, 5466 insertions(+), 1141 deletions(-)
+ create mode 100644 App/geoportal/app.py
+ create mode 100644 App/geoportal/templates/dataset_detail.html
+ create mode 100644 App/geoportal/templates/datasets.html
+ create mode 100644 App/geoportal/templates/index.html
+ create mode 100644 App/geoportal/templates/maps.html
+ create mode 100644 Trading/previous_signal.json
+ create mode 100644 Trading/signal_history.json
+ create mode 100644 Trading/signal_history.json.bak
+ create mode 100644 memory/2026-04-29-responsive-card-scale.md
+ create mode 100644 memory/2026-04-29-table-filter-pagination.md
+error: src refspec main does not match any
+error: failed to push some refs to 'github.com:callunk76-max/openclaw-backup.git'
+sending incremental file list
+./
+TOOLS.md
+backup_log.txt
+.clawhub/
+.clawhub/lock.json
+App/geoportal/
+App/geoportal/app.log
+App/geoportal/app.py
+App/geoportal/templates/
+App/geoportal/templates/flood.html
+App/geoportal/templates/flood3d.html
+App/geoportal/templates/index.html
+App/sirup_bulukumba/
+App/sirup_bulukumba/app.log
+App/sirup_bulukumba/app.py
+App/sirup_bulukumba/bulukumba.db
+App/sirup_bulukumba/restart_log.txt
+App/sirup_bulukumba/visitor_count.json
+App/sirup_bulukumba/templates/
+App/sirup_bulukumba/templates/index.html
+App/sirup_bulukumba/templates/penyedia.html
+Trading/previous_signal.json
+Trading/signal_history.json
+Trading/signal_log.txt
+memory/
+memory/2026-04-30-forum-recommendations.md
+memory/2026-04-30-js-rewrite-bugfix.md
+memory/2026-04-30-trading-board.md
+memory/2026-04-30.md
+skills/
+skills/agent-browser-core/
+skills/agent-browser-core/SKILL.md
+skills/agent-browser-core/_meta.json
+skills/agent-browser-core/.clawhub/
+skills/agent-browser-core/.clawhub/origin.json
+skills/agent-browser-core/references/
+skills/agent-browser-core/references/agent-browser-command-map.md
+skills/agent-browser-core/references/agent-browser-overview.md
+skills/agent-browser-core/references/agent-browser-safety.md
+skills/agent-browser-core/references/agent-browser-troubleshooting.md
+skills/agent-browser-core/references/agent-browser-workflows.md
+skills/code-quality-guard/
+skills/code-quality-guard/SKILL.md
+skills/code-quality-guard/_meta.json
+skills/code-quality-guard/.clawhub/
+skills/code-quality-guard/.clawhub/origin.json
+skills/openclaw-tavily-search/
+skills/openclaw-tavily-search/SKILL.md
+skills/openclaw-tavily-search/_meta.json
+skills/openclaw-tavily-search/.clawhub/
+skills/openclaw-tavily-search/.clawhub/origin.json
+skills/openclaw-tavily-search/scripts/
+skills/openclaw-tavily-search/scripts/tavily_search.py
+skills/stealth-browser/
+skills/stealth-browser/SKILL.md
+skills/stealth-browser/_meta.json
+skills/stealth-browser/.clawhub/
+skills/stealth-browser/.clawhub/origin.json
+skills/stealth-browser/scripts/
+skills/stealth-browser/scripts/cf_bypass.py
+skills/stealth-browser/scripts/login_session.py
+skills/stealth-browser/scripts/proxy_rotate.py
+skills/stealth-browser/scripts/session_manager.py
+skills/stealth-browser/scripts/smart_login.py
+skills/stealth-browser/scripts/solve_captcha.py
+skills/stealth-browser/scripts/stealth_session.py
+skills/stealth-browser/scripts/task_runner.py
+
+sent 4,331,931 bytes  received 1,075 bytes  8,666,012.00 bytes/sec
+total size is 57,754,717  speedup is 13.33
+[master a2cd2b9] Daily Backup from Cuy - 2026-05-01 03:00
+ 48 files changed, 7327 insertions(+), 1158 deletions(-)
+ create mode 100644 .clawhub/lock.json
+ create mode 100644 App/geoportal/app.log
+ create mode 100644 App/geoportal/templates/flood.html
+ create mode 100644 App/geoportal/templates/flood3d.html
+ create mode 100644 memory/2026-04-30-forum-recommendations.md
+ create mode 100644 memory/2026-04-30-js-rewrite-bugfix.md
+ create mode 100644 memory/2026-04-30-trading-board.md
+ create mode 100644 memory/2026-04-30.md
+ create mode 100644 skills/agent-browser-core/.clawhub/origin.json
+ create mode 100644 skills/agent-browser-core/SKILL.md
+ create mode 100644 skills/agent-browser-core/_meta.json
+ create mode 100644 skills/agent-browser-core/references/agent-browser-command-map.md
+ create mode 100644 skills/agent-browser-core/references/agent-browser-overview.md
+ create mode 100644 skills/agent-browser-core/references/agent-browser-safety.md
+ create mode 100644 skills/agent-browser-core/references/agent-browser-troubleshooting.md
+ create mode 100644 skills/agent-browser-core/references/agent-browser-workflows.md
+ create mode 100644 skills/code-quality-guard/.clawhub/origin.json
+ create mode 100644 skills/code-quality-guard/SKILL.md
+ create mode 100644 skills/code-quality-guard/_meta.json
+ create mode 100644 skills/openclaw-tavily-search/.clawhub/origin.json
+ create mode 100644 skills/openclaw-tavily-search/SKILL.md
+ create mode 100644 skills/openclaw-tavily-search/_meta.json
+ create mode 100644 skills/openclaw-tavily-search/scripts/tavily_search.py
+ create mode 100644 skills/stealth-browser/.clawhub/origin.json
+ create mode 100644 skills/stealth-browser/SKILL.md
+ create mode 100644 skills/stealth-browser/_meta.json
+ create mode 100644 skills/stealth-browser/scripts/cf_bypass.py
+ create mode 100644 skills/stealth-browser/scripts/login_session.py
+ create mode 100644 skills/stealth-browser/scripts/proxy_rotate.py
+ create mode 100644 skills/stealth-browser/scripts/session_manager.py
+ create mode 100644 skills/stealth-browser/scripts/smart_login.py
+ create mode 100644 skills/stealth-browser/scripts/solve_captcha.py
+ create mode 100644 skills/stealth-browser/scripts/stealth_session.py
+ create mode 100644 skills/stealth-browser/scripts/task_runner.py
+error: src refspec main does not match any
+error: failed to push some refs to 'github.com:callunk76-max/openclaw-backup.git'

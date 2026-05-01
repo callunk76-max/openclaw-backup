@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoPortal Bulukumba 🗺️</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <script>const BASE_URL = '/geo';</script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        #map { height: 100vh; width: 100%; z-index: 0; }
+        .glass { background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        .glass-dark { background: rgba(15,23,42,0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        .hero-overlay { background: linear-gradient(180deg, rgba(15,23,42,0.7) 0%, rgba(15,23,42,0.3) 50%, transparent 100%); }
+        .dataset-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .dataset-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.12); }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+        #sidebar { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .leaflet-popup-content-wrapper { border-radius: 12px !important; box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important; }
+        .leaflet-popup-content { margin: 12px 16px !important; font-family: 'Inter', sans-serif !important; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade { animation: fadeInUp 0.5s ease-out; }
+        @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        .loading-dot { animation: pulse-dot 1.5s infinite; }
+        .loading-dot:nth-child(2) { animation-delay: 0.2s; }
+        .loading-dot:nth-child(3) { animation-delay: 0.4s; }
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+
+<!-- ===== MAP FULLSCREEN ===== -->
+<div id="map" class="absolute inset-0"></div>
+
+<!-- ===== TOP BAR ===== -->
+<div class="absolute top-0 left-0 right-0 z-[1000] hero-overlay">
+    <div class="container mx-auto px-4 lg:px-8 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center text-xl shadow-lg">🗺️</div>
+            <div>
+                <h1 class="text-lg font-extrabold tracking-tight text-white">GeoPortal Bulukumba</h1>
+                <p class="text-[10px] text-emerald-200 font-medium">Kabupaten Bulukumba · Sistem Informasi Geografis</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-2">
+            <a href="/geo/flood" class="hidden md:flex px-4 py-2 bg-red-500/20 hover:bg-red-500/30 rounded-lg text-sm font-bold transition backdrop-blur-sm text-white border border-red-500/30">🌊 Peta Rawan Banjir</a>
+            <a href="/geo/maps" class="hidden md:flex px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm font-bold transition backdrop-blur-sm text-white border border-white/10">🗺️ Peta Interaktif</a>
+            <a href="datasets" class="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 rounded-lg text-sm font-bold transition text-white shadow-lg">📦 Jelajahi Data (60)</a>
+        </div>
+    </div>
+</div>
+
+<!-- ===== CENTER INFO ===== -->
+<div class="absolute inset-0 z-[500] pointer-events-none flex items-center justify-center">
+    <div class="text-center pointer-events-auto animate-fade">
+        <div class="glass rounded-2xl px-8 py-6 shadow-2xl max-w-lg mx-4 border border-white/20">
+            <div class="text-5xl mb-3">🌏</div>
+            <h2 class="text-2xl font-black text-slate-800">GeoPortal Bulukumba</h2>
+            <p class="text-slate-600 text-sm mt-2 font-medium">Platform data geospasial Kabupaten Bulukumba</p>
+            <p class="text-slate-400 text-xs mt-1">60 dataset · 0 peta · Satu portal</p>
+            <div class="flex gap-3 mt-5 justify-center">
+                <a href="/geo/datasets" class="px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold transition shadow-lg text-sm">📦 Jelajahi Dataset</a>
+                <a href="/geo/flood" class="px-6 py-3 bg-red-600 hover:bg-red-500 text-white rounded-xl font-bold transition shadow-lg text-sm">🌊 Peta Rawan Banjir</a>
+                <a href="/geo/maps" class="px-4 py-3 bg-slate-700 hover:bg-slate-600 text-white rounded-xl font-bold transition shadow-lg text-sm">🗺️ Lihat Peta</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== BOTTOM STATS ===== -->
+<div class="absolute bottom-0 left-0 right-0 z-[1000]">
+    <div class="container mx-auto px-4 lg:px-8 pb-4">
+        <div class="glass rounded-2xl p-4 border border-white/20 shadow-2xl">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                <div class="p-2">
+                    <p class="text-2xl font-black text-emerald-600" id="stat-datasets">—</p>
+                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Dataset</p>
+                </div>
+                <div class="p-2">
+                    <p class="text-2xl font-black text-blue-600" id="stat-maps">—</p>
+                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Peta</p>
+                </div>
+                <div class="p-2">
+                    <p class="text-2xl font-black text-purple-600" id="stat-categories">—</p>
+                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Kategori</p>
+                </div>
+                <div class="p-2">
+                    <p class="text-2xl font-black text-amber-600" id="stat-owners">—</p>
+                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">SKPD Pengunggah</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== WATERMARK ===== -->
+<div class="absolute bottom-20 right-4 z-[1000]">
+    <p class="text-[10px] text-white/30 font-medium">callunk@2026</p>
+</div>
+
+<script>
+// === MAP ===
+const map = L.map('map', {
+    center: [-5.4, 120.2],
+    zoom: 10,
+    zoomControl: false
+});
+
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>',
+    subdomains: 'abcd',
+    maxZoom: 19
+}).addTo(map);
+
+L.control.zoom({ position: 'bottomleft' }).addTo(map);
+
+// === LOAD STATS ===
+fetch(BASE_URL+'/api/stats')
+    .then(r => r.json())
+    .then(d => {
+        document.getElementById('stat-datasets').textContent = d.total_datasets;
+        document.getElementById('stat-maps').textContent = d.total_maps;
+        document.getElementById('stat-categories').textContent = d.categories.length;
+        document.getElementById('stat-owners').textContent = '—';
+    });
+
+// === LOAD ALL DATASET BOUNDS ON MAP ===
+fetch(BASE_URL+'/api/datasets?page_size=100')
+    .then(r => r.json())
+    .then(d => {
+        const datasets = d.datasets || [];
+        datasets.forEach(ds => {
+            if (ds.extent && ds.extent.length === 4) {
+                const bounds = [[ds.extent[1], ds.extent[0]], [ds.extent[3], ds.extent[2]]];
+                const rect = L.rectangle(bounds, {
+                    color: '#10b981',
+                    weight: 1.5,
+                    fillColor: '#10b981',
+                    fillOpacity: 0.1,
+                    className: 'dataset-bound'
+                }).addTo(map);
+
+                let popupHtml = `
+                    <div style="min-width:220px">
+                        <p style="font-weight:800;font-size:14px;margin-bottom:4px;color:#1e293b">${ds.title}</p>
+                        <p style="font-size:11px;color:#64748b;margin-bottom:6px">${ds.owner} · ${ds.category}</p>
+                        <p style="font-size:11px;color:#475569;margin-bottom:8px">${ds.abstract.substring(0, 120)}...</p>
+                        <a href="/geo/dataset/${ds.pk}" style="display:inline-block;background:#059669;color:white;padding:4px 12px;border-radius:6px;font-size:11px;font-weight:700;text-decoration:none">Lihat Detail →</a>
+                    </div>
+                `;
+                rect.bindPopup(popupHtml, { maxWidth: 320, className: 'custom-popup' });
+
+                rect.on('mouseover', function() { this.setStyle({ fillOpacity: 0.25, weight: 2.5 }); });
+                rect.on('mouseout', function() { this.setStyle({ fillOpacity: 0.1, weight: 1.5 }); });
+            }
+        });
+
+        // Fit map to show all datasets
+        if (datasets.length > 0) {
+            // Fit to Bulukumba region
+            map.fitBounds([[ -5.75, 119.8 ], [ -5.0, 120.6 ]], { padding: [30, 30] });
+        }
+    })
+    .catch(() => {});
+</script>
+</body>
+</html>

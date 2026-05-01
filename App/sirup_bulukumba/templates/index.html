@@ -11,9 +11,70 @@
     <style>
         body { font-family: 'Inter', sans-serif; }
         .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); }
-        .pagination-btn { @apply px-3 py-1.5 text-xs font-bold rounded-lg border transition; }
-        .pagination-btn-active { @apply bg-indigo-600 text-white border-indigo-600; }
-        .pagination-btn-inactive { @apply bg-white text-slate-600 border-slate-300 hover:bg-indigo-50 hover:border-indigo-300; }
+        .pagination-btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            min-width: 36px; height: 36px;
+            padding: 0 10px;
+            font-size: 12px; font-weight: 700;
+            border-radius: 9999px;
+            border: 2px solid transparent;
+            transition: all 0.15s ease;
+            cursor: pointer;
+            user-select: none;
+        }
+        .pagination-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .pagination-btn:active { transform: translateY(0); }
+        .pagination-btn-active {
+            background: #6366f1;
+            color: white;
+            border-color: #6366f1;
+            box-shadow: 0 4px 14px rgba(99,102,241,0.35);
+        }
+        .pagination-btn-inactive {
+            background: white;
+            color: #475569;
+            border-color: #e2e8f0;
+        }
+        .pagination-btn-inactive:hover {
+            background: #eef2ff;
+            border-color: #a5b4fc;
+            color: #4338ca;
+        }
+        .pagination-ellipsis {
+            display: inline-flex; align-items: center;
+            padding: 0 4px;
+            font-size: 13px;
+            color: #94a3b8;
+            letter-spacing: 1px;
+        }
+        .pagination-jump input {
+            width: 64px; padding: 6px 8px;
+            text-align: center;
+            border: 2px solid #e2e8f0;
+            border-radius: 9999px;
+            font-size: 12px; font-weight: 700;
+            outline: none;
+            transition: border-color 0.15s ease;
+        }
+        .pagination-jump input:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99,102,241,0.15);
+        }
+        .pagination-jump .go-btn {
+            padding: 6px 16px;
+            background: #6366f1;
+            color: white;
+            border: none;
+            border-radius: 9999px;
+            font-size: 12px; font-weight: 700;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .pagination-jump .go-btn:hover {
+            background: #4f46e5;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(99,102,241,0.3);
+        }
         .stats-card-hover {
             transition: all 0.2s ease;
             position: relative;
@@ -73,7 +134,7 @@
                 <h1 class="text-3xl font-extrabold tracking-tight">LPSE UKPBJ Setda Kab. Bulukumba present:</h1>
                 <h2 class="text-2xl font-bold text-indigo-200">SIRUP Bulukumba Explorer 🚀</h2>
                 <p class="text-indigo-100 opacity-80">Analisis Data Pengadaan Kabupaten Bulukumba</p>
-                <p class="text-indigo-200 text-[11px] font-medium tracking-wide mt-1">terakhir update: {{ last_update }}</p>
+                <p class="text-indigo-200 text-[11px] font-medium tracking-wide mt-1">Terahir update: {{ last_update }}</p>
             </div>
             <div class="flex gap-3">
                 <a href="/export?format=pdf&search={{ search_query }}&method={{ m_filter }}&type={{ type_filter }}"
@@ -112,6 +173,7 @@
                         </div>
                         <div class="flex flex-wrap gap-2 text-xs font-medium mt-2">
                             <span class="px-2 py-1 bg-indigo-100 text-indigo-700 rounded-full" id="modal-method"></span>
+                            <span class="px-2 py-1 bg-teal-100 text-teal-700 rounded-full" id="modal-cara"></span>
                             <span class="px-2 py-1 bg-indigo-100 text-indigo-700 rounded-full" id="modal-type"></span>
                             <span class="px-3 py-1 bg-amber-100 text-amber-800 rounded-full font-extrabold text-sm border border-amber-200" id="modal-budget"></span>
                             <span class="px-3 py-1 bg-cyan-100 text-cyan-800 rounded-full font-extrabold text-sm border border-cyan-200 hidden" id="modal-sisa-pagu"></span>
@@ -209,6 +271,29 @@
                             💰 Realisasi melebihi Pagu <span class="bg-orange-500 text-white text-[10px] px-2 py-0.5 rounded-full">{{ pagu_anomaly_count }}</span>
                         </button>
                     </div>
+                    <!-- Filter modes untuk pagu anomalies -->
+                    <div id="pagu-mode-filters" class="flex flex-wrap gap-2 mb-3 mt-2 hidden">
+                        <button onclick="applyPaguMode('default')" id="pmode-default"
+                                class="py-3 px-4 rounded-xl font-bold text-[11px] leading-tight transition border-2 flex-1 min-w-[130px] text-center
+                                       border-indigo-400 bg-indigo-50 text-indigo-700 shadow-sm">
+                            🔵 Standar<br><span class="font-normal text-[10px] text-indigo-500">Gabung Kode RUP + Nama Paket</span>
+                        </button>
+                        <button onclick="applyPaguMode('strict')" id="pmode-strict"
+                                class="py-3 px-4 rounded-xl font-bold text-[11px] leading-tight transition border-2 flex-1 min-w-[130px] text-center
+                                       border-slate-200 bg-white text-slate-500 hover:border-emerald-300 hover:bg-emerald-50">
+                            🟢 Solusi 1<br><span class="font-normal text-[10px]">Cocokkan Kode RUP saja</span>
+                        </button>
+                        <button onclick="applyPaguMode('threshold')" id="pmode-threshold"
+                                class="py-3 px-4 rounded-xl font-bold text-[11px] leading-tight transition border-2 flex-1 min-w-[130px] text-center
+                                       border-slate-200 bg-white text-slate-500 hover:border-amber-300 hover:bg-amber-50">
+                            🟡 Solusi 2<br><span class="font-normal text-[10px]">Abaikan jika >10% / >Rp1jt</span>
+                        </button>
+                        <button onclick="applyPaguMode('both')" id="pmode-both"
+                                class="py-3 px-4 rounded-xl font-bold text-[11px] leading-tight transition border-2 flex-1 min-w-[130px] text-center
+                                       border-slate-200 bg-white text-slate-500 hover:border-red-300 hover:bg-red-50">
+                            🔴 Solusi 3<br><span class="font-normal text-[10px]">Kode RUP + Threshold</span>
+                        </button>
+                    </div>
                     <div class="relative max-w-md mb-4 ml-auto">
                         <div class="search-wrapper">
                             <input type="text" id="anomaly-search"
@@ -301,7 +386,8 @@
                     <div class="flex justify-between stats-detail"><span class="text-slate-500">E-Purchasing:</span><span class="font-semibold text-slate-700">{{ "{:,}".format(total_epurchasing) }}</span></div>
                     <div class="flex justify-between stats-detail"><span class="text-slate-500">P. Langsung:</span><span class="font-semibold text-slate-700">{{ "{:,}".format(total_pl) }}</span></div>
                     <div class="flex justify-between stats-detail"><span class="text-slate-500">Dikecualikan:</span><span class="font-semibold text-slate-700">{{ "{:,}".format(total_dikecualikan) }}</span></div>
-                    <div class="flex justify-between stats-detail"><span class="text-slate-500">Lainnya/Kosong:</span><span class="font-semibold text-slate-700">{{ "{:,}".format(total_lainnya) }}</span></div>
+                    <div class="flex justify-between stats-detail"><span class="text-slate-500">Seleksi:</span><span class="font-semibold text-slate-700">{{ "{:,}".format(total_seleksi) }}</span></div>
+                                    <div class="flex justify-between stats-detail"><span class="text-slate-500">Lainnya/Kosong:</span><span class="font-semibold text-slate-700">{{ "{:,}".format(total_lainnya) }}</span></div>
                 </div>
             </div>
             <div class="bg-white p-4 xl:p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col h-full cursor-pointer stats-card-hover" onclick="openChartModal('budget')">
@@ -316,7 +402,8 @@
                     <div class="flex justify-between stats-detail"><span class="text-slate-500 label">E-Purchasing:</span><span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(budget_epurchasing) }}</span></div>
                     <div class="flex justify-between stats-detail"><span class="text-slate-500 label">P. Langsung:</span><span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(budget_pl) }}</span></div>
                     <div class="flex justify-between stats-detail"><span class="text-slate-500 label">Dikecualikan:</span><span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(budget_dikecualikan) }}</span></div>
-                    <div class="flex justify-between stats-detail"><span class="text-slate-500 label">Lainnya:</span><span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(budget_lainnya) }}</span></div>
+                    <div class="flex justify-between stats-detail"><span class="text-slate-500 label">Seleksi:</span><span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(budget_seleksi) }}</span></div>
+                                    <div class="flex justify-between stats-detail"><span class="text-slate-500 label">Lainnya:</span><span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(budget_lainnya) }}</span></div>
                 </div>
             </div>
             <div class="bg-white p-4 xl:p-5 rounded-2xl shadow-sm border border-emerald-200 flex flex-col h-full bg-emerald-50/30 cursor-pointer stats-card-hover" onclick="openChartModal('realisasi')">
@@ -332,7 +419,8 @@
                     <div class="flex justify-between stats-detail"><span class="text-slate-500 label">E-Purchasing:</span><span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(real_epurchasing) }}</span></div>
                     <div class="flex justify-between stats-detail"><span class="text-slate-500 label">P. Langsung:</span><span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(real_pl) }}</span></div>
                     <div class="flex justify-between stats-detail"><span class="text-slate-500 label">Dikecualikan:</span><span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(real_dikecualikan) }}</span></div>
-                    <div class="flex justify-between stats-detail"><span class="text-slate-500 label">Lainnya:</span><span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(real_lainnya) }}</span></div>
+                    <div class="flex justify-between stats-detail"><span class="text-slate-500 label">Seleksi:</span><span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(real_seleksi) }}</span></div>
+                                    <div class="flex justify-between stats-detail"><span class="text-slate-500 label">Lainnya:</span><span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(real_lainnya) }}</span></div>
                 </div>
             </div>
             <div id="filtered-stats-card" class="bg-white p-4 xl:p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col h-full border-l-4 border-l-indigo-500 stats-card-hover">
@@ -347,7 +435,8 @@
                     <div class="flex justify-between stats-detail"><span class="text-slate-500 label">E-Purchasing:</span><span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(f_budget_epurchasing) }}</span></div>
                     <div class="flex justify-between stats-detail"><span class="text-slate-500 label">P. Langsung:</span><span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(f_budget_pl) }}</span></div>
                     <div class="flex justify-between stats-detail"><span class="text-slate-500 label">Dikecualikan:</span><span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(f_budget_dikecualikan) }}</span></div>
-                    <div class="flex justify-between stats-detail"><span class="text-slate-500 label">Lainnya:</span><span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(f_budget_lainnya) }}</span></div>
+                    <div class="flex justify-between stats-detail"><span class="text-slate-500 label">Seleksi:</span><span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(f_budget_seleksi) }}</span></div>
+                                    <div class="flex justify-between stats-detail"><span class="text-slate-500 label">Lainnya:</span><span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(f_budget_lainnya) }}</span></div>
                 </div>
             </div>
             <div class="bg-white p-4 xl:p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col h-full border-l-4 border-l-amber-500 stats-card-hover">
@@ -374,7 +463,7 @@
                                placeholder="Ketik nama paket atau dinas..."
                                class="w-full p-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none transition"
                                oninput="document.getElementById('search-clear-btn').style.display=this.value?'block':'none'">
-                        <span id="search-clear-btn" class="search-clear" onclick="document.getElementById('search-input').value='';this.style.display='none';document.getElementById('search-input').focus();document.getElementById('filter-form').requestSubmit()"
+                        <span id="search-clear-btn" class="search-clear" onclick="document.getElementById('search-input').value='';this.style.display='none';document.getElementById('search-input').focus();document.getElementById('method-filter').value='';document.getElementById('type-filter').value='';searchTerm='';methodVal='';typeVal='';fetchTable(1, currentSort, currentSortDir);"
                               style="display:{{ 'block' if search_query else 'none' }}">&times;</span>
                     </div>
                     <div id="suggestions" class="hidden absolute z-10 w-full bg-white border border-slate-200 rounded-lg shadow-xl mt-1 max-h-60 overflow-y-auto"></div>
@@ -397,9 +486,7 @@
                         {% endfor %}
                     </select>
                 </div>
-                <div class="md:col-span-4 flex justify-end gap-2">
-                    <a href="/" class="px-4 py-2 text-slate-500 hover:text-slate-700 font-medium transition">Reset</a>
-                    <button type="submit" id="apply-filter-btn" class="bg-indigo-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-indigo-700 transition shadow-md">Terapkan Filter</button>
+                <div class="md:col-span-4 hidden"></div>
                 </div>
             </form>
         </div>
@@ -417,7 +504,7 @@
                         <div class="relative">
                         <div class="search-wrapper">
                             <input type="text" id="table-filter"
-                                   placeholder="Cari cepat di halaman ini..."
+                                   placeholder="Cari cepat di semua halaman..."
                                    class="w-full p-2 pl-9 pr-8 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none transition shadow-sm text-sm"
                                    oninput="document.getElementById('table-clear-btn').style.display=this.value?'block':'none'">
                             <span class="absolute left-3 top-2.5 text-slate-400 text-sm">🔍</span>
@@ -427,6 +514,7 @@
                         </div>
                     </div>
                 </div>
+                <div id="pagination-container-top" class="px-6 py-3 border-b border-slate-200 bg-white/50 flex flex-col items-center gap-2"></div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse text-xs">
                         <thead class="bg-slate-50 border-b border-slate-200">
@@ -441,6 +529,7 @@
                                     Satker <span class="sort-indicator">{% if sort_by == 'satker' %}{{ '▲' if sort_dir == 'ASC' else '▼' }}{% endif %}</span>
                                 </th>
                                 <th class="p-3 text-[10px] font-bold text-slate-500 uppercase">Metode</th>
+                                <th class="p-3 text-[10px] font-bold text-slate-500 uppercase">Cara</th>
                                 <th class="p-3 text-[10px] font-bold text-slate-500 uppercase cursor-pointer hover:text-indigo-600 transition sort-header" data-sort="budget">
                                     Anggaran <span class="sort-indicator">{% if sort_by == 'budget' %}{{ '▲' if sort_dir == 'ASC' else '▼' }}{% endif %}</span>
                                 </th>
@@ -467,6 +556,16 @@
                                         {{ p['procurement_method'] }}
                                     </span>
                                 </td>
+                                <td class="p-3">
+                                    {% set cp = p.get('Cara Pengadaan', '') %}
+                                    {% if cp == 'Swakelola' %}
+                                    <span class="px-2 py-1 text-xs font-medium rounded-full border border-teal-200 bg-teal-50 text-teal-700">{{ cp }}</span>
+                                    {% elif cp == 'Penyedia' %}
+                                    <span class="px-2 py-1 text-xs font-medium rounded-full border border-blue-200 bg-blue-50 text-blue-700">{{ cp }}</span>
+                                    {% else %}
+                                    <span class="text-xs text-slate-400">{{ cp }}</span>
+                                    {% endif %}
+                                </td>
                                 <td class="p-3 font-mono text-xs font-semibold {% if is_pl_over %}text-red-600{% else %}text-slate-800{% endif %}">
                                     Rp {{ "{:,.0f}".format(p['budget']|replace('Rp ', '')|replace(',', '')|float if p['budget'] else 0) }}
                                 </td>
@@ -474,7 +573,7 @@
                             {% endfor %}
                             {% if not packages %}
                             <tr>
-                                <td colspan="6" class="p-12 text-center text-slate-400 italic">Tidak ada data yang cocok dengan filter.</td>
+                                <td colspan="7" class="p-12 text-center text-slate-400 italic">Tidak ada data yang cocok dengan filter.</td>
                             </tr>
                             {% endif %}
                         </tbody>
@@ -542,6 +641,9 @@
         const searchInput = document.getElementById('search-input');
         const suggestionsBox = document.getElementById('suggestions');
         const tableFilter = document.getElementById('table-filter');
+
+        // Render pagination on initial page load
+        renderPagination();
         const filterForm = document.getElementById('filter-form');
 
         // ===== HELPER: Format Rupiah =====
@@ -580,7 +682,8 @@
                 <div class="flex justify-between stats-detail"><span class="text-slate-500 label">E-Purchasing:</span><span class="font-semibold text-slate-700">${fmtRp(data.f_budget_epurchasing)}</span></div>
                 <div class="flex justify-between stats-detail"><span class="text-slate-500 label">P. Langsung:</span><span class="font-semibold text-slate-700">${fmtRp(data.f_budget_pl)}</span></div>
                 <div class="flex justify-between stats-detail"><span class="text-slate-500 label">Dikecualikan:</span><span class="font-semibold text-slate-700">${fmtRp(data.f_budget_dikecualikan)}</span></div>
-                <div class="flex justify-between stats-detail"><span class="text-slate-500 label">Lainnya:</span><span class="font-semibold text-slate-700">${fmtRp(data.f_budget_lainnya)}</span></div>
+                <div class="flex justify-between stats-detail"><span class="text-slate-500 label">Seleksi:</span><span class="font-semibold text-slate-700">${fmtRp(data.f_budget_seleksi)}</span></div>
+                            <div class="flex justify-between stats-detail"><span class="text-slate-500 label">Lainnya:</span><span class="font-semibold text-slate-700">${fmtRp(data.f_budget_lainnya)}</span></div>
             `;
 
             // Update page budget & info
@@ -611,6 +714,15 @@
                 const badgeClass = isOver ? 'bg-red-50 text-red-700 border-red-200 font-bold' : 'bg-indigo-100 text-indigo-700 border-indigo-200';
                 const budgetClass = isOver ? 'text-red-600' : 'text-slate-800';
 
+                // Cara Pengadaan badge
+                const cp = p['Cara Pengadaan'] || '';
+                let cpBadge = `<span class="text-xs text-slate-400">${escHtml(cp)}</span>`;
+                if (cp === 'Swakelola') {
+                    cpBadge = `<span class="px-2 py-1 text-xs font-medium rounded-full border border-teal-200 bg-teal-50 text-teal-700">Swakelola</span>`;
+                } else if (cp === 'Penyedia') {
+                    cpBadge = `<span class="px-2 py-1 text-xs font-medium rounded-full border border-blue-200 bg-blue-50 text-blue-700">Penyedia</span>`;
+                }
+
                 let realBadge = '';
                 if (hasReal && realPct > 0) {
                     const pctClass = realPct > 100 ? 'text-red-500' : 'text-emerald-500';
@@ -629,6 +741,7 @@
                     <td class="p-3">
                         <span class="px-2 py-1 text-xs font-medium rounded-full border ${badgeClass}">${escHtml(p.procurement_method || '')}</span>
                     </td>
+                    <td class="p-3">${cpBadge}</td>
                     <td class="p-3 font-mono text-xs font-semibold ${budgetClass}">${fmtRp(budgetNum)}</td>
                 </tr>`;
             }).join('');
@@ -644,8 +757,10 @@
         // ===== PAGINATION =====
         function renderPagination() {
             const container = document.getElementById('pagination-container');
+            const topContainer = document.getElementById('pagination-container-top');
             if (totalPages <= 1) {
                 container.innerHTML = '';
+                if (topContainer) topContainer.innerHTML = '';
                 return;
             }
 
@@ -664,7 +779,7 @@
 
             if (start > 1) {
                 html += `<button onclick="goToPage(1)" class="pagination-btn pagination-btn-inactive">1</button>`;
-                if (start > 2) html += `<span class="px-2 text-slate-400 text-xs">...</span>`;
+                if (start > 2) html += `<span class="pagination-ellipsis">···</span>`;
             }
 
             for (let p = start; p <= end; p++) {
@@ -673,7 +788,7 @@
             }
 
             if (end < totalPages) {
-                if (end < totalPages - 1) html += `<span class="px-2 text-slate-400 text-xs">...</span>`;
+                if (end < totalPages - 1) html += `<span class="pagination-ellipsis">···</span>`;
                 html += `<button onclick="goToPage(${totalPages})" class="pagination-btn pagination-btn-inactive">${totalPages}</button>`;
             }
 
@@ -685,16 +800,16 @@
 
             html += '</div>';
 
-            // Jump to page input
-            html += `<div class="flex items-center gap-2 text-xs text-slate-500">
-                <span>Lompat ke halaman</span>
-                <input type="number" id="jump-page-input" min="1" max="${totalPages}" value="${currentPage}"
-                       class="w-16 p-1.5 text-center border border-slate-300 rounded-lg text-xs font-bold focus:ring-2 focus:ring-indigo-500 outline-none">
-                <button onclick="jumpToPage()" class="px-3 py-1.5 bg-indigo-600 text-white rounded-lg font-bold text-xs hover:bg-indigo-700 transition">Go</button>
+            // Jump to page input (pill style)
+            html += `<div class="pagination-jump flex items-center gap-2 text-xs text-slate-500 mt-1">
+                <span class="font-medium">Lompat ke</span>
+                <input type="number" id="jump-page-input" min="1" max="${totalPages}" value="${currentPage}">
+                <button onclick="jumpToPage()" class="go-btn">Go</button>
                 <span class="text-slate-400">dari ${Number(totalPages).toLocaleString('id-ID')} halaman</span>
             </div>`;
 
             container.innerHTML = html;
+            if (topContainer) topContainer.innerHTML = html;
         }
 
         function goToPage(page) {
@@ -794,22 +909,43 @@
             }
         });
 
-        // ===== QUICK TABLE FILTER (client-side) =====
+        // ===== QUICK TABLE FILTER (server-side, all pages) =====
+        let quickSearchTimer = null;
         tableFilter.addEventListener('input', function() {
-            const term = this.value.toLowerCase();
-            document.querySelectorAll('.package-row').forEach(row => {
-                const dataAttr = row.getAttribute('data-package');
-                let show = false;
-                if (dataAttr) {
-                    try {
-                        const data = JSON.parse(dataAttr);
-                        const pkgName = (data.package_name || '').toLowerCase();
-                        const kodeRup = String(data.id || '').toLowerCase();
-                        show = pkgName.includes(term) || kodeRup.includes(term);
-                    } catch(e) { show = false; }
+            clearTimeout(quickSearchTimer);
+            const term = this.value.trim();
+            // Clear indicator
+            document.getElementById('table-clear-btn').style.display = term ? 'block' : 'none';
+            
+            // Debounce 400ms then do server-side search
+            quickSearchTimer = setTimeout(() => {
+                // Set the main search input value
+                const mainSearch = document.getElementById('search-input');
+                if (mainSearch) {
+                    mainSearch.value = term;
+                    // Trigger the server-side search (fetch page 1)
+                    searchTerm = term;
+                    methodVal = document.getElementById('method-filter')?.value || '';
+                    typeVal = document.getElementById('type-filter')?.value || '';
+                    fetchTable(1, currentSort, currentSortDir);
                 }
-                row.style.display = show ? '' : 'none';
-            });
+            }, 400);
+        });
+        
+        // Also allow pressing Enter to search immediately
+        tableFilter.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                clearTimeout(quickSearchTimer);
+                const term = this.value.trim();
+                const mainSearch = document.getElementById('search-input');
+                if (mainSearch) {
+                    mainSearch.value = term;
+                    searchTerm = term;
+                    methodVal = document.getElementById('method-filter')?.value || '';
+                    typeVal = document.getElementById('type-filter')?.value || '';
+                    fetchTable(1, currentSort, currentSortDir);
+                }
+            }
         });
 
         // ===== DATA MASKING =====
@@ -900,6 +1036,16 @@
             document.getElementById('modal-satker').textContent = p.satker || '-';
             document.getElementById('modal-kode-rup').textContent = p.id || '-';
             document.getElementById('modal-method').textContent = p.procurement_method || '-';
+            const cpVal = p['Cara Pengadaan'] || '';
+            document.getElementById('modal-cara').textContent = cpVal || '-';
+            const caraBadge = document.getElementById('modal-cara');
+            if (cpVal === 'Swakelola') {
+                caraBadge.className = 'px-2 py-1 bg-teal-100 text-teal-700 rounded-full border border-teal-200';
+            } else if (cpVal === 'Penyedia') {
+                caraBadge.className = 'px-2 py-1 bg-blue-100 text-blue-700 rounded-full border border-blue-200';
+            } else {
+                caraBadge.className = 'px-2 py-1 bg-slate-100 text-slate-500 rounded-full';
+            }
             document.getElementById('modal-type').textContent = p.procurement_type || '-';
             const budgetVal = p.budget ? p.budget.replace('Rp ', '').replace(/,/g, '') : '0';
             document.getElementById('modal-budget').textContent = 'Pagu RUP: Rp ' + Number(budgetVal).toLocaleString('id-ID');
@@ -1081,6 +1227,13 @@
             document.getElementById('antab-pagu').className = 'px-5 py-2.5 rounded-lg font-bold text-sm transition flex items-center gap-2 ' + (tab === 'pagu' ? 'bg-orange-50 text-orange-700 antab-active' : 'bg-slate-100 text-slate-500');
             document.getElementById('anomaly-content-pl').classList.toggle('hidden', tab !== 'pl');
             document.getElementById('anomaly-content-pagu').classList.toggle('hidden', tab !== 'pagu');
+            // Tampilkan filter mode hanya di tab Pagu
+            const filterDiv = document.getElementById('pagu-mode-filters');
+            if (tab === 'pagu') {
+                filterDiv.classList.remove('hidden');
+            } else {
+                filterDiv.classList.add('hidden');
+            }
             // Clear search and re-paginate new tab
             const searchInput = document.getElementById('anomaly-search');
             if (searchInput.value) {
@@ -1088,7 +1241,109 @@
                 document.getElementById('anomaly-clear-btn').style.display = 'none';
             }
             if (tab === 'pl') paginateTable('pl-tbody', 'pl-pagination');
-            else paginateTable('pagu-tbody', 'pagu-pagination');
+            else {
+                // Default ke Solusi 1 (strict Kode RUP match)
+                applyPaguMode('default', true);
+                setTimeout(() => applyPaguMode('strict'), 150);
+                paginateTable('pagu-tbody', 'pagu-pagination');
+            }
+        }
+
+        // ===== PAGU ANOMALY MODE FILTERS =====
+        let paguModeActive = 'default';
+
+        function applyPaguMode(mode, silent) {
+            paguModeActive = mode;
+
+            // Update button styles
+            ['default','strict','threshold','both'].forEach(m => {
+                const btn = document.getElementById('pmode-' + m);
+                if (!btn) return;
+                if (m === mode) {
+                    // Active
+                    const activeColors = {
+                        'default': 'border-indigo-400 bg-indigo-50 text-indigo-700',
+                        'strict': 'border-emerald-400 bg-emerald-50 text-emerald-700',
+                        'threshold': 'border-amber-400 bg-amber-50 text-amber-700',
+                        'both': 'border-red-400 bg-red-50 text-red-700'
+                    };
+                    btn.className = 'py-3 px-4 rounded-xl font-bold text-[11px] leading-tight transition border-2 flex-1 min-w-[130px] text-center ' + (activeColors[m] || '');
+                } else {
+                    btn.className = 'py-3 px-4 rounded-xl font-bold text-[11px] leading-tight transition border-2 flex-1 min-w-[130px] text-center border-slate-200 bg-white text-slate-500 hover:border-slate-300 hover:bg-slate-50';
+                }
+            });
+
+            if (silent) return;
+
+            // Fetch filtered data from API
+            const tbody = document.getElementById('pagu-tbody');
+            tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-slate-400 italic">Memuat data...</td></tr>';
+
+            fetch('/api/anomalies/pagu?mode=' + encodeURIComponent(mode))
+                .then(res => res.json())
+                .then(result => {
+                    if (!result.success) {
+                        tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-red-500">Error: ' + (result.message || 'unknown') + '</td></tr>';
+                        return;
+                    }
+                    renderPaguAnomalyRows(result.data, result.count);
+
+                    // Update badge count on the tab button
+                    const badge = document.querySelector('#antab-pagu span');
+                    if (badge) badge.textContent = result.count;
+                })
+                .catch(err => {
+                    tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-red-500">Gagal memuat data: ' + err.message + '</td></tr>';
+                });
+        }
+
+        function renderPaguAnomalyRows(data, totalCount) {
+            const tbody = document.getElementById('pagu-tbody');
+            if (!data || data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-green-600 font-bold">✅ Tidak ada anomali dengan filter ini</td></tr>';
+                document.getElementById('pagu-pagination').innerHTML = '';
+                return;
+            }
+
+            // Rebuild rows as DOM elements for pagination
+            const fragment = document.createDocumentFragment();
+            data.forEach((a, idx) => {
+                const budNum = a.budget ? parseFloat(String(a.budget).replace('Rp ', '').replace(/,/g, '')) : 0;
+                const realNum = a.realisasi_total || 0;
+                const overNum = realNum - budNum;
+                const overStr = 'Rp ' + Number(overNum).toLocaleString('id-ID');
+                const realStr = 'Rp ' + Number(realNum).toLocaleString('id-ID');
+
+                const pJson = JSON.stringify(a).replace(/'/g, '&#39;');
+
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-orange-50/50 transition paginated-row cursor-pointer';
+                tr.setAttribute('data-package', pJson);
+                tr.addEventListener('click', function() {
+                    try {
+                        const data = JSON.parse(this.getAttribute('data-package'));
+                        openPackageModal(data);
+                    } catch(e) {}
+                });
+                tr.innerHTML = `
+                    <td class="p-3 text-slate-400 font-mono idx-col">${idx + 1}</td>
+                    <td class="p-3 font-semibold text-slate-700 max-w-[250px] truncate">${escHtml(a.package_name || '')}</td>
+                    <td class="p-3 text-slate-500 max-w-[150px] truncate">${escHtml(a.satker || '')}</td>
+                    <td class="p-3 font-mono text-slate-600">${a.budget || 'Rp 0'}</td>
+                    <td class="p-3 font-mono text-emerald-600 font-bold">${realStr}</td>
+                    <td class="p-3 font-mono text-red-600 font-bold">${overStr}</td>
+                `;
+                fragment.appendChild(tr);
+            });
+
+            tbody.innerHTML = '';
+            tbody.appendChild(fragment);
+
+            // Update data-per-page
+            tbody.dataset.perPage = '50';
+
+            // Re-paginate
+            setTimeout(() => paginateTable('pagu-tbody', 'pagu-pagination'), 50);
         }
 
         // ===== ADMIN MODAL =====
@@ -1149,9 +1404,9 @@
 
         // ===== CHARTS (unchanged) =====
         const chartData = {
-            packages: { labels: ['E-Purchasing', 'Pengadaan Langsung', 'Dikecualikan', 'Lainnya'], values: [{{ total_epurchasing }}, {{ total_pl }}, {{ total_dikecualikan }}, {{ total_lainnya }}], total: {{ total_count }} },
-            budget: { labels: ['E-Purchasing', 'Pengadaan Langsung', 'Dikecualikan', 'Lainnya'], values: [{{ budget_epurchasing }}, {{ budget_pl }}, {{ budget_dikecualikan }}, {{ budget_lainnya }}], total: {{ total_budget }} },
-            realisasi: { labels: ['E-Purchasing', 'Pengadaan Langsung', 'Dikecualikan', 'Lainnya'], values: [{{ real_epurchasing }}, {{ real_pl }}, {{ real_dikecualikan }}, {{ real_lainnya }}], total: {{ real_total }}, pagu: [{{ budget_epurchasing }}, {{ budget_pl }}, {{ budget_dikecualikan }}, {{ budget_lainnya }}] }
+            packages: { labels: ['E-Purchasing', 'Pengadaan Langsung', 'Dikecualikan', 'Seleksi', 'Lainnya'], values: [{{ total_epurchasing }}, {{ total_pl }}, {{ total_dikecualikan }}, {{ total_seleksi }}, {{ total_lainnya }}], total: {{ total_count }} },
+            budget: { labels: ['E-Purchasing', 'Pengadaan Langsung', 'Dikecualikan', 'Seleksi', 'Lainnya'], values: [{{ budget_epurchasing }}, {{ budget_pl }}, {{ budget_dikecualikan }}, {{ budget_seleksi }}, {{ budget_lainnya }}], total: {{ total_budget }} },
+            realisasi: { labels: ['E-Purchasing', 'Pengadaan Langsung', 'Dikecualikan', 'Seleksi', 'Lainnya'], values: [{{ real_epurchasing }}, {{ real_pl }}, {{ real_dikecualikan }}, {{ real_seleksi }}, {{ real_lainnya }}], total: {{ real_total }}, pagu: [{{ budget_epurchasing }}, {{ budget_pl }}, {{ budget_dikecualikan }}, {{ budget_seleksi }}, {{ budget_lainnya }}] }
         };
         let chartInstances = {};
         function destroyCharts() { Object.values(chartInstances).forEach(c => { if (c) c.destroy(); }); chartInstances = {}; }
