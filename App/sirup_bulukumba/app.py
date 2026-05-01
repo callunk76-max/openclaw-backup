@@ -56,10 +56,11 @@ def parse_budget(budget_str):
 
 class FilterQuery:
     """Build and manage filter SQL queries"""
-    def __init__(self, search_query='', m_filter='', type_filter=''):
+    def __init__(self, search_query='', m_filter='', type_filter='', cara_filter=''):
         self.search_query = search_query
         self.m_filter = m_filter
         self.type_filter = type_filter
+        self.cara_filter = cara_filter
 
     def where_clause(self, alias='p'):
         """Build WHERE clause and return (clause_string, params_list)"""
@@ -80,13 +81,17 @@ class FilterQuery:
             parts.append(f"{prefix}procurement_type = ?")
             params.append(self.type_filter)
 
+        if self.cara_filter:
+            parts.append(f"{prefix}\"Cara Pengadaan\" = ?")
+            params.append(self.cara_filter)
+
         if parts:
             return ' AND '.join(parts), params
         return '', []
 
     @property
     def has_filters(self):
-        return bool(self.search_query or self.m_filter or self.type_filter)
+        return bool(self.search_query or self.m_filter or self.type_filter or self.cara_filter)
 
 
 def get_threshold_case():
@@ -96,9 +101,9 @@ def get_threshold_case():
             "ELSE 200000000 END")
 
 
-def fetch_table_data(conn, search_query, m_filter, type_filter, sort_by='id', sort_dir='DESC', page=1):
+def fetch_table_data(conn, search_query, m_filter, type_filter, cara_filter='', sort_by='id', sort_dir='DESC', page=1):
     """Fetch paginated table data + stats. Returns dict with all needed data."""
-    fq = FilterQuery(search_query, m_filter, type_filter)
+    fq = FilterQuery(search_query, m_filter, type_filter, cara_filter)
     offset = (page - 1) * PER_PAGE
 
     allowed_sorts = {
@@ -201,6 +206,7 @@ def index():
     search_query = request.args.get('search', '')
     m_filter = request.args.get('method', '')
     type_filter = request.args.get('type', '')
+    cara_filter = request.args.get('cara', '')
     sort_by = request.args.get('sort_by', 'id')
     sort_dir = request.args.get('sort_dir', 'DESC')
     page = int(request.args.get('page', 1))
@@ -251,7 +257,7 @@ def index():
         else: real_lainnya = bgt
 
     # Table data (filtered/paginated)
-    td = fetch_table_data(conn, search_query, m_filter, type_filter, sort_by, sort_dir, page)
+    td = fetch_table_data(conn, search_query, m_filter, type_filter, cara_filter, sort_by, sort_dir, page)
 
     # Methods & types for filter dropdowns
     methods = conn.execute(
@@ -259,6 +265,9 @@ def index():
     ).fetchall()
     types = conn.execute(
         "SELECT DISTINCT procurement_type FROM procurement WHERE procurement_type IS NOT NULL"
+    ).fetchall()
+    cara_list = conn.execute(
+        '''SELECT DISTINCT "Cara Pengadaan" FROM procurement WHERE "Cara Pengadaan" IS NOT NULL AND "Cara Pengadaan" != '' '''
     ).fetchall()
 
     # Suggestions
@@ -300,6 +309,24 @@ def index():
         ORDER BY realisasi_total DESC
     """).fetchall()
 
+    # Splash info: RUP tanpa realisasi
+    splash1 = conn.execute(f"""
+        SELECT COUNT(*) as cnt, COALESCE(SUM({BUDGET_SQL}), 0) as total
+        FROM procurement p
+        WHERE (SELECT COUNT(*) FROM realisasi r WHERE r."Kode RUP" = p.id) = 0
+    """).fetchone()
+    splash_no_realisasi_cnt = splash1['cnt']
+    splash_no_realisasi_total = splash1['total']
+
+    # Splash info: realisasi tanpa RUP awal
+    splash2 = conn.execute(f"""
+        SELECT COUNT(*) as cnt, COALESCE(SUM(r."Total Nilai (Rp)"), 0) as total
+        FROM realisasi r
+        WHERE r."Kode RUP" NOT IN (SELECT id FROM procurement)
+    """).fetchone()
+    splash_orphan_real_cnt = splash2['cnt']
+    splash_orphan_real_total = splash2['total']
+
     conn.close()
 
     return render_template('index.html',
@@ -327,16 +354,21 @@ def index():
         f_total_seleksi=td['sl'], f_budget_seleksi=td['bd_sl'],
         f_total_lainnya=td['ln'], f_budget_lainnya=td['bd_ln'],
         # Filters
-        search_query=search_query, m_filter=m_filter, type_filter=type_filter,
+        search_query=search_query, m_filter=m_filter, type_filter=type_filter, cara_filter=cara_filter,
         sort_by=sort_by, sort_dir=sort_dir, page=page, per_page=PER_PAGE,
         # UI data
-        methods=methods, types=types, suggestions=suggestions,
+        methods=methods, types=types, cara_list=cara_list, suggestions=suggestions,
         total_visits=total_visits, last_update=last_update,
         # Anomalies
         pl_anomalies=[dict(r) for r in pl_anomalies],
         pl_anomaly_count=pl_anomaly_count,
         pagu_anomalies=[dict(r) for r in pagu_anomalies],
-        pagu_anomaly_count=pagu_anomaly_count
+        pagu_anomaly_count=pagu_anomaly_count,
+        # Splash info
+        splash_no_realisasi_cnt=splash_no_realisasi_cnt,
+        splash_no_realisasi_total=splash_no_realisasi_total,
+        splash_orphan_real_cnt=splash_orphan_real_cnt,
+        splash_orphan_real_total=splash_orphan_real_total
     )
 
 
@@ -346,12 +378,13 @@ def api_table():
     search_query = request.args.get('search', '')
     m_filter = request.args.get('method', '')
     type_filter = request.args.get('type', '')
+    cara_filter = request.args.get('cara', '')
     sort_by = request.args.get('sort_by', 'id')
     sort_dir = request.args.get('sort_dir', 'DESC')
     page = int(request.args.get('page', 1))
 
     conn = get_db_connection()
-    td = fetch_table_data(conn, search_query, m_filter, type_filter, sort_by, sort_dir, page)
+    td = fetch_table_data(conn, search_query, m_filter, type_filter, cara_filter, sort_by, sort_dir, page)
     conn.close()
 
     return jsonify({
@@ -380,10 +413,11 @@ def export():
     search_query = request.args.get('search', '')
     m_filter = request.args.get('method', '')
     type_filter = request.args.get('type', '')
+    cara_filter = request.args.get('cara', '')
     file_format = request.args.get('format', 'xlsx')
 
     conn = get_db_connection()
-    fq = FilterQuery(search_query, m_filter, type_filter)
+    fq = FilterQuery(search_query, m_filter, type_filter, cara_filter)
     query = "SELECT * FROM procurement WHERE 1=1"
     where_clause, params = fq.where_clause(alias='')
     if where_clause:

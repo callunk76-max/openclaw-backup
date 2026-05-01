@@ -87,6 +87,74 @@
             box-shadow: 0 16px 40px rgba(0,0,0,0.18);
             border-color: #6366f1;
         }
+
+        /* 🏀 Ball cards */
+        .ball-card {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+            user-select: none;
+            margin: 0 auto;
+        }
+        .ball-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .ball-card::after {
+            content: '';
+            position: absolute;
+            bottom: 8px;
+            left: 20%;
+            width: 60%;
+            height: 6px;
+            background: radial-gradient(ellipse, rgba(0,0,0,0.12) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(2px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+        .ball-card:hover {
+            transform: translateY(-12px) scale(1.08);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        .ball-card:hover::after {
+            width: 80%;
+            left: 10%;
+            opacity: 0.5;
+            transform: translateY(6px);
+        }
+        .ball-card:active {
+            transform: translateY(-2px) scale(0.95);
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+        @keyframes float-shadow {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(0.85); opacity: 0.15; }
+        }
+        .ball-float {
+            animation: float 4s ease-in-out infinite;
+        }
+        .ball-float:nth-child(2) {
+            animation-delay: -2s;
+        }
+        .ball-float:hover {
+            animation: none;
+        }
         @container (inline-size > 0px) {
             .stats-value {
                 font-size: clamp(0.5rem, 6cqi, 0.95rem) !important;
@@ -137,11 +205,11 @@
                 <p class="text-indigo-200 text-[11px] font-medium tracking-wide mt-1">Terahir update: {{ last_update }}</p>
             </div>
             <div class="flex gap-3">
-                <a href="/export?format=pdf&search={{ search_query }}&method={{ m_filter }}&type={{ type_filter }}"
+                <a href="/export?format=pdf&search={{ search_query }}&method={{ m_filter }}&type={{ type_filter }}&cara={{ cara_filter }}"
                    class="bg-white text-indigo-700 px-4 py-2 rounded-lg font-bold hover:bg-indigo-50 transition flex items-center gap-2">
                    <span>📄</span> PDF
                 </a>
-                <a href="/export?format=xlsx&search={{ search_query }}&method={{ m_filter }}&type={{ type_filter }}"
+                <a href="/export?format=xlsx&search={{ search_query }}&method={{ m_filter }}&type={{ type_filter }}&cara={{ cara_filter }}"
                    class="bg-white text-indigo-700 px-4 py-2 rounded-lg font-bold hover:bg-indigo-50 transition flex items-center gap-2">
                    <span>📊</span> Excel
                 </a>
@@ -255,6 +323,51 @@
             </div>
         </div>
 
+        <!-- Splash Modal (auto-close before anomaly) -->
+        <div id="splashModal" class="fixed inset-0 z-50 hidden bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="bg-white rounded-3xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-hidden transform transition-all animate__animated">
+                <div class="bg-gradient-to-r from-indigo-700 to-purple-600 px-6 py-5 flex justify-between items-center text-white">
+                    <h3 class="text-xl font-bold flex items-center gap-2">🧐 Cek Data Dulu Yuk!</h3>
+                    <button onclick="closeSplash()" class="text-white hover:text-indigo-200 transition text-2xl leading-none">&times;</button>
+                </div>
+                <div class="p-6 space-y-5">
+                    <div class="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-xl p-5 border border-indigo-200">
+                        <div class="flex items-start gap-4">
+                            <span class="text-3xl shrink-0">📭</span>
+                            <div>
+                                <p class="font-bold text-indigo-800 text-lg">RUP Belum Direalisasikan</p>
+                                <p class="text-indigo-600 mt-1">
+                                    Terdapat <span class="font-black text-indigo-900 text-xl">{{ "{:,}".format(splash_no_realisasi_cnt) }}</span> RUP
+                                    yg belum ada realisasinya dgn total Pagu
+                                    <span class="font-black text-indigo-900">Rp {{ "{:,}".format(splash_no_realisasi_total | int) }}</span>
+                                </p>
+                                <p class="text-xs text-indigo-400 mt-2">Data ini tidak termasuk dalam analisis anomali, hanya sebagai informasi tambahan.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gradient-to-br from-amber-50 to-amber-100 rounded-xl p-5 border border-amber-200">
+                        <div class="flex items-start gap-4">
+                            <span class="text-3xl shrink-0">👻</span>
+                            <div>
+                                <p class="font-bold text-amber-800 text-lg">Realisasi Tak Berinduk</p>
+                                <p class="text-amber-600 mt-1">
+                                    Terdapat <span class="font-black text-amber-900 text-xl">{{ "{:,}".format(splash_orphan_real_cnt) }}</span> RUP
+                                    pada realisasi yg tdk ada pada RUP awal dgn total realisasi
+                                    <span class="font-black text-amber-900">Rp {{ "{:,}".format(splash_orphan_real_total | int) }}</span>
+                                </p>
+                                <p class="text-xs text-amber-400 mt-2">Realisasi ini mungkin berasal dari paket yg dihapus atau data yg tidak sinkron.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button onclick="closeSplashAndOpenAnomaly()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-8 py-3 rounded-xl transition text-base shadow-md">
+                            Lanjut ke Anomali ⚠️
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Anomaly Modal -->
         <div id="anomalyModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
             <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] flex flex-col overflow-hidden transform transition-all">
@@ -276,22 +389,22 @@
                         <button onclick="applyPaguMode('default')" id="pmode-default"
                                 class="py-3 px-4 rounded-xl font-bold text-[11px] leading-tight transition border-2 flex-1 min-w-[130px] text-center
                                        border-indigo-400 bg-indigo-50 text-indigo-700 shadow-sm">
-                            🔵 Standar<br><span class="font-normal text-[10px] text-indigo-500">Gabung Kode RUP + Nama Paket</span>
+                            🔵 Logic 1<br><span class="font-normal text-[10px] text-indigo-500">Gabung Kode RUP + Nama Paket</span>
                         </button>
                         <button onclick="applyPaguMode('strict')" id="pmode-strict"
                                 class="py-3 px-4 rounded-xl font-bold text-[11px] leading-tight transition border-2 flex-1 min-w-[130px] text-center
                                        border-slate-200 bg-white text-slate-500 hover:border-emerald-300 hover:bg-emerald-50">
-                            🟢 Solusi 1<br><span class="font-normal text-[10px]">Cocokkan Kode RUP saja</span>
+                            🟢 Standar<br><span class="font-normal text-[10px]">Cocokkan Kode RUP saja</span>
                         </button>
                         <button onclick="applyPaguMode('threshold')" id="pmode-threshold"
                                 class="py-3 px-4 rounded-xl font-bold text-[11px] leading-tight transition border-2 flex-1 min-w-[130px] text-center
                                        border-slate-200 bg-white text-slate-500 hover:border-amber-300 hover:bg-amber-50">
-                            🟡 Solusi 2<br><span class="font-normal text-[10px]">Abaikan jika >10% / >Rp1jt</span>
+                            🟡 Logic 2<br><span class="font-normal text-[10px]">Abaikan jika >10% / >Rp1jt</span>
                         </button>
                         <button onclick="applyPaguMode('both')" id="pmode-both"
                                 class="py-3 px-4 rounded-xl font-bold text-[11px] leading-tight transition border-2 flex-1 min-w-[130px] text-center
                                        border-slate-200 bg-white text-slate-500 hover:border-red-300 hover:bg-red-50">
-                            🔴 Solusi 3<br><span class="font-normal text-[10px]">Kode RUP + Threshold</span>
+                            🔴 Logic 3<br><span class="font-normal text-[10px]">Kode RUP + Threshold</span>
                         </button>
                     </div>
                     <div class="relative max-w-md mb-4 ml-auto">
@@ -372,90 +485,42 @@
             </div>
         </div>
 
-        <!-- Stats Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 xl:gap-6 mb-8 items-start">
-            <div class="bg-white p-4 xl:p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col h-full cursor-pointer stats-card-hover" onclick="openChartModal('packages')">
-                <div class="flex items-center gap-3 xl:gap-4 mb-3 xl:mb-4">
-                    <div class="bg-indigo-100 p-2.5 xl:p-3 rounded-full text-indigo-600 text-xl xl:text-2xl shrink-0">📦</div>
-                    <div class="min-w-0">
-                        <p class="text-[10px] xl:text-xs text-slate-500 font-medium leading-tight">Total Paket</p>
-                        <p class="font-bold text-slate-800 stats-value-lg">{{ "{:,}".format(total_count) if total_count else 0 }}</p>
-                    </div>
-                </div>
-                <div class="mt-auto space-y-1.5 pt-3 border-t border-slate-100">
-                    <div class="flex justify-between stats-detail"><span class="text-slate-500">E-Purchasing:</span><span class="font-semibold text-slate-700">{{ "{:,}".format(total_epurchasing) }}</span></div>
-                    <div class="flex justify-between stats-detail"><span class="text-slate-500">P. Langsung:</span><span class="font-semibold text-slate-700">{{ "{:,}".format(total_pl) }}</span></div>
-                    <div class="flex justify-between stats-detail"><span class="text-slate-500">Dikecualikan:</span><span class="font-semibold text-slate-700">{{ "{:,}".format(total_dikecualikan) }}</span></div>
-                    <div class="flex justify-between stats-detail"><span class="text-slate-500">Seleksi:</span><span class="font-semibold text-slate-700">{{ "{:,}".format(total_seleksi) }}</span></div>
-                                    <div class="flex justify-between stats-detail"><span class="text-slate-500">Lainnya/Kosong:</span><span class="font-semibold text-slate-700">{{ "{:,}".format(total_lainnya) }}</span></div>
+        <!-- 5 BOLA STATS -->
+        <div class="flex flex-wrap justify-center gap-5 lg:gap-8 mb-8">
+            <!-- 1. Total Paket -->
+            <div class="ball-card ball-float bg-gradient-to-br from-indigo-500 to-indigo-700 shadow-xl shadow-indigo-200" onclick="openChartModal('packages')">
+                <div class="relative z-10 flex flex-col items-center">
+                    <span class="text-[10px] font-semibold text-indigo-200 uppercase tracking-widest">📦 Total Paket</span>
+                    <span class="text-4xl xl:text-5xl font-black text-white leading-none mt-1">{{ "{:,}".format(total_count) if total_count else 0 }}</span>
                 </div>
             </div>
-            <div class="bg-white p-4 xl:p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col h-full cursor-pointer stats-card-hover" onclick="openChartModal('budget')">
-                <div class="flex items-center gap-3 xl:gap-4 mb-3 xl:mb-4">
-                    <div class="bg-green-100 p-2.5 xl:p-3 rounded-full text-green-600 text-xl xl:text-2xl shrink-0">💰</div>
-                    <div class="min-w-0">
-                        <p class="text-[10px] xl:text-xs text-slate-500 font-medium leading-tight">Total Pagu RUP</p>
-                        <p class="font-bold text-slate-800 stats-value">Rp {{ "{:,.0f}".format(total_budget) if total_budget else 0 }}</p>
-                    </div>
-                </div>
-                <div class="mt-auto space-y-1.5 pt-3 border-t border-slate-100">
-                    <div class="flex justify-between stats-detail"><span class="text-slate-500 label">E-Purchasing:</span><span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(budget_epurchasing) }}</span></div>
-                    <div class="flex justify-between stats-detail"><span class="text-slate-500 label">P. Langsung:</span><span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(budget_pl) }}</span></div>
-                    <div class="flex justify-between stats-detail"><span class="text-slate-500 label">Dikecualikan:</span><span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(budget_dikecualikan) }}</span></div>
-                    <div class="flex justify-between stats-detail"><span class="text-slate-500 label">Seleksi:</span><span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(budget_seleksi) }}</span></div>
-                                    <div class="flex justify-between stats-detail"><span class="text-slate-500 label">Lainnya:</span><span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(budget_lainnya) }}</span></div>
+            <!-- 2. Total Pagu -->
+            <div class="ball-card ball-float bg-gradient-to-br from-emerald-500 to-emerald-700 shadow-xl shadow-emerald-200" onclick="openChartModal('budget')">
+                <div class="relative z-10 flex flex-col items-center">
+                    <span class="text-[10px] font-semibold text-emerald-200 uppercase tracking-widest">💰 Total Pagu</span>
+                    <span class="text-4xl xl:text-5xl font-black text-white leading-none mt-1">Rp{{ "{:,.0f}".format(total_budget / 1_000_000_000) if total_budget >= 1_000_000_000 else "{:,.0f}".format(total_budget / 1_000_000) }}<span class="text-xl">{{ 'M' if total_budget >= 1_000_000_000 else 'Jt' }}</span></span>
                 </div>
             </div>
-            <div class="bg-white p-4 xl:p-5 rounded-2xl shadow-sm border border-emerald-200 flex flex-col h-full bg-emerald-50/30 cursor-pointer stats-card-hover" onclick="openChartModal('realisasi')">
-                <div class="flex items-center gap-3 xl:gap-4 mb-3 xl:mb-4">
-                    <div class="bg-emerald-100 p-2.5 xl:p-3 rounded-full text-emerald-600 text-xl xl:text-2xl shrink-0">✅</div>
-                    <div class="min-w-0">
-                        <p class="text-[10px] xl:text-xs text-slate-500 font-medium leading-tight">Total Realisasi ({{ "{:,}".format(count_realized) if count_realized else 0 }} paket)</p>
-                        <p class="font-bold text-emerald-700 stats-value">Rp {{ "{:,.0f}".format(real_total) if real_total else 0 }}</p>
-                        <p class="text-[10px] xl:text-xs text-slate-400 font-semibold">{{ "%.2f"|format((real_total/total_budget)*100) if total_budget and total_budget > 0 else 0 }}% dari Pagu RUP</p>
-                    </div>
-                </div>
-                <div class="mt-auto space-y-1.5 pt-3 border-t border-emerald-200/50">
-                    <div class="flex justify-between stats-detail"><span class="text-slate-500 label">E-Purchasing:</span><span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(real_epurchasing) }}</span></div>
-                    <div class="flex justify-between stats-detail"><span class="text-slate-500 label">P. Langsung:</span><span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(real_pl) }}</span></div>
-                    <div class="flex justify-between stats-detail"><span class="text-slate-500 label">Dikecualikan:</span><span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(real_dikecualikan) }}</span></div>
-                    <div class="flex justify-between stats-detail"><span class="text-slate-500 label">Seleksi:</span><span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(real_seleksi) }}</span></div>
-                                    <div class="flex justify-between stats-detail"><span class="text-slate-500 label">Lainnya:</span><span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(real_lainnya) }}</span></div>
+            <!-- 3. Realisasi -->
+            <div class="ball-card ball-float bg-gradient-to-br from-teal-500 to-teal-700 shadow-xl shadow-teal-200" onclick="openChartModal('realisasi')">
+                <div class="relative z-10 flex flex-col items-center">
+                    <span class="text-[10px] font-semibold text-teal-200 uppercase tracking-widest">✅ Realisasi</span>
+                    <span class="text-4xl xl:text-5xl font-black text-white leading-none mt-1">Rp{{ "{:,.0f}".format(real_total / 1_000_000_000) if real_total >= 1_000_000_000 else "{:,.0f}".format(real_total / 1_000_000) }}<span class="text-xl">{{ 'M' if real_total >= 1_000_000_000 else 'Jt' }}</span></span>
                 </div>
             </div>
-            <div id="filtered-stats-card" class="bg-white p-4 xl:p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col h-full border-l-4 border-l-indigo-500 stats-card-hover">
-                <div class="flex items-center gap-3 xl:gap-4 mb-3 xl:mb-4">
-                    <div class="bg-indigo-50 p-2.5 xl:p-3 rounded-full text-indigo-500 text-xl xl:text-2xl shrink-0">🎯</div>
-                    <div class="min-w-0">
-                        <p class="text-[10px] xl:text-xs text-slate-500 font-medium leading-tight">Hasil Filter (<span id="filtered-count">{{ "{:,}".format(filtered_count) }}</span> pkt)</p>
-                        <p class="font-bold text-indigo-700 stats-value" id="filtered-budget">Rp {{ "{:,.0f}".format(filtered_total_budget) if filtered_total_budget else 0 }}</p>
-                    </div>
-                </div>
-                <div class="mt-auto space-y-1.5 pt-3 border-t border-slate-100" id="filtered-breakdown">
-                    <div class="flex justify-between stats-detail"><span class="text-slate-500 label">E-Purchasing:</span><span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(f_budget_epurchasing) }}</span></div>
-                    <div class="flex justify-between stats-detail"><span class="text-slate-500 label">P. Langsung:</span><span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(f_budget_pl) }}</span></div>
-                    <div class="flex justify-between stats-detail"><span class="text-slate-500 label">Dikecualikan:</span><span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(f_budget_dikecualikan) }}</span></div>
-                    <div class="flex justify-between stats-detail"><span class="text-slate-500 label">Seleksi:</span><span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(f_budget_seleksi) }}</span></div>
-                                    <div class="flex justify-between stats-detail"><span class="text-slate-500 label">Lainnya:</span><span class="font-semibold text-slate-700">Rp {{ "{:,.0f}".format(f_budget_lainnya) }}</span></div>
-                </div>
-            </div>
-            <div class="bg-white p-4 xl:p-5 rounded-2xl shadow-sm border border-slate-200 flex flex-col h-full border-l-4 border-l-amber-500 stats-card-hover">
-                <div class="flex items-center gap-3 xl:gap-4 mb-3 xl:mb-4">
-                    <div class="bg-amber-50 p-2.5 xl:p-3 rounded-full text-amber-500 text-xl xl:text-2xl shrink-0">📄</div>
-                    <div class="min-w-0">
-                        <p class="text-[10px] xl:text-xs text-slate-500 font-medium leading-tight">Total Halaman Ini</p>
-                        <p class="font-bold text-amber-700 stats-value" id="page-budget">Rp {{ "{:,.0f}".format(page_total_budget) if page_total_budget else 0 }}</p>
-                    </div>
-                </div>
-                <div class="mt-auto pt-3 border-t border-slate-100 flex items-center justify-center">
-                    <p class="text-xs text-slate-400 italic text-center" id="page-info">Tampil dari baris {{ (page - 1) * per_page + 1 }} - {{ (page - 1) * per_page + (packages|length) }}</p>
+            <!-- 4. Hasil Filter -->
+            <div class="ball-card ball-float bg-gradient-to-br from-amber-500 to-orange-600 shadow-xl shadow-amber-200" onclick="document.getElementById('filter-form').scrollIntoView({behavior:'smooth'})">
+                <div class="relative z-10 flex flex-col items-center">
+                    <span class="text-[10px] font-semibold text-amber-200 uppercase tracking-widest">🎯 Filter</span>
+                    <span class="text-3xl xl:text-4xl font-black text-white leading-none mt-1" id="filtered-budget-ball">Rp{{ "{:,.0f}".format(filtered_total_budget / 1_000_000_000) if filtered_total_budget >= 1_000_000_000 else "{:,.0f}".format(filtered_total_budget / 1_000_000) if filtered_total_budget >= 1_000_000 else "{:,.0f}".format(filtered_total_budget) }}<span class="text-base">{{ 'M' if filtered_total_budget >= 1_000_000_000 else 'Jt' if filtered_total_budget >= 1_000_000 else '' }}</span></span>
+                    <span class="text-[8px] text-amber-300 mt-0.5" id="filtered-count-ball">{{ "{:,}".format(filtered_count) }} paket</span>
                 </div>
             </div>
         </div>
 
         <!-- Filters Section -->
         <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 mb-8">
-            <form id="filter-form" class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+            <form id="filter-form" class="grid grid-cols-1 md:grid-cols-5 gap-4 items-end">
                 <div class="md:col-span-2 relative">
                     <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Cari Paket / Satker</label>
                     <div class="search-wrapper">
@@ -463,7 +528,7 @@
                                placeholder="Ketik nama paket atau dinas..."
                                class="w-full p-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none transition"
                                oninput="document.getElementById('search-clear-btn').style.display=this.value?'block':'none'">
-                        <span id="search-clear-btn" class="search-clear" onclick="document.getElementById('search-input').value='';this.style.display='none';document.getElementById('search-input').focus();document.getElementById('method-filter').value='';document.getElementById('type-filter').value='';searchTerm='';methodVal='';typeVal='';fetchTable(1, currentSort, currentSortDir);"
+                        <span id="search-clear-btn" class="search-clear" onclick="document.getElementById('search-input').value='';this.style.display='none';document.getElementById('search-input').focus();document.getElementById('method-filter').value='';document.getElementById('type-filter').value='';document.getElementById('cara-filter').value='';searchTerm='';methodVal='';typeVal='';caraVal='';fetchTable(1, currentSort, currentSortDir);"
                               style="display:{{ 'block' if search_query else 'none' }}">&times;</span>
                     </div>
                     <div id="suggestions" class="hidden absolute z-10 w-full bg-white border border-slate-200 rounded-lg shadow-xl mt-1 max-h-60 overflow-y-auto"></div>
@@ -486,7 +551,16 @@
                         {% endfor %}
                     </select>
                 </div>
-                <div class="md:col-span-4 hidden"></div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Cara Pengadaan</label>
+                    <select name="cara" id="cara-filter" class="w-full p-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none transition">
+                        <option value="">Semua Cara</option>
+                        {% for c in cara_list %}
+                        <option value="{{ c[0] }}" {% if c[0] == cara_filter %}selected{% endif %}>{{ c[0] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="hidden"></div>
                 </div>
             </form>
         </div>
@@ -657,6 +731,7 @@
                 search: searchTerm,
                 method: methodVal,
                 type: typeVal,
+                cara: caraVal,
                 sort_by: sortBy || currentSort,
                 sort_dir: sortDir || currentSortDir,
                 page: page || 1
@@ -673,24 +748,37 @@
             totalPages = data.total_pages;
             filteredCount = data.filtered_count;
 
-            // Update filtered stats card
-            document.getElementById('filtered-count').textContent = Number(filteredCount).toLocaleString('id-ID');
-            document.getElementById('filtered-budget').textContent = fmtRp(data.filtered_total_budget);
+            // Update filtered stats ball
+            const fBudEl = document.getElementById('filtered-budget-ball');
+            if (fBudEl) {
+                const fBud = data.filtered_total_budget;
+                if (fBud >= 1000000000) {
+                    fBudEl.innerHTML = 'Rp' + (fBud / 1000000000).toLocaleString('id-ID', {maximumFractionDigits: 0}) + '<span class="text-base">M</span>';
+                } else if (fBud >= 1000000) {
+                    fBudEl.innerHTML = 'Rp' + (fBud / 1000000).toLocaleString('id-ID', {maximumFractionDigits: 0}) + '<span class="text-base">Jt</span>';
+                } else {
+                    fBudEl.textContent = 'Rp' + Number(fBud).toLocaleString('id-ID');
+                }
+            }
+            const fCntEl = document.getElementById('filtered-count-ball');
+            if (fCntEl) fCntEl.textContent = Number(filteredCount).toLocaleString('id-ID') + ' paket';
 
-            const breakdownEl = document.getElementById('filtered-breakdown');
-            breakdownEl.innerHTML = `
-                <div class="flex justify-between stats-detail"><span class="text-slate-500 label">E-Purchasing:</span><span class="font-semibold text-slate-700">${fmtRp(data.f_budget_epurchasing)}</span></div>
-                <div class="flex justify-between stats-detail"><span class="text-slate-500 label">P. Langsung:</span><span class="font-semibold text-slate-700">${fmtRp(data.f_budget_pl)}</span></div>
-                <div class="flex justify-between stats-detail"><span class="text-slate-500 label">Dikecualikan:</span><span class="font-semibold text-slate-700">${fmtRp(data.f_budget_dikecualikan)}</span></div>
-                <div class="flex justify-between stats-detail"><span class="text-slate-500 label">Seleksi:</span><span class="font-semibold text-slate-700">${fmtRp(data.f_budget_seleksi)}</span></div>
-                            <div class="flex justify-between stats-detail"><span class="text-slate-500 label">Lainnya:</span><span class="font-semibold text-slate-700">${fmtRp(data.f_budget_lainnya)}</span></div>
-            `;
-
-            // Update page budget & info
-            document.getElementById('page-budget').textContent = fmtRp(data.page_total_budget);
+            // Update page budget ball
+            const pBudEl = document.getElementById('page-budget-ball');
+            if (pBudEl) {
+                const pBud = data.page_total_budget;
+                if (pBud >= 1000000000) {
+                    pBudEl.innerHTML = 'Rp' + (pBud / 1000000000).toLocaleString('id-ID', {maximumFractionDigits: 0}) + '<span class="text-base">M</span>';
+                } else if (pBud >= 1000000) {
+                    pBudEl.innerHTML = 'Rp' + (pBud / 1000000).toLocaleString('id-ID', {maximumFractionDigits: 0}) + '<span class="text-base">Jt</span>';
+                } else {
+                    pBudEl.textContent = 'Rp' + Number(pBud).toLocaleString('id-ID');
+                }
+            }
             const startRow = (data.current_page - 1) * PER_PAGE + 1;
             const endRow = Math.min(data.current_page * PER_PAGE, data.filtered_count);
-            document.getElementById('page-info').textContent = `Tampil dari baris ${startRow} - ${endRow}`;
+            const pInfoEl = document.getElementById('page-info-ball');
+            if (pInfoEl) pInfoEl.textContent = `Baris ${startRow}-${endRow}`;
             document.getElementById('showing-info').innerHTML = `Menampilkan <b>${data.packages.length}</b> dari <b>${Number(data.filtered_count).toLocaleString('id-ID')}</b> data`;
 
             // Render table rows
@@ -842,12 +930,13 @@
             searchTerm = document.querySelector('[name="search"]').value;
             methodVal = document.querySelector('[name="method"]').value;
             typeVal = document.querySelector('[name="type"]').value;
+            caraVal = document.querySelector('[name="cara"]').value;
             currentPage = 1;
             fetchTable(1, currentSort, currentSortDir);
         });
 
         // Auto-submit on dropdown change
-        document.querySelectorAll('#method-filter, #type-filter').forEach(el => {
+        document.querySelectorAll('#method-filter, #type-filter, #cara-filter').forEach(el => {
             el.addEventListener('change', () => {
                 filterForm.dispatchEvent(new Event('submit'));
             });
@@ -862,6 +951,7 @@
                 searchTerm = this.value;
                 methodVal = document.querySelector('[name="method"]').value;
                 typeVal = document.querySelector('[name="type"]').value;
+                caraVal = document.querySelector('[name="cara"]').value;
                 currentPage = 1;
                 fetchTable(1, currentSort, currentSortDir);
             }, 500);
@@ -927,6 +1017,7 @@
                     searchTerm = term;
                     methodVal = document.getElementById('method-filter')?.value || '';
                     typeVal = document.getElementById('type-filter')?.value || '';
+                    caraVal = document.getElementById('cara-filter')?.value || '';
                     fetchTable(1, currentSort, currentSortDir);
                 }
             }, 400);
@@ -943,6 +1034,7 @@
                     searchTerm = term;
                     methodVal = document.getElementById('method-filter')?.value || '';
                     typeVal = document.getElementById('type-filter')?.value || '';
+                    caraVal = document.getElementById('cara-filter')?.value || '';
                     fetchTable(1, currentSort, currentSortDir);
                 }
             }
@@ -1131,8 +1223,20 @@
             document.body.style.overflow = '';
         }
 
-        // ===== ANOMALY MODAL =====
+        // ===== SPLASH MODAL =====
         function openAnomalyModal() {
+            // Show splash first (no auto-close, user clicks to proceed)
+            document.getElementById('splashModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSplash() {
+            document.getElementById('splashModal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        function closeSplashAndOpenAnomaly() {
+            document.getElementById('splashModal').classList.add('hidden');
             document.getElementById('anomalyModal').classList.remove('hidden');
             document.body.style.overflow = 'hidden';
             setTimeout(() => paginateTable('pl-tbody', 'pl-pagination'), 100);
@@ -1427,7 +1531,7 @@
         }
         function renderChartRealisasi(container) {
             const d = chartData.realisasi; const persen = d.total > 0 ? ((d.total / chartData.budget.total) * 100).toFixed(2) : 0;
-            container.innerHTML = `<div class="text-center mb-6"><p class="text-3xl font-black text-emerald-700">${fmtRp(d.total)}</p><p class="text-sm text-slate-500 font-medium">Total Realisasi (${Number(chartData.packages.values.reduce((a,b)=>a+b,0)).toLocaleString('id-ID')} paket terealisasi)</p><p class="text-xs text-slate-400 mt-1">${persen}% dari total Pagu RUP</p></div><div class="space-y-6"><div class="grid grid-cols-1 md:grid-cols-2 gap-8"><div class="flex items-center justify-center h-72" id="chartRealDoughnut"></div><div class="flex flex-col justify-center"><p class="text-xs font-bold text-slate-500 uppercase mb-4">Realisasi per Metode</p><div class="space-y-3">${d.labels.map((l, i) => `<div class="p-3 rounded-lg border" style="border-color:${COLORS[i]}33"><div class="flex items-center gap-2 mb-1"><span class="w-2.5 h-2.5 rounded-full shrink-0" style="background:${COLORS[i]}"></span><span class="text-xs font-bold text-slate-600">${l}</span></div><div class="flex justify-between text-sm ml-4"><span class="text-emerald-600 font-bold">${fmtRp(d.values[i])}</span><span class="text-slate-400">dari ${fmtRp(d.pagu[i])}</span></div><div class="ml-4 mt-1 w-full bg-slate-100 rounded-full h-1.5"><div class="h-1.5 rounded-full transition-all" style="width:${d.pagu[i] > 0 ? Math.min((d.values[i]/d.pagu[i])*100, 100) : 0}%; background:${COLORS[i]}"></div></div><div class="ml-4 text-[10px] font-bold mt-0.5 ${d.pagu[i] > 0 && d.values[i] > d.pagu[i] ? 'text-red-500' : 'text-slate-400'}">${d.pagu[i] > 0 ? ((d.values[i]/d.pagu[i])*100).toFixed(1) + '%' : '0%'} ${d.pagu[i] > 0 && d.values[i] > d.pagu[i] ? '⚠️ Over' : ''}</div></div>`).join('')}</div></div></div></div>`;
+            container.innerHTML = `<div class="text-center mb-6"><p class="text-3xl font-black text-emerald-700">${fmtRp(d.total)}</p><p class="text-sm text-slate-500 font-medium">Total Realisasi ({{ "{:,}".format(count_realized) }} paket terealisasi)</p><p class="text-xs text-slate-400 mt-1">${persen}% dari total Pagu RUP</p></div><div class="space-y-6"><div class="grid grid-cols-1 md:grid-cols-2 gap-8"><div class="flex items-center justify-center h-72" id="chartRealDoughnut"></div><div class="flex flex-col justify-center"><p class="text-xs font-bold text-slate-500 uppercase mb-4">Realisasi per Metode</p><div class="space-y-3">${d.labels.map((l, i) => `<div class="p-3 rounded-lg border" style="border-color:${COLORS[i]}33"><div class="flex items-center gap-2 mb-1"><span class="w-2.5 h-2.5 rounded-full shrink-0" style="background:${COLORS[i]}"></span><span class="text-xs font-bold text-slate-600">${l}</span></div><div class="flex justify-between text-sm ml-4"><span class="text-emerald-600 font-bold">${fmtRp(d.values[i])}</span><span class="text-slate-400">dari ${fmtRp(d.pagu[i])}</span></div><div class="ml-4 mt-1 w-full bg-slate-100 rounded-full h-1.5"><div class="h-1.5 rounded-full transition-all" style="width:${d.pagu[i] > 0 ? Math.min((d.values[i]/d.pagu[i])*100, 100) : 0}%; background:${COLORS[i]}"></div></div><div class="ml-4 text-[10px] font-bold mt-0.5 ${d.pagu[i] > 0 && d.values[i] > d.pagu[i] ? 'text-red-500' : 'text-slate-400'}">${d.pagu[i] > 0 ? ((d.values[i]/d.pagu[i])*100).toFixed(1) + '%' : '0%'} ${d.pagu[i] > 0 && d.values[i] > d.pagu[i] ? '⚠️ Over' : ''}</div></div>`).join('')}</div></div></div></div>`;
             const ctx = document.getElementById('chartRealDoughnut'); const canvas = document.createElement('canvas'); ctx.appendChild(canvas);
             chartInstances.realisasi = new Chart(canvas.getContext('2d'), { type: 'doughnut', data: { labels: d.labels, datasets: [{ data: d.values, backgroundColor: COLORS_REAL, borderWidth: 2, borderColor: '#fff' }] }, options: { responsive: true, maintainAspectRatio: false, cutout: '65%', plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => fmtRp(ctx.parsed) + ' (' + ((ctx.parsed/d.total)*100).toFixed(1) + '%)' } } } } });
         }
