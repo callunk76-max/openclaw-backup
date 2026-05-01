@@ -71,6 +71,7 @@ def update_signal_history(current_pairs):
             else:
                 # Same day — add a star, crown cycle over
                 entry["stars"] = entry.get("stars", 0) + 1
+                print(f'[TRACK] {pair} REAPPEARED → stars={entry["stars"]}, consecutive=1')
 
         updated[pair] = entry
 

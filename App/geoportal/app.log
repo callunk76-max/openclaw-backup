@@ -34,3 +34,8 @@
 127.0.0.1 - - [30/Apr/2026 21:33:32] "GET /api/datasets HTTP/1.0" 200 -
 127.0.0.1 - - [30/Apr/2026 21:36:20] "GET /flood3d HTTP/1.0" 200 -
 127.0.0.1 - - [30/Apr/2026 21:36:27] "GET /api/datasets HTTP/1.0" 200 -
+ * Detected change in '/root/.openclaw/workspace/App/geoportal/app.py', reloading
+ * Restarting with stat
+127.0.0.1 - - [01/May/2026 23:10:10] "GET /flood HTTP/1.0" 200 -
+127.0.0.1 - - [01/May/2026 23:10:10] "GET /flood3d HTTP/1.0" 200 -
+127.0.0.1 - - [01/May/2026 23:10:10] "GET / HTTP/1.0" 200 -

@@ -1,14 +1,9 @@
 #!/bin/bash
-# Auto-restart for sirup_bulukumba Flask app
-APP_DIR="/root/.openclaw/workspace/App/sirup_bulukumba"
-PID_FILE="/tmp/sirup_bulukumba.pid"
-
-if curl -sf http://127.0.0.1:5005/ > /dev/null 2>&1; then
+# Healthcheck for sirup_bulukumba - uses systemd now
+if systemctl is-active --quiet sirup-bulukumba; then
     exit 0
 fi
 
-# App is down, restart it
-cd "$APP_DIR"
-nohup python3 app.py > app.log 2>&1 &
-echo $! > "$PID_FILE"
-echo "[$(date)] sirup_bulukumba restarted (was down)" >> restart_log.txt
+# If systemd failed, try restart
+systemctl restart sirup-bulukumba
+echo "[$(date)] sirup_bulukumba restarted via systemd" >> /root/.openclaw/workspace/App/sirup_bulukumba/restart_log.txt
