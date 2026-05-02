@@ -19,6 +19,22 @@ DB_PATH = '/root/.openclaw/workspace/App/sirup_bulukumba/bulukumba.db'
 BUDGET_SQL = "CAST(REPLACE(REPLACE(budget, 'Rp ', ''), ',', '') AS REAL)"
 PER_PAGE = 50
 
+# Simple TTL cache
+_cache = {}
+_CACHE_TTL = 300  # 5 minutes
+
+def cached(key, ttl=_CACHE_TTL):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            now = time.time()
+            if key in _cache and now - _cache[key]['time'] < ttl:
+                return _cache[key]['data']
+            result = func(*args, **kwargs)
+            _cache[key] = {'data': result, 'time': now}
+            return result
+        return wrapper
+    return decorator
+
 def get_db_connection():
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
@@ -373,6 +389,7 @@ def index():
 
 
 @app.route('/api/table')
+@app.route('/api/table')
 def api_table():
     """API endpoint returning JSON for AJAX table refresh."""
     search_query = request.args.get('search', '')
@@ -564,6 +581,53 @@ def package_details():
         conn.close()
 
 
+@cached('global_stats')
+def _get_global_stats():
+    conn = get_db_connection()
+    stats = conn.execute(
+        f"SELECT COUNT(*) as total, SUM({BUDGET_SQL}) as total_budget FROM procurement"
+    ).fetchone()
+
+    detail_grouped = conn.execute(f"""
+        SELECT
+            CASE WHEN procurement_method IN ('E-Purchasing', 'Pengadaan Langsung', 'Dikecualikan', 'Seleksi')
+                 THEN procurement_method ELSE 'Lainnya' END as method_group,
+            COUNT(*) as total, SUM({BUDGET_SQL}) as total_budget
+        FROM procurement GROUP BY method_group
+    """).fetchall()
+
+    real_total = conn.execute(
+        'SELECT SUM("Total Nilai (Rp)") as total FROM realisasi'
+    ).fetchone()['total'] or 0
+    count_realized = conn.execute(
+        'SELECT COUNT(DISTINCT "Kode RUP") as cnt FROM realisasi'
+    ).fetchone()['cnt'] or 0
+
+    def _find(dg, name):
+        for r in dg:
+            if r['method_group'] == name:
+                return r['total'], r['total_budget'] or 0
+        return 0, 0
+
+    return {
+        'total_count': stats['total'],
+        'total_budget': stats['total_budget'] or 0,
+        'ep': dict(zip(['total','budget'], _find(detail_grouped, 'E-Purchasing'))),
+        'pl': dict(zip(['total','budget'], _find(detail_grouped, 'Pengadaan Langsung'))),
+        'dk': dict(zip(['total','budget'], _find(detail_grouped, 'Dikecualikan'))),
+        'sl': dict(zip(['total','budget'], _find(detail_grouped, 'Seleksi'))),
+        'ln': dict(zip(['total','budget'], _find(detail_grouped, 'Lainnya'))),
+        'real_total': real_total,
+        'count_realized': count_realized,
+        'last_update': get_last_update(),
+    }
+
+
+@app.route('/api/stats')
+def api_stats():
+    return jsonify(_get_global_stats())
+
+
 @app.route('/api/anomalies/pagu')
 def api_anomalies_pagu():
     """Return pagu anomalies filtered by mode: default|strict|threshold|both"""
@@ -616,6 +680,31 @@ def api_anomalies_pagu():
         'data': rows,
         'mode': mode,
         'match_label': match_label
+    })
+
+
+@app.route('/api/anomalies/orphan')
+def api_anomalies_orphan():
+    """Return orphan realisasi (no parent RUP in procurement table)"""
+    conn = get_db_connection()
+    count = conn.execute(
+        'SELECT COUNT(*) FROM realisasi WHERE "Kode RUP" NOT IN (SELECT id FROM procurement)'
+    ).fetchone()[0] or 0
+    rows = conn.execute('''
+        SELECT "Kode RUP" as kode_rup, "Nama Paket" as nama_paket,
+               "Nama Satuan Kerja" as satker, "Nama Penyedia" as penyedia,
+               "Total Nilai (Rp)" as total_nilai, "Metode Pengadaan" as metode,
+               "Jenis Pengadaan" as jenis, "Tahun Anggaran" as tahun,
+               "Status Paket" as status_paket
+        FROM realisasi
+        WHERE "Kode RUP" NOT IN (SELECT id FROM procurement)
+        ORDER BY "Nama Paket" ASC
+    ''').fetchall()
+    conn.close()
+    return jsonify({
+        'success': True,
+        'count': count,
+        'data': [dict(r) for r in rows]
     })
 
 

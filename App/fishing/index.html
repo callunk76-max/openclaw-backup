@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#0b1a2e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Mancing Bulukumba 🎣</title>
+<base href="/fish/">
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{--bg:#0b1a2e;--card:#112240;--accent:#0d6efd;--gold:#f0c040;--text:#e0e8f0;--dim:#8899aa;--green:#20c997;--red:#dc3545;--orange:#fd7e14}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);min-height:100dvh;overflow-x:hidden}
+.splash{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;transition:opacity .5s}
+.splash.hide{opacity:0;pointer-events:none}
+.splash h1{font-size:3rem;margin-bottom:.5rem}
+.splash p{color:var(--dim);font-size:.9rem}
+.splash .loader{width:40px;height:40px;border:3px solid var(--card);border-top:3px solid var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin-top:1.5rem}
+@keyframes spin{to{transform:rotate(360deg)}}
+header{background:var(--card);padding:12px 16px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255,255,255,.05)}
+header .logo{font-size:1.5rem}
+header h1{font-size:1rem;font-weight:600;flex:1}
+header .loc-badge{font-size:.7rem;color:var(--green);background:rgba(32,201,151,.15);padding:3px 8px;border-radius:20px;white-space:nowrap}
+nav{display:flex;background:var(--card);overflow-x:auto;scrollbar-width:none;gap:2px;padding:4px 8px;border-bottom:1px solid rgba(255,255,255,.05)}
+nav::-webkit-scrollbar{display:none}
+nav button{flex-shrink:0;padding:8px 14px;border:none;background:transparent;color:var(--dim);font-size:.78rem;font-weight:500;border-radius:20px;cursor:pointer;transition:all .2s;white-space:nowrap}
+nav button.active{background:var(--accent);color:#fff}
+nav button i{margin-right:4px}
+.pages{display:none;padding:12px;max-width:800px;margin:auto;padding-bottom:80px}
+.pages.active{display:block}
+.page-title{font-size:1.1rem;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.page-title small{font-size:.7rem;color:var(--dim);font-weight:400}
+.card{background:var(--card);border-radius:14px;padding:14px;margin-bottom:12px;border:1px solid rgba(255,255,255,.04)}
+.card h3{font-size:.85rem;color:var(--gold);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.stat-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stat-box{background:rgba(255,255,255,.04);border-radius:10px;padding:10px;text-align:center}
+.stat-box .val{font-size:1.2rem;font-weight:700}
+.stat-box .lbl{font-size:.65rem;color:var(--dim);margin-top:2px}
+.stat-box .sub{font-size:.7rem;color:var(--gold)}
+.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:.65rem;font-weight:600}
+.badge-green{background:rgba(32,201,151,.2);color:var(--green)}
+.badge-orange{background:rgba(253,126,20,.2);color:var(--orange)}
+.badge-red{background:rgba(220,53,69,.2);color:var(--red)}
+.spots-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+.spot-card{background:var(--card);border-radius:12px;padding:12px;border:1px solid rgba(255,255,255,.04);position:relative;overflow:hidden}
+.spot-card .type-tag{position:absolute;top:8px;right:8px;font-size:.6rem;padding:2px 8px;border-radius:8px;background:rgba(13,110,253,.2);color:var(--accent)}
+.spot-card .name{font-size:.9rem;font-weight:600;margin-bottom:4px}
+.spot-card .loc{font-size:.7rem;color:var(--dim);margin-bottom:6px}
+.spot-card .meta{display:flex;gap:6px;flex-wrap:wrap;font-size:.65rem}
+.spot-card .meta span{background:rgba(255,255,255,.05);padding:2px 6px;border-radius:6px}
+.spot-card .coords{font-size:.6rem;color:var(--dim);margin-top:6px;font-family:monospace}
+.weather-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.weather-btn{background:rgba(255,255,255,.04);border-radius:10px;padding:10px;text-align:center;border:none;color:var(--text);font-size:.7rem;cursor:pointer;transition:all .2s}
+.weather-btn:active{transform:scale(.95)}
+.weather-btn .val{font-size:1.1rem;font-weight:700}
+.weather-btn .lbl{color:var(--dim);font-size:.65rem}
+.fish-item{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.fish-item:last-child{border:none}
+.fish-item .name{font-size:.85rem;font-weight:500}
+.fish-item .desc{font-size:.68rem;color:var(--dim)}
+.fish-item .season{font-size:.65rem;padding:2px 8px;border-radius:8px}
+.fish-item .best{background:rgba(32,201,151,.2);color:var(--green)}
+.fish-item .normal{background:rgba(13,110,253,.15);color:var(--accent)}
+.fish-item .off{background:rgba(220,53,69,.15);color:var(--red)}
+#map{height:300px;border-radius:12px;margin-bottom:12px}
+.rating-box{display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;margin-bottom:8px}
+.rating-box.sangat-baik{background:rgba(32,201,151,.15)}
+.rating-box.baik{background:rgba(13,110,253,.15)}
+.rating-box.cukup{background:rgba(253,126,20,.15)}
+.rating-box.buruk{background:rgba(220,53,69,.15)}
+.rating-box .score{font-size:1.8rem;font-weight:700}
+.rating-box .label{font-size:.75rem;font-weight:600;text-transform:uppercase}
+.rating-box .detail{font-size:.65rem;color:var(--dim)}
+.moon-phase{display:flex;align-items:center;gap:12px;padding:8px}
+.moon-phase .moon-icon{font-size:2.5rem}
+.moon-phase .moon-info{flex:1}
+.moon-phase .moon-info .phase{font-size:.9rem;font-weight:600}
+.moon-phase .moon-info .detail{font-size:.7rem;color:var(--dim)}
+.tide-table{width:100%;border-collapse:collapse;font-size:.75rem}
+.tide-table th,.tide-table td{padding:6px 4px;text-align:center;border-bottom:1px solid rgba(255,255,255,.04)}
+.tide-table th{color:var(--gold);font-weight:600;font-size:.65rem}
+.tide-bar{height:4px;background:rgba(255,255,255,.05);border-radius:2px;margin:2px 0;position:relative;overflow:hidden}
+.tide-bar .fill{height:100%;border-radius:2px;background:var(--accent);transition:width .3s}
+.forecast-hourly{display:flex;gap:4px;overflow-x:auto;padding:4px 0;scrollbar-width:none}
+.forecast-hourly::-webkit-scrollbar{display:none}
+.forecast-hourly .fh-item{flex-shrink:0;text-align:center;min-width:50px;background:rgba(255,255,255,.03);border-radius:8px;padding:6px 4px}
+.forecast-hourly .fh-item .time{font-size:.6rem;color:var(--dim)}
+.forecast-hourly .fh-item .icon{font-size:1rem}
+.forecast-hourly .fh-item .temp{font-size:.7rem;font-weight:600}
+.forecast-hourly .fh-item .wave{font-size:.6rem;color:var(--dim)}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--card);display:flex;border-top:1px solid rgba(255,255,255,.05);z-index:200;padding-bottom:env(safe-area-inset-bottom)}
+.bottom-nav button{flex:1;padding:6px 0;border:none;background:transparent;color:var(--dim);font-size:.6rem;cursor:pointer;transition:all .2s;text-align:center}
+.bottom-nav button.active{color:var(--accent)}
+.bottom-nav button.active .nav-icon{filter:brightness(1.3)}
+.bottom-nav button .nav-icon{font-size:1.2rem;display:block}
+.bottom-nav button .nav-label{font-size:.6rem;margin-top:1px}
+.refresh-btn{background:var(--accent);border:none;color:#fff;padding:6px 12px;border-radius:20px;font-size:.7rem;cursor:pointer;margin-left:auto}
+.gps-status{font-size:.65rem;padding:4px 8px;border-radius:8px;margin-bottom:8px;text-align:center}
+.gps-status.active{background:rgba(32,201,151,.12);color:var(--green)}
+.gps-status.inactive{background:rgba(253,126,20,.12);color:var(--orange)}
+.gps-status.error{background:rgba(220,53,69,.12);color:var(--red)}
+.bmkg-source{font-size:.6rem;color:var(--dim);text-align:center;margin-top:8px}
+.btn{background:var(--accent);border:none;color:#fff;padding:8px 16px;border-radius:20px;font-size:.8rem;font-weight:500;cursor:pointer;transition:all .2s}
+.btn:active{transform:scale(.95);opacity:.8}
+.btn-outline{background:transparent;border:1px solid var(--accent);color:var(--accent)}
+.note{font-size:.7rem;color:var(--dim);padding:8px;text-align:center}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.loading-dots::after{content:'';animation:pulse 1.5s infinite}
+</style>
+</head>
+<body>
+
+<div class="splash" id="splash">
+  <h1>🎣</h1>
+  <p>Mancing Bulukumba</p>
+  <div class="loader"></div>
+</div>
+
+<header>
+  <span class="logo">🎣</span>
+  <h1>Mancing Bulukumba</h1>
+  <span class="loc-badge" id="locBadge">📍 —</span>
+  <button class="refresh-btn" onclick="refreshAll()">↻</button>
+</header>
+
+<!-- NAV -->
+<nav id="sectionNav">
+  <button class="active" data-page="home">🏠 Home</button>
+  <button data-page="spots">📍 Spot</button>
+  <button data-page="weather">🌊 Cuaca</button>
+  <button data-page="tide">🌙 Pasang</button>
+  <button data-page="fish">🐟 Ikan</button>
+  <button data-page="map">🗺️ Peta</button>
+</nav>
+
+<!-- HOME -->
+<div class="pages active" id="page-home">
+  <div class="page-title">Status Memancing <small id="homeDate"></small></div>
+
+  <div class="card">
+    <h3>📍 Lokasi GPS Kamu</h3>
+    <div class="gps-status inactive" id="gpsStatus">Mendeteksi lokasi...</div>
+    <div class="stat-row">
+      <div class="stat-box"><div class="val" id="gpsLat">—</div><div class="lbl">Latitude</div></div>
+      <div class="stat-box"><div class="val" id="gpsLng">—</div><div class="lbl">Longitude</div></div>
+    </div>
+  </div>
+
+  <div id="fishingRatingContainer"></div>
+
+  <div class="card">
+    <h3>🌊 Kondisi Perairan Bulukumba</h3>
+    <div class="stat-row">
+      <div class="stat-box"><div class="val" id="waveHeight">—</div><div class="lbl">Gelombang</div></div>
+      <div class="stat-box"><div class="val" id="windSpeed">—</div><div class="lbl">Angin</div></div>
+      <div class="stat-box"><div class="val" id="currentSpeed">—</div><div class="lbl">Arus</div></div>
+      <div class="stat-box"><div class="val" id="seaTemp">—</div><div class="lbl">Suhu Air</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🌙 Fase Bulan & Pasang</h3>
+    <div class="moon-phase">
+      <span class="moon-icon" id="moonEmoji">🌗</span>
+      <div class="moon-info">
+        <div class="phase" id="moonPhase">Memuat...</div>
+        <div class="detail" id="moonDetail">—</div>
+      </div>
+      <div style="text-align:right"><div id="tideStatus" style="font-size:.8rem;font-weight:700">—</div><div style="font-size:.6rem;color:var(--dim)">Pasang</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🐟 Spot Terdekat</h3>
+    <div id="nearbySpots">—</div>
+  </div>
+</div>
+
+<!-- SPOTS -->
+<div class="pages" id="page-spots">
+  <div class="page-title">📍 Spot Pemancingan</div>
+  <div class="gps-status inactive" id="spotsGpsStatus">Aktifkan GPS untuk spot terdekat</div>
+  <div id="spotsFilter" style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap">
+    <button class="btn btn-sm" onclick="filterSpots('all')" style="background:var(--accent);padding:4px 10px;font-size:.7rem">Semua</button>
+    <button class="btn btn-sm btn-outline" onclick="filterSpots('boat')" style="padding:4px 10px;font-size:.7rem">🚤 Perahu</button>
+    <button class="btn btn-sm btn-outline" onclick="filterSpots('laut')" style="padding:4px 10px;font-size:.7rem">🌊 Laut</button>
+    <button class="btn btn-sm btn-outline" onclick="filterSpots('tawar')" style="padding:4px 10px;font-size:.7rem">💧 Tawar</button>
+    <button class="btn btn-sm btn-outline" onclick="filterSpots('tebing')" style="padding:4px 10px;font-size:.7rem">⛰️ Tebing</button>
+    <button class="btn btn-sm btn-outline" onclick="filterSpots('dermaga')" style="padding:4px 10px;font-size:.7rem">🏗️ Dermaga</button>
+  </div>
+  <div class="spots-grid" id="spotsGrid"></div>
+</div>
+
+<!-- WEATHER -->
+<div class="pages" id="page-weather">
+  <div class="page-title">🌊 Cuaca & Gelombang <small>BMKG Perairan Bulukumba</small></div>
+
+  <div class="card">
+    <h3>📊 Ringkasan Terkini</h3>
+    <div class="weather-grid" id="weatherSummary">
+      <div class="weather-btn"><div class="val" id="wWave">—</div><div class="lbl">Gelombang</div></div>
+      <div class="weather-btn"><div class="val" id="wWind">—</div><div class="lbl">Angin</div></div>
+      <div class="weather-btn"><div class="val" id="wCurrent">—</div><div class="lbl">Arus</div></div>
+      <div class="weather-btn"><div class="val" id="wTemp">—</div><div class="lbl">Suhu</div></div>
+      <div class="weather-btn"><div class="val" id="wHumid">—</div><div class="lbl">Kelembapan</div></div>
+      <div class="weather-btn"><div class="val" id="wWeather">—</div><div class="lbl">Cuaca</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>⏱️ Prakiraan Per Jam (BMKG)</h3>
+    <div class="forecast-hourly" id="hourlyForecast"></div>
+  </div>
+
+  <div class="card">
+    <h3>📋 Tabel Prakiraan</h3>
+    <div style="overflow-x:auto">
+      <table class="tide-table" id="forecastTable">
+        <thead><tr><th>Waktu</th><th>Cuaca</th><th>Angin</th><th>Gelombang</th><th>Suhu</th></tr></thead>
+        <tbody id="forecastTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="bmkg-source">Sumber: BMKG - Perairan Bulukumba (P.AE.06) • 2-5 Mei 2026</div>
+</div>
+
+<!-- TIDE -->
+<div class="pages" id="page-tide">
+  <div class="page-title">🌙 Pasang & Solunar</div>
+
+  <div class="card">
+    <h3>🌙 Fase Bulan</h3>
+    <div class="moon-phase">
+      <span class="moon-icon" id="tMoonEmoji">🌗</span>
+      <div class="moon-info">
+        <div class="phase" id="tMoonPhase">—</div>
+        <div class="detail" id="tMoonDetail">—</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🎯 Aktivitas Ikan (Solunar)</h3>
+    <div id="solunarActivity">
+      <div class="rating-box baik"><div class="score" id="solunarScore">—</div><div><div class="label" id="solunarLabel">—</div><div class="detail" id="solunarDetail">—</div></div></div>
+    </div>
+    <div style="font-size:.7rem;color:var(--dim);margin-top:6px">
+      <div>🌅 Matahari terbit: <span id="sunrise">05:58</span> | Terbenam: <span id="sunset">17:50</span></div>
+      <div>🌙 Bulan terbit: <span id="moonrise">—</span> | Terbenam: <span id="moonset">—</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🌊 Prakiraan Pasang Surut</h3>
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:8px">
+      <div style="flex:1">
+        <div style="font-size:.7rem;color:var(--dim)">Pasang tertinggi</div>
+        <div style="font-weight:700" id="highTideVal">—</div>
+      </div>
+      <div style="flex:1;text-align:right">
+        <div style="font-size:.7rem;color:var(--dim)">Surut terendah</div>
+        <div style="font-weight:700" id="lowTideVal">—</div>
+      </div>
+    </div>
+    <table class="tide-table" id="tideTable">
+      <thead><tr><th>Waktu</th><th>Tinggi</th><th>Status</th></tr></thead>
+      <tbody id="tideTableBody"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>🎣 Waktu Memancing Terbaik</h3>
+    <div id="bestTimes">
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <div style="background:rgba(32,201,151,.12);border-radius:10px;padding:8px;flex:1;min-width:100px;text-align:center">
+          <div style="font-size:.6rem;color:var(--dim)">Sesi 1</div>
+          <div id="bestTime1" style="font-weight:700">—</div>
+        </div>
+        <div style="background:rgba(32,201,151,.12);border-radius:10px;padding:8px;flex:1;min-width:100px;text-align:center">
+          <div style="font-size:.6rem;color:var(--dim)">Sesi 2</div>
+          <div id="bestTime2" style="font-weight:700">—</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FISH -->
+<div class="pages" id="page-fish">
+  <div class="page-title">🐟 Jenis Ikan <small>Perairan Bulukumba</small></div>
+  <div class="card">
+    <div style="font-size:.75rem;color:var(--dim);margin-bottom:10px">Ikan laut dan air tawar yang umum ditemukan di perairan Kabupaten Bulukumba.</div>
+    <div id="fishList"></div>
+  </div>
+</div>
+
+<!-- MAP -->
+<div class="pages" id="page-map">
+  <div class="page-title">🗺️ Peta Spot <small>GPS</small></div>
+  <div class="gps-status inactive" id="mapGpsStatus">Mendeteksi lokasi...</div>
+  <div id="map"></div>
+  <div class="card" id="mapSpotInfo" style="display:none">
+    <h3 id="mapSpotName">—</h3>
+    <p id="mapSpotDesc" style="font-size:.7rem;color:var(--dim);margin-bottom:6px">—</p>
+    <div style="background:rgba(240,192,64,.1);border-radius:8px;padding:8px;margin:6px 0;text-align:center">
+      <div style="font-size:.6rem;color:var(--dim)">KOORDINAT GPS — Salin untuk kompas perahu</div>
+      <div id="mapSpotCoords" style="font-size:1rem;font-weight:700;color:var(--gold);font-family:monospace;letter-spacing:1px">—</div>
+    </div>
+    <table style="font-size:.7rem;width:100%;margin:4px 0">
+      <tr><td style="color:var(--dim);padding:2px">🐟 Target Ikan</td><td id="mapSpotFish" style="text-align:right">—</td></tr>
+      <tr><td style="color:var(--dim);padding:2px">🕐 Waktu Terbaik</td><td id="mapSpotTime" style="text-align:right">—</td></tr>
+      <tr><td style="color:var(--dim);padding:2px">📌 Akses</td><td id="mapSpotAccess" style="text-align:right">—</td></tr>
+    </table>
+    <div style="display:flex;gap:6px;margin-top:8px">
+      <button class="btn" style="flex:1;font-size:.7rem;padding:6px" onclick="navigateToSpot()">🗺️ Buka Google Maps</button>
+      <button class="btn btn-outline" style="flex:1;font-size:.7rem;padding:6px" onclick="copyCoords()">📋 Salin Koordinat</button>
+    </div>
+  </div>
+  <div class="card" style="text-align:center;padding:10px">
+    <div style="font-size:.85rem;font-weight:600;color:var(--gold)">📍 Cara Navigasi</div>
+    <div style="font-size:.7rem;color:var(--dim);margin-top:4px">Tap marker spot → info muncul → tap "Navigasi" → langsung ke Google Maps. Koordinat GPS bisa kamu salin/catat buat kompas perahu.</div>
+  </div>
+</div>
+
+<!-- Bottom Nav -->
+<div class="bottom-nav">
+  <button class="active" data-page="home"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></button>
+  <button data-page="spots"><span class="nav-icon">📍</span><span class="nav-label">Spot</span></button>
+  <button data-page="weather"><span class="nav-icon">🌊</span><span class="nav-label">Cuaca</span></button>
+  <button data-page="tide"><span class="nav-icon">🌙</span><span class="nav-label">Pasang</span></button>
+  <button data-page="fish"><span class="nav-icon">🐟</span><span class="nav-label">Ikan</span></button>
+  <button data-page="map"><span class="nav-icon">🗺️</span><span class="nav-label">Peta</span></button>
+</div>
+
+<script>
+// ===================== DATA =====================
+const SPOTS = [
+  // ═══════════════════════════════════════════════════════════════
+  // SPOT LAUT — Area Bira & Sekitarnya (bisa dijangkau perahu)
+  // ═══════════════════════════════════════════════════════════════
+  {id:1,name:'⭐ PULAU BATU — BIRA',lat:-5.6180,lng:120.4720,type:'boat',desc:'Spot favoritmu! Batu karang di tengah laut selatan Tanjung Bira. Medan rock fishing ekstrem, ombak besar. Target: GT, kakap merah, kerapu. Perahu dari Pelabuhan Bira ~10 menit.',fish:'GT, Kakap Merah, Kerapu, Baronang',bestTime:'Pagi 06:00-10:00',facilities:'🚤 Boat 10menit dr Bira'},
+  {id:2,name:'⭐ PULAU KAMBING',lat:-5.6345,lng:120.4680,type:'boat',desc:'Pulau karang tak berpenghuni ~8km dari Bira. Spot diving & mancing terkenal. Tebing karang, arus kencang di sisi selatan. Shark Point di kedalaman 20-30m. Ikan karang melimpah.',fish:'Napoleon, Kerapu GT, Kakap, Baronang',bestTime:'Pagi 06:00-11:00',facilities:'🚤 Boat 20menit dr Bira'},
+  {id:3,name:'⭐ PULAU LIUKANG LOE',lat:-5.6610,lng:120.4920,type:'boat',desc:'Pulau pasir putih 3.5km dari Pantai Bira. Penangkaran penyu. Spot snorkeling & mancing karang. Perairan relatif tenang. Ada cottage & warung.',fish:'Kakap, Baronang, Ikan Karang, Cumi',bestTime:'Pagi & Sore',facilities:'🚤 Boat 15menit • Ada penginapan'},
+  {id:4,name:'GOSONG KARANG BIRA',lat:-5.6250,lng:120.4750,type:'boat',desc:'Gosong (shoal) antara Bira-Pulau Kambing. Karang dangkal, banyak ikan karang dan predator kecil. Bagus untuk casting dari perahu.',fish:'Baronang, Ekor Kuning, Kerapu Kecil',bestTime:'Pagi 07:00-10:00',facilities:'🚤 Perahu'},
+  {id:5,name:'SHARK POINT — P.Kambing',lat:-5.6410,lng:120.4730,type:'boat',desc:'Spot selatan Pulau Kambing, kedalaman 20-30m. Sering ada hiu karang, mola-mola (Sep-Oct). Arus kuat — butuh pengalaman.',fish:'Hiu Karang, Kakap Merah, GT, Mola-mola',bestTime:'Pagi 06:00-09:00',facilities:'🚤 Arus kuat • Hati-hati'},
+  {id:6,name:'TITIK NOL SULAWESI',lat:-5.6075,lng:120.4600,type:'boat',desc:'Ujung selatan Pulau Sulawesi. Tebing karst dan perairan berbatu. Spot mancing GT dan kakap dari perahu. Deket Jembatan Kaca & Teras Bira.',fish:'GT, Kakap Batu, Kerapu',bestTime:'Pagi 06:00-10:00',facilities:'🚤 Dekat dermaga Bira'},
+  {id:7,name:'SELAT BIRA — BONE',lat:-5.6600,lng:120.5200,type:'boat',desc:'Perairan terbuka antara Bira dan Selayar. Jalur migrasi ikan. Target tuna, cakalang, tenggiri. Air biru dalam.',fish:'Tuna, Cakalang, Tenggiri, Marlin',bestTime:'Pagi Subuh 05:00-08:00',facilities:'🚤 Boat besar • 30-45menit'},
+  {id:8,name:'KARANG TENGAH BIRA',lat:-5.6280,lng:120.4600,type:'boat',desc:'Area karang di tengah-tengah antara Pelabuhan Bira dan Pulau Kambing. Kedalaman bervariasi 5-15m. Spot andalan mancing kakap.',fish:'Kakap Merah, Kerapu, Bawal',bestTime:'Pagi 07:00-11:00',facilities:'🚤 Boat 15menit dr Bira'},
+  // ═══════════════════════════════════════════════════════════════
+  // SPOT DARATAN — Akses dari pantai
+  // ═══════════════════════════════════════════════════════════════
+  {id:9,name:'Kolam Labuh (Pelabuhan Bulukumba)',lat:-5.5569,lng:120.1833,type:'laut',desc:'Spot favorit warga di kawasan pelabuhan. Air tenang, cocok untuk pemancing pemula.',fish:'Mujair, Belanak, Kuwe',bestTime:'Pagi',facilities:'Area parkir, warung'},
+  {id:10,name:'Pantai Merpati / Pinisi Park',lat:-5.5511,lng:120.1847,type:'laut',desc:'Kawasan wisata di Jl Yos Sudarso, Kel. Terang-terang. Spot mancing dari bibir pantai.',fish:'Mujair, Baronang',bestTime:'Sore',facilities:'Parkir, gazebo'},
+  {id:11,name:'Pelabuhan Bira (Start Point)',lat:-5.6100,lng:120.4580,type:'dermaga',desc:'DERMAGA & titik keberangkatan ke semua spot boat! Sewa perahu di sini. Ada warung dan parkir.',fish:'Kakap, Kerapu, Baronang',bestTime:'Pagi & Sore',facilities:'🏗️ Dermaga • parkir • warung'},
+  {id:12,name:'Pantai Bara',lat:-5.5667,lng:120.3833,type:'laut',desc:'Pantai berpasir putih, spot mancing dari pinggir pantai. Area wisata.',fish:'Baronang, Ekor Kuning',bestTime:'Sore',facilities:'Parkir, warung'},
+  {id:13,name:'Tebing Apparalang',lat:-5.5583,lng:120.1333,type:'tebing',desc:'Spot rock fishing di tebing karst. Pemandangan spektakuler, medan menantang.',fish:'Kakap Batu, Kerapu',bestTime:'Pagi',facilities:'Medan ekstrem'},
+  {id:14,name:'Muara Sungai Bulukumba',lat:-5.5400,lng:120.1667,type:'tebing',desc:'Spot rock fishing di area muara. Medan cukup ekstrem.',fish:'Ikan karang, Kakap, Snapper',bestTime:'Pagi',facilities:'Hati-hati medan berbatu'},
+  {id:15,name:'Perairan Lepas Bulukumba',lat:-5.6667,lng:120.2167,type:'laut',desc:'Area lepas pantai untuk mancing ikan besar. Tuna, cakalang, tenggiri.',fish:'Tuna, Cakalang, Tenggiri',bestTime:'Pagi',facilities:'Sewa boat di pelabuhan'},
+  {id:16,name:'Luppung Manyampa',lat:-5.5833,lng:120.2500,type:'laut',desc:'Spot terkenal untuk ikan kapas-kapas di perairan Bulukumba.',fish:'Kapas-kapas, Kuro, Tembang',bestTime:'Sore',facilities:'—'},
+  {id:17,name:'Sungai Gantarang',lat:-5.5200,lng:120.1400,type:'tawar',desc:'Sungai air tawar di Kecamatan Gantarang. Spot ikan gabus dan nila.',fish:'Gabus, Nila, Mujair',bestTime:'Pagi & Sore',facilities:'—'},
+  {id:18,name:'Perumahan Sokko Bampa (Gantarang)',lat:-5.5300,lng:120.1300,type:'tawar',desc:'Spot ikan gabus di pinggiran kota. Kolam dan saluran air tawar.',fish:'Gabus, Nila, Lele',bestTime:'Sore',facilities:'Akses mudah'}
+];
+
+const FISH = [
+  {name:'Tuna (Cakalang/Yellowfin)',desc:'Ikan pelagis besar, banyak di perairan lepas Bulukumba. Target utama nelayan.',season:'best',loc:'Lepas pantai'},
+  {name:'Kakap Merah (Red Snapper)',desc:'Ikan demersal berkualitas tinggi. Banyak di area karang dan sekitar pulau.',season:'best',loc:'Liukang Loe, Pulau Kambing'},
+  {name:'Kerapu (Grouper)',desc:'Ikan karang bernilai ekonomis. Bersembunyi di celah-celah karang.',season:'best',loc:'Pulau Kambing, Liukang Loe'},
+  {name:'Baronang (Rabbitfish)',desc:'Ikan karang herbivora, mudah dipancing dari bibir pantai.',season:'best',loc:'Pantai Bara, Bira'},
+  {name:'Ikan Gabus (Snakehead)',desc:'Ikan air tawar predator, banyak di sungai dan kolam Gantarang.',season:'best',loc:'Sokko Bampa, Sungai Gantarang'},
+  {name:'Kembung (Mackerel)',desc:'Ikan pelagis kecil, melimpah di pesisir Bulukumba.',season:'normal',loc:'Pesisir, Kolam Labuh'},
+  {name:'Mujair / Nila (Tilapia)',desc:'Ikan air tawar, favorit di spot Kolam Labuh dan sungai.',season:'best',loc:'Kolam Labuh, Pinisi Park'},
+  {name:'Kapas-kapas',desc:'Ikan khas perairan Bulukumba, target pemancing lokal.',season:'normal',loc:'Luppung Manyampa'},
+  {name:'Tenggiri (Spanish Mackerel)',desc:'Ikan predator cepat, musiman di perairan lepas.',season:'normal',loc:'Perairan Lepas'},
+  {name:'Cumi-cumi & Gurita',desc:'Cephalopoda, aktif di malam hari. Dipancing dengan umpan cahaya.',season:'normal',loc:'Karang & pasir'},
+  {name:'Bandeng (Milkfish)',desc:'Ikan air payau, banyak di tambak dan muara.',season:'normal',loc:'Tambak sekitar pesisir'},
+  {name:'Kuwe (Giant Trevally)',desc:'Ikan predator kuat, fight-nya seru. Spot di sekitar pelabuhan.',season:'normal',loc:'Kolam Labuh, Pelabuhan'}
+];
+
+const MOON_PHASES = [
+  {emoji:'🌑',name:'Bulan Baru',fish:'Sangat Baik'},
+  {emoji:'🌒',name:'Sabit Muda',fish:'Baik'},
+  {emoji:'🌓',name:'Kuartir Awal',fish:'Cukup'},
+  {emoji:'🌔',name:'Cembung Awal',fish:'Baik'},
+  {emoji:'🌕',name:'Bulan Purnama',fish:'Sangat Baik'},
+  {emoji:'🌖',name:'Cembung Akhir',fish:'Baik'},
+  {emoji:'🌗',name:'Kuartir Akhir',fish:'Cukup'},
+  {emoji:'🌘',name:'Sabit Tua',fish:'Baik'}
+];
+
+const BMKG_FORECAST = [
+  {time:'03:00',weather:'☁️ Berawan',wind:'Timur 11kt',gust:24,wave:'0.7m',temp:28,humid:79},
+  {time:'04:00',weather:'⛅ Cerah Berawan',wind:'Timur 11kt',gust:25,wave:'0.8m',temp:29,humid:78},
+  {time:'05:00',weather:'⛅ Cerah Berawan',wind:'Timur 11kt',gust:25,wave:'0.8m',temp:31,humid:77},
+  {time:'06:00',weather:'☁️ Berawan',wind:'Timur 11kt',gust:24,wave:'0.8m',temp:32,humid:77},
+  {time:'07:00',weather:'☁️ Berawan Tebal',wind:'Timur 11kt',gust:24,wave:'0.8m',temp:31,humid:77},
+  {time:'08:00',weather:'☁️ Berawan Tebal',wind:'Timur 10kt',gust:23,wave:'0.8m',temp:30,humid:77},
+  {time:'09:00',weather:'☁️ Berawan Tebal',wind:'Timur 10kt',gust:21,wave:'0.8m',temp:29,humid:76},
+  {time:'10:00',weather:'☁️ Berawan Tebal',wind:'Timur 10kt',gust:20,wave:'0.8m',temp:29,humid:76},
+  {time:'11:00',weather:'☁️ Berawan Tebal',wind:'Timur 10kt',gust:17,wave:'0.8m',temp:29,humid:76},
+  {time:'12:00',weather:'☁️ Berawan',wind:'Timur 10kt',gust:18,wave:'0.8m',temp:29,humid:76},
+  {time:'13:00',weather:'☁️ Berawan Tebal',wind:'Timur 10kt',gust:18,wave:'0.9m',temp:29,humid:76},
+  {time:'14:00',weather:'☁️ Berawan Tebal',wind:'Timur Laut 11kt',gust:18,wave:'0.9m',temp:28,humid:77},
+  {time:'15:00',weather:'☁️ Berawan',wind:'Timur Laut 11kt',gust:18,wave:'0.9m',temp:28,humid:79},
+  {time:'16:00',weather:'☁️ Berawan',wind:'Timur Laut 11kt',gust:20,wave:'0.9m',temp:27,humid:82},
+  {time:'17:00',weather:'☁️ Berawan',wind:'Timur Laut 11kt',gust:21,wave:'0.9m',temp:27,humid:83},
+  {time:'18:00',weather:'☁️ Berawan',wind:'Timur Laut 11kt',gust:20,wave:'0.9m',temp:27,humid:85},
+  {time:'19:00',weather:'🌧️ Hujan Ringan',wind:'Timur Laut 11kt',gust:19,wave:'0.9m',temp:27,humid:85},
+  {time:'20:00',weather:'🌧️ Hujan Ringan',wind:'Timur Laut 10kt',gust:18,wave:'0.9m',temp:26,humid:87},
+  {time:'21:00',weather:'🌧️ Hujan Ringan',wind:'Timur Laut 10kt',gust:20,wave:'0.8m',temp:26,humid:87},
+  {time:'22:00',weather:'🌧️ Hujan Ringan',wind:'Timur Laut 10kt',gust:20,wave:'0.8m',temp:25,humid:88},
+  {time:'23:00',weather:'🌧️ Hujan Ringan',wind:'Timur 8kt',gust:20,wave:'0.8m',temp:25,humid:88}
+];
+
+// ===================== HELPERS =====================
+function getMoonPhase(day, month, year) {
+  const synMonth = 29.53058867;
+  const knownNewMoon = new Date(2000,0,6,18,14);
+  const target = new Date(year, month, day);
+  const diff = (target - knownNewMoon) / (1000*60*60*24);
+  const age = ((diff % synMonth) + synMonth) % synMonth;
+  const phase = age / synMonth;
+  const idx = Math.round(phase * 8) % 8;
+  return MOON_PHASES[idx];
+}
+
+function getFishingRating(wave, wind) {
+  const w = parseFloat(wave) || 0.8;
+  const ws = parseFloat(wind) || 10;
+  if (w <= 0.6 && ws <= 8) return {label:'Sangat Baik',cls:'sangat-baik',score:'A',detail:'Kondisi laut sangat tenang. Waktu ideal memancing!',color:'var(--green)'};
+  if (w <= 0.9 && ws <= 12) return {label:'Baik',cls:'baik',score:'B',detail:'Kondisi cukup bersahabat. Cocok untuk memancing.',color:'var(--accent)'};
+  if (w <= 1.5 && ws <= 18) return {label:'Cukup',cls:'cukup',score:'C',detail:'Gelombang mulai naik. Hati-hati di perairan terbuka.',color:'var(--orange)'};
+  return {label:'Buruk',cls:'buruk',score:'D',detail:'Gelombang tinggi. Tidak disarankan melaut.',color:'var(--red)'};
+}
+
+function distance(lat1,lon1,lat2,lon2) {
+  const R = 6371;
+  const dLat = (lat2-lat1)*Math.PI/180, dLon = (lon2-lon1)*Math.PI/180;
+  const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+}
+
+// ===================== STATE =====================
+let currentPos = null;
+let map = null;
+let mapMarkers = [];
+let currentPage = 'home';
+
+// ===================== GPS =====================
+function startGPS() {
+  if (!navigator.geolocation) {
+    document.querySelectorAll('.gps-status').forEach(el => {el.textContent='❌ GPS tidak didukung browser ini';el.className='gps-status error';});
+    return;
+  }
+  navigator.geolocation.getCurrentPosition(pos => {
+    currentPos = {lat:pos.coords.latitude,lng:pos.coords.longitude};
+    updateGPSUI();
+    updateNearbySpots();
+    if (map) updateMapMarker();
+  }, err => {
+    document.querySelectorAll('.gps-status').forEach(el => {
+      el.textContent = '⚠️ GPS tidak aktif. Aktifkan lokasi untuk fitur lengkap.';
+      el.className = 'gps-status inactive';
+    });
+  }, {enableHighAccuracy:true,timeout:10000});
+}
+
+function updateGPSUI() {
+  if (!currentPos) return;
+  document.getElementById('gpsLat').textContent = currentPos.lat.toFixed(5);
+  document.getElementById('gpsLng').textContent = currentPos.lng.toFixed(5);
+  document.getElementById('locBadge').textContent = `📍 ${currentPos.lat.toFixed(3)}, ${currentPos.lng.toFixed(3)}`;
+  document.querySelectorAll('.gps-status').forEach(el => {el.textContent='✅ GPS aktif';el.className='gps-status active';});
+}
+
+// ===================== WEATHER DATA =====================
+function setWeatherData() {
+  const cur = BMKG_FORECAST[0] || BMKG_FORECAST[1];
+  document.getElementById('wWave').textContent = cur.wave;
+  document.getElementById('wWind').textContent = cur.wind;
+  document.getElementById('wCurrent').textContent = '0.8 kt';
+  document.getElementById('wTemp').textContent = cur.temp + '°C';
+  document.getElementById('wHumid').textContent = cur.humid + '%';
+  document.getElementById('wWeather').textContent = cur.weather.replace(/[☁️⛅🌧️☀️]/g,'').trim() || cur.weather;
+
+  // Home page sea stats
+  document.getElementById('waveHeight').textContent = cur.wave;
+  document.getElementById('windSpeed').textContent = cur.wind;
+  document.getElementById('currentSpeed').textContent = '0.8 kt';
+  document.getElementById('seaTemp').textContent = cur.temp + '°C';
+
+  // Fishing rating
+  const rating = getFishingRating(cur.wave, cur.wind);
+  document.getElementById('fishingRatingContainer').innerHTML = `
+    <div class="card">
+      <h3>🎯 Rating Memancing Hari Ini</h3>
+      <div class="rating-box ${rating.cls}">
+        <div class="score" style="color:${rating.color}">${rating.score}</div>
+        <div>
+          <div class="label" style="color:${rating.color}">${rating.label}</div>
+          <div class="detail">${rating.detail}</div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // Hourly forecast
+  const hf = document.getElementById('hourlyForecast');
+  hf.innerHTML = BMKG_FORECAST.slice(0,12).map(f => `
+    <div class="fh-item">
+      <div class="time">${f.time}</div>
+      <div class="icon">${f.weather.split(' ')[0]}</div>
+      <div class="temp">${f.temp}°</div>
+      <div class="wave">${f.wave}</div>
+    </div>
+  `).join('');
+
+  // Forecast table
+  document.getElementById('forecastTableBody').innerHTML = BMKG_FORECAST.map(f => `
+    <tr>
+      <td>${f.time}</td>
+      <td>${f.weather}</td>
+      <td>${f.wind}</td>
+      <td>${f.wave}</td>
+      <td>${f.temp}°C</td>
+    </tr>
+  `).join('');
+}
+
+// ===================== MOON & TIDE =====================
+function setMoonTideData() {
+  const now = new Date();
+  const moon = getMoonPhase(now.getDate(), now.getMonth(), now.getFullYear());
+  document.getElementById('moonEmoji').textContent = moon.emoji;
+  document.getElementById('moonPhase').textContent = moon.name;
+  document.getElementById('moonDetail').textContent = `Aktivitas ikan: ${moon.fish}`;
+  document.getElementById('tMoonEmoji').textContent = moon.emoji;
+  document.getElementById('tMoonPhase').textContent = moon.name;
+  document.getElementById('tMoonDetail').textContent = `Aktivitas ikan: ${moon.fish}`;
+
+  // Tide (approximate for Bira)
+  const tides = [
+    {time:'03:42',height:'1.8m',status:'Pasang'},
+    {time:'09:54',height:'0.3m',status:'Surut'},
+    {time:'16:12',height:'2.1m',status:'Pasang'},
+    {time:'22:36',height:'0.4m',status:'Surut'}
+  ];
+  document.getElementById('highTideVal').textContent = '2.1m';
+  document.getElementById('lowTideVal').textContent = '0.3m';
+  document.getElementById('tideTableBody').innerHTML = tides.map(t => `
+    <tr><td>${t.time}</td><td>${t.height}</td><td><span class="badge ${t.status==='Pasang'?'badge-green':'badge-orange'}">${t.status}</span></td></tr>
+  `).join('');
+
+  // Current tide status
+  const nowH = now.getHours() + now.getMinutes()/60;
+  const currentTide = tides.find(t => {
+    const h = parseInt(t.time.split(':')[0]) + parseInt(t.time.split(':')[1])/60;
+    return Math.abs(nowH - h) < 3;
+  }) || tides[0];
+  document.getElementById('tideStatus').textContent = currentTide.status;
+  document.getElementById('tideStatus').style.color = currentTide.status==='Pasang' ? 'var(--green)' : 'var(--orange)';
+
+  // Solunar
+  const fishScores = { 'Sangat Baik':95, 'Baik':78, 'Cukup':55, 'Buruk':30 };
+  const score = fishScores[moon.fish] || 70;
+  document.getElementById('solunarScore').textContent = score + '%';
+  document.getElementById('solunarLabel').textContent = moon.fish;
+  document.getElementById('solunarDetail').textContent = `Fase ${moon.name}: ${moon.fish === 'Sangat Baik' ? 'Waktu prime untuk memancing!' : moon.fish === 'Baik' ? 'Potensi ikan aktif tinggi.' : 'Aktivitas ikan sedang.'}`;
+
+  // Sun times
+  document.getElementById('sunrise').textContent = '05:58';
+  document.getElementById('sunset').textContent = '17:50';
+
+  // Moon times (approximate for Bulukumba)
+  const moonTimes = { 'Bulan Baru':{rise:'05:30',set:'17:45'}, 'Sabit Muda':{rise:'08:15',set:'20:30'}, 'Kuartir Awal':{rise:'11:45',set:'23:55'}, 'Cembung Awal':{rise:'14:30',set:'02:15'}, 'Bulan Purnama':{rise:'17:45',set:'05:30'}, 'Cembung Akhir':{rise:'20:15',set:'08:45'}, 'Kuartir Akhir':{rise:'23:30',set:'11:20'}, 'Sabit Tua':{rise:'02:45',set:'14:30'} };
+  const mt = moonTimes[moon.name] || {rise:'06:00',set:'18:00'};
+  document.getElementById('moonrise').textContent = mt.rise;
+  document.getElementById('moonset').textContent = mt.set;
+
+  // Best fishing times
+  const bt1 = parseInt(mt.rise.split(':')[0]);
+  const bt2 = parseInt(mt.set.split(':')[0]);
+  document.getElementById('bestTime1').textContent = `${String(bt1-1).padStart(2,'0')}:00 - ${String(bt1+1).padStart(2,'0')}:00`;
+  document.getElementById('bestTime2').textContent = `${String(bt2-1).padStart(2,'0')}:00 - ${String(bt2+1).padStart(2,'0')}:00`;
+}
+
+// ===================== SPOTS =====================
+function renderSpots(filter='all') {
+  const grid = document.getElementById('spotsGrid');
+  const filtered = filter==='all' ? SPOTS : SPOTS.filter(s => s.type===filter);
+  grid.innerHTML = filtered.map(s => {
+    const dist = currentPos ? distance(currentPos.lat, currentPos.lng, s.lat, s.lng).toFixed(1) : null;
+    const typeIcons = {boat:'🚤 Perahu',laut:'🌊 Laut',tawar:'💧 Tawar',tebing:'⛰️ Tebing',dermaga:'🏗️ Dermaga'};
+    return `
+      <div class="spot-card" onclick="focusSpot(${s.id})" ${s.type==='boat'?'style="border-color:rgba(240,192,64,.3)"':''}>
+        <span class="type-tag" ${s.type==='boat'?'style="background:rgba(240,192,64,.2);color:#f0c040"':''}>${typeIcons[s.type]||s.type}</span>
+        <div class="name">${s.type==='boat'?'🚤 ':''}${s.name}</div>
+        <div class="loc">${s.desc.substring(0,80)}${s.desc.length>80?'...':''}</div>
+        <div class="meta">
+          <span>🐟 ${s.fish.split(',').slice(0,2).join(',')}</span>
+          <span>🕐 ${s.bestTime.substring(0,12)}</span>
+          ${dist ? `<span>📏 ${dist} km</span>` : ''}
+        </div>
+        <div class="coords">${s.lat.toFixed(5)}, ${s.lng.toFixed(5)}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function filterSpots(type) {
+  document.querySelectorAll('#spotsFilter .btn').forEach(b => {b.style.background='transparent';b.style.borderColor='var(--accent)'});
+  event.target.style.background='var(--accent)';
+  event.target.style.borderColor='var(--accent)';
+  renderSpots(type);
+}
+
+function updateNearbySpots() {
+  const el = document.getElementById('nearbySpots');
+  if (!currentPos) { el.innerHTML = '<span style="color:var(--dim);font-size:.75rem">Aktifkan GPS untuk melihat spot terdekat</span>'; return; }
+  const sorted = [...SPOTS].map(s => ({...s, dist:distance(currentPos.lat,currentPos.lng,s.lat,s.lng)})).sort((a,b)=>a.dist-b.dist).slice(0,3);
+  el.innerHTML = sorted.map(s => `<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:.75rem;border-bottom:1px solid rgba(255,255,255,.04)"><span>${s.name}</span><span style="color:var(--gold)">${s.dist.toFixed(1)} km</span></div>`).join('');
+}
+
+// ===================== FISH LIST =====================
+function renderFish() {
+  document.getElementById('fishList').innerHTML = FISH.map(f => `
+    <div class="fish-item">
+      <div>
+        <div class="name">${f.name}</div>
+        <div class="desc">${f.desc} — ${f.loc}</div>
+      </div>
+      <span class="season ${f.season==='best'?'best':'normal'}">${f.season==='best'?'🎯 Musim':'○ Biasa'}</span>
+    </div>
+  `).join('');
+}
+
+// ===================== MAP =====================
+function initMap() {
+  map = L.map('map', {zoomControl:false}).setView([-5.62, 120.46], 12);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution:'© OpenStreetMap',maxZoom:18}).addTo(map);
+  L.control.zoom({position:'bottomright'}).addTo(map);
+
+  SPOTS.forEach(s => {
+    const icons = {boat:'🚤',laut:'🔵',tawar:'💧',tebing:'⛰️',dermaga:'🏗️'};
+    const color = s.type==='boat' ? '#f0c040' : '#0d6efd';
+    const marker = L.marker([s.lat,s.lng], {
+      icon: L.divIcon({
+        className: '',
+        html: `<div style="background:${color};width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 6px rgba(0,0,0,.4)"></div>`,
+        iconSize: [14,14],
+        iconAnchor: [7,7]
+      })
+    }).addTo(map);
+    marker.bindPopup(`
+      <div style="font-weight:700;font-size:14px">${icons[s.type]||'📍'} ${s.name}</div>
+      <div style="font-size:11px;color:#555;margin:4px 0">${s.desc}</div>
+      <div style="font-size:10px;color:#888">🐟 ${s.fish}</div>
+      <hr style="margin:4px 0;border:none;border-top:1px solid #eee">
+      <div style="font-size:12px;font-weight:600;color:#333">📍 GPS: ${s.lat.toFixed(5)}, ${s.lng.toFixed(5)}</div>
+      <div style="font-size:10px;color:#999">Salin koordinat ini ke kompas perahumu</div>
+      <div style="margin-top:4px"><a href="https://www.google.com/maps/dir/?api=1&destination=${s.lat},${s.lng}" target="_blank" style="background:#0d6efd;color:#fff;padding:4px 12px;border-radius:14px;font-size:11px;text-decoration:none;display:inline-block">🗺️ Navigasi</a></div>
+    `);
+    marker.on('click', () => showMapSpotInfo(s));
+    mapMarkers.push(marker);
+  });
+}
+
+function updateMapMarker() {
+  if (!currentPos || !map) return;
+  if (window.userMarker) map.removeLayer(window.userMarker);
+  window.userMarker = L.marker([currentPos.lat, currentPos.lng], {
+    icon: L.divIcon({className:'',html:'<div style="background:#0d6efd;width:16px;height:16px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 8px rgba(13,110,253,.5)"></div>',iconSize:[16,16],iconAnchor:[8,8]})
+  }).addTo(map).bindPopup('📍 Kamu di sini');
+  document.getElementById('mapGpsStatus').textContent = '✅ GPS aktif';
+  document.getElementById('mapGpsStatus').className = 'gps-status active';
+}
+
+function showMapSpotInfo(spot) {
+  const el = document.getElementById('mapSpotInfo');
+  el.style.display = 'block';
+  document.getElementById('mapSpotName').textContent = spot.name;
+  document.getElementById('mapSpotDesc').textContent = spot.desc;
+  document.getElementById('mapSpotCoords').textContent = `${spot.lat.toFixed(5)}, ${spot.lng.toFixed(5)}`;
+  document.getElementById('mapSpotFish').textContent = spot.fish;
+  document.getElementById('mapSpotTime').textContent = spot.bestTime;
+  document.getElementById('mapSpotAccess').textContent = spot.facilities;
+  window.selectedSpot = spot;
+  // scroll to info
+  setTimeout(() => el.scrollIntoView({behavior:'smooth',block:'center'}), 300);
+}
+
+function navigateToSpot() {
+  if (window.selectedSpot) {
+    window.open(`https://www.google.com/maps/dir/?api=1&destination=${window.selectedSpot.lat},${window.selectedSpot.lng}`, '_blank');
+  }
+}
+
+function copyCoords() {
+  if (!window.selectedSpot) return;
+  const txt = `${window.selectedSpot.lat.toFixed(5)}, ${window.selectedSpot.lng.toFixed(5)}`;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(txt).then(() => {
+      const orig = document.getElementById('mapSpotCoords').textContent;
+      document.getElementById('mapSpotCoords').textContent = '✅ Tersalin!';
+      setTimeout(() => document.getElementById('mapSpotCoords').textContent = orig, 1500);
+    });
+  } else {
+    // fallback
+    const ta = document.createElement('textarea');
+    ta.value = txt; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+    document.body.removeChild(ta);
+    const orig = document.getElementById('mapSpotCoords').textContent;
+    document.getElementById('mapSpotCoords').textContent = '✅ Tersalin!';
+    setTimeout(() => document.getElementById('mapSpotCoords').textContent = orig, 1500);
+  }
+}
+
+function focusSpot(id) {
+  const spot = SPOTS.find(s => s.id===id);
+  if (!spot) return;
+  if (map) { map.setView([spot.lat, spot.lng], 14);
+    mapMarkers.forEach(m => {
+      const ll = m.getLatLng();
+      if (Math.abs(ll.lat-spot.lat)<0.001 && Math.abs(ll.lng-spot.lng)<0.001) m.openPopup();
+    });
+  }
+  // Switch to map tab
+  navigateTo('map');
+}
+
+// ===================== NAVIGATION =====================
+function navigateTo(page) {
+  currentPage = page;
+  document.querySelectorAll('.pages').forEach(p => p.classList.remove('active'));
+  document.getElementById(`page-${page}`).classList.add('active');
+  document.querySelectorAll('nav button, .bottom-nav button').forEach(b => {
+    b.classList.toggle('active', b.dataset.page === page);
+  });
+  if (page === 'map' && map) setTimeout(() => map.invalidateSize(), 200);
+}
+
+document.querySelectorAll('nav button, .bottom-nav button').forEach(btn => {
+  btn.addEventListener('click', () => navigateTo(btn.dataset.page));
+});
+
+// ===================== REFRESH =====================
+function refreshAll() {
+  setWeatherData();
+  setMoonTideData();
+  if (currentPos) { updateNearbySpots(); updateGPSUI(); }
+}
+
+// ===================== INIT =====================
+document.addEventListener('DOMContentLoaded', () => {
+  const now = new Date();
+  document.getElementById('homeDate').textContent = now.toLocaleDateString('id-ID', {weekday:'long',day:'numeric',month:'long',year:'numeric'});
+
+  setWeatherData();
+  setMoonTideData();
+  renderSpots('all');
+  renderFish();
+  initMap();
+  startGPS();
+
+  // Register SW
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').catch(()=>{});
+  }
+
+  setTimeout(() => document.getElementById('splash').classList.add('hide'), 600);
+});
+</script>
+</body>
+</html>

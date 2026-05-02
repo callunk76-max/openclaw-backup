@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FileBox - Masuk</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .login-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        }
+        .login-card h1 { color: #fff; font-size: 1.5rem; font-weight: 800; }
+        .login-card p { color: #94a3b8; font-size: 0.85rem; }
+        .login-card input {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: #fff;
+            padding: 12px 16px;
+            border-radius: 12px;
+            width: 100%;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+        .login-card input:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99,102,241,0.3);
+            background: rgba(255,255,255,0.12);
+        }
+        .login-card input::placeholder { color: #64748b; }
+        .login-card button {
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            color: #fff;
+            font-weight: 700;
+            font-size: 1rem;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .login-card button:hover { transform: translateY(-1px); box-shadow: 0 8px 25px rgba(99,102,241,0.4); }
+        .error-msg { color: #f87171; font-size: 0.85rem; text-align: center; margin-top: 10px; }
+        .lock-icon { font-size: 3rem; text-align: center; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <div class="lock-icon">🔒</div>
+        <h1 class="text-center mb-1">FileBox</h1>
+        <p class="text-center mb-4">Masukkan password untuk mengakses file</p>
+        <form method="POST">
+            <input type="password" name="password" placeholder="Password" required autofocus>
+            {% if error %}<div class="error-msg">{{ error }}</div>{% endif %}
+            <button type="submit" class="mt-4">🔓 Buka</button>
+        </form>
+    </div>
+</body>
+</html>

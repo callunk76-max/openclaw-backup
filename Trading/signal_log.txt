@@ -10928,3 +10928,915 @@ Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
 🎯 Status: ☑️ WAIT FOR DIP ⏳
 ✅ Sent via Telegram. Message ID: 3083
 Message sent status: 0
+--- Running Signal at Fri May  1 10:45:01 AM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 10:45 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 6.71 (-0.1)
+🥈 AUD : 5.86 (-0.4)
+🥉 GBP : 5.57 (-0.1)
+🔹 CHF : 5.29 (+0.3)
+🔹 CAD : 5.00
+🔹 JPY : 4.00
+🔹 EUR : 2.29 (+0.3)
+💀 USD : 1.29 (+0.1)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **NO SIGNALS** | Min gap 5.5, none qualified ✅
+   └ Wait for wider spread between currencies
+✅ Sent via Telegram. Message ID: 3092
+Message sent status: 0
+--- Running Signal at Fri May  1 11:00:02 AM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 11:00 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 6.57 (-0.1)
+🥈 AUD : 5.86
+🥉 GBP : 5.57
+🔹 CHF : 5.29
+🔹 CAD : 5.00
+🔹 JPY : 4.00
+🔹 EUR : 2.57 (+0.3)
+💀 USD : 1.14 (-0.1)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **NO SIGNALS** | Min gap 5.5, none qualified ✅
+   └ Wait for wider spread between currencies
+✅ Sent via Telegram. Message ID: 3108
+Message sent status: 0
+--- Running Signal at Fri May  1 11:15:01 AM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 11:15 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 7.00 (+0.4)
+🥈 GBP : 6.00 (+0.4)
+🥉 AUD : 5.57 (-0.3)
+🔹 CHF : 5.14 (-0.1)
+🔹 CAD : 5.00
+🔹 JPY : 4.00
+🔹 EUR : 2.29 (-0.3)
+💀 USD : 1.00 (-0.1)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP OPPORTUNITY**
+1️⃣ **NZD/USD ⭐8**
+⚡ Power : NZD (7.00) vs USD (1.00)
+📉 Gap   : 6.00 (+0.6) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ☑️ WAIT FOR DIP ⏳
+✅ Sent via Telegram. Message ID: 3113
+Message sent status: 0
+--- Running Signal at Fri May  1 11:30:01 AM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 11:30 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 6.71 (-0.3)
+🥈 AUD : 6.14 (+0.6)
+🥉 GBP : 5.86 (-0.1)
+🔹 CHF : 5.14
+🔹 CAD : 5.00
+🔹 JPY : 4.00
+🔹 EUR : 2.29
+💀 USD : 0.86 (-0.1)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP OPPORTUNITY**
+1️⃣ **NZD/USD ⭐9**
+⚡ Power : NZD (6.71) vs USD (0.86)
+📉 Gap   : 5.86 (-0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ☑️ WAIT FOR DIP ⏳
+✅ Sent via Telegram. Message ID: 3114
+Message sent status: 0
+--- Running Signal at Fri May  1 11:45:01 AM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 11:45 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 6.29 (-0.4)
+🥈 GBP : 5.71 (-0.1)
+🥉 AUD : 5.43 (-0.7)
+🔹 CAD : 5.29 (+0.3)
+🔹 CHF : 5.29 (+0.1)
+🔹 JPY : 4.29 (+0.3)
+🔹 EUR : 2.43 (+0.1)
+💀 USD : 1.29 (+0.4)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **NO SIGNALS** | Min gap 5.5, none qualified ✅
+   └ Wait for wider spread between currencies
+✅ Sent via Telegram. Message ID: 3115
+Message sent status: 0
+--- Running Signal at Fri May  1 12:00:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 12:00 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 6.00 (-0.3)
+🥈 GBP : 5.86 (+0.1)
+🥉 AUD : 5.29 (-0.1)
+🔹 CAD : 5.29
+🔹 CHF : 5.29
+🔹 JPY : 4.29
+🔹 EUR : 2.57 (+0.1)
+💀 USD : 1.43 (+0.1)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **NO SIGNALS** | Min gap 5.5, none qualified ✅
+   └ Wait for wider spread between currencies
+✅ Sent via Telegram. Message ID: 3116
+Message sent status: 0
+--- Running Signal at Fri May  1 12:15:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 12:15 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 GBP : 5.86
+🥈 NZD : 5.86 (-0.1)
+🥉 CHF : 5.43 (+0.1)
+🔹 AUD : 5.00 (-0.3)
+🔹 CAD : 5.00 (-0.3)
+🔹 JPY : 4.71 (+0.4)
+🔹 EUR : 2.57
+💀 USD : 1.57 (+0.1)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **NO SIGNALS** | Min gap 5.5, none qualified ✅
+   └ Wait for wider spread between currencies
+✅ Sent via Telegram. Message ID: 3117
+Message sent status: 0
+--- Running Signal at Fri May  1 12:30:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 12:30 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 GBP : 5.86
+🥈 NZD : 5.86
+🥉 AUD : 5.14 (+0.1)
+🔹 CAD : 5.14 (+0.1)
+🔹 CHF : 5.14 (-0.3)
+🔹 JPY : 4.57 (-0.1)
+🔹 EUR : 2.43 (-0.1)
+💀 USD : 1.86 (+0.3)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **NO SIGNALS** | Min gap 5.5, none qualified ✅
+   └ Wait for wider spread between currencies
+✅ Sent via Telegram. Message ID: 3118
+Message sent status: 0
+--- Running Signal at Fri May  1 12:45:02 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 12:45 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 GBP : 5.86
+🥈 NZD : 5.71 (-0.1)
+🥉 AUD : 5.29 (+0.1)
+🔹 CHF : 5.14
+🔹 CAD : 5.00 (-0.1)
+🔹 JPY : 4.43 (-0.1)
+🔹 EUR : 2.71 (+0.3)
+💀 USD : 1.86
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **NO SIGNALS** | Min gap 5.5, none qualified ✅
+   └ Wait for wider spread between currencies
+✅ Sent via Telegram. Message ID: 3119
+Message sent status: 0
+--- Running Signal at Fri May  1 01:00:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 13:00 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 GBP : 5.86
+🥈 NZD : 5.71
+🥉 AUD : 5.29
+🔹 CHF : 5.14
+🔹 CAD : 5.00
+🔹 JPY : 4.43
+🔹 EUR : 2.71
+💀 USD : 1.86
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **NO SIGNALS** | Min gap 5.5, none qualified ✅
+   └ Wait for wider spread between currencies
+✅ Sent via Telegram. Message ID: 3125
+Message sent status: 0
+--- Running Signal at Fri May  1 01:15:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 13:15 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 5.86 (+0.1)
+🥈 GBP : 5.71 (-0.1)
+🥉 AUD : 5.29
+🔹 CAD : 5.14 (+0.1)
+🔹 CHF : 4.86 (-0.3)
+🔹 JPY : 4.43
+🔹 EUR : 2.71
+💀 USD : 2.00 (+0.1)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **NO SIGNALS** | Min gap 5.5, none qualified ✅
+   └ Wait for wider spread between currencies
+✅ Sent via Telegram. Message ID: 3131
+Message sent status: 0
+--- Running Signal at Fri May  1 01:30:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 13:30 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 5.86
+🥈 GBP : 5.71
+🥉 AUD : 5.57 (+0.3)
+🔹 CAD : 5.14
+🔹 CHF : 4.57 (-0.3)
+🔹 JPY : 4.43
+🔹 EUR : 2.71
+💀 USD : 2.00
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **NO SIGNALS** | Min gap 5.5, none qualified ✅
+   └ Wait for wider spread between currencies
+✅ Sent via Telegram. Message ID: 3135
+Message sent status: 0
+--- Running Signal at Fri May  1 01:45:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 13:45 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 5.86 (+0.3)
+🥈 NZD : 5.86
+🥉 GBP : 5.57 (-0.1)
+🔹 CAD : 5.00 (-0.1)
+🔹 CHF : 4.71 (+0.1)
+🔹 JPY : 4.57 (+0.1)
+🔹 EUR : 2.43 (-0.3)
+💀 USD : 2.00
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **NO SIGNALS** | Min gap 5.5, none qualified ✅
+   └ Wait for wider spread between currencies
+✅ Sent via Telegram. Message ID: 3142
+Message sent status: 0
+--- Running Signal at Fri May  1 02:00:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 14:00 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 GBP : 5.57
+🥈 NZD : 5.57 (-0.3)
+🥉 CAD : 5.43 (+0.4)
+🔹 AUD : 5.29 (-0.6)
+🔹 CHF : 5.00 (+0.3)
+🔹 JPY : 4.43 (-0.1)
+🔹 EUR : 2.71 (+0.3)
+💀 USD : 2.00
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **NO SIGNALS** | Min gap 5.5, none qualified ✅
+   └ Wait for wider spread between currencies
+✅ Sent via Telegram. Message ID: 3147
+Message sent status: 0
+--- Running Signal at Fri May  1 02:15:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 14:15 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 5.71 (+0.4)
+🥈 GBP : 5.57
+🥉 CAD : 5.57 (+0.1)
+🔹 NZD : 5.29 (-0.3)
+🔹 CHF : 4.71 (-0.3)
+🔹 JPY : 4.57 (+0.1)
+🔹 EUR : 2.57 (-0.1)
+💀 USD : 2.00
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **NO SIGNALS** | Min gap 5.5, none qualified ✅
+   └ Wait for wider spread between currencies
+✅ Sent via Telegram. Message ID: 3157
+Message sent status: 0
+--- Running Signal at Fri May  1 02:30:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 14:30 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 GBP : 6.14 (+0.6)
+🥈 AUD : 5.86 (+0.1)
+🥉 CAD : 5.43 (-0.1)
+🔹 NZD : 5.14 (-0.1)
+🔹 JPY : 4.57
+🔹 CHF : 4.57 (-0.1)
+🔹 EUR : 2.29 (-0.3)
+💀 USD : 2.00
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **NO SIGNALS** | Min gap 5.5, none qualified ✅
+   └ Wait for wider spread between currencies
+✅ Sent via Telegram. Message ID: 3158
+Message sent status: 0
+--- Running Signal at Fri May  1 02:45:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 14:45 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 GBP : 6.43 (+0.3)
+🥈 CAD : 5.57 (+0.1)
+🥉 AUD : 5.14 (-0.7)
+🔹 JPY : 4.86 (+0.3)
+🔹 CHF : 4.86 (+0.3)
+🔹 NZD : 4.43 (-0.7)
+🔹 EUR : 2.57 (+0.3)
+💀 USD : 2.14 (+0.1)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **NO SIGNALS** | Min gap 5.5, none qualified ✅
+   └ Wait for wider spread between currencies
+✅ Sent via Telegram. Message ID: 3159
+Message sent status: 0
+--- Running Signal at Fri May  1 03:00:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 15:00 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 JPY : 6.71 (+1.9)
+🥈 GBP : 6.14 (-0.3)
+🥉 CHF : 6.00 (+1.1)
+🔹 NZD : 4.86 (+0.4)
+🔹 AUD : 4.71 (-0.4)
+🔹 CAD : 4.43 (-1.1)
+🔹 EUR : 2.43 (-0.1)
+💀 USD : 0.71 (-1.4)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP OPPORTUNITY**
+1️⃣ **USD/JPY 👑1**
+⚡ Power : USD (0.71) vs JPY (6.71)
+📉 Gap   : 6.00 (+3.3) Pts
+📈 Action: 🔴 STRONG SELL ⬇️
+🎯 Status: ☑️ WAIT FOR DIP ⏳
+✅ Sent via Telegram. Message ID: 3160
+Message sent status: 0
+--- Running Signal at Fri May  1 03:15:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 15:15 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 GBP : 6.14
+🥈 JPY : 6.14 (-0.6)
+🥉 AUD : 5.86 (+1.1)
+🔹 NZD : 5.14 (+0.3)
+🔹 CHF : 4.86 (-1.1)
+🔹 CAD : 4.57 (+0.1)
+🔹 EUR : 2.29 (-0.1)
+💀 USD : 1.00 (+0.3)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **NO SIGNALS** | Min gap 5.5, none qualified ✅
+   └ Wait for wider spread between currencies
+✅ Sent via Telegram. Message ID: 3161
+Message sent status: 0
+--- Running Signal at Fri May  1 03:30:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 15:30 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 6.14 (+0.3)
+🥈 JPY : 6.00 (-0.1)
+🥉 GBP : 5.86 (-0.3)
+🔹 CHF : 5.43 (+0.6)
+🔹 NZD : 4.86 (-0.3)
+🔹 CAD : 4.29 (-0.3)
+🔹 EUR : 2.57 (+0.3)
+💀 USD : 0.86 (-0.1)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **NO SIGNALS** | Min gap 5.5, none qualified ✅
+   └ Wait for wider spread between currencies
+✅ Sent via Telegram. Message ID: 3162
+Message sent status: 0
+--- Running Signal at Fri May  1 03:45:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 15:45 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 GBP : 6.00 (+0.1)
+🥈 JPY : 5.71 (-0.3)
+🥉 AUD : 5.57 (-0.6)
+🔹 CHF : 5.29 (-0.1)
+🔹 NZD : 5.00 (+0.1)
+🔹 CAD : 4.71 (+0.4)
+🔹 EUR : 2.71 (+0.1)
+💀 USD : 1.00 (+0.1)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **NO SIGNALS** | Min gap 5.5, none qualified ✅
+   └ Wait for wider spread between currencies
+✅ Sent via Telegram. Message ID: 3163
+Message sent status: 0
+--- Running Signal at Fri May  1 04:00:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 16:00 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 GBP : 5.86 (-0.1)
+🥈 JPY : 5.43 (-0.3)
+🥉 AUD : 5.43 (-0.1)
+🔹 CAD : 5.14 (+0.4)
+🔹 CHF : 5.00 (-0.3)
+🔹 NZD : 4.86 (-0.1)
+🔹 EUR : 3.00 (+0.3)
+💀 USD : 1.29 (+0.3)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **NO SIGNALS** | Min gap 5.5, none qualified ✅
+   └ Wait for wider spread between currencies
+✅ Sent via Telegram. Message ID: 3166
+Message sent status: 0
+--- Running Signal at Fri May  1 04:15:02 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 16:15 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 GBP : 6.00 (+0.1)
+🥈 JPY : 5.86 (+0.4)
+🥉 NZD : 5.00 (+0.1)
+🔹 CAD : 5.00 (-0.1)
+🔹 AUD : 4.86 (-0.6)
+🔹 CHF : 4.86 (-0.1)
+🔹 EUR : 2.86 (-0.1)
+💀 USD : 1.57 (+0.3)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **NO SIGNALS** | Min gap 5.5, none qualified ✅
+   └ Wait for wider spread between currencies
+✅ Sent via Telegram. Message ID: 3167
+Message sent status: 0
+--- Running Signal at Fri May  1 04:30:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 16:30 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 JPY : 6.00 (+0.1)
+🥈 CHF : 6.00 (+1.1)
+🥉 GBP : 5.57 (-0.4)
+🔹 AUD : 5.14 (+0.3)
+🔹 CAD : 4.71 (-0.3)
+🔹 NZD : 4.57 (-0.4)
+🔹 EUR : 3.29 (+0.4)
+💀 USD : 0.71 (-0.9)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **NO SIGNALS** | Min gap 5.5, none qualified ✅
+   └ Wait for wider spread between currencies
+✅ Sent via Telegram. Message ID: 3174
+Message sent status: 0
+--- Running Signal at Fri May  1 04:45:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 16:45 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 GBP : 5.86 (+0.3)
+🥈 JPY : 5.86 (-0.1)
+🥉 CHF : 5.43 (-0.6)
+🔹 AUD : 5.14
+🔹 CAD : 4.86 (+0.1)
+🔹 NZD : 4.57
+🔹 EUR : 3.43 (+0.1)
+💀 USD : 0.86 (+0.1)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **NO SIGNALS** | Min gap 5.5, none qualified ✅
+   └ Wait for wider spread between currencies
+✅ Sent via Telegram. Message ID: 3177
+Message sent status: 0
+--- Running Signal at Fri May  1 05:00:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 17:00 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 GBP : 5.86
+🥈 CHF : 5.86 (+0.4)
+🥉 JPY : 5.71 (-0.1)
+🔹 AUD : 4.86 (-0.3)
+🔹 NZD : 4.71 (+0.1)
+🔹 CAD : 4.71 (-0.1)
+🔹 EUR : 3.43
+💀 USD : 0.86
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **NO SIGNALS** | Min gap 5.5, none qualified ✅
+   └ Wait for wider spread between currencies
+✅ Sent via Telegram. Message ID: 3182
+Message sent status: 0
+--- Running Signal at Fri May  1 05:15:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 17:15 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 GBP : 5.71 (-0.1)
+🥈 JPY : 5.71
+🥉 CHF : 5.43 (-0.4)
+🔹 CAD : 5.29 (+0.6)
+🔹 NZD : 4.86 (+0.1)
+🔹 AUD : 4.57 (-0.3)
+🔹 EUR : 3.14 (-0.3)
+💀 USD : 1.29 (+0.4)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **NO SIGNALS** | Min gap 5.5, none qualified ✅
+   └ Wait for wider spread between currencies
+✅ Sent via Telegram. Message ID: 3183
+Message sent status: 0
+--- Running Signal at Fri May  1 05:30:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 17:30 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 CHF : 5.71 (+0.3)
+🥈 CAD : 5.57 (+0.3)
+🥉 GBP : 5.43 (-0.3)
+🔹 JPY : 5.43 (-0.3)
+🔹 AUD : 4.71 (+0.1)
+🔹 NZD : 4.57 (-0.3)
+🔹 EUR : 3.14
+💀 USD : 1.43 (+0.1)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **NO SIGNALS** | Min gap 5.5, none qualified ✅
+   └ Wait for wider spread between currencies
+✅ Sent via Telegram. Message ID: 3184
+Message sent status: 0
+--- Running Signal at Fri May  1 05:45:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 17:45 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 JPY : 5.86 (+0.4)
+🥈 CHF : 5.86 (+0.1)
+🥉 GBP : 5.71 (+0.3)
+🔹 CAD : 5.14 (-0.4)
+🔹 NZD : 4.71 (+0.1)
+🔹 AUD : 4.29 (-0.4)
+🔹 EUR : 3.14
+💀 USD : 1.29 (-0.1)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **NO SIGNALS** | Min gap 5.5, none qualified ✅
+   └ Wait for wider spread between currencies
+✅ Sent via Telegram. Message ID: 3185
+Message sent status: 0
+--- Running Signal at Fri May  1 06:00:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 18:00 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 CHF : 6.14 (+0.3)
+🥈 JPY : 6.00 (+0.1)
+🥉 CAD : 5.57 (+0.4)
+🔹 GBP : 5.29 (-0.4)
+🔹 NZD : 4.43 (-0.3)
+🔹 AUD : 4.14 (-0.1)
+🔹 EUR : 2.86 (-0.3)
+💀 USD : 1.57 (+0.3)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **NO SIGNALS** | Min gap 5.5, none qualified ✅
+   └ Wait for wider spread between currencies
+✅ Sent via Telegram. Message ID: 3186
+Message sent status: 0
+--- Running Signal at Fri May  1 06:15:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 18:15 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 JPY : 6.00
+🥈 CHF : 6.00 (-0.1)
+🥉 GBP : 5.86 (+0.6)
+🔹 CAD : 5.00 (-0.6)
+🔹 NZD : 4.57 (+0.1)
+🔹 AUD : 4.00 (-0.1)
+🔹 EUR : 3.43 (+0.6)
+💀 USD : 1.14 (-0.4)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **NO SIGNALS** | Min gap 5.5, none qualified ✅
+   └ Wait for wider spread between currencies
+✅ Sent via Telegram. Message ID: 3187
+Message sent status: 0
+--- Running Signal at Fri May  1 06:30:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 18:30 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 CHF : 6.29 (+0.3)
+🥈 GBP : 6.14 (+0.3)
+🥉 JPY : 5.71 (-0.3)
+🔹 CAD : 5.43 (+0.4)
+🔹 NZD : 4.29 (-0.3)
+🔹 AUD : 4.00
+🔹 EUR : 3.29 (-0.1)
+💀 USD : 0.86 (-0.3)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **NO SIGNALS** | Min gap 5.5, none qualified ✅
+   └ Wait for wider spread between currencies
+✅ Sent via Telegram. Message ID: 3188
+Message sent status: 0
+--- Running Signal at Fri May  1 06:45:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 18:45 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 CHF : 6.00 (-0.3)
+🥈 GBP : 5.86 (-0.3)
+🥉 JPY : 5.86 (+0.1)
+🔹 CAD : 5.43
+🔹 AUD : 4.29 (+0.3)
+🔹 NZD : 4.14 (-0.1)
+🔹 EUR : 3.29
+💀 USD : 1.14 (+0.3)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **NO SIGNALS** | Min gap 5.5, none qualified ✅
+   └ Wait for wider spread between currencies
+✅ Sent via Telegram. Message ID: 3189
+Message sent status: 0
+--- Running Signal at Fri May  1 07:00:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 19:00 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 CHF : 6.29 (+0.3)
+🥈 GBP : 5.71 (-0.1)
+🥉 JPY : 5.57 (-0.3)
+🔹 CAD : 5.43
+🔹 AUD : 4.43 (+0.1)
+🔹 NZD : 4.14
+🔹 EUR : 3.43 (+0.1)
+💀 USD : 1.00 (-0.1)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **NO SIGNALS** | Min gap 5.5, none qualified ✅
+   └ Wait for wider spread between currencies
+✅ Sent via Telegram. Message ID: 3190
+Message sent status: 0
+--- Running Signal at Fri May  1 07:15:02 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 19:15 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 CHF : 6.29
+🥈 GBP : 6.00 (+0.3)
+🥉 JPY : 5.57
+🔹 CAD : 5.14 (-0.3)
+🔹 AUD : 4.71 (+0.3)
+🔹 NZD : 4.00 (-0.1)
+🔹 EUR : 3.57 (+0.1)
+💀 USD : 0.71 (-0.3)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP OPPORTUNITY**
+1️⃣ **USD/CHF 👑1**
+⚡ Power : USD (0.71) vs CHF (6.29)
+📉 Gap   : 5.57 (+0.3) Pts
+📈 Action: 🔴 STRONG SELL ⬇️
+🎯 Status: ☑️ WAIT FOR DIP ⏳
+✅ Sent via Telegram. Message ID: 3191
+Message sent status: 0
+--- Running Signal at Fri May  1 07:30:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 19:30 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 CHF : 6.43 (+0.1)
+🥈 GBP : 6.00
+🥉 JPY : 5.43 (-0.1)
+🔹 CAD : 5.14
+🔹 AUD : 4.86 (+0.1)
+🔹 NZD : 3.86 (-0.1)
+🔹 EUR : 3.57
+💀 USD : 0.71
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP OPPORTUNITY**
+1️⃣ **USD/CHF 👑2**
+⚡ Power : USD (0.71) vs CHF (6.43)
+📉 Gap   : 5.71 (+0.1) Pts
+📈 Action: 🔴 STRONG SELL ⬇️
+🎯 Status: ☑️ WAIT FOR DIP ⏳
+✅ Sent via Telegram. Message ID: 3192
+Message sent status: 0
+--- Running Signal at Fri May  1 07:45:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 19:45 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 CHF : 6.29 (-0.1)
+🥈 GBP : 6.00
+🥉 JPY : 5.43
+🔹 CAD : 5.14
+🔹 AUD : 4.86
+🔹 NZD : 4.14 (+0.3)
+🔹 EUR : 3.43 (-0.1)
+💀 USD : 0.71
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP OPPORTUNITY**
+1️⃣ **USD/CHF 👑3**
+⚡ Power : USD (0.71) vs CHF (6.29)
+📉 Gap   : 5.57 (-0.1) Pts
+📈 Action: 🔴 STRONG SELL ⬇️
+🎯 Status: ☑️ WAIT FOR DIP ⏳
+✅ Sent via Telegram. Message ID: 3193
+Message sent status: 0
+--- Running Signal at Fri May  1 08:00:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 20:00 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 CHF : 6.29
+🥈 GBP : 6.14 (+0.1)
+🥉 JPY : 5.29 (-0.1)
+🔹 CAD : 5.14
+🔹 AUD : 4.71 (-0.1)
+🔹 NZD : 4.29 (+0.1)
+🔹 EUR : 3.43
+💀 USD : 0.71
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP OPPORTUNITY**
+1️⃣ **USD/CHF 👑4**
+⚡ Power : USD (0.71) vs CHF (6.29)
+📉 Gap   : 5.57 Pts
+📈 Action: 🔴 STRONG SELL ⬇️
+🎯 Status: ☑️ WAIT FOR DIP ⏳
+✅ Sent via Telegram. Message ID: 3194
+Message sent status: 0
+--- Running Signal at Fri May  1 08:15:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 20:15 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 GBP : 6.43 (+0.3)
+🥈 CHF : 6.14 (-0.1)
+🥉 JPY : 5.29
+🔹 AUD : 5.00 (+0.3)
+🔹 NZD : 4.86 (+0.6)
+🔹 CAD : 4.43 (-0.7)
+🔹 EUR : 3.43
+💀 USD : 0.43 (-0.3)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 2 OPPORTUNITIES**
+1️⃣ **GBP/USD 👑1**
+⚡ Power : GBP (6.43) vs USD (0.43)
+📉 Gap   : 6.00 (+0.6) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ☑️ WAIT FOR DIP ⏳
+
+2️⃣ **USD/CHF 👑5**
+⚡ Power : USD (0.43) vs CHF (6.14)
+📉 Gap   : 5.71 (+0.1) Pts
+📈 Action: 🔴 STRONG SELL ⬇️
+🎯 Status: ☑️ WAIT FOR DIP ⏳
+✅ Sent via Telegram. Message ID: 3195
+Message sent status: 0
+--- Running Signal at Fri May  1 08:30:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 20:30 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 GBP : 6.43
+🥈 CHF : 6.14
+🥉 JPY : 5.29
+🔹 NZD : 5.00 (+0.1)
+🔹 AUD : 4.86 (-0.1)
+🔹 CAD : 4.57 (+0.1)
+🔹 EUR : 3.29 (-0.1)
+💀 USD : 0.43
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 2 OPPORTUNITIES**
+1️⃣ **GBP/USD 👑2**
+⚡ Power : GBP (6.43) vs USD (0.43)
+📉 Gap   : 6.00 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ☑️ WAIT FOR DIP ⏳
+
+2️⃣ **USD/CHF 👑6**
+⚡ Power : USD (0.43) vs CHF (6.14)
+📉 Gap   : 5.71 Pts
+📈 Action: 🔴 STRONG SELL ⬇️
+🎯 Status: ☑️ WAIT FOR DIP ⏳
+✅ Sent via Telegram. Message ID: 3196
+Message sent status: 0
+--- Running Signal at Fri May  1 08:45:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 20:45 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 GBP : 6.57 (+0.1)
+🥈 CHF : 6.14
+🥉 JPY : 5.29
+🔹 AUD : 4.86
+🔹 NZD : 4.71 (-0.3)
+🔹 CAD : 4.71 (+0.1)
+🔹 EUR : 3.29
+💀 USD : 0.43
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 2 OPPORTUNITIES**
+1️⃣ **GBP/USD 👑3**
+⚡ Power : GBP (6.57) vs USD (0.43)
+📉 Gap   : 6.14 (+0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ☑️ WAIT FOR DIP ⏳
+
+2️⃣ **USD/CHF 👑7**
+⚡ Power : USD (0.43) vs CHF (6.14)
+📉 Gap   : 5.71 Pts
+📈 Action: 🔴 STRONG SELL ⬇️
+🎯 Status: ☑️ WAIT FOR DIP ⏳
+✅ Sent via Telegram. Message ID: 3197
+Message sent status: 0
+--- Running Signal at Fri May  1 09:00:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 21:00 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 GBP : 6.43 (-0.1)
+🥈 CHF : 6.00 (-0.1)
+🥉 JPY : 5.29
+🔹 AUD : 5.14 (+0.3)
+🔹 CAD : 4.71
+🔹 NZD : 4.57 (-0.1)
+🔹 EUR : 3.29
+💀 USD : 0.57 (+0.1)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP OPPORTUNITY**
+1️⃣ **GBP/USD 👑4**
+⚡ Power : GBP (6.43) vs USD (0.57)
+📉 Gap   : 5.86 (-0.3) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ☑️ WAIT FOR DIP ⏳
+✅ Sent via Telegram. Message ID: 3198
+Message sent status: 0
+--- Running Signal at Fri May  1 09:15:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 21:15 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 GBP : 6.57 (+0.1)
+🥈 AUD : 5.43 (+0.3)
+🥉 JPY : 5.29
+🔹 CHF : 5.29 (-0.7)
+🔹 NZD : 4.86 (+0.3)
+🔹 CAD : 4.86 (+0.1)
+🔹 EUR : 3.29
+💀 USD : 0.43 (-0.1)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP OPPORTUNITY**
+1️⃣ **GBP/USD 👑5**
+⚡ Power : GBP (6.57) vs USD (0.43)
+📉 Gap   : 6.14 (+0.3) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ☑️ WAIT FOR DIP ⏳
+✅ Sent via Telegram. Message ID: 3199
+Message sent status: 0
+--- Running Signal at Fri May  1 09:30:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 21:30 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 GBP : 6.14 (-0.4)
+🥈 AUD : 5.43
+🥉 CHF : 5.43 (+0.1)
+🔹 JPY : 5.29
+🔹 CAD : 5.14 (+0.3)
+🔹 NZD : 5.00 (+0.1)
+🔹 EUR : 3.14 (-0.1)
+💀 USD : 0.43
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP OPPORTUNITY**
+1️⃣ **GBP/USD 👑6**
+⚡ Power : GBP (6.14) vs USD (0.43)
+📉 Gap   : 5.71 (-0.4) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ☑️ WAIT FOR DIP ⏳
+✅ Sent via Telegram. Message ID: 3200
+Message sent status: 0
+--- Running Signal at Fri May  1 09:45:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 21:45 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 GBP : 6.00 (-0.1)
+🥈 AUD : 5.57 (+0.1)
+🥉 CHF : 5.57 (+0.1)
+🔹 JPY : 5.29
+🔹 CAD : 5.14
+🔹 NZD : 5.00
+🔹 EUR : 3.00 (-0.1)
+💀 USD : 0.43
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP OPPORTUNITY**
+1️⃣ **GBP/USD 👑7**
+⚡ Power : GBP (6.00) vs USD (0.43)
+📉 Gap   : 5.57 (-0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ☑️ WAIT FOR DIP ⏳
+✅ Sent via Telegram. Message ID: 3201
+Message sent status: 0
+--- Running Signal at Fri May  1 10:00:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 22:00 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 GBP : 6.29 (+0.3)
+🥈 AUD : 6.14 (+0.6)
+🥉 CHF : 5.57
+🔹 JPY : 5.14 (-0.1)
+🔹 NZD : 5.14 (+0.1)
+🔹 CAD : 4.00 (-1.1)
+🔹 EUR : 3.43 (+0.4)
+💀 USD : 0.29 (-0.1)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 2 OPPORTUNITIES**
+1️⃣ **GBP/USD 👑8**
+⚡ Power : GBP (6.29) vs USD (0.29)
+📉 Gap   : 6.00 (+0.4) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ☑️ WAIT FOR DIP ⏳
+
+2️⃣ **AUD/USD 👑1**
+⚡ Power : AUD (6.14) vs USD (0.29)
+📉 Gap   : 5.86 (+0.7) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ☑️ WAIT FOR DIP ⏳
+✅ Sent via Telegram. Message ID: 3202
+Message sent status: 0
