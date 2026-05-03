@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FileBox - File Saya</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            background: #0f172a;
+            color: #e2e8f0;
+            font-family: system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+        }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            margin-bottom: 24px;
+        }
+        .header h1 { font-size: 1.5rem; font-weight: 800; margin: 0; }
+        .header h1 span { color: #818cf8; }
+        .header .logout-btn {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.12);
+            color: #94a3b8;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .header .logout-btn:hover { background: rgba(239,68,68,0.15); border-color: rgba(239,68,68,0.3); color: #f87171; }
+
+        /* Upload area */
+        .upload-area {
+            background: rgba(255,255,255,0.04);
+            border: 2px dashed rgba(255,255,255,0.12);
+            border-radius: 16px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            margin-bottom: 28px;
+            position: relative;
+        }
+        .upload-area:hover, .upload-area.dragover {
+            border-color: #6366f1;
+            background: rgba(99,102,241,0.06);
+        }
+        .upload-area .icon { font-size: 2.5rem; margin-bottom: 8px; }
+        .upload-area p { color: #94a3b8; font-size: 0.9rem; margin: 0; }
+        .upload-area .hint { font-size: 0.75rem; color: #64748b; margin-top: 6px; }
+        .upload-area input[type="file"] {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        /* File list */
+        .file-count { color: #94a3b8; font-size: 0.85rem; margin-bottom: 12px; font-weight: 600; }
+        .file-list { display: flex; flex-direction: column; gap: 6px; }
+        
+        .file-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 12px 16px;
+            transition: all 0.2s;
+        }
+        .file-item:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); }
+        .file-icon { font-size: 1.5rem; flex-shrink: 0; }
+        .file-info { flex: 1; min-width: 0; }
+        .file-info .name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #e2e8f0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .file-info .meta {
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-top: 2px;
+        }
+        .file-actions { display: flex; gap: 6px; flex-shrink: 0; }
+        .file-actions a, .file-actions button {
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .btn-download {
+            background: rgba(99,102,241,0.15);
+            color: #818cf8;
+        }
+        .btn-download:hover { background: rgba(99,102,241,0.25); }
+        .btn-delete {
+            background: rgba(239,68,68,0.1);
+            color: #f87171;
+        }
+        .btn-delete:hover { background: rgba(239,68,68,0.2); }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #64748b;
+        }
+        .empty-state .icon { font-size: 3.5rem; margin-bottom: 12px; }
+        .empty-state p { font-size: 0.9rem; margin: 0; }
+
+        /* Toast notification */
+        .toast-msg {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e293b;
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #e2e8f0;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            z-index: 999;
+        }
+        .toast-msg.show { opacity: 1; }
+
+        @media (max-width: 600px) {
+            .file-item { flex-wrap: wrap; }
+            .file-actions { width: 100%; justify-content: flex-end; margin-top: 4px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>📁 File<span>Box</span></h1>
+            <a href="/logout" class="logout-btn">🚪 Keluar</a>
+        </div>
+
+        <!-- Upload area -->
+        <form method="POST" action="/upload" enctype="multipart/form-data" id="uploadForm">
+            <div class="upload-area" id="dropZone">
+                <div class="icon">☁️</div>
+                <p>Klik atau tarik file ke sini untuk upload</p>
+                <div class="hint">Maks 100MB per file</div>
+                <input type="file" name="file" id="fileInput">
+            </div>
+        </form>
+
+        <!-- File list -->
+        {% if files %}
+        <div class="file-count">📄 {{ files|length }} file</div>
+        <div class="file-list" id="fileList">
+            {% for f in files %}
+            <div class="file-item">
+                {% set ext = f.name.split('.')[-1]|lower if '.' in f.name else '' %}
+                {% if ext in ['jpg','jpeg','png','gif','webp','svg'] %}
+                    {% set icon = '🖼️' %}
+                {% elif ext in ['pdf'] %}
+                    {% set icon = '📄' %}
+                {% elif ext in ['doc','docx'] %}
+                    {% set icon = '📝' %}
+                {% elif ext in ['xls','xlsx','csv'] %}
+                    {% set icon = '📊' %}
+                {% elif ext in ['zip','rar','7z','gz','tar'] %}
+                    {% set icon = '📦' %}
+                {% elif ext in ['mp4','mkv','avi','mov'] %}
+                    {% set icon = '🎬' %}
+                {% elif ext in ['mp3','wav','flac','ogg'] %}
+                    {% set icon = '🎵' %}
+                {% elif ext in ['py','js','html','css','json','xml','sh'] %}
+                    {% set icon = '💻' %}
+                {% else %}
+                    {% set icon = '📄' %}
+                {% endif %}
+                <div class="file-icon">{{ icon }}</div>
+                <div class="file-info">
+                    <div class="name" title="{{ f.name }}">{{ f.name }}</div>
+                    <div class="meta">{{ f.size_str }} • {{ f.mtime }}</div>
+                </div>
+                <div class="file-actions">
+                    <a href="/download/{{ f.name }}" class="btn-download" download>⬇ Download</a>
+                    <form method="POST" action="/delete/{{ f.name }}" style="display:inline" onsubmit="return confirm('Hapus file ini?')">
+                        <button type="submit" class="btn-delete">🗑</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <div class="icon">📂</div>
+            <p>Belum ada file. Upload file pertama kamu!</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Toast -->
+    <div class="toast-msg" id="toast"></div>
+
+    <script>
+        // Auto-submit on file select
+        document.getElementById('fileInput').addEventListener('change', function() {
+            if (this.files.length > 0) {
+                document.getElementById('uploadForm').submit();
+            }
+        });
+
+        // Drag & drop visual feedback
+        const dropZone = document.getElementById('dropZone');
+        ['dragenter', 'dragover'].forEach(evt => {
+            dropZone.addEventListener(evt, e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+        });
+        ['dragleave', 'drop'].forEach(evt => {
+            dropZone.addEventListener(evt, e => { e.preventDefault(); dropZone.classList.remove('dragover'); });
+        });
+
+        // Toast helper
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 2500);
+        }
+
+        // Show upload toast
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        showToast('{{ messages[0] }}');
+        {% endif %}
+        {% endwith %}
+    </script>
+</body>
+</html>

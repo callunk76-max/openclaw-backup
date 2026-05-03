@@ -72,11 +72,12 @@ def parse_budget(budget_str):
 
 class FilterQuery:
     """Build and manage filter SQL queries"""
-    def __init__(self, search_query='', m_filter='', type_filter='', cara_filter=''):
+    def __init__(self, search_query='', m_filter='', type_filter='', cara_filter='', quick_search=''):
         self.search_query = search_query
         self.m_filter = m_filter
         self.type_filter = type_filter
         self.cara_filter = cara_filter
+        self.quick_search = quick_search
 
     def where_clause(self, alias='p'):
         """Build WHERE clause and return (clause_string, params_list)"""
@@ -88,6 +89,12 @@ class FilterQuery:
             parts.append(f"({prefix}package_name LIKE ? OR {prefix}satker LIKE ? OR CAST({prefix}id AS TEXT) LIKE ?)")
             sq = f'%{self.search_query}%'
             params.extend([sq, sq, sq])
+
+        # Quick search: narrows within results already filtered by search_query
+        if self.quick_search:
+            parts.append(f"({prefix}package_name LIKE ? OR {prefix}satker LIKE ? OR CAST({prefix}id AS TEXT) LIKE ?)")
+            qs = f'%{self.quick_search}%'
+            params.extend([qs, qs, qs])
 
         if self.m_filter:
             parts.append(f"{prefix}procurement_method = ?")
@@ -117,9 +124,9 @@ def get_threshold_case():
             "ELSE 200000000 END")
 
 
-def fetch_table_data(conn, search_query, m_filter, type_filter, cara_filter='', sort_by='id', sort_dir='DESC', page=1):
+def fetch_table_data(conn, search_query, m_filter, type_filter, cara_filter='', sort_by='id', sort_dir='DESC', page=1, quick_search=''):
     """Fetch paginated table data + stats. Returns dict with all needed data."""
-    fq = FilterQuery(search_query, m_filter, type_filter, cara_filter)
+    fq = FilterQuery(search_query, m_filter, type_filter, cara_filter, quick_search)
     offset = (page - 1) * PER_PAGE
 
     allowed_sorts = {
@@ -396,12 +403,13 @@ def api_table():
     m_filter = request.args.get('method', '')
     type_filter = request.args.get('type', '')
     cara_filter = request.args.get('cara', '')
+    quick_search = request.args.get('quick_search', '')
     sort_by = request.args.get('sort_by', 'id')
     sort_dir = request.args.get('sort_dir', 'DESC')
     page = int(request.args.get('page', 1))
 
     conn = get_db_connection()
-    td = fetch_table_data(conn, search_query, m_filter, type_filter, cara_filter, sort_by, sort_dir, page)
+    td = fetch_table_data(conn, search_query, m_filter, type_filter, cara_filter, sort_by, sort_dir, page, quick_search)
     conn.close()
 
     return jsonify({
@@ -680,6 +688,31 @@ def api_anomalies_pagu():
         'data': rows,
         'mode': mode,
         'match_label': match_label
+    })
+
+
+@app.route('/api/anomalies/orphan')
+def api_anomalies_orphan():
+    """Return orphan realisasi (no parent RUP in procurement table)"""
+    conn = get_db_connection()
+    count = conn.execute(
+        'SELECT COUNT(*) FROM realisasi WHERE "Kode RUP" NOT IN (SELECT id FROM procurement)'
+    ).fetchone()[0] or 0
+    rows = conn.execute('''
+        SELECT "Kode RUP" as kode_rup, "Nama Paket" as nama_paket,
+               "Nama Satuan Kerja" as satker, "Nama Penyedia" as penyedia,
+               "Total Nilai (Rp)" as total_nilai, "Metode Pengadaan" as metode,
+               "Jenis Pengadaan" as jenis, "Tahun Anggaran" as tahun,
+               "Status Paket" as status_paket
+        FROM realisasi
+        WHERE "Kode RUP" NOT IN (SELECT id FROM procurement)
+        ORDER BY "Nama Paket" ASC
+    ''').fetchall()
+    conn.close()
+    return jsonify({
+        'success': True,
+        'count': count,
+        'data': [dict(r) for r in rows]
     })
 
 

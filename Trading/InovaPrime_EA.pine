@@ -1,0 +1,195 @@
+//@version=5
+strategy("Inova Prime EA - TradingView", 
+         overlay=true, 
+         initial_capital=10000, 
+         default_qty_type=strategy.percent_of_equity, 
+         default_qty_value=100,
+         commission_type=strategy.commission.percent,
+         commission_value=0.04)
+
+//============================================================
+// INOVA PRIME EA - HYBRID ORDER BLOCK STRATEGY
+// Reconstructed Logic based on Inova Prime EA MT4 v2.1
+//============================================================
+
+// --- INPUT PARAMETERS ---
+// Core Settings
+minOrderBlockDist  = input.float(40.0, "Min OB Distance (pips)", step=5.0)
+atrFilter          = input.float(0.7, "ATR Filter", step=0.1)
+useTrendFilter     = input.bool(true, "Enable Trend Filter")
+ignoreCounterTrend = input.bool(true, "Ignore Counter Trend")
+
+// Lot/Risk Management
+fixedLot           = input.float(0.05, "Fixed Lot (MT4 simulation)")
+useAutoLot         = input.bool(false, "Use Auto Lot (Risk %)")
+riskPercent        = input.float(1.0, "Risk % per Trade", step=0.1)
+
+// Martingale
+useMartingale      = input.bool(true, "Enable Martingale")
+martingaleMult     = input.float(1.3, "Martingale Multiplier", step=0.1)
+maxMartingaleTrades= input.int(15, "Max Martingale Levels")
+closeProfitTarget  = input.float(5.0, "Close All Profit Target ($)")
+
+// Risk Protection
+maxSpreadPts       = input.int(30, "Max Spread (points)")
+floatingLossProtect= input.float(10.0, "Floating Loss Protection ($)")
+
+// Trading
+allowHedging       = input.bool(true, "Allow Hedging")
+slAtrMultiplier    = input.float(1.5, "SL ATR Multiplier", step=0.1)
+
+// --- CALCULATIONS ---
+atrValue = ta.atr(14)
+atrPips = atrValue / syminfo.mintick / 10
+
+// Spread estimation (simplified)
+spread = (request.security(syminfo.tickerid, "1", (high - low))) * 0.1
+
+// Trend: Monthly SMA
+monthlyClose = request.security(syminfo.tickerid, "M", close)
+monthlySMA = request.security(syminfo.tickerid, "M", ta.sma(close, 20))
+isBullishTrend = monthlyClose > monthlySMA
+
+// --- ORDER BLOCK DETECTION ---
+var float obHigh = na
+var float obLow = na
+var int obDirection = 0
+
+var bool bullishOB = false
+var bool bearishOB = false
+var int obBarIndex = 0
+
+// Scan on each bar
+bullishOB := false
+bearishOB := false
+
+for i = 3 to 49
+    candleBody = math.abs(close[i] - open[i])
+    candleRange = high[i] - low[i]
+    prevBody = math.abs(close[i+1] - open[i+1])
+    
+    // Bullish Order Block
+    if close[i] > open[i] and 
+       candleBody > candleRange * 0.6 and 
+       candleBody > prevBody * 1.5 and 
+       candleRange > minOrderBlockDist * (syminfo.mintick * 10)
+        
+        for j = i-1 to 1
+            if low[j] <= high[i] and low[j] >= low[i] - candleRange * 0.3
+                bullishOB := true
+                obHigh := high[i]
+                obLow := low[i]
+                obDirection := 1
+                obBarIndex := i
+    
+    // Bearish Order Block
+    if close[i] < open[i] and 
+       candleBody > candleRange * 0.6 and 
+       candleBody > prevBody * 1.5 and 
+       candleRange > minOrderBlockDist * (syminfo.mintick * 10)
+        
+        for j = i-1 to 1
+            if high[j] >= low[i] and high[j] <= high[i] + candleRange * 0.3
+                bearishOB := true
+                obHigh := high[i]
+                obLow := low[i]
+                obDirection := -1
+                obBarIndex := i
+
+// --- ENTRY SIGNALS ---
+volatilityOK = atrPips >= atrFilter
+spreadOK = spread <= maxSpreadPts * syminfo.mintick
+
+longCondition = volatilityOK and spreadOK and bullishOB and obDirection == 1 and (not ignoreCounterTrend or isBullishTrend)
+shortCondition = volatilityOK and spreadOK and bearishOB and obDirection == -1 and (not ignoreCounterTrend or not isBullishTrend)
+
+// --- MARTINGALE: count consecutive losses from closed trades ---
+var int martingaleCount = 0
+var string lastEntryComment = ""
+
+if strategy.closedtrades > 0
+    lastClosedProfit = strategy.closedtrades.profit(strategy.closedtrades - 1)
+    lastClosedComment = strategy.closedtrades.entry_comment(strategy.closedtrades - 1)
+    
+    if lastClosedProfit < 0 and lastClosedComment == lastEntryComment
+        martingaleCount := math.min(martingaleCount + 1, maxMartingaleTrades)
+    else if lastClosedProfit > 0
+        martingaleCount := 0
+
+// --- LOT SIZE with martingale multiplier ---
+var float lotSize = fixedLot
+
+if useAutoLot
+    lotSize := (strategy.equity * riskPercent / 100.0) / (atrValue * 10)
+else
+    lotSize := fixedLot
+
+if useMartingale and martingaleCount > 0
+    lotSize := lotSize * math.pow(martingaleMult, martingaleCount)
+
+// Clamp lot size
+lotSize := math.max(lotSize, 0.01)
+
+// --- CLOSE ALL at profit target ---
+var float totalClosedProfit = 0.0
+if strategy.closedtrades > 0
+    totalClosedProfit := strategy.closedtrades.profit(strategy.closedtrades - 1)
+
+// Close all open trades on profit target or floating loss protection
+if (closeProfitTarget > 0 and strategy.netprofit >= closeProfitTarget) or
+   (floatingLossProtect > 0 and strategy.openprofit <= -floatingLossProtect)
+    strategy.close_all()
+
+// --- EXECUTION ---
+if longCondition and (strategy.position_size <= 0 or allowHedging)
+    strategy.entry("LONG", strategy.long, qty=lotSize)
+    lastEntryComment := "LONG"
+    
+    slPrice = obLow - atrValue * slAtrMultiplier
+    tpPrice = close + (close - slPrice) * 2.0
+    strategy.exit("XLONG", "LONG", stop=slPrice, limit=tpPrice)
+
+if shortCondition and (strategy.position_size >= 0 or allowHedging)
+    strategy.entry("SHORT", strategy.short, qty=lotSize)
+    lastEntryComment := "SHORT"
+    
+    slPrice = obHigh + atrValue * slAtrMultiplier
+    tpPrice = close - (slPrice - close) * 2.0
+    strategy.exit("XSHORT", "SHORT", stop=slPrice, limit=tpPrice)
+
+// --- VISUALIZATION ---
+plotshape(bullishOB and obDirection == 1, style=shape.triangleup, location=location.belowbar, 
+          color=color.new(color.green, 50), size=size.small, title="Bullish OB")
+
+plotshape(bearishOB and obDirection == -1, style=shape.triangledown, location=location.abovebar, 
+          color=color.new(color.red, 50), size=size.small, title="Bearish OB")
+
+// OB Boxes (simple lines)
+if bullishOB and obDirection == 1
+    line.new(bar_index[obBarIndex], obHigh, bar_index[obBarIndex] + 10, obHigh, 
+             color=color.new(color.green, 60), width=1)
+    line.new(bar_index[obBarIndex], obLow, bar_index[obBarIndex] + 10, obLow, 
+             color=color.new(color.green, 60), width=1)
+
+if bearishOB and obDirection == -1
+    line.new(bar_index[obBarIndex], obHigh, bar_index[obBarIndex] + 10, obHigh, 
+             color=color.new(color.red, 60), width=1)
+    line.new(bar_index[obBarIndex], obLow, bar_index[obBarIndex] + 10, obLow, 
+             color=color.new(color.red, 60), width=1)
+
+// Trend indicator
+bgcolor(useTrendFilter ? (isBullishTrend ? color.new(color.green, 92) : color.new(color.red, 92)) : na)
+
+// Info panel
+var table infoTable = table.new(position.top_right, 2, 5)
+if barstate.islast
+    table.cell(infoTable, 0, 0, "INOVA PRIME EA", text_color=color.white, bgcolor=color.new(color.blue, 30))
+    table.cell(infoTable, 0, 1, "Trend:", text_color=color.gray)
+    table.cell(infoTable, 1, 1, isBullishTrend ? "BULLISH ▲" : "BEARISH ▼", text_color=isBullishTrend ? color.green : color.red)
+    table.cell(infoTable, 0, 2, "ATR:", text_color=color.gray)
+    table.cell(infoTable, 1, 2, str.tostring(atrPips, "#.#"), text_color=color.yellow)
+    table.cell(infoTable, 0, 3, "Martingale:", text_color=color.gray)
+    table.cell(infoTable, 1, 3, str.tostring(martingaleCount) + "/" + str.tostring(maxMartingaleTrades), text_color=color.orange)
+    table.cell(infoTable, 0, 4, "Open P/L:", text_color=color.gray)
+    table.cell(infoTable, 1, 4, "$" + str.tostring(strategy.openprofit, "#.##"), 
+               text_color=strategy.openprofit >= 0 ? color.green : color.red)
