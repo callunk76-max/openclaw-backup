@@ -276,12 +276,12 @@ def index():
         else: total_lainnya = cnt; budget_lainnya = bgt
 
     # Realisasi global
-    real_total = conn.execute('SELECT SUM("Total Nilai (Rp)") FROM realisasi').fetchone()[0] or 0
-    count_realized = conn.execute('SELECT COUNT(*) FROM realisasi').fetchone()[0] or 0
+    real_total = conn.execute('SELECT SUM("Total Nilai (Rp)") FROM realisasi WHERE "Tahun Anggaran" = ?', (tahun,)).fetchone()[0] or 0
+    count_realized = conn.execute('SELECT COUNT(*) FROM realisasi WHERE "Tahun Anggaran" = ?', (tahun,)).fetchone()[0] or 0
 
-    real_grouped = conn.execute("""
+    real_grouped = conn.execute(f"""
         SELECT CASE WHEN "Metode Pengadaan" IN ('E-Purchasing', 'Pengadaan Langsung', 'Dikecualikan', 'Seleksi') THEN "Metode Pengadaan" ELSE 'Lainnya' END as method_group, SUM("Total Nilai (Rp)") as total_budget
-        FROM realisasi GROUP BY method_group
+        FROM realisasi WHERE "Tahun Anggaran" = {tahun} GROUP BY method_group
     """).fetchall()
     real_epurchasing = 0; real_pl = 0; real_dikecualikan = 0; real_seleksi = 0; real_lainnya = 0
     for row in real_grouped:
@@ -297,10 +297,10 @@ def index():
 
     # Methods & types for filter dropdowns
     methods = conn.execute(
-        "SELECT DISTINCT procurement_method FROM procurement WHERE procurement_method IS NOT NULL"
+        "SELECT DISTINCT procurement_method FROM procurement WHERE procurement_method IS NOT NULL AND \"Tahun Anggaran\" = ?", (tahun,)
     ).fetchall()
     types = conn.execute(
-        "SELECT DISTINCT procurement_type FROM procurement WHERE procurement_type IS NOT NULL"
+        "SELECT DISTINCT procurement_type FROM procurement WHERE procurement_type IS NOT NULL AND \"Tahun Anggaran\" = ?", (tahun,)
     ).fetchall()
     cara_list = conn.execute(
         '''SELECT DISTINCT "Cara Pengadaan" FROM procurement WHERE "Cara Pengadaan" IS NOT NULL AND "Cara Pengadaan" != '' '''
@@ -308,15 +308,16 @@ def index():
 
     # Suggestions
     suggestions = {
-        "package_names": conn.execute("SELECT DISTINCT package_name FROM procurement").fetchall(),
-        "satkers": conn.execute("SELECT DISTINCT satker FROM procurement").fetchall(),
-        "kode_rup": conn.execute("SELECT DISTINCT id FROM procurement ORDER BY id").fetchall()
+        "package_names": conn.execute("SELECT DISTINCT package_name FROM procurement WHERE \"Tahun Anggaran\" = ?", (tahun,)).fetchall(),
+        "satkers": conn.execute("SELECT DISTINCT satker FROM procurement WHERE \"Tahun Anggaran\" = ?", (tahun,)).fetchall(),
+        "kode_rup": conn.execute("SELECT DISTINCT id FROM procurement WHERE \"Tahun Anggaran\" = ? ORDER BY id", (tahun,)).fetchall()
     }
 
     # Anomalies
     pl_anomaly_count = conn.execute(f"""
         SELECT COUNT(*) FROM procurement
         WHERE procurement_method = 'Pengadaan Langsung'
+        AND "Tahun Anggaran" = {tahun}
         AND {BUDGET_SQL} > {get_threshold_case()}
     """).fetchone()[0] or 0
 
@@ -326,22 +327,23 @@ def index():
                {get_threshold_case()} as threshold
         FROM procurement
         WHERE procurement_method = 'Pengadaan Langsung'
+        AND "Tahun Anggaran" = {tahun}
         AND {BUDGET_SQL} > {get_threshold_case()}
         ORDER BY {BUDGET_SQL} DESC
     """).fetchall()
 
     pagu_anomaly_count = conn.execute(f"""
         SELECT COUNT(*) FROM procurement p
-        WHERE {BUDGET_SQL} > 0
-        AND (SELECT SUM(r2."Total Nilai (Rp)") FROM realisasi r2 WHERE r2."Kode RUP" = p.id) > {BUDGET_SQL}
+        WHERE p."Tahun Anggaran" = {tahun} AND {BUDGET_SQL} > 0
+        AND (SELECT SUM(r2."Total Nilai (Rp)") FROM realisasi r2 WHERE r2."Kode RUP" = CAST(p.id AS TEXT) AND r2."Tahun Anggaran" = {tahun}) > {BUDGET_SQL}
     """).fetchone()[0] or 0
 
     pagu_anomalies = conn.execute(f"""
         SELECT p.id, p.package_name, p.satker, p.budget, p.procurement_method, p.procurement_type, p.work_description,
-               (SELECT SUM(r2."Total Nilai (Rp)") FROM realisasi r2 WHERE r2."Kode RUP" = p.id) as realisasi_total
+               (SELECT SUM(r2."Total Nilai (Rp)") FROM realisasi r2 WHERE r2."Kode RUP" = CAST(p.id AS TEXT) AND r2."Tahun Anggaran" = {tahun}) as realisasi_total
         FROM procurement p
-        WHERE {BUDGET_SQL} > 0
-        AND (SELECT SUM(r2."Total Nilai (Rp)") FROM realisasi r2 WHERE r2."Kode RUP" = p.id) > {BUDGET_SQL}
+        WHERE p."Tahun Anggaran" = {tahun} AND {BUDGET_SQL} > 0
+        AND (SELECT SUM(r2."Total Nilai (Rp)") FROM realisasi r2 WHERE r2."Kode RUP" = CAST(p.id AS TEXT) AND r2."Tahun Anggaran" = {tahun}) > {BUDGET_SQL}
         ORDER BY realisasi_total DESC
     """).fetchall()
 
@@ -349,7 +351,8 @@ def index():
     splash1 = conn.execute(f"""
         SELECT COUNT(*) as cnt, COALESCE(SUM({BUDGET_SQL}), 0) as total
         FROM procurement p
-        WHERE (SELECT COUNT(*) FROM realisasi r WHERE r."Kode RUP" = p.id) = 0
+        WHERE p."Tahun Anggaran" = {tahun}
+        AND (SELECT COUNT(*) FROM realisasi r WHERE r."Kode RUP" = CAST(p.id AS TEXT) AND r."Tahun Anggaran" = {tahun}) = 0
     """).fetchone()
     splash_no_realisasi_cnt = splash1['cnt']
     splash_no_realisasi_total = splash1['total']
@@ -358,7 +361,8 @@ def index():
     splash2 = conn.execute(f"""
         SELECT COUNT(*) as cnt, COALESCE(SUM(r."Total Nilai (Rp)"), 0) as total
         FROM realisasi r
-        WHERE r."Kode RUP" NOT IN (SELECT id FROM procurement)
+        WHERE r."Tahun Anggaran" = {tahun}
+        AND r."Kode RUP" NOT IN (SELECT id FROM procurement WHERE "Tahun Anggaran" = {tahun})
     """).fetchone()
     splash_orphan_real_cnt = splash2['cnt']
     splash_orphan_real_total = splash2['total']
