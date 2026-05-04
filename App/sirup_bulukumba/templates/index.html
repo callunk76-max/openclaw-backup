@@ -1776,7 +1776,7 @@
             const tbody = document.getElementById('pagu-tbody');
             tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-slate-400 italic">Memuat data...</td></tr>';
 
-            fetch('/api/anomalies/pagu?mode=strict')
+            fetch('/api/anomalies/pagu?mode=strict&tahun=' + currentTahun)
                 .then(res => res.json())
                 .then(result => {
                     if (!result.success) {
@@ -1797,7 +1797,7 @@
         function loadOrphanData() {
             const tbody = document.getElementById('orphan-tbody');
             tbody.innerHTML = '<tr><td colspan="7" class="p-8 text-center text-slate-400 italic">Memuat data...</td></tr>';
-            fetch('/api/anomalies/orphan')
+            fetch('/api/anomalies/orphan?tahun=' + currentTahun)
                 .then(res => res.json())
                 .then(result => {
                     if (!result.success) {
