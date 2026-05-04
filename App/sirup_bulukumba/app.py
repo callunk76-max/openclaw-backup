@@ -1088,6 +1088,7 @@ def clear_verification():
 
 @app.route('/api/konsultan_check')
 def api_konsultan_check():
+    tahun = get_year()
     """
     Analisa Fee Konsultan: Cocokkan paket Jasa Konsultansi dengan Pekerjaan Konstruksi.
     Menggunakan multi-level matching dengan confidence score.
@@ -1172,20 +1173,20 @@ def api_konsultan_check():
     conn = get_db_connection()
     try:
         # Fetch all consultancy & construction packages
-        konsultansi = conn.execute("""
+        konsultansi = conn.execute(f"""
             SELECT id, package_name, satker, budget,
                    CAST(REPLACE(REPLACE(budget, 'Rp ', ''), ',', '') AS REAL) AS nilai,
                    procurement_method
             FROM procurement
-            WHERE procurement_type = 'Jasa Konsultansi'
+            WHERE procurement_type = 'Jasa Konsultansi' AND "Tahun Anggaran" = {tahun}
         """).fetchall()
 
-        konstruksi = conn.execute("""
+        konstruksi = conn.execute(f"""
             SELECT id, package_name, satker, budget,
                    CAST(REPLACE(REPLACE(budget, 'Rp ', ''), ',', '') AS REAL) AS nilai,
                    procurement_method
             FROM procurement
-            WHERE procurement_type = 'Pekerjaan Konstruksi'
+            WHERE procurement_type = 'Pekerjaan Konstruksi' AND "Tahun Anggaran" = {tahun}
         """).fetchall()
         conn.close()
 

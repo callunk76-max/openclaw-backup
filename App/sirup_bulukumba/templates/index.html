@@ -227,7 +227,7 @@
             </div>
             <div class="flex gap-2">
                 <button onclick="openAnomalyModal()"
-                   class="relative bg-red-500/20 backdrop-blur-sm text-red-200 px-4 py-2 rounded-xl font-bold text-xs hover:bg-red-500/30 transition flex items-center gap-1.5 border border-red-400/20 {% if pl_anomaly_count == 0 and pagu_anomaly_count == 0 and splash_orphan_real_cnt == 0 %}hidden{% endif %}">
+                   class="relative bg-red-500/20 backdrop-blur-sm text-red-200 px-4 py-2 rounded-xl font-bold text-xs hover:bg-red-500/30 transition flex items-center gap-1.5 border border-red-400/20">
                    <span>⚠️</span> Anomali
                    <span class="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] px-1.5 h-5 rounded-full flex items-center justify-center whitespace-nowrap font-bold shadow-md">{{ pl_anomaly_count }}+{{ pagu_anomaly_count }}+{{ splash_orphan_real_cnt }}</span>
                 </button>
