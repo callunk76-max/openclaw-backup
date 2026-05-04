@@ -207,7 +207,7 @@ def fetch_table_data(conn, search_query, m_filter, type_filter, cara_filter='', 
         SELECT
             CASE WHEN procurement_method IN ('E-Purchasing', 'Pengadaan Langsung', 'Dikecualikan', 'Seleksi')
                  THEN procurement_method ELSE 'Lainnya' END as method_group,
-            COUNT(*) as total, SUM({BUDGET_SQL}) as total_budget
+            COUNT(*) as total, COALESCE(SUM({BUDGET_SQL}), 0) as total_budget
         FROM procurement p
         WHERE {where_clause}
         GROUP BY method_group"""
@@ -251,15 +251,15 @@ def index():
 
     # Global stats (always the same, independent of filter)
     stats = conn.execute(
-        f"SELECT COUNT(*) as total, SUM({BUDGET_SQL}) as total_budget FROM procurement"
+        f"SELECT COUNT(*) as total, COALESCE(SUM({BUDGET_SQL}), 0) as total_budget FROM procurement WHERE \"Tahun Anggaran\" = {tahun}"
     ).fetchone()
 
     detail_grouped = conn.execute(f"""
         SELECT
             CASE WHEN procurement_method IN ('E-Purchasing', 'Pengadaan Langsung', 'Dikecualikan', 'Seleksi')
                  THEN procurement_method ELSE 'Lainnya' END as method_group,
-            COUNT(*) as total, SUM({BUDGET_SQL}) as total_budget
-        FROM procurement GROUP BY method_group
+            COUNT(*) as total, COALESCE(SUM({BUDGET_SQL}), 0) as total_budget
+        FROM procurement WHERE "Tahun Anggaran" = {tahun} GROUP BY method_group
     """).fetchall()
 
     total_epurchasing = 0; budget_epurchasing = 0
@@ -276,11 +276,11 @@ def index():
         else: total_lainnya = cnt; budget_lainnya = bgt
 
     # Realisasi global
-    real_total = conn.execute('SELECT SUM("Total Nilai (Rp)") FROM realisasi WHERE "Tahun Anggaran" = ?', (tahun,)).fetchone()[0] or 0
+    real_total = conn.execute('SELECT COALESCE(SUM("Total Nilai (Rp)"), 0) FROM realisasi WHERE "Tahun Anggaran" = ?', (tahun,)).fetchone()[0] or 0
     count_realized = conn.execute('SELECT COUNT(*) FROM realisasi WHERE "Tahun Anggaran" = ?', (tahun,)).fetchone()[0] or 0
 
     real_grouped = conn.execute(f"""
-        SELECT CASE WHEN "Metode Pengadaan" IN ('E-Purchasing', 'Pengadaan Langsung', 'Dikecualikan', 'Seleksi') THEN "Metode Pengadaan" ELSE 'Lainnya' END as method_group, SUM("Total Nilai (Rp)") as total_budget
+        SELECT CASE WHEN "Metode Pengadaan" IN ('E-Purchasing', 'Pengadaan Langsung', 'Dikecualikan', 'Seleksi') THEN "Metode Pengadaan" ELSE 'Lainnya' END as method_group, COALESCE(SUM("Total Nilai (Rp)"), 0) as total_budget
         FROM realisasi WHERE "Tahun Anggaran" = {tahun} GROUP BY method_group
     """).fetchall()
     real_epurchasing = 0; real_pl = 0; real_dikecualikan = 0; real_seleksi = 0; real_lainnya = 0
@@ -303,7 +303,7 @@ def index():
         "SELECT DISTINCT procurement_type FROM procurement WHERE procurement_type IS NOT NULL AND \"Tahun Anggaran\" = ?", (tahun,)
     ).fetchall()
     cara_list = conn.execute(
-        '''SELECT DISTINCT "Cara Pengadaan" FROM procurement WHERE "Cara Pengadaan" IS NOT NULL AND "Cara Pengadaan" != '' '''
+        '''SELECT DISTINCT "Cara Pengadaan" FROM procurement WHERE "Cara Pengadaan" IS NOT NULL AND "Cara Pengadaan" != '' AND "Tahun Anggaran" = ?''', (tahun,)
     ).fetchall()
 
     # Suggestions
@@ -639,25 +639,25 @@ def package_details():
 
 
 @cached('global_stats')
-def _get_global_stats():
+def _get_global_stats(tahun=2026):
     conn = get_db_connection()
     stats = conn.execute(
-        f"SELECT COUNT(*) as total, SUM({BUDGET_SQL}) as total_budget FROM procurement"
+        f"SELECT COUNT(*) as total, COALESCE(SUM({BUDGET_SQL}), 0) as total_budget FROM procurement WHERE \"Tahun Anggaran\" = {tahun}"
     ).fetchone()
 
     detail_grouped = conn.execute(f"""
         SELECT
             CASE WHEN procurement_method IN ('E-Purchasing', 'Pengadaan Langsung', 'Dikecualikan', 'Seleksi')
                  THEN procurement_method ELSE 'Lainnya' END as method_group,
-            COUNT(*) as total, SUM({BUDGET_SQL}) as total_budget
-        FROM procurement GROUP BY method_group
+            COUNT(*) as total, COALESCE(SUM({BUDGET_SQL}), 0) as total_budget
+        FROM procurement WHERE "Tahun Anggaran" = {tahun} GROUP BY method_group
     """).fetchall()
 
     real_total = conn.execute(
-        'SELECT SUM("Total Nilai (Rp)") as total FROM realisasi'
+        f'SELECT SUM("Total Nilai (Rp)") as total FROM realisasi WHERE "Tahun Anggaran" = {tahun}'
     ).fetchone()['total'] or 0
     count_realized = conn.execute(
-        'SELECT COUNT(DISTINCT "Kode RUP") as cnt FROM realisasi'
+        f'SELECT COUNT(DISTINCT "Kode RUP") as cnt FROM realisasi WHERE "Tahun Anggaran" = {tahun}'
     ).fetchone()['cnt'] or 0
 
     def _find(dg, name):
@@ -682,7 +682,8 @@ def _get_global_stats():
 
 @app.route('/api/stats')
 def api_stats():
-    return jsonify(_get_global_stats())
+    tahun = get_year()
+    return jsonify(_get_global_stats(tahun))
 
 
 @app.route('/api/anomalies/pagu')

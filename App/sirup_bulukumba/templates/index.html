@@ -1561,7 +1561,7 @@
             const tbody = document.getElementById('fee-tbody');
             tbody.innerHTML = '<tr><td colspan="8" class="p-8 text-center text-slate-400 italic">Memuat data...</td></tr>';
             try {
-                const res = await fetch('/api/konsultan_check');
+                const res = await fetch('/api/konsultan_check?tahun=' + currentTahun);
                 const data = await res.json();
                 if (!data.success) throw new Error(data.message);
                 _feeData = data.grouped;
