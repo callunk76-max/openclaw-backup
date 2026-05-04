@@ -208,14 +208,6 @@
                 <p class="text-[10px] text-indigo-300/60 font-medium mt-0.5">Terakhir update: {{ last_update }}</p>
             </div>
             <div class="flex gap-2">
-                <a href="/export?format=pdf&search={{ search_query }}&method={{ m_filter }}&type={{ type_filter }}&cara={{ cara_filter }}"
-                   class="bg-white/10 backdrop-blur-sm text-white px-4 py-2 rounded-xl font-bold text-xs hover:bg-white/20 transition flex items-center gap-1.5 border border-white/10">
-                   <span>📄</span> PDF
-                </a>
-                <a href="/export?format=xlsx&search={{ search_query }}&method={{ m_filter }}&type={{ type_filter }}&cara={{ cara_filter }}"
-                   class="bg-white/10 backdrop-blur-sm text-white px-4 py-2 rounded-xl font-bold text-xs hover:bg-white/20 transition flex items-center gap-1.5 border border-white/10">
-                   <span>📊</span> Excel
-                </a>
                 <button onclick="openAnomalyModal()"
                    class="relative bg-red-500/20 backdrop-blur-sm text-red-200 px-4 py-2 rounded-xl font-bold text-xs hover:bg-red-500/30 transition flex items-center gap-1.5 border border-red-400/20 {% if pl_anomaly_count == 0 and pagu_anomaly_count == 0 and splash_orphan_real_cnt == 0 %}hidden{% endif %}">
                    <span>⚠️</span> Anomali
@@ -705,7 +697,8 @@
                         <h2 class="font-bold text-slate-800 text-base tracking-tight">Hasil Pencarian</h2>
                         <p class="text-xs text-slate-400 font-medium" id="showing-info">Menampilkan <b class="text-indigo-600">{{ (packages|length) }}</b> dari <b class="text-indigo-600">{{ "{:,}".format(filtered_count) }}</b> data</p>
                     </div>
-                    <div class="relative max-w-sm">
+                    <div class="flex items-end gap-3">
+                    <div class="relative max-w-sm flex-1">
                         <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1 ml-1">Quick Search</label>
                         <div class="search-wrapper">
                             <span class="absolute left-3 top-2.5 text-slate-400 text-sm pointer-events-none z-10">🔍</span>
@@ -716,6 +709,24 @@
                             <span id="table-clear-btn" class="search-clear" onclick="document.getElementById('table-filter').value='';this.style.display='none';document.getElementById('table-filter').focus();quickSearchTerm='';methodVal=document.getElementById('method-filter')?.value||'';typeVal=document.getElementById('type-filter')?.value||'';caraVal=document.getElementById('cara-filter')?.value||'';fetchTable(1, currentSort, currentSortDir);"
                                   style="display:none">&times;</span>
                         </div>
+                    </div>
+                    <!-- Export Dropdown -->
+                    <div class="relative" id="export-dropdown">
+                        <button onclick="toggleExportMenu()" class="flex items-center gap-2 px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 hover:border-indigo-300 hover:text-indigo-600 transition shadow-sm">
+                            <span>📥</span> Export
+                            <svg class="w-3 h-3 ml-1 transition-transform" id="export-arrow" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <div id="export-menu" class="hidden absolute right-0 mt-1 w-40 bg-white border border-slate-200 rounded-xl shadow-xl z-20 overflow-hidden">
+                            <a href="/export?format=pdf&search={{ search_query }}&method={{ m_filter }}&type={{ type_filter }}&cara={{ cara_filter }}"
+                               class="flex items-center gap-3 px-4 py-3 text-xs font-semibold text-slate-600 hover:bg-indigo-50 hover:text-indigo-700 transition border-b border-slate-100">
+                               <span>📄</span> PDF
+                            </a>
+                            <a href="/export?format=xlsx&search={{ search_query }}&method={{ m_filter }}&type={{ type_filter }}&cara={{ cara_filter }}"
+                               class="flex items-center gap-3 px-4 py-3 text-xs font-semibold text-slate-600 hover:bg-indigo-50 hover:text-indigo-700 transition">
+                               <span>📊</span> Excel
+                            </a>
+                        </div>
+                    </div>
                     </div>
                 </div>
                 <div id="pagination-container-top" class="px-6 py-3 border-b border-slate-100 bg-slate-50/30 flex flex-col items-center gap-2"></div>
@@ -1046,7 +1057,21 @@
         }
 
         // ===== SORT =====
+        // ===== EXPORT DROPDOWN =====
+        function toggleExportMenu() {
+            const menu = document.getElementById('export-menu');
+            const arrow = document.getElementById('export-arrow');
+            const isHidden = menu.classList.contains('hidden');
+            menu.classList.toggle('hidden', !isHidden);
+            arrow.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
         document.addEventListener('click', (e) => {
+            const dd = document.getElementById('export-dropdown');
+            if (dd && !dd.contains(e.target)) {
+                document.getElementById('export-menu')?.classList.add('hidden');
+                const arrow = document.getElementById('export-arrow');
+                if (arrow) arrow.style.transform = 'rotate(0deg)';
+            }
             const header = e.target.closest('.sort-header');
             if (!header) return;
 
