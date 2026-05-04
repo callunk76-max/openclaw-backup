@@ -332,32 +332,40 @@ def index():
         ORDER BY {BUDGET_SQL} DESC
     """).fetchall()
 
+    # Pagu + Splash: optimized with LEFT JOIN (CTE subquery runs once, not per row)
+    real_agg = conn.execute(f"""
+        CREATE TEMP VIEW IF NOT EXISTS _real_agg AS
+        SELECT "Kode RUP" as kr, SUM("Total Nilai (Rp)") as total_real
+        FROM realisasi WHERE "Tahun Anggaran" = {tahun} GROUP BY "Kode RUP"
+    """)
+
     pagu_anomaly_count = conn.execute(f"""
         SELECT COUNT(*) FROM procurement p
+        LEFT JOIN _real_agg r ON r.kr = CAST(p.id AS TEXT)
         WHERE p."Tahun Anggaran" = {tahun} AND {BUDGET_SQL} > 0
-        AND (SELECT SUM(r2."Total Nilai (Rp)") FROM realisasi r2 WHERE r2."Kode RUP" = CAST(p.id AS TEXT) AND r2."Tahun Anggaran" = {tahun}) > {BUDGET_SQL}
+        AND COALESCE(r.total_real, 0) > {BUDGET_SQL}
     """).fetchone()[0] or 0
 
     pagu_anomalies = conn.execute(f"""
         SELECT p.id, p.package_name, p.satker, p.budget, p.procurement_method, p.procurement_type, p.work_description,
-               (SELECT SUM(r2."Total Nilai (Rp)") FROM realisasi r2 WHERE r2."Kode RUP" = CAST(p.id AS TEXT) AND r2."Tahun Anggaran" = {tahun}) as realisasi_total
+               COALESCE(r.total_real, 0) as realisasi_total
         FROM procurement p
+        LEFT JOIN _real_agg r ON r.kr = CAST(p.id AS TEXT)
         WHERE p."Tahun Anggaran" = {tahun} AND {BUDGET_SQL} > 0
-        AND (SELECT SUM(r2."Total Nilai (Rp)") FROM realisasi r2 WHERE r2."Kode RUP" = CAST(p.id AS TEXT) AND r2."Tahun Anggaran" = {tahun}) > {BUDGET_SQL}
+        AND COALESCE(r.total_real, 0) > {BUDGET_SQL}
         ORDER BY realisasi_total DESC
     """).fetchall()
 
-    # Splash info: RUP tanpa realisasi
     splash1 = conn.execute(f"""
         SELECT COUNT(*) as cnt, COALESCE(SUM({BUDGET_SQL}), 0) as total
         FROM procurement p
+        LEFT JOIN _real_agg r ON r.kr = CAST(p.id AS TEXT)
         WHERE p."Tahun Anggaran" = {tahun}
-        AND (SELECT COUNT(*) FROM realisasi r WHERE r."Kode RUP" = CAST(p.id AS TEXT) AND r."Tahun Anggaran" = {tahun}) = 0
+        AND r.kr IS NULL
     """).fetchone()
     splash_no_realisasi_cnt = splash1['cnt']
     splash_no_realisasi_total = splash1['total']
 
-    # Splash info: realisasi tanpa RUP awal
     splash2 = conn.execute(f"""
         SELECT COUNT(*) as cnt, COALESCE(SUM(r."Total Nilai (Rp)"), 0) as total
         FROM realisasi r
@@ -366,6 +374,8 @@ def index():
     """).fetchone()
     splash_orphan_real_cnt = splash2['cnt']
     splash_orphan_real_total = splash2['total']
+
+    conn.execute('DROP VIEW IF EXISTS _real_agg')
 
     conn.close()
 
