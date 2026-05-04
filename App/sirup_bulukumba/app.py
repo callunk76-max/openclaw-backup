@@ -536,78 +536,79 @@ def admin_upload():
     if password != 'Callunk13':
         return jsonify({'success': False, 'message': 'Password salah!'}), 403
 
-    rup_file = request.files.get('rup_file')
-    realisasi_file = request.files.get('realisasi_file')
+    rup_files = request.files.getlist('rup_file')
+    realisasi_files = request.files.getlist('realisasi_file')
 
-    if (not rup_file or rup_file.filename == '') and (not realisasi_file or realisasi_file.filename == ''):
+    if len(rup_files) == 0 and len(realisasi_files) == 0:
         return jsonify({'success': False, 'message': 'Minimal satu file harus diupload!'}), 400
+    if all(f.filename == '' for f in rup_files + realisasi_files):
+        return jsonify({'success': False, 'message': 'Minimal satu file harus diupload!'}), 400
+
+    def _detect_year(df, default=2026):
+        if 'Tahun Anggaran' in df.columns:
+            s = df['Tahun Anggaran'].dropna()
+            if not s.empty:
+                return int(s.mode().iloc[0])
+        if 'Tahun' in df.columns:
+            s = df['Tahun'].dropna()
+            if not s.empty:
+                return int(s.mode().iloc[0])
+        return default
+
+    def _process_rup(df, conn):
+        tahun = _detect_year(df)
+        conn.execute('DELETE FROM procurement WHERE "Tahun Anggaran" = ?', (tahun,))
+        col_map = {
+            'Kode RUP': 'id', 'Nama Satuan Kerja': 'satker', 'Nama Paket': 'package_name',
+            'Metode Pengadaan': 'procurement_method', 'Jenis Pengadaan': 'procurement_type',
+            'Total Nilai (Rp)': 'budget', 'Sumber Dana': 'funding_source', 'Produk Dalam Negeri': 'is_umkm'
+        }
+        if 'Kode RUP' in df.columns:
+            before = len(df)
+            df = df.drop_duplicates(subset=['Kode RUP'])
+            after = len(df)
+            if before > after:
+                print(f'[DEDUP] Removed {before - after} duplicate Kode RUP rows')
+        rename_dict = {k: v for k, v in col_map.items() if k in df.columns}
+        df = df.rename(columns=rename_dict)
+        if 'work_description' not in df.columns:
+            df['work_description'] = ''
+        if 'risk_score' not in df.columns:
+            df['risk_score'] = 0
+        if 'budget' in df.columns and pd.api.types.is_numeric_dtype(df['budget']):
+            df['budget'] = df['budget'].apply(lambda x: f"Rp {x:,.0f}" if pd.notnull(x) else "Rp 0")
+        df.to_sql('procurement', conn, if_exists='append', index=False)
+        conn.execute('DELETE FROM procurement WHERE rowid NOT IN (SELECT MIN(rowid) FROM procurement GROUP BY id, "Tahun Anggaran")')
+        print(f'[UPLOAD] Inserted {len(df)} procurement records for {tahun}')
+        return tahun
+
+    def _process_realisasi(df, conn):
+        tahun = _detect_year(df)
+        conn.execute('DELETE FROM realisasi WHERE "Tahun Anggaran" = ?', (tahun,))
+        df.to_sql('realisasi', conn, if_exists='append', index=False)
+        print(f'[UPLOAD] Inserted {len(df)} realisasi records for {tahun}')
+        return tahun
 
     try:
         conn = sqlite3.connect(DB_PATH)
+        years_processed = []
 
-        if rup_file and rup_file.filename != '':
-            df_rup = pd.read_csv(rup_file, low_memory=False)
+        for f in rup_files:
+            if f and f.filename:
+                df = pd.read_csv(f, low_memory=False)
+                y = _process_rup(df, conn)
+                years_processed.append(f'RUP {y}')
 
-            # Detect year from CSV
-            tahun_rup = 2026
-            if 'Tahun Anggaran' in df_rup.columns:
-                tahun_rup = int(df_rup['Tahun Anggaran'].mode().iloc[0]) if not df_rup['Tahun Anggaran'].mode().empty else 2026
-            elif 'Tahun' in df_rup.columns:
-                tahun_rup = int(df_rup['Tahun'].mode().iloc[0]) if not df_rup['Tahun'].mode().empty else 2026
-
-            # Delete existing records for this year before inserting
-            conn.execute('DELETE FROM procurement WHERE "Tahun Anggaran" = ?', (tahun_rup,))
-            print(f'[UPLOAD] Deleted existing procurement for {tahun_rup}')
-
-            col_map = {
-                'Kode RUP': 'id',
-                'Nama Satuan Kerja': 'satker',
-                'Nama Paket': 'package_name',
-                'Metode Pengadaan': 'procurement_method',
-                'Jenis Pengadaan': 'procurement_type',
-                'Total Nilai (Rp)': 'budget',
-                'Sumber Dana': 'funding_source',
-                'Produk Dalam Negeri': 'is_umkm'
-            }
-            # Deduplicate by Kode RUP before rename
-            if 'Kode RUP' in df_rup.columns:
-                before = len(df_rup)
-                df_rup = df_rup.drop_duplicates(subset=['Kode RUP'])
-                after = len(df_rup)
-                if before > after:
-                    print(f'[DEDUP] Removed {before - after} duplicate Kode RUP rows')
-            rename_dict = {k: v for k, v in col_map.items() if k in df_rup.columns}
-            df_rup = df_rup.rename(columns=rename_dict)
-            if 'work_description' not in df_rup.columns:
-                df_rup['work_description'] = ''
-            if 'risk_score' not in df_rup.columns:
-                df_rup['risk_score'] = 0
-            if 'budget' in df_rup.columns and pd.api.types.is_numeric_dtype(df_rup['budget']):
-                df_rup['budget'] = df_rup['budget'].apply(lambda x: f"Rp {x:,.0f}" if pd.notnull(x) else "Rp 0")
-            df_rup.to_sql('procurement', conn, if_exists='append', index=False)
-            conn.execute('DELETE FROM procurement WHERE rowid NOT IN (SELECT MIN(rowid) FROM procurement GROUP BY id, "Tahun Anggaran")')
-            print(f'[UPLOAD] Inserted {len(df_rup)} procurement records for {tahun_rup}')
-
-        if realisasi_file and realisasi_file.filename != '':
-            df_realisasi = pd.read_csv(realisasi_file, low_memory=False)
-
-            # Detect year from realisasi CSV
-            tahun_real = 2026
-            if 'Tahun Anggaran' in df_realisasi.columns:
-                tahun_real = int(df_realisasi['Tahun Anggaran'].mode().iloc[0]) if not df_realisasi['Tahun Anggaran'].mode().empty else 2026
-            elif 'Tahun' in df_realisasi.columns:
-                tahun_real = int(df_realisasi['Tahun'].mode().iloc[0]) if not df_realisasi['Tahun'].mode().empty else 2026
-
-            # Delete existing realisasi for this year before inserting
-            conn.execute('DELETE FROM realisasi WHERE "Tahun Anggaran" = ?', (tahun_real,))
-            print(f'[UPLOAD] Deleted existing realisasi for {tahun_real}')
-
-            df_realisasi.to_sql('realisasi', conn, if_exists='append', index=False)
-            print(f'[UPLOAD] Inserted {len(df_realisasi)} realisasi records for {tahun_real}')
+        for f in realisasi_files:
+            if f and f.filename:
+                df = pd.read_csv(f, low_memory=False)
+                y = _process_realisasi(df, conn)
+                years_processed.append(f'Realisasi {y}')
 
         conn.commit()
         conn.close()
-        return jsonify({'success': True, 'message': 'Database berhasil diupdate!'})
+        msg = f'Database berhasil diupdate! ({len(years_processed)} file: {", ".join(years_processed)})'
+        return jsonify({'success': True, 'message': msg})
     except Exception as e:
         conn.close()
         return jsonify({'success': False, 'message': str(e)}), 500
