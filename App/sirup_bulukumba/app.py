@@ -145,13 +145,14 @@ def fetch_table_data(conn, search_query, m_filter, type_filter, cara_filter='', 
         count_q += f" WHERE {where_clause}"
     filtered_count = conn.execute(count_q, params).fetchone()['cnt'] or 0
 
-    # --- DATA ---
+    # --- DATA (optimized: LEFT JOIN instead of correlated subquery) ---
     data_q = """SELECT p.*,
-        COALESCE((
-            SELECT SUM(r2."Total Nilai (Rp)") FROM realisasi r2
-            WHERE r2."Kode RUP" = p.id
-        ), 0) as realisasi_total
-    FROM procurement p"""
+        COALESCE(rt.total_real, 0) as realisasi_total
+    FROM procurement p
+    LEFT JOIN (
+        SELECT "Kode RUP" as kode_rup, SUM("Total Nilai (Rp)") as total_real
+        FROM realisasi GROUP BY "Kode RUP"
+    ) rt ON rt.kode_rup = CAST(p.id AS TEXT)"""
     if where_clause:
         data_q += f" WHERE {where_clause}"
     data_q += f" ORDER BY {sort_col} {sort_dir_sql} LIMIT {PER_PAGE} OFFSET {offset}"
@@ -638,58 +639,35 @@ def api_stats():
 
 @app.route('/api/anomalies/pagu')
 def api_anomalies_pagu():
-    """Return pagu anomalies filtered by mode: default|strict|threshold|both"""
-    mode = request.args.get('mode', 'default')
+    """Return pagu anomalies. Optimized with LEFT JOIN."""
     conn = get_db_connection()
-
-    # Base: match realisasi_sum for each procurement
-    strict_real = f'(SELECT SUM(r."Total Nilai (Rp)") FROM realisasi r WHERE r."Kode RUP" = p.id)'
-    fallback_real = f'(SELECT SUM(r2."Total Nilai (Rp)") FROM realisasi r2 WHERE r2."Nama Paket" = p.package_name AND r2."Nama Satuan Kerja" = p.satker)'
-
-    if mode == 'strict':
-        real_sum = strict_real
-        match_label = 'Kode RUP'
-    elif mode == 'both':
-        real_sum = strict_real
-        match_label = 'Kode RUP'
-    else:
-        real_sum = f'COALESCE({strict_real}, {fallback_real}, 0)'
-        match_label = 'Kode RUP + Nama Paket'
-
-    # Build WHERE
-    where_over = f'{real_sum} > {BUDGET_SQL}'
-    params = []
-
-    if mode in ('threshold', 'both'):
-        where_over = f'''(
-            {real_sum} - {BUDGET_SQL} > CAST({BUDGET_SQL} * 0.1 AS REAL)
-            AND
-            {real_sum} - {BUDGET_SQL} > 1000000
-        )'''
-
-    count_q = f'''SELECT COUNT(*) FROM procurement p
-        WHERE {BUDGET_SQL} > 0 AND {where_over}'''
-    count = conn.execute(count_q, params).fetchone()[0] or 0
-
-    data_q = f'''SELECT p.id, p.package_name, p.satker, p.budget,
+    B = """CAST(REPLACE(REPLACE(p.budget, 'Rp ', ''), ',', '') AS REAL)"""
+    count_q = f"""SELECT COUNT(*) FROM procurement p
+        LEFT JOIN (
+            SELECT "Kode RUP" as kr, SUM("Total Nilai (Rp)") as total_real
+            FROM realisasi GROUP BY "Kode RUP"
+        ) r ON r.kr = CAST(p.id AS TEXT)
+        WHERE {B} > 0
+        AND COALESCE(r.total_real, 0) > {B}"""
+    count = conn.execute(count_q).fetchone()[0] or 0
+    data_q = f"""SELECT p.id, p.package_name, p.satker, p.budget,
             p.procurement_method, p.procurement_type, p.work_description,
             p."Cara Pengadaan",
-            {real_sum} as realisasi_total
+            COALESCE(r.total_real, 0) as realisasi_total
         FROM procurement p
-        WHERE {BUDGET_SQL} > 0 AND {where_over}
-        ORDER BY realisasi_total DESC'''
-
-    rows = [dict(r) for r in conn.execute(data_q, params).fetchall()]
+        LEFT JOIN (
+            SELECT "Kode RUP" as kr, SUM("Total Nilai (Rp)") as total_real
+            FROM realisasi GROUP BY "Kode RUP"
+        ) r ON r.kr = CAST(p.id AS TEXT)
+        WHERE {B} > 0
+        AND COALESCE(r.total_real, 0) > {B}
+        ORDER BY realisasi_total DESC"""
+    rows = [dict(r) for r in conn.execute(data_q).fetchall()]
     conn.close()
-
     return jsonify({
-        'success': True,
-        'count': count,
-        'data': rows,
-        'mode': mode,
-        'match_label': match_label
+        'success': True, 'count': count, 'data': rows,
+        'mode': 'strict', 'match_label': 'Kode RUP'
     })
-
 
 @app.route('/api/anomalies/orphan')
 def api_anomalies_orphan():
