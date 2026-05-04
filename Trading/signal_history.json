@@ -1,21 +1,41 @@
 {
     "history": {
         "GBP/USD": {
-            "consecutive": 8,
+            "consecutive": 27,
             "stars": 0,
-            "crown_date": "2026-05-01"
-        },
-        "AUD/USD": {
-            "consecutive": 1,
-            "stars": 0,
-            "crown_date": "2026-05-01"
-        },
-        "USD/CHF": {
-            "consecutive": 7,
-            "stars": 0,
-            "crown_date": "2026-05-01"
+            "crown_date": "2026-05-04"
         },
         "USD/JPY": {
+            "consecutive": 1,
+            "stars": 1,
+            "crown_date": "2026-05-04"
+        },
+        "USD/CHF": {
+            "consecutive": 9,
+            "stars": 2,
+            "crown_date": "2026-05-04"
+        },
+        "GBP/NZD": {
+            "consecutive": 2,
+            "stars": 2,
+            "crown_date": "2026-05-04"
+        },
+        "NZD/JPY": {
+            "consecutive": 2,
+            "stars": 3,
+            "crown_date": "2026-05-04"
+        },
+        "EUR/NZD": {
+            "consecutive": 7,
+            "stars": 1,
+            "crown_date": "2026-05-04"
+        },
+        "GBP/AUD": {
+            "consecutive": 1,
+            "stars": 0,
+            "crown_date": "2026-05-04"
+        },
+        "AUD/USD": {
             "consecutive": 1,
             "stars": 0,
             "crown_date": "2026-05-01"
@@ -40,11 +60,6 @@
             "stars": 3,
             "crown_date": "2026-04-30"
         },
-        "NZD/JPY": {
-            "consecutive": 1,
-            "stars": 1,
-            "crown_date": "2026-04-30"
-        },
         "CAD/JPY": {
             "consecutive": 10,
             "stars": 0,
@@ -55,16 +70,6 @@
             "stars": 0,
             "crown_date": "2026-04-30"
         },
-        "EUR/NZD": {
-            "consecutive": 52,
-            "stars": 0,
-            "crown_date": "2026-04-29"
-        },
-        "GBP/NZD": {
-            "consecutive": 51,
-            "stars": 0,
-            "crown_date": "2026-04-29"
-        },
         "GBP/CAD": {
             "consecutive": 1,
             "stars": 0,
@@ -72,7 +77,6 @@
         }
     },
     "last_pairs": [
-        "GBP/USD",
-        "AUD/USD"
+        "GBP/USD"
     ]
 }

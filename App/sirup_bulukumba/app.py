@@ -70,6 +70,29 @@ def parse_budget(budget_str):
         return 0
     return float(budget_str.replace('Rp ', '').replace(',', ''))
 
+
+def read_config(key=''):
+    """Read password from cuy.config file"""
+    config_path = '/root/.openclaw/workspace/App/cuy.config'
+    try:
+        with open(config_path, 'r') as f:
+            for line in f:
+                line = line.strip()
+                if key == 'tahun' and 'tahun 2025' in line:
+                    return line.split(':')[1].strip()
+                if key == 'upload' and 'upload file' in line:
+                    return line.split(':')[1].strip()
+    except:
+        pass
+    return ''
+
+
+def get_year():
+    try:
+        return int(request.args.get('tahun', '2026'))
+    except:
+        return 2026
+
 class FilterQuery:
     """Build and manage filter SQL queries"""
     def __init__(self, search_query='', m_filter='', type_filter='', cara_filter='', quick_search=''):
@@ -124,7 +147,7 @@ def get_threshold_case():
             "ELSE 200000000 END")
 
 
-def fetch_table_data(conn, search_query, m_filter, type_filter, cara_filter='', sort_by='id', sort_dir='DESC', page=1, quick_search=''):
+def fetch_table_data(conn, search_query, m_filter, type_filter, cara_filter='', sort_by='id', sort_dir='DESC', page=1, quick_search='', tahun=2026):
     """Fetch paginated table data + stats. Returns dict with all needed data."""
     fq = FilterQuery(search_query, m_filter, type_filter, cara_filter, quick_search)
     offset = (page - 1) * PER_PAGE
@@ -138,23 +161,32 @@ def fetch_table_data(conn, search_query, m_filter, type_filter, cara_filter='', 
     sort_col = allowed_sorts.get(sort_by, 'p.id')
     sort_dir_sql = 'ASC' if sort_dir.upper() == 'ASC' else 'DESC'
 
-    # --- COUNT ---
-    count_q = "SELECT COUNT(*) as cnt FROM procurement p"
+
+    # Build WHERE with tahun filter
     where_clause, params = fq.where_clause()
+    tw = '= ?'
+    yp = [tahun]
     if where_clause:
-        count_q += f" WHERE {where_clause}"
+        where_clause += f' AND p."Tahun Anggaran" {tw}'
+        params += yp
+    else:
+        where_clause = f'p."Tahun Anggaran" {tw}'
+        params = yp
+
+    # --- COUNT ---
+    count_q = f"SELECT COUNT(*) as cnt FROM procurement p WHERE {where_clause}"
     filtered_count = conn.execute(count_q, params).fetchone()['cnt'] or 0
 
-    # --- DATA ---
-    data_q = """SELECT p.*,
-        COALESCE((
-            SELECT SUM(r2."Total Nilai (Rp)") FROM realisasi r2
-            WHERE r2."Kode RUP" = p.id
-        ), 0) as realisasi_total
-    FROM procurement p"""
-    if where_clause:
-        data_q += f" WHERE {where_clause}"
-    data_q += f" ORDER BY {sort_col} {sort_dir_sql} LIMIT {PER_PAGE} OFFSET {offset}"
+    # --- DATA (optimized: LEFT JOIN instead of correlated subquery) ---
+    data_q = f"""SELECT p.*,
+        COALESCE(rt.total_real, 0) as realisasi_total
+    FROM procurement p
+    LEFT JOIN (
+        SELECT "Kode RUP" as kr, SUM("Total Nilai (Rp)") as total_real
+        FROM realisasi WHERE "Tahun Anggaran" = {tahun} GROUP BY "Kode RUP"
+    ) rt ON rt.kr = CAST(p.id AS TEXT)
+    WHERE {where_clause}
+    ORDER BY {sort_col} {sort_dir_sql} LIMIT {PER_PAGE} OFFSET {offset}"""
 
     rows = conn.execute(data_q, params).fetchall()
 
@@ -183,9 +215,7 @@ def fetch_table_data(conn, search_query, m_filter, type_filter, cara_filter='', 
     total_pages = max(1, (filtered_count + PER_PAGE - 1) // PER_PAGE)
 
     # --- FILTERED BUDGET ---
-    fb_q = f"SELECT SUM({BUDGET_SQL}) FROM procurement p"
-    if where_clause:
-        fb_q += f" WHERE {where_clause}"
+    fb_q = f"SELECT SUM({BUDGET_SQL}) FROM procurement p WHERE {where_clause}"
     filtered_total_budget = conn.execute(fb_q, params).fetchone()[0] or 0
 
     # --- FILTERED BREAKDOWN ---
@@ -193,12 +223,10 @@ def fetch_table_data(conn, search_query, m_filter, type_filter, cara_filter='', 
         SELECT
             CASE WHEN procurement_method IN ('E-Purchasing', 'Pengadaan Langsung', 'Dikecualikan', 'Seleksi')
                  THEN procurement_method ELSE 'Lainnya' END as method_group,
-            COUNT(*) as total, SUM({BUDGET_SQL}) as total_budget
+            COUNT(*) as total, COALESCE(SUM({BUDGET_SQL}), 0) as total_budget
         FROM procurement p
-    """
-    if where_clause:
-        f_detail_q += f" WHERE {where_clause}"
-    f_detail_q += " GROUP BY method_group"
+        WHERE {where_clause}
+        GROUP BY method_group"""
 
     f_detail = conn.execute(f_detail_q, params).fetchall()
     fd = {'ep': 0, 'bd_ep': 0, 'pl': 0, 'bd_pl': 0, 'dk': 0, 'bd_dk': 0, 'sl': 0, 'bd_sl': 0, 'ln': 0, 'bd_ln': 0}
@@ -223,6 +251,7 @@ def fetch_table_data(conn, search_query, m_filter, type_filter, cara_filter='', 
 
 @app.route('/')
 def index():
+    tahun = get_year()
     total_visits = increment_visitor()
     last_update = get_last_update()
 
@@ -238,15 +267,15 @@ def index():
 
     # Global stats (always the same, independent of filter)
     stats = conn.execute(
-        f"SELECT COUNT(*) as total, SUM({BUDGET_SQL}) as total_budget FROM procurement"
+        f"SELECT COUNT(*) as total, COALESCE(SUM({BUDGET_SQL}), 0) as total_budget FROM procurement WHERE \"Tahun Anggaran\" = {tahun}"
     ).fetchone()
 
     detail_grouped = conn.execute(f"""
         SELECT
             CASE WHEN procurement_method IN ('E-Purchasing', 'Pengadaan Langsung', 'Dikecualikan', 'Seleksi')
                  THEN procurement_method ELSE 'Lainnya' END as method_group,
-            COUNT(*) as total, SUM({BUDGET_SQL}) as total_budget
-        FROM procurement GROUP BY method_group
+            COUNT(*) as total, COALESCE(SUM({BUDGET_SQL}), 0) as total_budget
+        FROM procurement WHERE "Tahun Anggaran" = {tahun} GROUP BY method_group
     """).fetchall()
 
     total_epurchasing = 0; budget_epurchasing = 0
@@ -263,12 +292,12 @@ def index():
         else: total_lainnya = cnt; budget_lainnya = bgt
 
     # Realisasi global
-    real_total = conn.execute('SELECT SUM("Total Nilai (Rp)") FROM realisasi').fetchone()[0] or 0
-    count_realized = conn.execute('SELECT COUNT(*) FROM realisasi').fetchone()[0] or 0
+    real_total = conn.execute('SELECT COALESCE(SUM("Total Nilai (Rp)"), 0) FROM realisasi WHERE "Tahun Anggaran" = ?', (tahun,)).fetchone()[0] or 0
+    count_realized = conn.execute('SELECT COUNT(*) FROM realisasi WHERE "Tahun Anggaran" = ?', (tahun,)).fetchone()[0] or 0
 
-    real_grouped = conn.execute("""
-        SELECT CASE WHEN "Metode Pengadaan" IN ('E-Purchasing', 'Pengadaan Langsung', 'Dikecualikan', 'Seleksi') THEN "Metode Pengadaan" ELSE 'Lainnya' END as method_group, SUM("Total Nilai (Rp)") as total_budget
-        FROM realisasi GROUP BY method_group
+    real_grouped = conn.execute(f"""
+        SELECT CASE WHEN "Metode Pengadaan" IN ('E-Purchasing', 'Pengadaan Langsung', 'Dikecualikan', 'Seleksi') THEN "Metode Pengadaan" ELSE 'Lainnya' END as method_group, COALESCE(SUM("Total Nilai (Rp)"), 0) as total_budget
+        FROM realisasi WHERE "Tahun Anggaran" = {tahun} GROUP BY method_group
     """).fetchall()
     real_epurchasing = 0; real_pl = 0; real_dikecualikan = 0; real_seleksi = 0; real_lainnya = 0
     for row in real_grouped:
@@ -280,30 +309,31 @@ def index():
         else: real_lainnya = bgt
 
     # Table data (filtered/paginated)
-    td = fetch_table_data(conn, search_query, m_filter, type_filter, cara_filter, sort_by, sort_dir, page)
+    td = fetch_table_data(conn, search_query, m_filter, type_filter, cara_filter, sort_by, sort_dir, page, tahun=tahun)
 
     # Methods & types for filter dropdowns
     methods = conn.execute(
-        "SELECT DISTINCT procurement_method FROM procurement WHERE procurement_method IS NOT NULL"
+        "SELECT DISTINCT procurement_method FROM procurement WHERE procurement_method IS NOT NULL AND \"Tahun Anggaran\" = ?", (tahun,)
     ).fetchall()
     types = conn.execute(
-        "SELECT DISTINCT procurement_type FROM procurement WHERE procurement_type IS NOT NULL"
+        "SELECT DISTINCT procurement_type FROM procurement WHERE procurement_type IS NOT NULL AND \"Tahun Anggaran\" = ?", (tahun,)
     ).fetchall()
     cara_list = conn.execute(
-        '''SELECT DISTINCT "Cara Pengadaan" FROM procurement WHERE "Cara Pengadaan" IS NOT NULL AND "Cara Pengadaan" != '' '''
+        '''SELECT DISTINCT "Cara Pengadaan" FROM procurement WHERE "Cara Pengadaan" IS NOT NULL AND "Cara Pengadaan" != '' AND "Tahun Anggaran" = ?''', (tahun,)
     ).fetchall()
 
     # Suggestions
     suggestions = {
-        "package_names": conn.execute("SELECT DISTINCT package_name FROM procurement").fetchall(),
-        "satkers": conn.execute("SELECT DISTINCT satker FROM procurement").fetchall(),
-        "kode_rup": conn.execute("SELECT DISTINCT id FROM procurement ORDER BY id").fetchall()
+        "package_names": conn.execute("SELECT DISTINCT package_name FROM procurement WHERE \"Tahun Anggaran\" = ?", (tahun,)).fetchall(),
+        "satkers": conn.execute("SELECT DISTINCT satker FROM procurement WHERE \"Tahun Anggaran\" = ?", (tahun,)).fetchall(),
+        "kode_rup": conn.execute("SELECT DISTINCT id FROM procurement WHERE \"Tahun Anggaran\" = ? ORDER BY id", (tahun,)).fetchall()
     }
 
     # Anomalies
     pl_anomaly_count = conn.execute(f"""
         SELECT COUNT(*) FROM procurement
         WHERE procurement_method = 'Pengadaan Langsung'
+        AND "Tahun Anggaran" = {tahun}
         AND {BUDGET_SQL} > {get_threshold_case()}
     """).fetchone()[0] or 0
 
@@ -313,42 +343,55 @@ def index():
                {get_threshold_case()} as threshold
         FROM procurement
         WHERE procurement_method = 'Pengadaan Langsung'
+        AND "Tahun Anggaran" = {tahun}
         AND {BUDGET_SQL} > {get_threshold_case()}
         ORDER BY {BUDGET_SQL} DESC
     """).fetchall()
 
+    # Pagu + Splash: optimized with LEFT JOIN (CTE subquery runs once, not per row)
+    real_agg = conn.execute(f"""
+        CREATE TEMP VIEW IF NOT EXISTS _real_agg AS
+        SELECT "Kode RUP" as kr, SUM("Total Nilai (Rp)") as total_real
+        FROM realisasi WHERE "Tahun Anggaran" = {tahun} GROUP BY "Kode RUP"
+    """)
+
     pagu_anomaly_count = conn.execute(f"""
         SELECT COUNT(*) FROM procurement p
-        WHERE {BUDGET_SQL} > 0
-        AND (SELECT SUM(r2."Total Nilai (Rp)") FROM realisasi r2 WHERE r2."Kode RUP" = p.id) > {BUDGET_SQL}
+        LEFT JOIN _real_agg r ON r.kr = CAST(p.id AS TEXT)
+        WHERE p."Tahun Anggaran" = {tahun} AND {BUDGET_SQL} > 0
+        AND COALESCE(r.total_real, 0) > {BUDGET_SQL}
     """).fetchone()[0] or 0
 
     pagu_anomalies = conn.execute(f"""
         SELECT p.id, p.package_name, p.satker, p.budget, p.procurement_method, p.procurement_type, p.work_description,
-               (SELECT SUM(r2."Total Nilai (Rp)") FROM realisasi r2 WHERE r2."Kode RUP" = p.id) as realisasi_total
+               COALESCE(r.total_real, 0) as realisasi_total
         FROM procurement p
-        WHERE {BUDGET_SQL} > 0
-        AND (SELECT SUM(r2."Total Nilai (Rp)") FROM realisasi r2 WHERE r2."Kode RUP" = p.id) > {BUDGET_SQL}
+        LEFT JOIN _real_agg r ON r.kr = CAST(p.id AS TEXT)
+        WHERE p."Tahun Anggaran" = {tahun} AND {BUDGET_SQL} > 0
+        AND COALESCE(r.total_real, 0) > {BUDGET_SQL}
         ORDER BY realisasi_total DESC
     """).fetchall()
 
-    # Splash info: RUP tanpa realisasi
     splash1 = conn.execute(f"""
         SELECT COUNT(*) as cnt, COALESCE(SUM({BUDGET_SQL}), 0) as total
         FROM procurement p
-        WHERE (SELECT COUNT(*) FROM realisasi r WHERE r."Kode RUP" = p.id) = 0
+        LEFT JOIN _real_agg r ON r.kr = CAST(p.id AS TEXT)
+        WHERE p."Tahun Anggaran" = {tahun}
+        AND r.kr IS NULL
     """).fetchone()
     splash_no_realisasi_cnt = splash1['cnt']
     splash_no_realisasi_total = splash1['total']
 
-    # Splash info: realisasi tanpa RUP awal
     splash2 = conn.execute(f"""
         SELECT COUNT(*) as cnt, COALESCE(SUM(r."Total Nilai (Rp)"), 0) as total
         FROM realisasi r
-        WHERE r."Kode RUP" NOT IN (SELECT id FROM procurement)
+        WHERE r."Tahun Anggaran" = {tahun}
+        AND r."Kode RUP" NOT IN (SELECT id FROM procurement WHERE "Tahun Anggaran" = {tahun})
     """).fetchone()
     splash_orphan_real_cnt = splash2['cnt']
     splash_orphan_real_total = splash2['total']
+
+    conn.execute('DROP VIEW IF EXISTS _real_agg')
 
     conn.close()
 
@@ -407,9 +450,10 @@ def api_table():
     sort_by = request.args.get('sort_by', 'id')
     sort_dir = request.args.get('sort_dir', 'DESC')
     page = int(request.args.get('page', 1))
+    tahun = get_year()
 
     conn = get_db_connection()
-    td = fetch_table_data(conn, search_query, m_filter, type_filter, cara_filter, sort_by, sort_dir, page, quick_search)
+    td = fetch_table_data(conn, search_query, m_filter, type_filter, cara_filter, sort_by, sort_dir, page, quick_search, tahun=tahun)
     conn.close()
 
     return jsonify({
@@ -440,6 +484,7 @@ def export():
     type_filter = request.args.get('type', '')
     cara_filter = request.args.get('cara', '')
     file_format = request.args.get('format', 'xlsx')
+    tahun = get_year()
 
     conn = get_db_connection()
     fq = FilterQuery(search_query, m_filter, type_filter, cara_filter)
@@ -447,6 +492,8 @@ def export():
     where_clause, params = fq.where_clause(alias='')
     if where_clause:
         query += f" AND {where_clause}"
+    params.append(tahun)
+    query += ' AND "Tahun Anggaran" = ?'
     df = pd.read_sql_query(query, conn, params=params)
     conn.close()
 
@@ -516,56 +563,85 @@ def export():
 @app.route('/admin/upload', methods=['POST'])
 def admin_upload():
     password = request.form.get('password')
-    if password != 'Callunk13':
+    config_pass = read_config('upload')
+    if password != config_pass:
         return jsonify({'success': False, 'message': 'Password salah!'}), 403
 
-    rup_file = request.files.get('rup_file')
-    realisasi_file = request.files.get('realisasi_file')
+    rup_files = request.files.getlist('rup_file')
+    realisasi_files = request.files.getlist('realisasi_file')
 
-    if (not rup_file or rup_file.filename == '') and (not realisasi_file or realisasi_file.filename == ''):
+    if len(rup_files) == 0 and len(realisasi_files) == 0:
         return jsonify({'success': False, 'message': 'Minimal satu file harus diupload!'}), 400
+    if all(f.filename == '' for f in rup_files + realisasi_files):
+        return jsonify({'success': False, 'message': 'Minimal satu file harus diupload!'}), 400
+
+    def _detect_year(df, default=2026):
+        if 'Tahun Anggaran' in df.columns:
+            s = df['Tahun Anggaran'].dropna()
+            if not s.empty:
+                return int(s.mode().iloc[0])
+        if 'Tahun' in df.columns:
+            s = df['Tahun'].dropna()
+            if not s.empty:
+                return int(s.mode().iloc[0])
+        return default
+
+    def _process_rup(df, conn):
+        tahun = _detect_year(df)
+        conn.execute('DELETE FROM procurement WHERE "Tahun Anggaran" = ?', (tahun,))
+        col_map = {
+            'Kode RUP': 'id', 'Nama Satuan Kerja': 'satker', 'Nama Paket': 'package_name',
+            'Metode Pengadaan': 'procurement_method', 'Jenis Pengadaan': 'procurement_type',
+            'Total Nilai (Rp)': 'budget', 'Sumber Dana': 'funding_source', 'Produk Dalam Negeri': 'is_umkm'
+        }
+        if 'Kode RUP' in df.columns:
+            before = len(df)
+            df = df.drop_duplicates(subset=['Kode RUP'])
+            after = len(df)
+            if before > after:
+                print(f'[DEDUP] Removed {before - after} duplicate Kode RUP rows')
+        rename_dict = {k: v for k, v in col_map.items() if k in df.columns}
+        df = df.rename(columns=rename_dict)
+        if 'work_description' not in df.columns:
+            df['work_description'] = ''
+        if 'risk_score' not in df.columns:
+            df['risk_score'] = 0
+        if 'budget' in df.columns and pd.api.types.is_numeric_dtype(df['budget']):
+            df['budget'] = df['budget'].apply(lambda x: f"Rp {x:,.0f}" if pd.notnull(x) else "Rp 0")
+        df.to_sql('procurement', conn, if_exists='append', index=False)
+        conn.execute('DELETE FROM procurement WHERE rowid NOT IN (SELECT MIN(rowid) FROM procurement GROUP BY id, "Tahun Anggaran")')
+        print(f'[UPLOAD] Inserted {len(df)} procurement records for {tahun}')
+        return tahun
+
+    def _process_realisasi(df, conn):
+        tahun = _detect_year(df)
+        conn.execute('DELETE FROM realisasi WHERE "Tahun Anggaran" = ?', (tahun,))
+        df.to_sql('realisasi', conn, if_exists='append', index=False)
+        print(f'[UPLOAD] Inserted {len(df)} realisasi records for {tahun}')
+        return tahun
 
     try:
         conn = sqlite3.connect(DB_PATH)
+        years_processed = []
 
-        if rup_file and rup_file.filename != '':
-            df_rup = pd.read_csv(rup_file, low_memory=False)
-            col_map = {
-                'Kode RUP': 'id',
-                'Nama Satuan Kerja': 'satker',
-                'Nama Paket': 'package_name',
-                'Metode Pengadaan': 'procurement_method',
-                'Jenis Pengadaan': 'procurement_type',
-                'Total Nilai (Rp)': 'budget',
-                'Sumber Dana': 'funding_source',
-                'Produk Dalam Negeri': 'is_umkm'
-            }
-            # Deduplicate by Kode RUP before rename (safe even if rename fails)
-            if 'Kode RUP' in df_rup.columns:
-                before = len(df_rup)
-                df_rup = df_rup.drop_duplicates(subset=['Kode RUP'])
-                after = len(df_rup)
-                if before > after:
-                    print(f'[DEDUP] Removed {before - after} duplicate Kode RUP rows')
-            rename_dict = {k: v for k, v in col_map.items() if k in df_rup.columns}
-            df_rup = df_rup.rename(columns=rename_dict)
-            if 'work_description' not in df_rup.columns:
-                df_rup['work_description'] = ''
-            if 'risk_score' not in df_rup.columns:
-                df_rup['risk_score'] = 0
-            if 'budget' in df_rup.columns and pd.api.types.is_numeric_dtype(df_rup['budget']):
-                df_rup['budget'] = df_rup['budget'].apply(lambda x: f"Rp {x:,.0f}" if pd.notnull(x) else "Rp 0")
-            df_rup.to_sql('procurement', conn, if_exists='replace', index=False)
+        for f in rup_files:
+            if f and f.filename:
+                df = pd.read_csv(f, low_memory=False)
+                y = _process_rup(df, conn)
+                years_processed.append(f'RUP {y}')
 
-        if realisasi_file and realisasi_file.filename != '':
-            df_realisasi = pd.read_csv(realisasi_file, low_memory=False)
-            # No dedup for realisasi — same Kode RUP can have multiple
-            # legitimate entries (different vendors, payment stages, etc.)
-            df_realisasi.to_sql('realisasi', conn, if_exists='replace', index=False)
+        for f in realisasi_files:
+            if f and f.filename:
+                df = pd.read_csv(f, low_memory=False)
+                y = _process_realisasi(df, conn)
+                years_processed.append(f'Realisasi {y}')
 
+        conn.commit()
         conn.close()
-        return jsonify({'success': True, 'message': 'Database berhasil diupdate!'})
+        msg = f'Database berhasil diupdate! ({len(years_processed)} file: {", ".join(years_processed)})'
+        return jsonify({'success': True, 'message': msg})
     except Exception as e:
+        conn.close()
         return jsonify({'success': False, 'message': str(e)}), 500
 
 
@@ -590,25 +666,25 @@ def package_details():
 
 
 @cached('global_stats')
-def _get_global_stats():
+def _get_global_stats(tahun=2026):
     conn = get_db_connection()
     stats = conn.execute(
-        f"SELECT COUNT(*) as total, SUM({BUDGET_SQL}) as total_budget FROM procurement"
+        f"SELECT COUNT(*) as total, COALESCE(SUM({BUDGET_SQL}), 0) as total_budget FROM procurement WHERE \"Tahun Anggaran\" = {tahun}"
     ).fetchone()
 
     detail_grouped = conn.execute(f"""
         SELECT
             CASE WHEN procurement_method IN ('E-Purchasing', 'Pengadaan Langsung', 'Dikecualikan', 'Seleksi')
                  THEN procurement_method ELSE 'Lainnya' END as method_group,
-            COUNT(*) as total, SUM({BUDGET_SQL}) as total_budget
-        FROM procurement GROUP BY method_group
+            COUNT(*) as total, COALESCE(SUM({BUDGET_SQL}), 0) as total_budget
+        FROM procurement WHERE "Tahun Anggaran" = {tahun} GROUP BY method_group
     """).fetchall()
 
     real_total = conn.execute(
-        'SELECT SUM("Total Nilai (Rp)") as total FROM realisasi'
+        f'SELECT SUM("Total Nilai (Rp)") as total FROM realisasi WHERE "Tahun Anggaran" = {tahun}'
     ).fetchone()['total'] or 0
     count_realized = conn.execute(
-        'SELECT COUNT(DISTINCT "Kode RUP") as cnt FROM realisasi'
+        f'SELECT COUNT(DISTINCT "Kode RUP") as cnt FROM realisasi WHERE "Tahun Anggaran" = {tahun}'
     ).fetchone()['cnt'] or 0
 
     def _find(dg, name):
@@ -633,70 +709,51 @@ def _get_global_stats():
 
 @app.route('/api/stats')
 def api_stats():
-    return jsonify(_get_global_stats())
+    tahun = get_year()
+    return jsonify(_get_global_stats(tahun))
 
 
 @app.route('/api/anomalies/pagu')
 def api_anomalies_pagu():
-    """Return pagu anomalies filtered by mode: default|strict|threshold|both"""
-    mode = request.args.get('mode', 'default')
+    """Return pagu anomalies. Optimized with LEFT JOIN."""
+    tahun = get_year()
     conn = get_db_connection()
-
-    # Base: match realisasi_sum for each procurement
-    strict_real = f'(SELECT SUM(r."Total Nilai (Rp)") FROM realisasi r WHERE r."Kode RUP" = p.id)'
-    fallback_real = f'(SELECT SUM(r2."Total Nilai (Rp)") FROM realisasi r2 WHERE r2."Nama Paket" = p.package_name AND r2."Nama Satuan Kerja" = p.satker)'
-
-    if mode == 'strict':
-        real_sum = strict_real
-        match_label = 'Kode RUP'
-    elif mode == 'both':
-        real_sum = strict_real
-        match_label = 'Kode RUP'
-    else:
-        real_sum = f'COALESCE({strict_real}, {fallback_real}, 0)'
-        match_label = 'Kode RUP + Nama Paket'
-
-    # Build WHERE
-    where_over = f'{real_sum} > {BUDGET_SQL}'
-    params = []
-
-    if mode in ('threshold', 'both'):
-        where_over = f'''(
-            {real_sum} - {BUDGET_SQL} > CAST({BUDGET_SQL} * 0.1 AS REAL)
-            AND
-            {real_sum} - {BUDGET_SQL} > 1000000
-        )'''
-
-    count_q = f'''SELECT COUNT(*) FROM procurement p
-        WHERE {BUDGET_SQL} > 0 AND {where_over}'''
-    count = conn.execute(count_q, params).fetchone()[0] or 0
-
-    data_q = f'''SELECT p.id, p.package_name, p.satker, p.budget,
+    B = """CAST(REPLACE(REPLACE(p.budget, 'Rp ', ''), ',', '') AS REAL)"""
+    count_q = f"""SELECT COUNT(*) FROM procurement p
+        LEFT JOIN (
+            SELECT "Kode RUP" as kr, SUM("Total Nilai (Rp)") as total_real
+            FROM realisasi WHERE "Tahun Anggaran" = {tahun} GROUP BY "Kode RUP"
+        ) r ON r.kr = CAST(p.id AS TEXT)
+        WHERE p."Tahun Anggaran" = {tahun} AND {B} > 0
+        AND COALESCE(r.total_real, 0) > {B}"""
+    count = conn.execute(count_q).fetchone()[0] or 0
+    data_q = f"""SELECT p.id, p.package_name, p.satker, p.budget,
             p.procurement_method, p.procurement_type, p.work_description,
             p."Cara Pengadaan",
-            {real_sum} as realisasi_total
+            COALESCE(r.total_real, 0) as realisasi_total
         FROM procurement p
-        WHERE {BUDGET_SQL} > 0 AND {where_over}
-        ORDER BY realisasi_total DESC'''
-
-    rows = [dict(r) for r in conn.execute(data_q, params).fetchall()]
+        LEFT JOIN (
+            SELECT "Kode RUP" as kr, SUM("Total Nilai (Rp)") as total_real
+            FROM realisasi WHERE "Tahun Anggaran" = {tahun} GROUP BY "Kode RUP"
+        ) r ON r.kr = CAST(p.id AS TEXT)
+        WHERE p."Tahun Anggaran" = {tahun} AND {B} > 0
+        AND COALESCE(r.total_real, 0) > {B}
+        ORDER BY realisasi_total DESC"""
+    rows = [dict(r) for r in conn.execute(data_q).fetchall()]
     conn.close()
-
     return jsonify({
-        'success': True,
-        'count': count,
-        'data': rows,
-        'mode': mode,
-        'match_label': match_label
+        'success': True, 'count': count, 'data': rows,
+        'mode': 'strict', 'match_label': 'Kode RUP'
     })
-
 
 @app.route('/api/anomalies/orphan')
 def api_anomalies_orphan():
     """Return orphan realisasi (no parent RUP in procurement table)"""
+    tahun = get_year()
     conn = get_db_connection()
     count = conn.execute(
-        'SELECT COUNT(*) FROM realisasi WHERE "Kode RUP" NOT IN (SELECT id FROM procurement)'
+        'SELECT COUNT(*) FROM realisasi WHERE "Tahun Anggaran" = ? AND "Kode RUP" NOT IN (SELECT id FROM procurement WHERE "Tahun Anggaran" = ?)',
+        (tahun, tahun)
     ).fetchone()[0] or 0
     rows = conn.execute('''
         SELECT "Kode RUP" as kode_rup, "Nama Paket" as nama_paket,
@@ -705,9 +762,9 @@ def api_anomalies_orphan():
                "Jenis Pengadaan" as jenis, "Tahun Anggaran" as tahun,
                "Status Paket" as status_paket
         FROM realisasi
-        WHERE "Kode RUP" NOT IN (SELECT id FROM procurement)
+        WHERE "Tahun Anggaran" = ? AND "Kode RUP" NOT IN (SELECT id FROM procurement WHERE "Tahun Anggaran" = ?)
         ORDER BY "Nama Paket" ASC
-    ''').fetchall()
+    ''', (tahun, tahun)).fetchall()
     conn.close()
     return jsonify({
         'success': True,
@@ -1048,6 +1105,15 @@ def api_penyedia_detail():
         conn.close()
 
 
+@app.route('/api/config')
+def api_config():
+    return jsonify({
+        'pass_2025': read_config('tahun'),
+        'pass_upload': read_config('upload'),
+        'path': '/root/.openclaw/workspace/App/cuy.config'
+    })
+
+
 @app.route('/penyedia/clear_verification', methods=['POST'])
 def clear_verification():
     conn = get_db_connection()
@@ -1057,5 +1123,239 @@ def clear_verification():
     return jsonify({'success': True, 'message': 'Semua status verifikasi telah direset'})
 
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5005)
+@app.route('/api/konsultan_check')
+def api_konsultan_check():
+    tahun = get_year()
+    """
+    Analisa Fee Konsultan: Cocokkan paket Jasa Konsultansi dengan Pekerjaan Konstruksi.
+    Menggunakan multi-level matching dengan confidence score.
+
+    Batasan biaya (Permen PUPR):
+    - Perencanaan: max ~3.5% dari pagu konstruksi
+    - Pengawasan: max ~2.5% dari pagu konstruksi
+    - Total konsultan (perencanaan + pengawasan): max ~5%
+    """
+    import re
+
+    # --- Prefix cleaners ---
+    _PREFIX_CLEAN = re.compile(
+        r'^(Belanja\s+Modal\s+(?:Gedung\s+dan\s+Bangunan\s+BLUD|Bangunan\s+(?:Gedung\s+(?:Kantor|Tempat\s+Kerja\s+Lainnya)|Kesehatan)|Air\s+Irigasi\s+Lainnya)\s*[-–]\s*(?:Belanja\s+Modal\s+(?:Bangunan\s+)?(?:Gedung\s+(?:Kantor|Tempat\s+Kerja\s+Lainnya)|Kesehatan)\s*[-–]\s*)?)'
+        r'|^(Konsultansi\s+(?:Perencana|Pengawasan)\s+)'
+        r'|^(Perencanaan\s+)'
+        r'|^(Pengawasan\s+)'
+        r'|^(Jasa\s+Konsultan(?:\s+(?:Perencanaan|Pengawasan))?\s+)'
+        r'|^(Biaya\s+(?:Perencanaan|Pengawasan)\s+)'
+        r'|^(Desain\s+Perencanaan\s+)'
+        r'|^(Konsultan\s+Perencana\s+)'
+        r'', re.IGNORECASE)
+
+    _PREFIX_CONSTR = re.compile(
+        r'^(Belanja\s+Modal\s+(?:Gedung\s+dan\s+Bangunan\s+BLUD|Bangunan\s+(?:Gedung\s+(?:Kantor|Tempat\s+Kerja\s+Lainnya)|Kesehatan)|Air\s+Irigasi\s+Lainnya)\s*[-–]\s*(?:Belanja\s+Modal\s+(?:Bangunan\s+)?(?:Gedung\s+(?:Kantor|Tempat\s+Kerja\s+Lainnya)|Kesehatan)\s*[-–]\s*)?)'
+        r'|^(PEMBANGUNAN\s+|Pekerjaan\s+|Pembangunan\s+|Peningkatan\s+|Perluasan\s+|Rehabilitasi\s+|Pemeliharaan/Rehabilitasi\s+|PEKERJAAN\s+|Pengadaan\s+)'
+        r'|^(PEMELIHARAAN\s+)', re.IGNORECASE)
+
+    def _clean_name(name, prefix_re):
+        return prefix_re.sub('', name).strip().rstrip('; ').strip().upper()
+
+    def _extract_project_name(cons_name):
+        name_upper = cons_name.upper()
+        for anchor in ['PENGERJAAN ', 'PEMBANGUNAN ', 'PEMELIHARAAN ', 'REHABILITASI ']:
+            idx = name_upper.find(anchor)
+            if idx >= 0:
+                return name_upper[idx:].strip(), 0
+        return _clean_name(cons_name, _PREFIX_CLEAN), 1
+
+    def _match_confidence(proj_name_uc, constr_name):
+        constr_uc = constr_name.upper()
+        constr_clean = _clean_name(constr_name, _PREFIX_CONSTR).strip()
+        # Level 1: Exact match
+        if proj_name_uc == constr_clean or proj_name_uc == constr_uc:
+            return 100, 'exact'
+        # Level 2: Project name is prefix of construction name
+        if constr_clean.startswith(proj_name_uc) or constr_uc.startswith(proj_name_uc):
+            return 90, 'prefix'
+        # Level 3: Contains
+        if proj_name_uc in constr_uc or proj_name_uc in constr_clean:
+            return 80, 'contains'
+        # Level 4: Try first 30 chars as prefix
+        short = proj_name_uc[:30]
+        if len(short) > 15 and (constr_uc.startswith(short) or constr_clean.startswith(short)):
+            return 70, 'partial_prefix'
+        # Level 5: First 20 chars anywhere
+        short20 = proj_name_uc[:20]
+        if len(short20) > 12 and (short20 in constr_uc or short20 in constr_clean):
+            return 60, 'partial'
+        return 0, ''
+
+    def _classify_tipe(nama):
+        n = nama.upper()
+        if 'PERENCANA' in n or n.startswith('PERENCANAAN'):
+            return 'Perencanaan'
+        if 'PENGAWASAN' in n:
+            return 'Pengawasan'
+        return 'Konsultansi'
+
+    def _fee_flag(tipe, fee):
+        t = tipe
+        # Referensi: Permen PUPR No.22/PRT/M/2018 jo. Permen PUPR No.8/2023
+        # Biaya Perencanaan: 2-3.5% dari nilai konstruksi
+        # Biaya Pengawasan: 1.5-2.5% dari nilai konstruksi
+        if t == 'Perencanaan':
+            return 'danger' if fee > 4.0 else ('warning' if fee > 3.5 else 'safe')
+        elif t == 'Pengawasan':
+            return 'danger' if fee > 3.0 else ('warning' if fee > 2.5 else 'safe')
+        else:
+            return 'danger' if fee > 5.0 else ('warning' if fee > 4.0 else 'safe')
+
+    conn = get_db_connection()
+    try:
+        # Fetch all consultancy & construction packages
+        konsultansi = conn.execute(f"""
+            SELECT id, package_name, satker, budget,
+                   CAST(REPLACE(REPLACE(budget, 'Rp ', ''), ',', '') AS REAL) AS nilai,
+                   procurement_method
+            FROM procurement
+            WHERE procurement_type = 'Jasa Konsultansi' AND "Tahun Anggaran" = {tahun}
+        """).fetchall()
+
+        konstruksi = conn.execute(f"""
+            SELECT id, package_name, satker, budget,
+                   CAST(REPLACE(REPLACE(budget, 'Rp ', ''), ',', '') AS REAL) AS nilai,
+                   procurement_method
+            FROM procurement
+            WHERE procurement_type = 'Pekerjaan Konstruksi' AND "Tahun Anggaran" = {tahun}
+        """).fetchall()
+        conn.close()
+
+        # Build list: only consultancy packages that look project-related
+        candidates = []
+        for c in konsultansi:
+            d = dict(c)
+            tipe = _classify_tipe(d['package_name'])
+            if tipe != 'Konsultansi' or any(kw in d['package_name'].upper() for kw in ['KONSULTAN', 'DESAIN']):
+                proj_name, bonus = _extract_project_name(d['package_name'])
+                proj_name = proj_name.strip()
+                if len(proj_name) > 5:  # Minimum meaningful length
+                    candidates.append({**d, 'proj_name': proj_name, 'bonus': bonus, 'tipe': tipe})
+
+        # Match each candidate against construction packages
+        results = []
+        grouped = {}
+
+        for cand in candidates:
+            best_score = 0
+            best_match = None
+            best_method = ''
+
+            for k in konstruksi:
+                kd = dict(k)
+                if cand['satker'] != kd['satker']:
+                    continue
+                score, method = _match_confidence(cand['proj_name'], kd['package_name'])
+                # Apply bonus for anchor-based extraction (more reliable)
+                actual_score = score - cand['bonus'] * 10
+                if actual_score > best_score:
+                    best_score = actual_score
+                    best_match = kd
+                    best_method = method
+
+            if best_match and best_score >= 50:
+                constr_nilai = best_match['nilai']
+                fee_persen = round(cand['nilai'] / constr_nilai * 100, 2) if constr_nilai > 0 else 0
+                flag = _fee_flag(cand['tipe'], fee_persen)
+
+                conf_label = {'100': 'Pasti', '90': 'Yakin', '80': 'Sesuai', '70': 'Mirip', '60': 'Kemungkinan'} \
+                    .get(str(best_score)[:2], 'Perkiraan')
+
+                entry = {
+                    'konsultan_id': cand['id'],
+                    'konsultan_nama': cand['package_name'],
+                    'konsultan_budget': cand['budget'],
+                    'konsultan_nilai': cand['nilai'],
+                    'konsultan_metode': cand['procurement_method'],
+                    'satker': cand['satker'],
+                    'tipe_konsultan': cand['tipe'],
+                    'fee_persen': fee_persen,
+                    'flag': flag,
+                    'match_score': best_score,
+                    'match_method': best_method,
+                    'match_label': conf_label,
+                    'konstruksi_id': best_match['id'],
+                    'konstruksi_nama': best_match['package_name'],
+                    'konstruksi_budget': best_match['budget'],
+                    'konstruksi_nilai': constr_nilai,
+                    'konstruksi_metode': best_match['procurement_method'],
+                }
+                results.append(entry)
+
+                # Group
+                kid = best_match['id']
+                if kid not in grouped:
+                    grouped[kid] = {
+                        'konstruksi_id': kid,
+                        'konstruksi_nama': best_match['package_name'],
+                        'konstruksi_nilai': constr_nilai,
+                        'konstruksi_budget': best_match['budget'],
+                        'konstruksi_metode': best_match['procurement_method'],
+                        'satker': cand['satker'],
+                        'konsultan': []
+                    }
+                grouped[kid]['konsultan'].append({
+                    'nama': cand['package_name'],
+                    'nilai': cand['nilai'],
+                    'budget': cand['budget'],
+                    'tipe': cand['tipe'],
+                    'fee_persen': fee_persen,
+                    'flag': flag,
+                    'id': cand['id'],
+                    'metode': cand['procurement_method'],
+                    'match_label': conf_label
+                })
+
+        # Calculate totals per group
+        konsolidasi = []
+        for kid, g in grouped.items():
+            total_fee = sum(k['nilai'] for k in g['konsultan'])
+            total_persen = round(total_fee / g['konstruksi_nilai'] * 100, 2) if g['konstruksi_nilai'] > 0 else 0
+            g['total_fee'] = total_fee
+            g['total_persen'] = total_persen
+            # Group flag = flag terparah dari konsultan di dalamnya
+            flags = set(k['flag'] for k in g['konsultan'])
+            if 'danger' in flags:
+                g['flag_total'] = 'danger'
+            elif 'warning' in flags:
+                g['flag_total'] = 'warning'
+            else:
+                g['flag_total'] = 'safe'
+            konsolidasi.append(g)
+
+        konsolidasi.sort(key=lambda g: g['total_persen'], reverse=True)
+
+        # Also find unmatched consultancies for reporting
+        matched_ids = set(r['konsultan_id'] for r in results)
+        unmatched = []
+        for c in candidates:
+            if c['id'] not in matched_ids:
+                unmatched.append({
+                    'id': c['id'],
+                    'nama': c['package_name'],
+                    'budget': c['budget'],
+                    'nilai': c['nilai'],
+                    'satker': c['satker'],
+                    'tipe': c['tipe'],
+                    'metode': c['procurement_method'],
+                    'proj_name': c['proj_name']
+                })
+
+        return jsonify({
+            'success': True,
+            'match_count': len(results),
+            'group_count': len(konsolidasi),
+            'unmatched_count': len(unmatched),
+            'unmatched': unmatched,
+            'pairs': results,
+            'grouped': konsolidasi
+        })
+    except Exception as e:
+        conn.close()
+        return jsonify({'success': False, 'message': str(e)})
