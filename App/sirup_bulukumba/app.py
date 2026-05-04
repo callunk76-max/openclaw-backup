@@ -70,6 +70,13 @@ def parse_budget(budget_str):
         return 0
     return float(budget_str.replace('Rp ', '').replace(',', ''))
 
+
+def get_year():
+    try:
+        return int(request.args.get('tahun', '2026'))
+    except:
+        return 2026
+
 class FilterQuery:
     """Build and manage filter SQL queries"""
     def __init__(self, search_query='', m_filter='', type_filter='', cara_filter='', quick_search=''):
@@ -124,7 +131,7 @@ def get_threshold_case():
             "ELSE 200000000 END")
 
 
-def fetch_table_data(conn, search_query, m_filter, type_filter, cara_filter='', sort_by='id', sort_dir='DESC', page=1, quick_search=''):
+def fetch_table_data(conn, search_query, m_filter, type_filter, cara_filter='', sort_by='id', sort_dir='DESC', page=1, quick_search='', tahun=2026):
     """Fetch paginated table data + stats. Returns dict with all needed data."""
     fq = FilterQuery(search_query, m_filter, type_filter, cara_filter, quick_search)
     offset = (page - 1) * PER_PAGE
@@ -138,24 +145,32 @@ def fetch_table_data(conn, search_query, m_filter, type_filter, cara_filter='', 
     sort_col = allowed_sorts.get(sort_by, 'p.id')
     sort_dir_sql = 'ASC' if sort_dir.upper() == 'ASC' else 'DESC'
 
-    # --- COUNT ---
-    count_q = "SELECT COUNT(*) as cnt FROM procurement p"
+
+    # Build WHERE with tahun filter
     where_clause, params = fq.where_clause()
+    tw = '= ?'
+    yp = [tahun]
     if where_clause:
-        count_q += f" WHERE {where_clause}"
+        where_clause += f' AND p."Tahun Anggaran" {tw}'
+        params += yp
+    else:
+        where_clause = f'p."Tahun Anggaran" {tw}'
+        params = yp
+
+    # --- COUNT ---
+    count_q = f"SELECT COUNT(*) as cnt FROM procurement p WHERE {where_clause}"
     filtered_count = conn.execute(count_q, params).fetchone()['cnt'] or 0
 
     # --- DATA (optimized: LEFT JOIN instead of correlated subquery) ---
-    data_q = """SELECT p.*,
+    data_q = f"""SELECT p.*,
         COALESCE(rt.total_real, 0) as realisasi_total
     FROM procurement p
     LEFT JOIN (
-        SELECT "Kode RUP" as kode_rup, SUM("Total Nilai (Rp)") as total_real
-        FROM realisasi GROUP BY "Kode RUP"
-    ) rt ON rt.kode_rup = CAST(p.id AS TEXT)"""
-    if where_clause:
-        data_q += f" WHERE {where_clause}"
-    data_q += f" ORDER BY {sort_col} {sort_dir_sql} LIMIT {PER_PAGE} OFFSET {offset}"
+        SELECT "Kode RUP" as kr, SUM("Total Nilai (Rp)") as total_real
+        FROM realisasi WHERE "Tahun Anggaran" = {tahun} GROUP BY "Kode RUP"
+    ) rt ON rt.kr = CAST(p.id AS TEXT)
+    WHERE {where_clause}
+    ORDER BY {sort_col} {sort_dir_sql} LIMIT {PER_PAGE} OFFSET {offset}"""
 
     rows = conn.execute(data_q, params).fetchall()
 
@@ -184,9 +199,7 @@ def fetch_table_data(conn, search_query, m_filter, type_filter, cara_filter='', 
     total_pages = max(1, (filtered_count + PER_PAGE - 1) // PER_PAGE)
 
     # --- FILTERED BUDGET ---
-    fb_q = f"SELECT SUM({BUDGET_SQL}) FROM procurement p"
-    if where_clause:
-        fb_q += f" WHERE {where_clause}"
+    fb_q = f"SELECT SUM({BUDGET_SQL}) FROM procurement p WHERE {where_clause}"
     filtered_total_budget = conn.execute(fb_q, params).fetchone()[0] or 0
 
     # --- FILTERED BREAKDOWN ---
@@ -196,10 +209,8 @@ def fetch_table_data(conn, search_query, m_filter, type_filter, cara_filter='', 
                  THEN procurement_method ELSE 'Lainnya' END as method_group,
             COUNT(*) as total, SUM({BUDGET_SQL}) as total_budget
         FROM procurement p
-    """
-    if where_clause:
-        f_detail_q += f" WHERE {where_clause}"
-    f_detail_q += " GROUP BY method_group"
+        WHERE {where_clause}
+        GROUP BY method_group"""
 
     f_detail = conn.execute(f_detail_q, params).fetchall()
     fd = {'ep': 0, 'bd_ep': 0, 'pl': 0, 'bd_pl': 0, 'dk': 0, 'bd_dk': 0, 'sl': 0, 'bd_sl': 0, 'ln': 0, 'bd_ln': 0}
@@ -224,6 +235,7 @@ def fetch_table_data(conn, search_query, m_filter, type_filter, cara_filter='', 
 
 @app.route('/')
 def index():
+    tahun = get_year()
     total_visits = increment_visitor()
     last_update = get_last_update()
 
@@ -281,7 +293,7 @@ def index():
         else: real_lainnya = bgt
 
     # Table data (filtered/paginated)
-    td = fetch_table_data(conn, search_query, m_filter, type_filter, cara_filter, sort_by, sort_dir, page)
+    td = fetch_table_data(conn, search_query, m_filter, type_filter, cara_filter, sort_by, sort_dir, page, tahun=tahun)
 
     # Methods & types for filter dropdowns
     methods = conn.execute(
@@ -408,9 +420,10 @@ def api_table():
     sort_by = request.args.get('sort_by', 'id')
     sort_dir = request.args.get('sort_dir', 'DESC')
     page = int(request.args.get('page', 1))
+    tahun = get_year()
 
     conn = get_db_connection()
-    td = fetch_table_data(conn, search_query, m_filter, type_filter, cara_filter, sort_by, sort_dir, page, quick_search)
+    td = fetch_table_data(conn, search_query, m_filter, type_filter, cara_filter, sort_by, sort_dir, page, quick_search, tahun=tahun)
     conn.close()
 
     return jsonify({
@@ -441,6 +454,7 @@ def export():
     type_filter = request.args.get('type', '')
     cara_filter = request.args.get('cara', '')
     file_format = request.args.get('format', 'xlsx')
+    tahun = get_year()
 
     conn = get_db_connection()
     fq = FilterQuery(search_query, m_filter, type_filter, cara_filter)
@@ -448,6 +462,8 @@ def export():
     where_clause, params = fq.where_clause(alias='')
     if where_clause:
         query += f" AND {where_clause}"
+    params.append(tahun)
+    query += ' AND "Tahun Anggaran" = ?'
     df = pd.read_sql_query(query, conn, params=params)
     conn.close()
 
@@ -531,6 +547,18 @@ def admin_upload():
 
         if rup_file and rup_file.filename != '':
             df_rup = pd.read_csv(rup_file, low_memory=False)
+
+            # Detect year from CSV
+            tahun_rup = 2026
+            if 'Tahun Anggaran' in df_rup.columns:
+                tahun_rup = int(df_rup['Tahun Anggaran'].mode().iloc[0]) if not df_rup['Tahun Anggaran'].mode().empty else 2026
+            elif 'Tahun' in df_rup.columns:
+                tahun_rup = int(df_rup['Tahun'].mode().iloc[0]) if not df_rup['Tahun'].mode().empty else 2026
+
+            # Delete existing records for this year before inserting
+            conn.execute('DELETE FROM procurement WHERE "Tahun Anggaran" = ?', (tahun_rup,))
+            print(f'[UPLOAD] Deleted existing procurement for {tahun_rup}')
+
             col_map = {
                 'Kode RUP': 'id',
                 'Nama Satuan Kerja': 'satker',
@@ -541,7 +569,7 @@ def admin_upload():
                 'Sumber Dana': 'funding_source',
                 'Produk Dalam Negeri': 'is_umkm'
             }
-            # Deduplicate by Kode RUP before rename (safe even if rename fails)
+            # Deduplicate by Kode RUP before rename
             if 'Kode RUP' in df_rup.columns:
                 before = len(df_rup)
                 df_rup = df_rup.drop_duplicates(subset=['Kode RUP'])
@@ -556,17 +584,32 @@ def admin_upload():
                 df_rup['risk_score'] = 0
             if 'budget' in df_rup.columns and pd.api.types.is_numeric_dtype(df_rup['budget']):
                 df_rup['budget'] = df_rup['budget'].apply(lambda x: f"Rp {x:,.0f}" if pd.notnull(x) else "Rp 0")
-            df_rup.to_sql('procurement', conn, if_exists='replace', index=False)
+            df_rup.to_sql('procurement', conn, if_exists='append', index=False)
+            conn.execute('DELETE FROM procurement WHERE rowid NOT IN (SELECT MIN(rowid) FROM procurement GROUP BY id, "Tahun Anggaran")')
+            print(f'[UPLOAD] Inserted {len(df_rup)} procurement records for {tahun_rup}')
 
         if realisasi_file and realisasi_file.filename != '':
             df_realisasi = pd.read_csv(realisasi_file, low_memory=False)
-            # No dedup for realisasi — same Kode RUP can have multiple
-            # legitimate entries (different vendors, payment stages, etc.)
-            df_realisasi.to_sql('realisasi', conn, if_exists='replace', index=False)
 
+            # Detect year from realisasi CSV
+            tahun_real = 2026
+            if 'Tahun Anggaran' in df_realisasi.columns:
+                tahun_real = int(df_realisasi['Tahun Anggaran'].mode().iloc[0]) if not df_realisasi['Tahun Anggaran'].mode().empty else 2026
+            elif 'Tahun' in df_realisasi.columns:
+                tahun_real = int(df_realisasi['Tahun'].mode().iloc[0]) if not df_realisasi['Tahun'].mode().empty else 2026
+
+            # Delete existing realisasi for this year before inserting
+            conn.execute('DELETE FROM realisasi WHERE "Tahun Anggaran" = ?', (tahun_real,))
+            print(f'[UPLOAD] Deleted existing realisasi for {tahun_real}')
+
+            df_realisasi.to_sql('realisasi', conn, if_exists='append', index=False)
+            print(f'[UPLOAD] Inserted {len(df_realisasi)} realisasi records for {tahun_real}')
+
+        conn.commit()
         conn.close()
         return jsonify({'success': True, 'message': 'Database berhasil diupdate!'})
     except Exception as e:
+        conn.close()
         return jsonify({'success': False, 'message': str(e)}), 500
 
 
@@ -640,14 +683,15 @@ def api_stats():
 @app.route('/api/anomalies/pagu')
 def api_anomalies_pagu():
     """Return pagu anomalies. Optimized with LEFT JOIN."""
+    tahun = get_year()
     conn = get_db_connection()
     B = """CAST(REPLACE(REPLACE(p.budget, 'Rp ', ''), ',', '') AS REAL)"""
     count_q = f"""SELECT COUNT(*) FROM procurement p
         LEFT JOIN (
             SELECT "Kode RUP" as kr, SUM("Total Nilai (Rp)") as total_real
-            FROM realisasi GROUP BY "Kode RUP"
+            FROM realisasi WHERE "Tahun Anggaran" = {tahun} GROUP BY "Kode RUP"
         ) r ON r.kr = CAST(p.id AS TEXT)
-        WHERE {B} > 0
+        WHERE p."Tahun Anggaran" = {tahun} AND {B} > 0
         AND COALESCE(r.total_real, 0) > {B}"""
     count = conn.execute(count_q).fetchone()[0] or 0
     data_q = f"""SELECT p.id, p.package_name, p.satker, p.budget,
@@ -657,9 +701,9 @@ def api_anomalies_pagu():
         FROM procurement p
         LEFT JOIN (
             SELECT "Kode RUP" as kr, SUM("Total Nilai (Rp)") as total_real
-            FROM realisasi GROUP BY "Kode RUP"
+            FROM realisasi WHERE "Tahun Anggaran" = {tahun} GROUP BY "Kode RUP"
         ) r ON r.kr = CAST(p.id AS TEXT)
-        WHERE {B} > 0
+        WHERE p."Tahun Anggaran" = {tahun} AND {B} > 0
         AND COALESCE(r.total_real, 0) > {B}
         ORDER BY realisasi_total DESC"""
     rows = [dict(r) for r in conn.execute(data_q).fetchall()]
@@ -672,9 +716,11 @@ def api_anomalies_pagu():
 @app.route('/api/anomalies/orphan')
 def api_anomalies_orphan():
     """Return orphan realisasi (no parent RUP in procurement table)"""
+    tahun = get_year()
     conn = get_db_connection()
     count = conn.execute(
-        'SELECT COUNT(*) FROM realisasi WHERE "Kode RUP" NOT IN (SELECT id FROM procurement)'
+        'SELECT COUNT(*) FROM realisasi WHERE "Tahun Anggaran" = ? AND "Kode RUP" NOT IN (SELECT id FROM procurement WHERE "Tahun Anggaran" = ?)',
+        (tahun, tahun)
     ).fetchone()[0] or 0
     rows = conn.execute('''
         SELECT "Kode RUP" as kode_rup, "Nama Paket" as nama_paket,
@@ -683,9 +729,9 @@ def api_anomalies_orphan():
                "Jenis Pengadaan" as jenis, "Tahun Anggaran" as tahun,
                "Status Paket" as status_paket
         FROM realisasi
-        WHERE "Kode RUP" NOT IN (SELECT id FROM procurement)
+        WHERE "Tahun Anggaran" = ? AND "Kode RUP" NOT IN (SELECT id FROM procurement WHERE "Tahun Anggaran" = ?)
         ORDER BY "Nama Paket" ASC
-    ''').fetchall()
+    ''', (tahun, tahun)).fetchall()
     conn.close()
     return jsonify({
         'success': True,
