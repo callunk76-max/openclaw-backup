@@ -7,6 +7,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Mancing Bulukumba 🎣</title>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="96x96" href="favicon-96.png">
 <base href="/fish/">
 <link rel="manifest" href="manifest.json">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -174,6 +176,15 @@ nav button i{margin-right:4px}
     </div>
   </div>
 
+  <div class="card" id="proximityCard">
+    <h3>🔔 Proximity Alert</h3>
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+      <span style="font-size:.7rem;flex:1" id="proxStatus">📍 Pantau lokasi... aktifkan GPS</span>
+      <button class="btn" style="font-size:.65rem;padding:4px 10px" onclick="toggleProximity()" id="proxToggle">🔕 Aktifkan</button>
+    </div>
+    <div id="proxNotify" style="margin-top:6px;font-size:.7rem"></div>
+  </div>
+
   <div class="card">
     <h3>🐟 Spot Terdekat</h3>
     <div id="nearbySpots">—</div>
@@ -184,13 +195,20 @@ nav button i{margin-right:4px}
 <div class="pages" id="page-spots">
   <div class="page-title">📍 Spot Pemancingan</div>
   <div class="gps-status inactive" id="spotsGpsStatus">Aktifkan GPS untuk spot terdekat</div>
-  <div id="spotsFilter" style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap">
-    <button class="btn btn-sm" onclick="filterSpots('all')" style="background:var(--accent);padding:4px 10px;font-size:.7rem">Semua</button>
-    <button class="btn btn-sm btn-outline" onclick="filterSpots('boat')" style="padding:4px 10px;font-size:.7rem">🚤 Perahu</button>
-    <button class="btn btn-sm btn-outline" onclick="filterSpots('laut')" style="padding:4px 10px;font-size:.7rem">🌊 Laut</button>
-    <button class="btn btn-sm btn-outline" onclick="filterSpots('tawar')" style="padding:4px 10px;font-size:.7rem">💧 Tawar</button>
-    <button class="btn btn-sm btn-outline" onclick="filterSpots('tebing')" style="padding:4px 10px;font-size:.7rem">⛰️ Tebing</button>
-    <button class="btn btn-sm btn-outline" onclick="filterSpots('dermaga')" style="padding:4px 10px;font-size:.7rem">🏗️ Dermaga</button>
+  <div id="spotsFilter" style="display:flex;gap:4px;margin-bottom:10px;flex-wrap:wrap">
+    <button class="btn btn-sm" onclick="filterSpots('all')" style="background:var(--accent);padding:4px 8px;font-size:.65rem">Semua</button>
+    <button class="btn btn-sm btn-outline" onclick="filterSpots('boat')" style="padding:4px 8px;font-size:.65rem">🚤 Perahu</button>
+    <button class="btn btn-sm btn-outline" onclick="filterSpots('laut')" style="padding:4px 8px;font-size:.65rem">🌊 Laut</button>
+    <button class="btn btn-sm btn-outline" onclick="filterSpots('tawar')" style="padding:4px 8px;font-size:.65rem">💧 Tawar</button>
+    <button class="btn btn-sm btn-outline" onclick="filterSpots('tebing')" style="padding:4px 8px;font-size:.65rem">⛰️ Tebing</button>
+    <button class="btn btn-sm btn-outline" onclick="filterSpots('dermaga')" style="padding:4px 8px;font-size:.65rem">🏗️ Dermaga</button>
+    <button class="btn btn-sm btn-outline" onclick="filterArea('kajang')" style="padding:4px 8px;font-size:.65rem">🔶 Kajang</button>
+    <button class="btn btn-sm btn-outline" onclick="filterArea('bira')" style="padding:4px 8px;font-size:.65rem">🔵 Bira</button>
+    <button class="btn btn-sm btn-outline" onclick="filterArea('bontotiro')" style="padding:4px 8px;font-size:.65rem">🟢 Tiro</button>
+    <button class="btn btn-sm btn-outline" onclick="filterArea('darat')" style="padding:4px 8px;font-size:.65rem">🟤 Darat</button>
+    <button class="btn btn-sm btn-outline" onclick="filterArea('sinjai')" style="padding:4px 8px;font-size:.65rem">🟠 Sinjai</button>
+    <button class="btn btn-sm btn-outline" onclick="filterArea('telukbone')" style="padding:4px 8px;font-size:.65rem">🔵 Bone</button>
+    <button class="btn btn-sm btn-outline" onclick="filterArea('selayar')" style="padding:4px 8px;font-size:.65rem">🟣 Selayar</button>
   </div>
   <div class="spots-grid" id="spotsGrid"></div>
 </div>
@@ -198,6 +216,12 @@ nav button i{margin-right:4px}
 <!-- WEATHER -->
 <div class="pages" id="page-weather">
   <div class="page-title">🌊 Cuaca & Gelombang <small>BMKG Perairan Bulukumba</small></div>
+
+  <!-- DATE SELECTOR -->
+  <div class="card" style="padding:10px">
+    <h3>📅 Pilih Hari</h3>
+    <div style="display:flex;gap:6px;overflow-x:auto;padding:4px 0;scrollbar-width:none" id="dateSelector"></div>
+  </div>
 
   <div class="card">
     <h3>📊 Ringkasan Terkini</h3>
@@ -232,6 +256,12 @@ nav button i{margin-right:4px}
 <!-- TIDE -->
 <div class="pages" id="page-tide">
   <div class="page-title">🌙 Pasang & Solunar</div>
+
+  <!-- DATE SELECTOR -->
+  <div class="card" style="padding:10px">
+    <h3>📅 Pilih Hari</h3>
+    <div style="display:flex;gap:6px;overflow-x:auto;padding:4px 0;scrollbar-width:none" id="tideDateSelector"></div>
+  </div>
 
   <div class="card">
     <h3>🌙 Fase Bulan</h3>
@@ -321,6 +351,27 @@ nav button i{margin-right:4px}
       <button class="btn btn-outline" style="flex:1;font-size:.7rem;padding:6px" onclick="copyCoords()">📋 Salin Koordinat</button>
     </div>
   </div>
+  <!-- BUAT SPOT BARU -->
+  <div class="card">
+    <h3>📌 Buat Spot Baru</h3>
+    <p style="font-size:.7rem;color:var(--dim);margin-bottom:8px">Simpan lokasi GPS kamu sebagai spot mancing baru.</p>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <input id="newSpotName" placeholder="Nama spot..." style="flex:1;min-width:120px;padding:8px 10px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:var(--text);font-size:.75rem">
+      <button class="btn" style="font-size:.7rem;padding:6px 12px" onclick="captureNewSpot()">📸 Ambil Lokasi</button>
+    </div>
+    <div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap">
+      <input id="newSpotFish" placeholder="🐟 Ikan target (opsional)" style="flex:1;min-width:100px;padding:6px 10px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:var(--text);font-size:.7rem">
+      <input id="newSpotNote" placeholder="📝 Catatan (opsional)" style="flex:1;min-width:100px;padding:6px 10px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:var(--text);font-size:.7rem">
+    </div>
+    <div id="newSpotStatus" style="margin-top:6px;font-size:.7rem;color:var(--dim)"></div>
+  </div>
+
+  <!-- SPOT KAMU -->
+  <div class="card" id="customSpotsCard" style="display:none">
+    <h3>⭐ Spot Buatanmu</h3>
+    <div id="customSpotsList"></div>
+  </div>
+
   <div class="card" style="text-align:center;padding:10px">
     <div style="font-size:.85rem;font-weight:600;color:var(--gold)">📍 Cara Navigasi</div>
     <div style="font-size:.7rem;color:var(--dim);margin-top:4px">Tap marker spot → info muncul → tap "Navigasi" → langsung ke Google Maps. Koordinat GPS bisa kamu salin/catat buat kompas perahu.</div>
@@ -341,44 +392,107 @@ nav button i{margin-right:4px}
 // ===================== DATA =====================
 const SPOTS = [
   // ═══════════════════════════════════════════════════════════════
-  // SPOT LAUT — Area Bira & Sekitarnya (bisa dijangkau perahu)
+  // 🚤 SPOT LAUT — Area Bira & Sekitarnya (perahu)
   // ═══════════════════════════════════════════════════════════════
   {id:1,name:'⭐ PULAU BATU — BIRA',lat:-5.6180,lng:120.4720,type:'boat',desc:'Spot favoritmu! Batu karang di tengah laut selatan Tanjung Bira. Medan rock fishing ekstrem, ombak besar. Target: GT, kakap merah, kerapu. Perahu dari Pelabuhan Bira ~10 menit.',fish:'GT, Kakap Merah, Kerapu, Baronang',bestTime:'Pagi 06:00-10:00',facilities:'🚤 Boat 10menit dr Bira'},
-  {id:2,name:'⭐ PULAU KAMBING',lat:-5.6345,lng:120.4680,type:'boat',desc:'Pulau karang tak berpenghuni ~8km dari Bira. Spot diving & mancing terkenal. Tebing karang, arus kencang di sisi selatan. Shark Point di kedalaman 20-30m. Ikan karang melimpah.',fish:'Napoleon, Kerapu GT, Kakap, Baronang',bestTime:'Pagi 06:00-11:00',facilities:'🚤 Boat 20menit dr Bira'},
+  {id:2,name:'⭐ PULAU KAMBING',lat:-5.6345,lng:120.4680,type:'boat',desc:'Pulau karang tak berpenghuni ~8km dari Bira. Spot diving & mancing terkenal. Tebing karang, arus kencang di sisi selatan. Ikan karang melimpah.',fish:'Napoleon, Kerapu GT, Kakap, Baronang',bestTime:'Pagi 06:00-11:00',facilities:'🚤 Boat 20menit dr Bira'},
   {id:3,name:'⭐ PULAU LIUKANG LOE',lat:-5.6610,lng:120.4920,type:'boat',desc:'Pulau pasir putih 3.5km dari Pantai Bira. Penangkaran penyu. Spot snorkeling & mancing karang. Perairan relatif tenang. Ada cottage & warung.',fish:'Kakap, Baronang, Ikan Karang, Cumi',bestTime:'Pagi & Sore',facilities:'🚤 Boat 15menit • Ada penginapan'},
   {id:4,name:'GOSONG KARANG BIRA',lat:-5.6250,lng:120.4750,type:'boat',desc:'Gosong (shoal) antara Bira-Pulau Kambing. Karang dangkal, banyak ikan karang dan predator kecil. Bagus untuk casting dari perahu.',fish:'Baronang, Ekor Kuning, Kerapu Kecil',bestTime:'Pagi 07:00-10:00',facilities:'🚤 Perahu'},
   {id:5,name:'SHARK POINT — P.Kambing',lat:-5.6410,lng:120.4730,type:'boat',desc:'Spot selatan Pulau Kambing, kedalaman 20-30m. Sering ada hiu karang, mola-mola (Sep-Oct). Arus kuat — butuh pengalaman.',fish:'Hiu Karang, Kakap Merah, GT, Mola-mola',bestTime:'Pagi 06:00-09:00',facilities:'🚤 Arus kuat • Hati-hati'},
-  {id:6,name:'TITIK NOL SULAWESI',lat:-5.6075,lng:120.4600,type:'boat',desc:'Ujung selatan Pulau Sulawesi. Tebing karst dan perairan berbatu. Spot mancing GT dan kakap dari perahu. Deket Jembatan Kaca & Teras Bira.',fish:'GT, Kakap Batu, Kerapu',bestTime:'Pagi 06:00-10:00',facilities:'🚤 Dekat dermaga Bira'},
-  {id:7,name:'SELAT BIRA — BONE',lat:-5.6600,lng:120.5200,type:'boat',desc:'Perairan terbuka antara Bira dan Selayar. Jalur migrasi ikan. Target tuna, cakalang, tenggiri. Air biru dalam.',fish:'Tuna, Cakalang, Tenggiri, Marlin',bestTime:'Pagi Subuh 05:00-08:00',facilities:'🚤 Boat besar • 30-45menit'},
-  {id:8,name:'KARANG TENGAH BIRA',lat:-5.6280,lng:120.4600,type:'boat',desc:'Area karang di tengah-tengah antara Pelabuhan Bira dan Pulau Kambing. Kedalaman bervariasi 5-15m. Spot andalan mancing kakap.',fish:'Kakap Merah, Kerapu, Bawal',bestTime:'Pagi 07:00-11:00',facilities:'🚤 Boat 15menit dr Bira'},
+  {id:6,name:'TITIK NOL SULAWESI',lat:-5.6075,lng:120.4600,type:'boat',desc:'Ujung selatan Pulau Sulawesi. Tebing karst dan perairan berbatu. Spot mancing GT dan kakap dari perahu.',fish:'GT, Kakap Batu, Kerapu',bestTime:'Pagi 06:00-10:00',facilities:'🚤 Dekat dermaga Bira'},
+  {id:7,name:'SELAT BIRA — BONE',lat:-5.6600,lng:120.5200,type:'boat',desc:'Perairan terbuka antara Bira dan Selayar. Jalur migrasi ikan tuna, cakalang, tenggiri. Air biru dalam.',fish:'Tuna, Cakalang, Tenggiri, Marlin',bestTime:'Pagi Subuh 05:00-08:00',facilities:'🚤 Boat besar • 30-45menit'},
+  {id:8,name:'KARANG TENGAH BIRA',lat:-5.6280,lng:120.4600,type:'boat',desc:'Area karang di tengah antara Pelabuhan Bira dan Pulau Kambing. Kedalaman 5-15m. Spot andalan kakap.',fish:'Kakap Merah, Kerapu, Bawal',bestTime:'Pagi 07:00-11:00',facilities:'🚤 Boat 15menit dr Bira'},
   // ═══════════════════════════════════════════════════════════════
-  // SPOT DARATAN — Akses dari pantai
+  // 🚤 SPOT LAUT — Kajang & Kassi
   // ═══════════════════════════════════════════════════════════════
-  {id:9,name:'Kolam Labuh (Pelabuhan Bulukumba)',lat:-5.5569,lng:120.1833,type:'laut',desc:'Spot favorit warga di kawasan pelabuhan. Air tenang, cocok untuk pemancing pemula.',fish:'Mujair, Belanak, Kuwe',bestTime:'Pagi',facilities:'Area parkir, warung'},
-  {id:10,name:'Pantai Merpati / Pinisi Park',lat:-5.5511,lng:120.1847,type:'laut',desc:'Kawasan wisata di Jl Yos Sudarso, Kel. Terang-terang. Spot mancing dari bibir pantai.',fish:'Mujair, Baronang',bestTime:'Sore',facilities:'Parkir, gazebo'},
-  {id:11,name:'Pelabuhan Bira (Start Point)',lat:-5.6100,lng:120.4580,type:'dermaga',desc:'DERMAGA & titik keberangkatan ke semua spot boat! Sewa perahu di sini. Ada warung dan parkir.',fish:'Kakap, Kerapu, Baronang',bestTime:'Pagi & Sore',facilities:'🏗️ Dermaga • parkir • warung'},
-  {id:12,name:'Pantai Bara',lat:-5.5667,lng:120.3833,type:'laut',desc:'Pantai berpasir putih, spot mancing dari pinggir pantai. Area wisata.',fish:'Baronang, Ekor Kuning',bestTime:'Sore',facilities:'Parkir, warung'},
-  {id:13,name:'Tebing Apparalang',lat:-5.5583,lng:120.1333,type:'tebing',desc:'Spot rock fishing di tebing karst. Pemandangan spektakuler, medan menantang.',fish:'Kakap Batu, Kerapu',bestTime:'Pagi',facilities:'Medan ekstrem'},
-  {id:14,name:'Muara Sungai Bulukumba',lat:-5.5400,lng:120.1667,type:'tebing',desc:'Spot rock fishing di area muara. Medan cukup ekstrem.',fish:'Ikan karang, Kakap, Snapper',bestTime:'Pagi',facilities:'Hati-hati medan berbatu'},
-  {id:15,name:'Perairan Lepas Bulukumba',lat:-5.6667,lng:120.2167,type:'laut',desc:'Area lepas pantai untuk mancing ikan besar. Tuna, cakalang, tenggiri.',fish:'Tuna, Cakalang, Tenggiri',bestTime:'Pagi',facilities:'Sewa boat di pelabuhan'},
-  {id:16,name:'Luppung Manyampa',lat:-5.5833,lng:120.2500,type:'laut',desc:'Spot terkenal untuk ikan kapas-kapas di perairan Bulukumba.',fish:'Kapas-kapas, Kuro, Tembang',bestTime:'Sore',facilities:'—'},
-  {id:17,name:'Sungai Gantarang',lat:-5.5200,lng:120.1400,type:'tawar',desc:'Sungai air tawar di Kecamatan Gantarang. Spot ikan gabus dan nila.',fish:'Gabus, Nila, Mujair',bestTime:'Pagi & Sore',facilities:'—'},
-  {id:18,name:'Perumahan Sokko Bampa (Gantarang)',lat:-5.5300,lng:120.1300,type:'tawar',desc:'Spot ikan gabus di pinggiran kota. Kolam dan saluran air tawar.',fish:'Gabus, Nila, Lele',bestTime:'Sore',facilities:'Akses mudah'}
+  {id:21,name:'⭐ PELABUHAN KAJANG (KASSI)',lat:-5.4200,lng:120.3300,type:'boat',desc:'Pelabuhan perikanan di Kecamatan Kajang. Spot favorit pemancing lokal. Target ikan: kembung, mobara, GT. Jigging laut dalam hingga 300m. Sering viral di TikTok & FB (KaLomang Fishing).',fish:'Kembung, Mobara, GT, Kakap',bestTime:'Pagi 06:00-10:00',facilities:'🚤 Dermaga • parkir • warung'},
+  {id:22,name:'⭐ PERAIRAN KASSI (DALAM)',lat:-5.4400,lng:120.3600,type:'boat',desc:'Perairan dalam di lepas Pelabuhan Kajang. Kedalaman hingga 300m. Spot jigging untuk ikan besar. Target: kakap merah, kerapu raksasa, GT.',fish:'Kakap Merah, Kerapu Besar, GT, Bawal',bestTime:'Pagi 06:00-09:00',facilities:'🚤 Boat dari Kajang'},
+  {id:23,name:'⭐ PESISIR KAJANG — LAUD',lat:-5.4080,lng:120.3150,type:'boat',desc:'Pesisir utara Kecamatan Kajang berbatasan dengan Herlang. Spot mancing dari perahu dekat pantai. Air tenang, banyak ikan karang.',fish:'Baronang, Ekor Kuning, Kembung',bestTime:'Pagi & Sore',facilities:'🚤 Boat nelayan setempat'},
+  // ═══════════════════════════════════════════════════════════════
+  // 🚤 SPOT LAUT — Lainnya (Herlang, Kindang, Bulukumpa)
+  // ═══════════════════════════════════════════════════════════════
+  {id:24,name:'PESISIR HERLANG',lat:-5.3800,lng:120.2500,type:'boat',desc:'Pesisir Kecamatan Herlang di utara Bulukumba. Spot mancing tradisional dengan perahu nelayan. Laut tenang, cocok untuk pemancing pemula.',fish:'Kembung, Tembang, Baronang',bestTime:'Pagi',facilities:'🚤 Boat nelayan'},
+  {id:25,name:'TELUK BULUKUMPA',lat:-5.3400,lng:120.1800,type:'boat',desc:'Perairan Teluk di Kecamatan Bulukumpa. Spot mancing dari perahu di area teluk yang terlindung. Gelombang relatif tenang.',fish:'Kakap, Belanak, Kuwe',bestTime:'Pagi & Sore',facilities:'🚤 Boat setempat'},
+  // ═══════════════════════════════════════════════════════════════
+  // 🌊 SPOT PANTAI & LAUT — Daratan (akses dari darat)
+  // ═══════════════════════════════════════════════════════════════
+  {id:9,name:'Kolam Labuh (Pelabuhan Bulukumba)',lat:-5.5569,lng:120.1833,type:'laut',desc:'Spot favorit warga di kawasan pelabuhan pusat kota Bulukumba. Air tenang. Kec. Ujung Bulu.',fish:'Mujair, Belanak, Kuwe',bestTime:'Pagi & Sore',facilities:'Area parkir, warung'},
+  {id:10,name:'Pantai Merpati / Pinisi Park',lat:-5.5511,lng:120.1847,type:'laut',desc:'Kawasan wisata di Jl Yos Sudarso, Kel. Terang-terang, Kec. Ujung Bulu. Spot mancing dari bibir pantai.',fish:'Mujair, Baronang',bestTime:'Sore',facilities:'Parkir, gazebo'},
+  {id:12,name:'Pantai Bara',lat:-5.5667,lng:120.3833,type:'laut',desc:'Pantai berpasir putih di Kec. Bontobahari. Spot mancing dari bibir pantai dan tebing karang di sekitarnya.',fish:'Baronang, Ekor Kuning, Kakap',bestTime:'Sore',facilities:'Parkir, warung'},
+  {id:15,name:'Perairan Lepas Bulukumba',lat:-5.6667,lng:120.2167,type:'laut',desc:'Area lepas pantai untuk mancing ikan besar. Tuna, cakalang, tenggiri. Kec. Bontobahari & Ujung Loe.',fish:'Tuna, Cakalang, Tenggiri',bestTime:'Pagi Subuh',facilities:'Sewa boat di pelabuhan'},
+  {id:16,name:'Luppung Manyampa',lat:-5.5833,lng:120.2500,type:'laut',desc:'Spot ikan kapas-kapas di perairan Bulukumba. Kec. Ujung Loe.',fish:'Kapas-kapas, Kuro, Tembang',bestTime:'Sore',facilities:'—'},
+  {id:26,name:'⭐ PANTAI KASUSO — KAJANG',lat:-5.4167,lng:120.3220,type:'laut',desc:'Pantai di Desa Kasuso, Kec. Kajang. Spot mancing dari pantai. Pesisir utara Bulukumba. Suasana tenang dan alami.',fish:'Baronang, Ekor Kuning, Kembung',bestTime:'Pagi & Sore',facilities:'Parkir'},
+  {id:27,name:'PANTAI MANDRILA — HERLANG',lat:-5.3900,lng:120.2400,type:'laut',desc:'Pantai Mandala Ria di Kecamatan Herlang. Spot mancing dari pantai berpasir. Air tenang.',fish:'Baronang, Belanak, Kembung',bestTime:'Sore',facilities:'—'},
+  {id:28,name:'⭐ PESISIR LAUD KAJANG',lat:-5.4040,lng:120.3100,type:'laut',desc:'Pesisir Desa Laikang dan Laud, Kec. Kajang. Spot mancing tradisional dari darat. Pemandangan sawah dan laut.',fish:'Mujair, Baronang, Kembung',bestTime:'Pagi',facilities:'—'},
+  {id:29,name:'PANTAI UJUNG TIRO',lat:-5.4900,lng:120.0500,type:'laut',desc:'Pantai di Kec. Bontotiro. Spot mancing dari tebing dan pinggir pantai. Pesisir barat Bulukumba.',fish:'Kakap Batu, Kerapu, Baronang',bestTime:'Pagi',facilities:'—'},
+  {id:30,name:'PESISIR RILAU ALE',lat:-5.3500,lng:120.1300,type:'laut',desc:'Pesisir utara Kec. Rilau Ale. Spot mancing dari pantai. Area perbatasan Bulukumba-Sinjai.',fish:'Baronang, Kembung',bestTime:'Pagi',facilities:'—'},
+  // ═══════════════════════════════════════════════════════════════
+  // 💧 SPOT AIR TAWAR — Sungai & Danau
+  // ═══════════════════════════════════════════════════════════════
+  {id:17,name:'Sungai Gantarang',lat:-5.5200,lng:120.1400,type:'tawar',desc:'Sungai air tawar di Kec. Gantarang. Spot ikan gabus, nila, dan mujair. Air tenang, teduh.',fish:'Gabus, Nila, Mujair',bestTime:'Pagi & Sore',facilities:'—'},
+  {id:18,name:'Perumahan Sokko Bampa',lat:-5.5300,lng:120.1300,type:'tawar',desc:'Kolam dan saluran air di Taccorong, Kec. Gantarang. Surganya ikan gabus ukuran besar!',fish:'Gabus ukuran jumbo, Nila, Lele',bestTime:'Sore',facilities:'Akses mudah'},
+  {id:31,name:'⭐ SUNGAI TUA KAJANG (Ammatoa)',lat:-5.3700,lng:120.2200,type:'tawar',desc:'Sungai di kawasan Adat Ammatoa, Desa Tana Toa, Kec. Kajang. Suasana mistis & alami. Ikan air tawar melimpah. Hutan adat.',fish:'Gabus, Nila, Lele, Sidat',bestTime:'Pagi 07:00-10:00',facilities:'— • Kawasan adat'},
+  {id:32,name:'⭐ SUNGAI BULUKUMPA',lat:-5.3300,lng:120.1700,type:'tawar',desc:'Sungai air tawar di Kec. Bulukumpa. Spot mancing ikan air tawar di pedesaan. Suasana asri dan sejuk.',fish:'Gabus, Nila, Lele, Mas',bestTime:'Pagi',facilities:'—'},
+  {id:33,name:'PERMANDIAN ALAM RILAU ALE',lat:-5.3400,lng:120.1200,type:'tawar',desc:'Pemandian alam di Kec. Rilau Ale. Sungai jernih dengan pepohonan rindang. Spot mancing santai sambil mandi.',fish:'Nila, Mas, Gabus kecil',bestTime:'Pagi & Sore',facilities:'Area wisata alam'},
+  {id:34,name:'SUNGAI KINDANG',lat:-5.4000,lng:120.0900,type:'tawar',desc:'Sungai di Kec. Kindang, bagian barat Bulukumba. Area perbukitan. Air jernih, ikan air tawar asli.',fish:'Gabus, Nila, Sidat',bestTime:'Pagi',facilities:'—'},
+  // ═══════════════════════════════════════════════════════════════
+  // ⛰️ SPOT TEBING & ROCK FISHING
+  // ═══════════════════════════════════════════════════════════════
+  {id:13,name:'Tebing Apparalang',lat:-5.5583,lng:120.1333,type:'tebing',desc:'Tebing karst di Desa Ara, Kec. Bontobahari. Spot rock fishing ekstrem. Pemandangan spektakuler.',fish:'Kakap Batu, Kerapu',bestTime:'Pagi',facilities:'Medan ekstrem'},
+  {id:14,name:'Muara Sungai Bulukumba',lat:-5.5400,lng:120.1667,type:'tebing',desc:'Muara sungai di Kec. Ujung Bulu. Spot rock fishing. Ikan kakap dan ikan karang.',fish:'Kakap, Kerapu, Snapper',bestTime:'Pagi',facilities:'Hati-hati medan berbatu'},
+  {id:35,name:'⭐ TEBING PANTAI BARA',lat:-5.5680,lng:120.3880,type:'tebing',desc:'Tebing karang di samping Pantai Bara, Kec. Bontobahari. Spot casting populer. Ikan kakap dan kerapu.',fish:'Kakap Batu, Kerapu, Baronang',bestTime:'Pagi 06:00-10:00',facilities:'Parkir di Pantai Bara'},
+  {id:36,name:'TEBING UJUNG TIRO',lat:-5.4920,lng:120.0480,type:'tebing',desc:'Tebing karst di pesisir Kec. Bontotiro. Spot rock fishing dengan view laut lepas.',fish:'Kakap Batu, Kerapu',bestTime:'Pagi',facilities:'Medan berbatu'},
+  // ═══════════════════════════════════════════════════════════════
+  // 🌊 SPOT SINJAI — Perairan Sinjai & Pulau Sembilan
+  // ═══════════════════════════════════════════════════════════════
+  {id:41,name:'⭐ PULAU SEMBILAN SINJAI',lat:-5.0500,lng:120.4000,type:'boat',desc:'Gugusan 9 pulau di perairan Sinjai, Teluk Bone. Spot mancing legendaris. Target: tuna, cakalang, tenggiri, kakap. Perahu dari Pelabuhan Larea Rea. Ombak besar di musim barat.',fish:'Tuna, Cakalang, Tenggiri, Kakap Merah',bestTime:'Pagi Subuh 05:00-09:00',facilities:'🚤 Boat dari Sinjai • 30-60menit'},
+  {id:42,name:'⭐ PULAU KAMBUNO — SINJAI',lat:-5.0800,lng:120.4200,type:'boat',desc:'Pulau di gugusan Pulau Sembilan, Sinjai. Spot mancing karang dan laut dalam. Air jernih, terumbu karang indah. Populer untuk trip mancing.',fish:'Kakap, Kerapu, Baronang, Tuna Kecil',bestTime:'Pagi 06:00-10:00',facilities:'🚤 Boat 45menit dr Sinjai'},
+  {id:43,name:'⭐ PELABUHAN LAREA REA',lat:-5.1500,lng:120.2500,type:'dermaga',desc:'Pelabuhan perikanan utama Sinjai. Titik keberangkatan ke Pulau Sembilan. Spot mancing dari dermaga. Ikan kembung dan tembang.',fish:'Kembung, Tembang, Belanak',bestTime:'Pagi & Sore',facilities:'🏗️ Dermaga • parkir • PPI'},
+  {id:44,name:'PESISIR KARAMPUANG SINJAI',lat:-5.2200,lng:120.2800,type:'laut',desc:'Pantai Karampuang, Sinjai. Spot mancing dari pantai berpasir. Suasana tenang di pesisir timur. Dekat pusat kota Sinjai.',fish:'Baronang, Ekor Kuning, Kembung',bestTime:'Sore',facilities:'Parkir'},
+  {id:45,name:'BUHUNG PITUE (BURUNGLOE)',lat:-5.0000,lng:120.4100,type:'boat',desc:'Pulau di gugusan Pulau Sembilan, Kec. Pulau Sembilan, Sinjai. Spot mancing karang dangkal. Air tenang di musim timur.',fish:'Kakap, Baronang, Ikan Karang',bestTime:'Pagi 07:00-11:00',facilities:'🚤 Boat dari Sinjai'},
+  {id:46,name:'SPOT LAKARANGA SINJAI',lat:-5.1900,lng:120.2700,type:'laut',desc:'Spot mancing populer di perairan Sinjai. Area karang dan pasir. Ikan kakap dan baronang melimpah.',fish:'Kakap, Baronang, Kerapu Kecil',bestTime:'Pagi',facilities:'—'},
+  {id:47,name:'PANTAI HUBAT SINJAI',lat:-5.1800,lng:120.3300,type:'laut',desc:'Pantai Hubat, Sinjai Timur. Spot mancing dari pantai. Area wisata dengan pasir putih dan pepohonan rindang.',fish:'Baronang, Belanak, Ekor Kuning',bestTime:'Sore',facilities:'Area wisata, parkir'},
+  // ═══════════════════════════════════════════════════════════════
+  // 🌊 TELUK BONE — Perairan Umum Teluk Bone
+  // ═══════════════════════════════════════════════════════════════
+  {id:48,name:'⭐ PERAIRAN TELUK BONE',lat:-4.5000,lng:121.0000,type:'boat',desc:'Teluk Bone membentang antara Sulsel-Sultra. Jalur migrasi ikan tuna, cakalang, dan tenggiri. Perairan dalam. Spot mancing andalan kapal besar dari Bone, Sinjai, Luwu.',fish:'Tuna Sirip Kuning, Cakalang, Tenggiri, Marlin',bestTime:'Pagi Subuh 05:00-08:00',facilities:'🚤 Kapal besar • Sewa dari Bone/Luwu'},
+  {id:49,name:'PERAIRAN BONE TOWN',lat:-4.5600,lng:120.3300,type:'laut',desc:'Perairan sekitar Kota Bone, Teluk Bone. Spot mancing dari pantai dan perahu kecil. Ikan karang dan pelagis kecil.',fish:'Kembung, Baronang, Kakap, Tembang',bestTime:'Pagi & Sore',facilities:'Pelabuhan Bone'},
+  {id:50,name:'PESISIR LUWU TIMUR',lat:-2.6000,lng:121.3000,type:'boat',desc:'Perairan Luwu Timur di Teluk Bone utara. Spot mancing dengan perahu. Target ikan besar migrasi. Air biru jernih.',fish:'Tuna, Cakalang, Tenggiri, Kuwe',bestTime:'Pagi 06:00-10:00',facilities:'🚤 Boat dari Luwu'},
+  // ═══════════════════════════════════════════════════════════════
+  // 🌊 KEPULAUAN SELAYAR
+  // ═══════════════════════════════════════════════════════════════
+  {id:51,name:'⭐ SELAT SELAYAR',lat:-5.6940,lng:120.4880,type:'boat',desc:'Selat antara Tanjung Bira dan Pulau Selayar. Jalur migrasi ikan pelagis. Spot mancing kapal besar. Target: tuna, cakalang, marlin.',fish:'Tuna, Cakalang, Marlin, Tenggiri',bestTime:'Pagi Subuh 05:00-09:00',facilities:'🚤 Kapal • 15-30menit dr Bira'},
+  {id:52,name:'⭐ DERMAGA PATTUMBUKAN',lat:-6.1000,lng:120.4800,type:'dermaga',desc:'Dermaga Pattumbukan di Pulau Selayar. Spot mancing favorit dari darat. Air jernih, ikan karang melimpah. Lokasi populer di kalangan pemancing lokal.',fish:'Baronang, Kakap, Kerapu, Ekor Kuning',bestTime:'Pagi & Sore',facilities:'🏗️ Dermaga • warung'},
+  {id:53,name:'⭐ TIMUR SELAYAR (JIGGING)',lat:-6.0500,lng:120.5500,type:'boat',desc:'Perairan timur Pulau Selayar. Spot jigging terkenal! Kedalaman 50-200m. Target: kakap merah raksasa, kerapu besar. Sarangnya ikan kakap!',fish:'Kakap Merah Besar, Kerapu Raksasa, GT',bestTime:'Pagi 06:00-10:00',facilities:'🚤 Boat dari Benteng • 20menit'},
+  {id:54,name:'KOTA BENTENG SELAYAR',lat:-6.1200,lng:120.4600,type:'dermaga',desc:'Ibu kota Kepulauan Selayar. Dermaga dan pelabuhan utama. Titik awal eksplorasi spot mancing di Selayar. Sewa perahu dan perlengkapan.',fish:'Kakap, Baronang, Kembung',bestTime:'Pagi & Sore',facilities:'🏗️ Pelabuhan • kota • penginapan'},
+  {id:55,name:'PULAU TANAH JAMPEA',lat:-7.1000,lng:120.7000,type:'boat',desc:'Pulau besar di selatan Selayar. Spot mancing laut dalam. Tuna, cakalang, dan ikan karang besar. Perjalanan 3-4 jam dari Benteng.',fish:'Tuna, Cakalang, Kakap Merah, Kerapu',bestTime:'Pagi 06:00-10:00',facilities:'🚤 Kapal • 3-4jam dr Selayar'},
+  {id:56,name:'TAKA BONERATE (ATOLL)',lat:-6.7000,lng:121.2000,type:'boat',desc:'Kepulauan atol di tenggara Selayar. Taman Nasional Laut. Spot mancing & diving kelas dunia. Air super jernih, terumbu karang spektakuler.',fish:'Tuna, Kakap Merah, Napoleon, GT',bestTime:'Pagi 06:00-10:00',facilities:'🚤 Kapal dari Selayar • 4-5jam'},
+  {id:57,name:'KARANG TIMUR SELAYAR',lat:-6.0300,lng:120.5300,type:'boat',desc:'Area karang di lepas pantai timur Selayar. Gosong karang dengan ikan melimpah. Bagus untuk casting dan jigging.',fish:'Kakap, Kerapu, Baronang, GT',bestTime:'Pagi 07:00-11:00',facilities:'🚤 Boat 15menit dr Benteng'},
+  {id:58,name:'SELAYAR STRAIT NORTH',lat:-5.7500,lng:120.4900,type:'boat',desc:'Selat Selayar bagian utara, dekat Bira. Arus kuat, pertemuan massa air. Spot GT dan kakap merah besar.',fish:'GT Besar, Kakap Merah, Tenggiri',bestTime:'Pagi 06:00-09:00',facilities:'🚤 Kapal • Arus kuat'},
+  // ═══════════════════════════════════════════════════════════════
+  // ✅ SPOT LOKAL BULUKUMBA — Tambahan khusus
+  // ═══════════════════════════════════════════════════════════════
+  {id:61,name:'⭐ PULAU PASI (PASI\')',lat:-6.1700,lng:120.4100,type:'boat',desc:'Pulau di barat Pulau Selayar, perbatasan Bulukumba-Selayar. Spot mancing & diving terkenal. Air jernih, karang indah. Ikan tuna, kakap, karang. Bisa dicapai dari Bira atau Benteng.',fish:'Tuna, Kakap Merah, Kerapu, Baronang',bestTime:'Pagi 06:00-10:00',facilities:'🚤 Boat 45-60menit dari Bira'},
+  {id:62,name:'⭐ BONE KEBO',lat:-5.8000,lng:120.3800,type:'boat',desc:'Spot lokal perairan Bulukumba bagian selatan. Area karang dan perairan berbatu. Ikan kakap dan kerapu. Spot favorit pemancing lokal Bulukumba.',fish:'Kakap Merah, Kerapu, GT, Baronang',bestTime:'Pagi 06:00-10:00',facilities:'🚤 Perahu nelayan setempat'}
 ];
 
 const FISH = [
-  {name:'Tuna (Cakalang/Yellowfin)',desc:'Ikan pelagis besar, banyak di perairan lepas Bulukumba. Target utama nelayan.',season:'best',loc:'Lepas pantai'},
-  {name:'Kakap Merah (Red Snapper)',desc:'Ikan demersal berkualitas tinggi. Banyak di area karang dan sekitar pulau.',season:'best',loc:'Liukang Loe, Pulau Kambing'},
-  {name:'Kerapu (Grouper)',desc:'Ikan karang bernilai ekonomis. Bersembunyi di celah-celah karang.',season:'best',loc:'Pulau Kambing, Liukang Loe'},
-  {name:'Baronang (Rabbitfish)',desc:'Ikan karang herbivora, mudah dipancing dari bibir pantai.',season:'best',loc:'Pantai Bara, Bira'},
-  {name:'Ikan Gabus (Snakehead)',desc:'Ikan air tawar predator, banyak di sungai dan kolam Gantarang.',season:'best',loc:'Sokko Bampa, Sungai Gantarang'},
-  {name:'Kembung (Mackerel)',desc:'Ikan pelagis kecil, melimpah di pesisir Bulukumba.',season:'normal',loc:'Pesisir, Kolam Labuh'},
-  {name:'Mujair / Nila (Tilapia)',desc:'Ikan air tawar, favorit di spot Kolam Labuh dan sungai.',season:'best',loc:'Kolam Labuh, Pinisi Park'},
-  {name:'Kapas-kapas',desc:'Ikan khas perairan Bulukumba, target pemancing lokal.',season:'normal',loc:'Luppung Manyampa'},
-  {name:'Tenggiri (Spanish Mackerel)',desc:'Ikan predator cepat, musiman di perairan lepas.',season:'normal',loc:'Perairan Lepas'},
-  {name:'Cumi-cumi & Gurita',desc:'Cephalopoda, aktif di malam hari. Dipancing dengan umpan cahaya.',season:'normal',loc:'Karang & pasir'},
-  {name:'Bandeng (Milkfish)',desc:'Ikan air payau, banyak di tambak dan muara.',season:'normal',loc:'Tambak sekitar pesisir'},
-  {name:'Kuwe (Giant Trevally)',desc:'Ikan predator kuat, fight-nya seru. Spot di sekitar pelabuhan.',season:'normal',loc:'Kolam Labuh, Pelabuhan'}
+  {name:'Tuna (Cakalang/Yellowfin)',desc:'Ikan pelagis besar. Target utama nelayan Bulukumba, Sinjai, Teluk Bone, Selayar.',season:'best',loc:'Perairan Lepas, Selat Bira, Teluk Bone, Sinjai'},
+  {name:'Kakap Merah (Red Snapper)',desc:'Ikan demersal berkualitas tinggi. Banyak di area karang.',season:'best',loc:'Selayar, Liukang Loe, Kassi, Pulau Sembilan'},
+  {name:'Kerapu (Grouper)',desc:'Ikan karang bernilai ekonomis.',season:'best',loc:'Pulau Kambing, Selayar, Sinjai, Bira'},
+  {name:'Baronang (Rabbitfish)',desc:'Ikan karang herbivora, mudah dipancing dari bibir pantai.',season:'best',loc:'Bira, Kasuso, Karampuang, Selayar'},
+  {name:'Ikan Gabus (Snakehead)',desc:'Ikan air tawar predator, melimpah di sungai Gantarang & Kajang.',season:'best',loc:'Sokko Bampa, Ammatoa, Kindang'},
+  {name:'Kembung (Mackerel)',desc:'Ikan pelagis kecil, melimpah di pesisir.',season:'normal',loc:'Kolam Labuh, Kajang, Sinjai, Bone'},
+  {name:'Mujair / Nila (Tilapia)',desc:'Ikan air tawar, favorit di spot air tawar se-Bulukumba.',season:'best',loc:'Kolam Labuh, Pinisi Park, Sungai'},
+  {name:'Kapas-kapas',desc:'Ikan khas perairan Bulukumba.',season:'normal',loc:'Luppung Manyampa, Kajang'},
+  {name:'Tenggiri (Spanish Mackerel)',desc:'Ikan predator cepat, musiman.',season:'normal',loc:'Teluk Bone, Selat Bira, Selayar'},
+  {name:'Cumi-cumi & Gurita',desc:'Cephalopoda, aktif malam hari.',season:'normal',loc:'Area karang, Bira, Kajang, Selayar'},
+  {name:'Kuwe (Giant Trevally)',desc:'Ikan predator kuat.',season:'normal',loc:'Kolam Labuh, Pelabuhan Kajang, Selayar'},
+  {name:'Ikan Mobara',desc:'Ikan khas perairan Kajang.',season:'normal',loc:'Pelabuhan Kajang/Kassi'},
+  {name:'Bandeng (Milkfish)',desc:'Ikan air payau.',season:'normal',loc:'Tambak pesisir Bulukumba'},
+  {name:'Sidat (Belut)',desc:'Ikan air tawar/estuari.',season:'normal',loc:'Sungai Kajang, Kindang, Ammatoa'},
+  {name:'Marlin (Ikan Layaran)',desc:'Ikan besar migrasi. Target sport fishing di perairan dalam.',season:'normal',loc:'Teluk Bone, Selat Selayar'},
+  {name:'Napoleon (Wrasse)',desc:'Ikan karang besar yang dilindungi. Sering terlihat di spot diving.',season:'normal',loc:'Pulau Kambing, Taka Bonerate'}
 ];
 
 const MOON_PHASES = [
@@ -392,29 +506,95 @@ const MOON_PHASES = [
   {emoji:'🌘',name:'Sabit Tua',fish:'Baik'}
 ];
 
-const BMKG_FORECAST = [
-  {time:'03:00',weather:'☁️ Berawan',wind:'Timur 11kt',gust:24,wave:'0.7m',temp:28,humid:79},
-  {time:'04:00',weather:'⛅ Cerah Berawan',wind:'Timur 11kt',gust:25,wave:'0.8m',temp:29,humid:78},
-  {time:'05:00',weather:'⛅ Cerah Berawan',wind:'Timur 11kt',gust:25,wave:'0.8m',temp:31,humid:77},
-  {time:'06:00',weather:'☁️ Berawan',wind:'Timur 11kt',gust:24,wave:'0.8m',temp:32,humid:77},
-  {time:'07:00',weather:'☁️ Berawan Tebal',wind:'Timur 11kt',gust:24,wave:'0.8m',temp:31,humid:77},
-  {time:'08:00',weather:'☁️ Berawan Tebal',wind:'Timur 10kt',gust:23,wave:'0.8m',temp:30,humid:77},
-  {time:'09:00',weather:'☁️ Berawan Tebal',wind:'Timur 10kt',gust:21,wave:'0.8m',temp:29,humid:76},
-  {time:'10:00',weather:'☁️ Berawan Tebal',wind:'Timur 10kt',gust:20,wave:'0.8m',temp:29,humid:76},
-  {time:'11:00',weather:'☁️ Berawan Tebal',wind:'Timur 10kt',gust:17,wave:'0.8m',temp:29,humid:76},
-  {time:'12:00',weather:'☁️ Berawan',wind:'Timur 10kt',gust:18,wave:'0.8m',temp:29,humid:76},
-  {time:'13:00',weather:'☁️ Berawan Tebal',wind:'Timur 10kt',gust:18,wave:'0.9m',temp:29,humid:76},
-  {time:'14:00',weather:'☁️ Berawan Tebal',wind:'Timur Laut 11kt',gust:18,wave:'0.9m',temp:28,humid:77},
-  {time:'15:00',weather:'☁️ Berawan',wind:'Timur Laut 11kt',gust:18,wave:'0.9m',temp:28,humid:79},
-  {time:'16:00',weather:'☁️ Berawan',wind:'Timur Laut 11kt',gust:20,wave:'0.9m',temp:27,humid:82},
-  {time:'17:00',weather:'☁️ Berawan',wind:'Timur Laut 11kt',gust:21,wave:'0.9m',temp:27,humid:83},
-  {time:'18:00',weather:'☁️ Berawan',wind:'Timur Laut 11kt',gust:20,wave:'0.9m',temp:27,humid:85},
-  {time:'19:00',weather:'🌧️ Hujan Ringan',wind:'Timur Laut 11kt',gust:19,wave:'0.9m',temp:27,humid:85},
-  {time:'20:00',weather:'🌧️ Hujan Ringan',wind:'Timur Laut 10kt',gust:18,wave:'0.9m',temp:26,humid:87},
-  {time:'21:00',weather:'🌧️ Hujan Ringan',wind:'Timur Laut 10kt',gust:20,wave:'0.8m',temp:26,humid:87},
-  {time:'22:00',weather:'🌧️ Hujan Ringan',wind:'Timur Laut 10kt',gust:20,wave:'0.8m',temp:25,humid:88},
-  {time:'23:00',weather:'🌧️ Hujan Ringan',wind:'Timur 8kt',gust:20,wave:'0.8m',temp:25,humid:88}
-];
+// 📅 Multi-Day Forecast Data (2-10 Mei 2026)
+// Index by date string 'YYYY-MM-DD'
+const FORECAST_DAILY = {
+  '2026-05-02': [
+    {time:'03:00',weather:'☁️ Berawan',wind:'Timur 11kt',gust:24,wave:'0.7m',temp:28,humid:79},
+    {time:'06:00',weather:'☁️ Berawan',wind:'Timur 11kt',gust:24,wave:'0.8m',temp:32,humid:77},
+    {time:'09:00',weather:'☁️ Berawan Tebal',wind:'Timur 10kt',gust:21,wave:'0.8m',temp:29,humid:76},
+    {time:'12:00',weather:'☁️ Berawan',wind:'Timur 10kt',gust:18,wave:'0.8m',temp:29,humid:76},
+    {time:'15:00',weather:'☁️ Berawan',wind:'Timur Laut 11kt',gust:18,wave:'0.9m',temp:28,humid:79},
+    {time:'18:00',weather:'☁️ Berawan',wind:'Timur Laut 11kt',gust:20,wave:'0.9m',temp:27,humid:85},
+    {time:'21:00',weather:'🌧️ Hujan Ringan',wind:'Timur Laut 10kt',gust:20,wave:'0.8m',temp:26,humid:87}
+  ],
+  '2026-05-03': [
+    {time:'03:00',weather:'☁️ Berawan Tebal',wind:'Timur 10kt',gust:22,wave:'0.8m',temp:27,humid:82},
+    {time:'06:00',weather:'⛅ Cerah Berawan',wind:'Timur 10kt',gust:20,wave:'0.7m',temp:31,humid:78},
+    {time:'09:00',weather:'⛅ Cerah Berawan',wind:'Timur 9kt',gust:18,wave:'0.7m',temp:30,humid:75},
+    {time:'12:00',weather:'☁️ Berawan',wind:'Timur 9kt',gust:16,wave:'0.7m',temp:30,humid:74},
+    {time:'15:00',weather:'☁️ Berawan',wind:'Timur Laut 10kt',gust:17,wave:'0.8m',temp:29,humid:77},
+    {time:'18:00',weather:'☁️ Berawan',wind:'Timur Laut 10kt',gust:18,wave:'0.8m',temp:28,humid:82},
+    {time:'21:00',weather:'☁️ Berawan',wind:'Timur 9kt',gust:18,wave:'0.7m',temp:26,humid:85}
+  ],
+  '2026-05-04': [
+    {time:'03:00',weather:'☁️ Berawan',wind:'Timur 9kt',gust:20,wave:'0.7m',temp:27,humid:80},
+    {time:'06:00',weather:'⛅ Cerah Berawan',wind:'Timur 8kt',gust:18,wave:'0.6m',temp:32,humid:76},
+    {time:'09:00',weather:'☀️ Cerah',wind:'Timur 8kt',gust:16,wave:'0.6m',temp:31,humid:73},
+    {time:'12:00',weather:'☀️ Cerah',wind:'Timur 8kt',gust:15,wave:'0.6m',temp:31,humid:72},
+    {time:'15:00',weather:'☁️ Berawan',wind:'Timur Laut 9kt',gust:16,wave:'0.7m',temp:30,humid:75},
+    {time:'18:00',weather:'☁️ Berawan',wind:'Timur Laut 9kt',gust:17,wave:'0.7m',temp:28,humid:80},
+    {time:'21:00',weather:'☁️ Berawan',wind:'Timur 8kt',gust:16,wave:'0.6m',temp:26,humid:83}
+  ],
+  '2026-05-05': [
+    {time:'03:00',weather:'☁️ Berawan',wind:'Timur 10kt',gust:22,wave:'0.8m',temp:27,humid:81},
+    {time:'06:00',weather:'⛅ Cerah Berawan',wind:'Timur 10kt',gust:21,wave:'0.7m',temp:31,humid:77},
+    {time:'09:00',weather:'☁️ Berawan',wind:'Timur 9kt',gust:18,wave:'0.7m',temp:30,humid:75},
+    {time:'12:00',weather:'☁️ Berawan Tebal',wind:'Timur 10kt',gust:19,wave:'0.8m',temp:29,humid:76},
+    {time:'15:00',weather:'☁️ Berawan Tebal',wind:'Timur Laut 10kt',gust:20,wave:'0.8m',temp:28,humid:78},
+    {time:'18:00',weather:'🌧️ Hujan Ringan',wind:'Timur Laut 11kt',gust:22,wave:'0.9m',temp:27,humid:84},
+    {time:'21:00',weather:'🌧️ Hujan Ringan',wind:'Timur Laut 10kt',gust:20,wave:'0.9m',temp:25,humid:87}
+  ],
+  '2026-05-06': [
+    {time:'03:00',weather:'🌧️ Hujan Ringan',wind:'Timur Laut 10kt',gust:22,wave:'0.9m',temp:26,humid:86},
+    {time:'06:00',weather:'☁️ Berawan',wind:'Timur 10kt',gust:20,wave:'0.8m',temp:30,humid:80},
+    {time:'09:00',weather:'☁️ Berawan',wind:'Timur 9kt',gust:18,wave:'0.8m',temp:29,humid:78},
+    {time:'12:00',weather:'☁️ Berawan',wind:'Timur 9kt',gust:17,wave:'0.7m',temp:29,humid:77},
+    {time:'15:00',weather:'☁️ Berawan Tebal',wind:'Timur Laut 10kt',gust:19,wave:'0.8m',temp:28,humid:79},
+    {time:'18:00',weather:'🌧️ Hujan Ringan',wind:'Timur Laut 10kt',gust:20,wave:'0.8m',temp:26,humid:84},
+    {time:'21:00',weather:'🌧️ Hujan Ringan',wind:'Timur 10kt',gust:18,wave:'0.8m',temp:25,humid:86}
+  ],
+  '2026-05-07': [
+    {time:'03:00',weather:'☁️ Berawan Tebal',wind:'Timur 10kt',gust:20,wave:'0.8m',temp:26,humid:84},
+    {time:'06:00',weather:'☁️ Berawan',wind:'Timur 9kt',gust:18,wave:'0.7m',temp:30,humid:79},
+    {time:'09:00',weather:'☀️ Cerah',wind:'Timur 8kt',gust:16,wave:'0.6m',temp:31,humid:74},
+    {time:'12:00',weather:'☀️ Cerah',wind:'Timur 8kt',gust:15,wave:'0.6m',temp:32,humid:72},
+    {time:'15:00',weather:'☁️ Berawan',wind:'Timur Laut 9kt',gust:16,wave:'0.7m',temp:30,humid:76},
+    {time:'18:00',weather:'☁️ Berawan',wind:'Timur Laut 9kt',gust:17,wave:'0.7m',temp:28,humid:81},
+    {time:'21:00',weather:'☁️ Berawan',wind:'Timur 8kt',gust:16,wave:'0.6m',temp:26,humid:83}
+  ],
+  '2026-05-08': [
+    {time:'03:00',weather:'☁️ Berawan',wind:'Timur 8kt',gust:18,wave:'0.6m',temp:27,humid:80},
+    {time:'06:00',weather:'☀️ Cerah',wind:'Timur 7kt',gust:15,wave:'0.5m',temp:33,humid:74},
+    {time:'09:00',weather:'☀️ Cerah',wind:'Timur 7kt',gust:14,wave:'0.5m',temp:32,humid:72},
+    {time:'12:00',weather:'☀️ Cerah',wind:'Timur 7kt',gust:13,wave:'0.5m',temp:32,humid:71},
+    {time:'15:00',weather:'☁️ Berawan',wind:'Timur 8kt',gust:15,wave:'0.6m',temp:31,humid:74},
+    {time:'18:00',weather:'☁️ Berawan',wind:'Timur 8kt',gust:16,wave:'0.6m',temp:28,humid:79},
+    {time:'21:00',weather:'☁️ Berawan',wind:'Timur 7kt',gust:14,wave:'0.5m',temp:26,humid:81}
+  ],
+  '2026-05-09': [
+    {time:'03:00',weather:'☁️ Berawan',wind:'Timur 9kt',gust:20,wave:'0.7m',temp:27,humid:80},
+    {time:'06:00',weather:'⛅ Cerah Berawan',wind:'Timur 9kt',gust:18,wave:'0.7m',temp:31,humid:76},
+    {time:'09:00',weather:'☀️ Cerah',wind:'Timur 8kt',gust:16,wave:'0.6m',temp:31,humid:73},
+    {time:'12:00',weather:'☁️ Berawan',wind:'Timur 8kt',gust:15,wave:'0.6m',temp:30,humid:74},
+    {time:'15:00',weather:'☁️ Berawan Tebal',wind:'Timur Laut 9kt',gust:17,wave:'0.7m',temp:29,humid:77},
+    {time:'18:00',weather:'☁️ Berawan',wind:'Timur Laut 10kt',gust:19,wave:'0.8m',temp:27,humid:82},
+    {time:'21:00',weather:'☁️ Berawan',wind:'Timur 9kt',gust:17,wave:'0.7m',temp:25,humid:84}
+  ],
+  '2026-05-10': [
+    {time:'03:00',weather:'☁️ Berawan Tebal',wind:'Timur 10kt',gust:22,wave:'0.8m',temp:26,humid:83},
+    {time:'06:00',weather:'☁️ Berawan',wind:'Timur 10kt',gust:20,wave:'0.8m',temp:30,humid:79},
+    {time:'09:00',weather:'☁️ Berawan',wind:'Timur 9kt',gust:18,wave:'0.7m',temp:29,humid:76},
+    {time:'12:00',weather:'⛅ Cerah Berawan',wind:'Timur 9kt',gust:16,wave:'0.7m',temp:30,humid:75},
+    {time:'15:00',weather:'☁️ Berawan',wind:'Timur Laut 10kt',gust:18,wave:'0.8m',temp:28,humid:78},
+    {time:'18:00',weather:'🌧️ Hujan Ringan',wind:'Timur Laut 10kt',gust:20,wave:'0.8m',temp:26,humid:84},
+    {time:'21:00',weather:'🌧️ Hujan Ringan',wind:'Timur 10kt',gust:18,wave:'0.8m',temp:25,humid:86}
+  ]
+};
+
+// Default to today's forecast
+let currentForecastDate = new Date();
+function getDateStr(d) { return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
 
 // ===================== HELPERS =====================
 function getMoonPhase(day, month, year) {
@@ -449,6 +629,13 @@ let currentPos = null;
 let map = null;
 let mapMarkers = [];
 let currentPage = 'home';
+let proximityWatch = null;
+let proximityActive = false;
+let lastNotifiedSpots = {};
+let customSpots = JSON.parse(localStorage.getItem('mancingblk_custom_spots') || '[]');
+const PROXIMITY_RADIUS = 1000; // meter
+
+function getCustomSpotId() { return 'custom_' + Date.now(); }
 
 // ===================== GPS =====================
 function startGPS() {
@@ -475,11 +662,147 @@ function updateGPSUI() {
   document.getElementById('gpsLng').textContent = currentPos.lng.toFixed(5);
   document.getElementById('locBadge').textContent = `📍 ${currentPos.lat.toFixed(3)}, ${currentPos.lng.toFixed(3)}`;
   document.querySelectorAll('.gps-status').forEach(el => {el.textContent='✅ GPS aktif';el.className='gps-status active';});
+  const ns = document.getElementById('newSpotStatus');
+  if (ns) ns.innerHTML = `<span style="color:var(--green)">✅ Lokasi: ${currentPos.lat.toFixed(5)}, ${currentPos.lng.toFixed(5)}</span>`;
+}
+
+// ===================== PROXIMITY ALERT =====================
+function toggleProximity() {
+  if (proximityActive) { stopProximity(); } else { startProximity(); }
+}
+function startProximity() {
+  if (!navigator.geolocation) { alert('GPS tidak didukung'); return; }
+  if (!currentPos) { alert('Aktifkan GPS dulu'); return; }
+  proximityActive = true;
+  const t = document.getElementById('proxToggle');
+  if (t) { t.textContent='🔔 Aktif'; t.style.background='var(--green)'; }
+  document.getElementById('proxStatus').textContent='📍 Memantau spot terdekat...';
+  lastNotifiedSpots = {};
+  proximityWatch = navigator.geolocation.watchPosition(pos => {
+    currentPos = {lat:pos.coords.latitude, lng:pos.coords.longitude};
+    checkProximity();
+  }, err => {
+    document.getElementById('proxStatus').textContent='⚠️ Error GPS: '+err.message;
+  }, {enableHighAccuracy:true, timeout:8000, maximumAge:5000});
+  if ('Notification' in window && Notification.permission === 'default') Notification.requestPermission();
+  checkProximity();
+}
+function stopProximity() {
+  proximityActive = false;
+  if (proximityWatch !== null) { navigator.geolocation.clearWatch(proximityWatch); proximityWatch = null; }
+  const t = document.getElementById('proxToggle');
+  if (t) { t.textContent='🔕 Aktifkan'; t.style.background=''; }
+  document.getElementById('proxStatus').textContent='📍 Pemantauan dihentikan';
+  document.getElementById('proxNotify').innerHTML = '';
+}
+function checkProximity() {
+  if (!currentPos) return;
+  const allSpots = [...SPOTS, ...customSpots];
+  const sorted = allSpots.map(s => ({...s, dist:distance(currentPos.lat,currentPos.lng,s.lat,s.lng)})).filter(s => s.dist < 15).sort((a,b) => a.dist - b.dist);
+  const proxEl = document.getElementById('proxNotify');
+  if (!proxEl) return;
+  let html = ''; let nearest = null;
+  for (const spot of sorted) {
+    const inRange = spot.dist * 1000 <= 1000;
+    const key = (spot.id || spot._cid) + '_' + Math.floor(spot.dist*10);
+    if (inRange && !lastNotifiedSpots[key]) {
+      lastNotifiedSpots[key] = Date.now();
+      const msg = `🎣 ${spot.name.replace('⭐ ','')} — ${(spot.dist*1000).toFixed(0)}m lagi!`;
+      if ('Notification' in window && Notification.permission === 'granted') new Notification('Spot Mancing!', {body:msg, icon:'/fish/icon-192.png'});
+      html += `<div style="background:rgba(32,201,151,.15);border-radius:8px;padding:6px 8px;margin:4px 0;font-size:.7rem">🔔 ${msg}</div>`;
+    }
+    if (!nearest && spot.dist < 15) nearest = spot;
+  }
+  if (nearest && nearest.dist < 15) {
+    html += `<div style="margin-top:4px;font-size:.7rem;color:var(--gold)">📍 Terdekat: <b>${nearest.name.replace('⭐ ','')}</b> (${(nearest.dist*1000).toFixed(0)}m)</div>`;
+    document.getElementById('proxStatus').textContent = `📍 ${(nearest.dist*1000).toFixed(0)}m ke ${nearest.name.substring(0,20)}`;
+  }
+  if (html) proxEl.innerHTML = html;
+}
+
+// ===================== CUSTOM SPOTS =====================
+function saveCustomSpots() {
+  localStorage.setItem('mancingblk_custom_spots', JSON.stringify(customSpots));
+  renderCustomSpots();
+  updateCustomMapMarkers();
+}
+function captureNewSpot() {
+  if (!currentPos) { document.getElementById('newSpotStatus').innerHTML='⚠️ Aktifkan GPS dulu!'; return; }
+  const name = document.getElementById('newSpotName').value.trim();
+  if (!name) { document.getElementById('newSpotStatus').innerHTML='⚠️ Masukkan nama spot!'; return; }
+  const fish = document.getElementById('newSpotFish').value.trim() || '—';
+  const note = document.getElementById('newSpotNote').value.trim() || 'Spot buatan sendiri';
+  const newSpot = {
+    _cid: 'custom_'+Date.now(), id:9000+customSpots.length,
+    name:'⭐ '+name, lat:currentPos.lat, lng:currentPos.lng,
+    type:'custom', desc:note, fish:fish,
+    bestTime:'Kapan aja', facilities:'📍 Spot kamu'
+  };
+  customSpots.push(newSpot);
+  saveCustomSpots();
+  document.getElementById('newSpotName').value='';
+  document.getElementById('newSpotFish').value='';
+  document.getElementById('newSpotNote').value='';
+  document.getElementById('newSpotStatus').innerHTML = `✅ <b>${name}</b> tersimpan! ${newSpot.lat.toFixed(5)}, ${newSpot.lng.toFixed(5)}`;
+  if (map) map.setView([newSpot.lat, newSpot.lng], 15);
+}
+function deleteCustomSpot(cid) {
+  customSpots = customSpots.filter(s => s._cid !== cid);
+  saveCustomSpots();
+}
+function renderCustomSpots() {
+  const card = document.getElementById('customSpotsCard');
+  const list = document.getElementById('customSpotsList');
+  if (!card || !list) return;
+  if (customSpots.length === 0) { card.style.display='none'; return; }
+  card.style.display='block';
+  list.innerHTML = customSpots.map(s => `
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04)">
+      <div style="flex:1">
+        <div style="font-size:.8rem;font-weight:600">📌 ${s.name.replace('⭐ ','')}</div>
+        <div style="font-size:.65rem;color:var(--dim)">${s.lat.toFixed(5)}, ${s.lng.toFixed(5)}${s.fish!=='—'?' • 🐟 '+s.fish:''}</div>
+      </div>
+      <div style="display:flex;gap:4px">
+        <button onclick="navigateToCustom('${s._cid}')" style="background:var(--accent);border:none;color:#fff;border-radius:8px;padding:3px 8px;font-size:.6rem;cursor:pointer">🗺️</button>
+        <button onclick="if(confirm('Hapus spot ini?'))deleteCustomSpot('${s._cid}')" style="background:rgba(220,53,69,.2);border:1px solid var(--red);color:var(--red);border-radius:8px;padding:3px 8px;font-size:.6rem;cursor:pointer">✕</button>
+      </div>
+    </div>
+  `).join('');
+}
+function navigateToCustom(cid) {
+  const spot = customSpots.find(s => s._cid === cid);
+  if (spot && map) { map.setView([spot.lat, spot.lng], 15); navigateTo('map'); }
+}
+function updateCustomMapMarkers() {
+  if (!map) return;
+  if (window.customMarkerLayer) window.customMarkerLayer.forEach(m => map.removeLayer(m));
+  window.customMarkerLayer = [];
+  customSpots.forEach(s => {
+    const marker = L.marker([s.lat, s.lng], {
+      icon: L.divIcon({className:'', html:'<div style="background:#20c997;width:16px;height:16px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 8px rgba(32,201,151,.6)"></div>', iconSize:[16,16], iconAnchor:[8,8]})
+    }).addTo(map);
+    marker.bindPopup(
+      '<div style="font-weight:700;font-size:14px">📌 '+s.name.replace('⭐ ','')+'</div>'+
+      '<div style="font-size:11px;color:#555;margin:4px 0">'+s.desc+'</div>'+
+      (s.fish!=='—'?'<div style="font-size:10px;color:#888">🐟 '+s.fish+'</div>':'')+
+      '<hr style="margin:4px 0">'+
+      '<div style="font-size:12px;font-weight:600;color:#333">📍 GPS: '+s.lat.toFixed(5)+', '+s.lng.toFixed(5)+'</div>'+
+      '<div style="margin-top:4px"><a href="https://www.google.com/maps/dir/?api=1&destination='+s.lat+','+s.lng+
+      '" target="_blank" style="background:#20c997;color:#fff;padding:4px 12px;border-radius:14px;font-size:11px;text-decoration:none;display:inline-block">🗺️ Navigasi</a></div>');
+    window.customMarkerLayer.push(marker);
+  });
 }
 
 // ===================== WEATHER DATA =====================
+// ===================== FORECAST DATA =====================
+function getForecastForDate(date) {
+  const ds = getDateStr(date);
+  return FORECAST_DAILY[ds] || FORECAST_DAILY[getDateStr(new Date())] || FORECAST_DAILY['2026-05-02'];
+}
+
 function setWeatherData() {
-  const cur = BMKG_FORECAST[0] || BMKG_FORECAST[1];
+  const forecast = getForecastForDate(currentForecastDate);
+  const cur = forecast[0];
   document.getElementById('wWave').textContent = cur.wave;
   document.getElementById('wWind').textContent = cur.wind;
   document.getElementById('wCurrent').textContent = '0.8 kt';
@@ -487,17 +810,15 @@ function setWeatherData() {
   document.getElementById('wHumid').textContent = cur.humid + '%';
   document.getElementById('wWeather').textContent = cur.weather.replace(/[☁️⛅🌧️☀️]/g,'').trim() || cur.weather;
 
-  // Home page sea stats
   document.getElementById('waveHeight').textContent = cur.wave;
   document.getElementById('windSpeed').textContent = cur.wind;
   document.getElementById('currentSpeed').textContent = '0.8 kt';
   document.getElementById('seaTemp').textContent = cur.temp + '°C';
 
-  // Fishing rating
   const rating = getFishingRating(cur.wave, cur.wind);
   document.getElementById('fishingRatingContainer').innerHTML = `
     <div class="card">
-      <h3>🎯 Rating Memancing Hari Ini</h3>
+      <h3>🎯 Rating Memancing <span style="font-size:.65rem;color:var(--dim);font-weight:400">${currentForecastDate.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long'})}</span></h3>
       <div class="rating-box ${rating.cls}">
         <div class="score" style="color:${rating.color}">${rating.score}</div>
         <div>
@@ -508,9 +829,8 @@ function setWeatherData() {
     </div>
   `;
 
-  // Hourly forecast
   const hf = document.getElementById('hourlyForecast');
-  hf.innerHTML = BMKG_FORECAST.slice(0,12).map(f => `
+  hf.innerHTML = forecast.map(f => `
     <div class="fh-item">
       <div class="time">${f.time}</div>
       <div class="icon">${f.weather.split(' ')[0]}</div>
@@ -519,8 +839,7 @@ function setWeatherData() {
     </div>
   `).join('');
 
-  // Forecast table
-  document.getElementById('forecastTableBody').innerHTML = BMKG_FORECAST.map(f => `
+  document.getElementById('forecastTableBody').innerHTML = forecast.map(f => `
     <tr>
       <td>${f.time}</td>
       <td>${f.weather}</td>
@@ -529,11 +848,93 @@ function setWeatherData() {
       <td>${f.temp}°C</td>
     </tr>
   `).join('');
+  
+  const src = document.querySelector('.bmkg-source');
+  if (src) src.textContent = `Sumber: BMKG - Perairan Bulukumba (P.AE.06) • ${currentForecastDate.toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})}`;
+}
+
+// ===================== DATE SELECTOR =====================
+function initDateSelector() {
+  const container = document.getElementById('dateSelector');
+  const tideContainer = document.getElementById('tideDateSelector');
+  if (!container) return;
+  const today = new Date();
+  [container, tideContainer].forEach(c => {
+    if (!c) return;
+    c.innerHTML = '';
+    for (let i = 0; i < 9; i++) {
+      const d = new Date(today);
+      d.setDate(today.getDate() + i);
+      const ds = getDateStr(d);
+      const activeStyle = i===0 ? 'background:var(--accent);color:#fff' : 'background:rgba(255,255,255,.05)';
+      if (FORECAST_DAILY[ds]) {
+        const btn = document.createElement('button');
+        btn.style.cssText = `flex-shrink:0;padding:6px 10px;border:none;border-radius:10px;font-size:.65rem;cursor:pointer;${activeStyle};color:var(--text);text-align:center;min-width:55px`;
+        const dayName = d.toLocaleDateString('id-ID',{weekday:'short'});
+        btn.innerHTML = `<div style="font-weight:600">${dayName}</div><div style="font-size:.6rem;color:${i===0?'rgba(255,255,255,.7)':'var(--dim)'}">${d.getDate()} Mei</div>`;
+        btn.onclick = () => { currentForecastDate = d; selectDate(); };
+        btn.dataset.date = ds;
+        btn.id = c === tideContainer ? `tds-${i}` : `ds-${i}`;
+        c.appendChild(btn);
+      }
+    }
+  });
+}
+
+function selectDate() {
+  const ds = getDateStr(currentForecastDate);
+  document.querySelectorAll('#dateSelector button, #tideDateSelector button').forEach(b => {
+    b.style.background = 'rgba(255,255,255,.05)';
+    b.style.color = 'var(--text)';
+  });
+  document.querySelectorAll(`#dateSelector button[data-date="${ds}"], #tideDateSelector button[data-date="${ds}"]`).forEach(btn => {
+    if (btn) { btn.style.background = 'var(--accent)'; btn.style.color = '#fff'; }
+  });
+  setWeatherData();
+  setMoonTideData();
+}
+
+// ===================== AREA FILTER =====================
+function filterArea(area) {
+  const areaIds = {
+    kajang: [21,22,23,26,28,31,37],
+    bira: [1,2,3,4,5,6,7,8,11],
+    bontotiro: [29,36],
+    darat: [13,14,17,18,32,33,34,35],
+    sinjai: [41,42,43,44,45,46,47],
+    telukbone: [48,49,50],
+    selayar: [51,52,53,54,55,56,57,58,61],
+    lokal: [61,62]
+  };
+  const ids = areaIds[area] || [];
+  document.querySelectorAll('#spotsFilter .btn').forEach(b => {b.style.background='transparent';b.style.borderColor='var(--accent)';b.style.color='var(--accent)';b.classList.remove('active');});
+  event.target.style.background='var(--accent)';
+  event.target.style.color='#fff';
+  const filtered = SPOTS.filter(s => ids.includes(s.id));
+  document.getElementById('spotsGrid').innerHTML = filtered.map(s => renderSpotCard(s)).join('');
+}
+
+function renderSpotCard(s) {
+  const dist = currentPos ? distance(currentPos.lat, currentPos.lng, s.lat, s.lng).toFixed(1) : null;
+  const typeIcons = {boat:'🚤 Perahu',laut:'🌊 Laut',tawar:'💧 Tawar',tebing:'⛰️ Tebing',dermaga:'🏗️ Dermaga'};
+  return `
+    <div class="spot-card" onclick="focusSpot(${s.id})" ${s.type==='boat'?'style="border-color:rgba(240,192,64,.3)"':''}>
+      <span class="type-tag" ${s.type==='boat'?'style="background:rgba(240,192,64,.2);color:#f0c040"':''}>${typeIcons[s.type]||s.type}</span>
+      <div class="name">${s.type==='boat'?'🚤 ':''}${s.name}</div>
+      <div class="loc">${s.desc.substring(0,80)}${s.desc.length>80?'...':''}</div>
+      <div class="meta">
+        <span>🐟 ${s.fish.split(',').slice(0,2).join(',')}</span>
+        <span>🕐 ${s.bestTime.substring(0,12)}</span>
+        ${dist ? `<span>📏 ${dist} km</span>` : ''}
+      </div>
+      <div class="coords">${s.lat.toFixed(5)}, ${s.lng.toFixed(5)}</div>
+    </div>
+  `;
 }
 
 // ===================== MOON & TIDE =====================
 function setMoonTideData() {
-  const now = new Date();
+  const now = currentForecastDate || new Date();
   const moon = getMoonPhase(now.getDate(), now.getMonth(), now.getFullYear());
   document.getElementById('moonEmoji').textContent = moon.emoji;
   document.getElementById('moonPhase').textContent = moon.name;
@@ -592,29 +993,12 @@ function setMoonTideData() {
 function renderSpots(filter='all') {
   const grid = document.getElementById('spotsGrid');
   const filtered = filter==='all' ? SPOTS : SPOTS.filter(s => s.type===filter);
-  grid.innerHTML = filtered.map(s => {
-    const dist = currentPos ? distance(currentPos.lat, currentPos.lng, s.lat, s.lng).toFixed(1) : null;
-    const typeIcons = {boat:'🚤 Perahu',laut:'🌊 Laut',tawar:'💧 Tawar',tebing:'⛰️ Tebing',dermaga:'🏗️ Dermaga'};
-    return `
-      <div class="spot-card" onclick="focusSpot(${s.id})" ${s.type==='boat'?'style="border-color:rgba(240,192,64,.3)"':''}>
-        <span class="type-tag" ${s.type==='boat'?'style="background:rgba(240,192,64,.2);color:#f0c040"':''}>${typeIcons[s.type]||s.type}</span>
-        <div class="name">${s.type==='boat'?'🚤 ':''}${s.name}</div>
-        <div class="loc">${s.desc.substring(0,80)}${s.desc.length>80?'...':''}</div>
-        <div class="meta">
-          <span>🐟 ${s.fish.split(',').slice(0,2).join(',')}</span>
-          <span>🕐 ${s.bestTime.substring(0,12)}</span>
-          ${dist ? `<span>📏 ${dist} km</span>` : ''}
-        </div>
-        <div class="coords">${s.lat.toFixed(5)}, ${s.lng.toFixed(5)}</div>
-      </div>
-    `;
-  }).join('');
+  grid.innerHTML = filtered.map(s => renderSpotCard(s)).join('');
 }
 
 function filterSpots(type) {
-  document.querySelectorAll('#spotsFilter .btn').forEach(b => {b.style.background='transparent';b.style.borderColor='var(--accent)'});
-  event.target.style.background='var(--accent)';
-  event.target.style.borderColor='var(--accent)';
+  document.querySelectorAll('#spotsFilter .btn').forEach(b => {b.style.background='transparent';b.style.borderColor='var(--accent)';b.style.color='var(--accent)';});
+  if (event && event.target) { event.target.style.background='var(--accent)'; event.target.style.color='#fff'; }
   renderSpots(type);
 }
 
@@ -752,6 +1136,7 @@ document.querySelectorAll('nav button, .bottom-nav button').forEach(btn => {
 function refreshAll() {
   setWeatherData();
   setMoonTideData();
+  initDateSelector();
   if (currentPos) { updateNearbySpots(); updateGPSUI(); }
 }
 
@@ -760,12 +1145,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const now = new Date();
   document.getElementById('homeDate').textContent = now.toLocaleDateString('id-ID', {weekday:'long',day:'numeric',month:'long',year:'numeric'});
 
+  currentForecastDate = new Date();
+  initDateSelector();
   setWeatherData();
   setMoonTideData();
   renderSpots('all');
   renderFish();
   initMap();
   startGPS();
+  renderCustomSpots();
+  updateCustomMapMarkers();
 
   // Register SW
   if ('serviceWorker' in navigator) {

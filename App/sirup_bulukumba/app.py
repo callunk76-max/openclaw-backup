@@ -72,11 +72,12 @@ def parse_budget(budget_str):
 
 class FilterQuery:
     """Build and manage filter SQL queries"""
-    def __init__(self, search_query='', m_filter='', type_filter='', cara_filter=''):
+    def __init__(self, search_query='', m_filter='', type_filter='', cara_filter='', quick_search=''):
         self.search_query = search_query
         self.m_filter = m_filter
         self.type_filter = type_filter
         self.cara_filter = cara_filter
+        self.quick_search = quick_search
 
     def where_clause(self, alias='p'):
         """Build WHERE clause and return (clause_string, params_list)"""
@@ -88,6 +89,12 @@ class FilterQuery:
             parts.append(f"({prefix}package_name LIKE ? OR {prefix}satker LIKE ? OR CAST({prefix}id AS TEXT) LIKE ?)")
             sq = f'%{self.search_query}%'
             params.extend([sq, sq, sq])
+
+        # Quick search: narrows within results already filtered by search_query
+        if self.quick_search:
+            parts.append(f"({prefix}package_name LIKE ? OR {prefix}satker LIKE ? OR CAST({prefix}id AS TEXT) LIKE ?)")
+            qs = f'%{self.quick_search}%'
+            params.extend([qs, qs, qs])
 
         if self.m_filter:
             parts.append(f"{prefix}procurement_method = ?")
@@ -117,9 +124,9 @@ def get_threshold_case():
             "ELSE 200000000 END")
 
 
-def fetch_table_data(conn, search_query, m_filter, type_filter, cara_filter='', sort_by='id', sort_dir='DESC', page=1):
+def fetch_table_data(conn, search_query, m_filter, type_filter, cara_filter='', sort_by='id', sort_dir='DESC', page=1, quick_search=''):
     """Fetch paginated table data + stats. Returns dict with all needed data."""
-    fq = FilterQuery(search_query, m_filter, type_filter, cara_filter)
+    fq = FilterQuery(search_query, m_filter, type_filter, cara_filter, quick_search)
     offset = (page - 1) * PER_PAGE
 
     allowed_sorts = {
@@ -396,12 +403,13 @@ def api_table():
     m_filter = request.args.get('method', '')
     type_filter = request.args.get('type', '')
     cara_filter = request.args.get('cara', '')
+    quick_search = request.args.get('quick_search', '')
     sort_by = request.args.get('sort_by', 'id')
     sort_dir = request.args.get('sort_dir', 'DESC')
     page = int(request.args.get('page', 1))
 
     conn = get_db_connection()
-    td = fetch_table_data(conn, search_query, m_filter, type_filter, cara_filter, sort_by, sort_dir, page)
+    td = fetch_table_data(conn, search_query, m_filter, type_filter, cara_filter, sort_by, sort_dir, page, quick_search)
     conn.close()
 
     return jsonify({
@@ -1049,5 +1057,232 @@ def clear_verification():
     return jsonify({'success': True, 'message': 'Semua status verifikasi telah direset'})
 
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5005)
+@app.route('/api/konsultan_check')
+def api_konsultan_check():
+    """
+    Analisa Fee Konsultan: Cocokkan paket Jasa Konsultansi dengan Pekerjaan Konstruksi.
+    Menggunakan multi-level matching dengan confidence score.
+
+    Batasan biaya (Permen PUPR):
+    - Perencanaan: max ~3.5% dari pagu konstruksi
+    - Pengawasan: max ~2.5% dari pagu konstruksi
+    - Total konsultan (perencanaan + pengawasan): max ~5%
+    """
+    import re
+
+    # --- Prefix cleaners ---
+    _PREFIX_CLEAN = re.compile(
+        r'^(Belanja\s+Modal\s+(?:Gedung\s+dan\s+Bangunan\s+BLUD|Bangunan\s+(?:Gedung\s+(?:Kantor|Tempat\s+Kerja\s+Lainnya)|Kesehatan)|Air\s+Irigasi\s+Lainnya)\s*[-–]\s*(?:Belanja\s+Modal\s+(?:Bangunan\s+)?(?:Gedung\s+(?:Kantor|Tempat\s+Kerja\s+Lainnya)|Kesehatan)\s*[-–]\s*)?)'
+        r'|^(Konsultansi\s+(?:Perencana|Pengawasan)\s+)'
+        r'|^(Perencanaan\s+)'
+        r'|^(Pengawasan\s+)'
+        r'|^(Jasa\s+Konsultan(?:\s+(?:Perencanaan|Pengawasan))?\s+)'
+        r'|^(Biaya\s+(?:Perencanaan|Pengawasan)\s+)'
+        r'|^(Desain\s+Perencanaan\s+)'
+        r'|^(Konsultan\s+Perencana\s+)'
+        r'', re.IGNORECASE)
+
+    _PREFIX_CONSTR = re.compile(
+        r'^(Belanja\s+Modal\s+(?:Gedung\s+dan\s+Bangunan\s+BLUD|Bangunan\s+(?:Gedung\s+(?:Kantor|Tempat\s+Kerja\s+Lainnya)|Kesehatan)|Air\s+Irigasi\s+Lainnya)\s*[-–]\s*(?:Belanja\s+Modal\s+(?:Bangunan\s+)?(?:Gedung\s+(?:Kantor|Tempat\s+Kerja\s+Lainnya)|Kesehatan)\s*[-–]\s*)?)'
+        r'|^(PEMBANGUNAN\s+|Pekerjaan\s+|Pembangunan\s+|Peningkatan\s+|Perluasan\s+|Rehabilitasi\s+|Pemeliharaan/Rehabilitasi\s+|PEKERJAAN\s+|Pengadaan\s+)'
+        r'|^(PEMELIHARAAN\s+)', re.IGNORECASE)
+
+    def _clean_name(name, prefix_re):
+        return prefix_re.sub('', name).strip().rstrip('; ').strip().upper()
+
+    def _extract_project_name(cons_name):
+        name_upper = cons_name.upper()
+        for anchor in ['PENGERJAAN ', 'PEMBANGUNAN ', 'PEMELIHARAAN ', 'REHABILITASI ']:
+            idx = name_upper.find(anchor)
+            if idx >= 0:
+                return name_upper[idx:].strip(), 0
+        return _clean_name(cons_name, _PREFIX_CLEAN), 1
+
+    def _match_confidence(proj_name_uc, constr_name):
+        constr_uc = constr_name.upper()
+        constr_clean = _clean_name(constr_name, _PREFIX_CONSTR).strip()
+        # Level 1: Exact match
+        if proj_name_uc == constr_clean or proj_name_uc == constr_uc:
+            return 100, 'exact'
+        # Level 2: Project name is prefix of construction name
+        if constr_clean.startswith(proj_name_uc) or constr_uc.startswith(proj_name_uc):
+            return 90, 'prefix'
+        # Level 3: Contains
+        if proj_name_uc in constr_uc or proj_name_uc in constr_clean:
+            return 80, 'contains'
+        # Level 4: Try first 30 chars as prefix
+        short = proj_name_uc[:30]
+        if len(short) > 15 and (constr_uc.startswith(short) or constr_clean.startswith(short)):
+            return 70, 'partial_prefix'
+        # Level 5: First 20 chars anywhere
+        short20 = proj_name_uc[:20]
+        if len(short20) > 12 and (short20 in constr_uc or short20 in constr_clean):
+            return 60, 'partial'
+        return 0, ''
+
+    def _classify_tipe(nama):
+        n = nama.upper()
+        if 'PERENCANA' in n or n.startswith('PERENCANAAN'):
+            return 'Perencanaan'
+        if 'PENGAWASAN' in n:
+            return 'Pengawasan'
+        return 'Konsultansi'
+
+    def _fee_flag(tipe, fee):
+        t = tipe
+        # Referensi: Permen PUPR No.22/PRT/M/2018 jo. Permen PUPR No.8/2023
+        # Biaya Perencanaan: 2-3.5% dari nilai konstruksi
+        # Biaya Pengawasan: 1.5-2.5% dari nilai konstruksi
+        if t == 'Perencanaan':
+            return 'danger' if fee > 4.0 else ('warning' if fee > 3.5 else 'safe')
+        elif t == 'Pengawasan':
+            return 'danger' if fee > 3.0 else ('warning' if fee > 2.5 else 'safe')
+        else:
+            return 'danger' if fee > 5.0 else ('warning' if fee > 4.0 else 'safe')
+
+    conn = get_db_connection()
+    try:
+        # Fetch all consultancy & construction packages
+        konsultansi = conn.execute("""
+            SELECT id, package_name, satker, budget,
+                   CAST(REPLACE(REPLACE(budget, 'Rp ', ''), ',', '') AS REAL) AS nilai,
+                   procurement_method
+            FROM procurement
+            WHERE procurement_type = 'Jasa Konsultansi'
+        """).fetchall()
+
+        konstruksi = conn.execute("""
+            SELECT id, package_name, satker, budget,
+                   CAST(REPLACE(REPLACE(budget, 'Rp ', ''), ',', '') AS REAL) AS nilai,
+                   procurement_method
+            FROM procurement
+            WHERE procurement_type = 'Pekerjaan Konstruksi'
+        """).fetchall()
+        conn.close()
+
+        # Build list: only consultancy packages that look project-related
+        candidates = []
+        for c in konsultansi:
+            d = dict(c)
+            tipe = _classify_tipe(d['package_name'])
+            if tipe != 'Konsultansi' or any(kw in d['package_name'].upper() for kw in ['KONSULTAN', 'DESAIN']):
+                proj_name, bonus = _extract_project_name(d['package_name'])
+                proj_name = proj_name.strip()
+                if len(proj_name) > 5:  # Minimum meaningful length
+                    candidates.append({**d, 'proj_name': proj_name, 'bonus': bonus, 'tipe': tipe})
+
+        # Match each candidate against construction packages
+        results = []
+        grouped = {}
+
+        for cand in candidates:
+            best_score = 0
+            best_match = None
+            best_method = ''
+
+            for k in konstruksi:
+                kd = dict(k)
+                if cand['satker'] != kd['satker']:
+                    continue
+                score, method = _match_confidence(cand['proj_name'], kd['package_name'])
+                # Apply bonus for anchor-based extraction (more reliable)
+                actual_score = score - cand['bonus'] * 10
+                if actual_score > best_score:
+                    best_score = actual_score
+                    best_match = kd
+                    best_method = method
+
+            if best_match and best_score >= 50:
+                constr_nilai = best_match['nilai']
+                fee_persen = round(cand['nilai'] / constr_nilai * 100, 2) if constr_nilai > 0 else 0
+                flag = _fee_flag(cand['tipe'], fee_persen)
+
+                conf_label = {'100': 'Pasti', '90': 'Yakin', '80': 'Sesuai', '70': 'Mirip', '60': 'Kemungkinan'} \
+                    .get(str(best_score)[:2], 'Perkiraan')
+
+                entry = {
+                    'konsultan_id': cand['id'],
+                    'konsultan_nama': cand['package_name'],
+                    'konsultan_budget': cand['budget'],
+                    'konsultan_nilai': cand['nilai'],
+                    'konsultan_metode': cand['procurement_method'],
+                    'satker': cand['satker'],
+                    'tipe_konsultan': cand['tipe'],
+                    'fee_persen': fee_persen,
+                    'flag': flag,
+                    'match_score': best_score,
+                    'match_method': best_method,
+                    'match_label': conf_label,
+                    'konstruksi_id': best_match['id'],
+                    'konstruksi_nama': best_match['package_name'],
+                    'konstruksi_budget': best_match['budget'],
+                    'konstruksi_nilai': constr_nilai,
+                    'konstruksi_metode': best_match['procurement_method'],
+                }
+                results.append(entry)
+
+                # Group
+                kid = best_match['id']
+                if kid not in grouped:
+                    grouped[kid] = {
+                        'konstruksi_id': kid,
+                        'konstruksi_nama': best_match['package_name'],
+                        'konstruksi_nilai': constr_nilai,
+                        'konstruksi_budget': best_match['budget'],
+                        'konstruksi_metode': best_match['procurement_method'],
+                        'satker': cand['satker'],
+                        'konsultan': []
+                    }
+                grouped[kid]['konsultan'].append({
+                    'nama': cand['package_name'],
+                    'nilai': cand['nilai'],
+                    'budget': cand['budget'],
+                    'tipe': cand['tipe'],
+                    'fee_persen': fee_persen,
+                    'flag': flag,
+                    'id': cand['id'],
+                    'metode': cand['procurement_method'],
+                    'match_label': conf_label
+                })
+
+        # Calculate totals per group
+        konsolidasi = []
+        for kid, g in grouped.items():
+            total_fee = sum(k['nilai'] for k in g['konsultan'])
+            total_persen = round(total_fee / g['konstruksi_nilai'] * 100, 2) if g['konstruksi_nilai'] > 0 else 0
+            g['total_fee'] = total_fee
+            g['total_persen'] = total_persen
+            # Total fee perencanaan+pengawasan wajar ≤6% (Permen PUPR praktik)
+            g['flag_total'] = 'danger' if total_persen > 7.0 else ('warning' if total_persen > 6.0 else 'safe')
+            konsolidasi.append(g)
+
+        konsolidasi.sort(key=lambda g: g['total_persen'], reverse=True)
+
+        # Also find unmatched consultancies for reporting
+        matched_ids = set(r['konsultan_id'] for r in results)
+        unmatched = []
+        for c in candidates:
+            if c['id'] not in matched_ids:
+                unmatched.append({
+                    'id': c['id'],
+                    'nama': c['package_name'],
+                    'budget': c['budget'],
+                    'nilai': c['nilai'],
+                    'satker': c['satker'],
+                    'tipe': c['tipe'],
+                    'metode': c['procurement_method'],
+                    'proj_name': c['proj_name']
+                })
+
+        return jsonify({
+            'success': True,
+            'match_count': len(results),
+            'group_count': len(konsolidasi),
+            'unmatched_count': len(unmatched),
+            'unmatched': unmatched,
+            'pairs': results,
+            'grouped': konsolidasi
+        })
+    except Exception as e:
+        conn.close()
+        return jsonify({'success': False, 'message': str(e)})

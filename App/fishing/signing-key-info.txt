@@ -1,9 +1,9 @@
 Keep this file and signing.keystore in a safe place. You'll need these files if you want to upload future versions of your PWA to the Google Play Store.
 
 Key store file: signing.keystore
-Key store password: VJ85DC3LyGSv
+Key store password: tv0aQMIxYfEq
 Key alias: my-key-alias
-Key password: VJ85DC3LyGSv
+Key password: tv0aQMIxYfEq
 Signer's full name: Callunk Admin
 Signer's organization: MancingBLK
 Signer's organizational unit: Fishing

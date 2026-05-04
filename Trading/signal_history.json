@@ -1,5 +1,10 @@
 {
     "history": {
+        "GBP/AUD": {
+            "consecutive": 1,
+            "stars": 0,
+            "crown_date": "2026-05-04"
+        },
         "GBP/USD": {
             "consecutive": 8,
             "stars": 0,
@@ -72,7 +77,6 @@
         }
     },
     "last_pairs": [
-        "GBP/USD",
-        "AUD/USD"
+        "GBP/AUD"
     ]
 }

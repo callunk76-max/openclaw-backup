@@ -12,3 +12,6 @@
 [Thu Apr 30 05:02:03 PM CST 2026] sirup_bulukumba restarted (was down)
 [Fri May  1 09:58:01 AM CST 2026] sirup_bulukumba restarted (was down)
 [Fri May  1 01:41:01 PM CST 2026] sirup_bulukumba restarted (was down)
+[Mon May  4 08:10:02 AM CST 2026] sirup_bulukumba restarted via systemd
+[Mon May  4 08:36:01 AM CST 2026] sirup_bulukumba restarted via systemd
+[Mon May  4 08:39:01 AM CST 2026] sirup_bulukumba restarted via systemd

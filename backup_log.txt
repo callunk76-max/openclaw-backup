@@ -1,0 +1,393 @@
+/bin/sh: line 1: /root/.openclaw/workspace/backup_to_github.sh: No such file or directory
+sending incremental file list
+./
+backup_log.txt
+App/
+App/aramedica/templates/admin/
+App/aramedica/templates/admin/pos.html
+App/filebox/
+App/filebox/app.log
+App/filebox/app.py
+App/filebox/templates/
+App/filebox/templates/index.html
+App/filebox/templates/login.html
+App/filebox/uploads/
+App/filebox/uploads/Limbangmi Taung – Ridwan Sau _ AI Orchestral.mp4
+App/fishing/
+App/fishing/Mancing Bulukumba+.aab
+App/fishing/Mancing Bulukumba+.apk
+App/fishing/Readme.html
+App/fishing/assetlinks.json
+App/fishing/favicon-96.png
+App/fishing/favicon.ico
+App/fishing/icon-192.png
+App/fishing/icon-512.png
+App/fishing/index.html
+App/fishing/manifest.json
+App/fishing/signing-key-info.txt
+App/fishing/signing.keystore
+App/fishing/sw.js
+App/geoportal/
+App/lpse/
+App/lpse/Dokumen_Standarisasi_LPSE_Cetak.zip
+App/lpse/SK LPSE LKPP.pdf
+App/lpse/convert_all.py
+App/lpse/Rencana_Standarisasi/
+App/lpse/Rencana_Standarisasi/Panduan Pengisian Form dan BA.docx
+App/lpse/Rencana_Standarisasi/Panduan Standarisasi LPSE 2022 (Migrasi Basis Data & Aplikasi).docx
+App/lpse/Rencana_Standarisasi/Paparan Standarisasi LPSE 2022.pdf
+App/lpse/Rencana_Standarisasi/Standar Atas-20251003T074130Z-1-001.zip
+App/lpse/Rencana_Standarisasi/Standar Faktual-20251003T074319Z-1-001.zip
+App/lpse/Rencana_Standarisasi/ceklist.xlsx
+App/lpse/Rencana_Standarisasi/AKSI/
+App/lpse/Rencana_Standarisasi/AKSI/Standar10/
+App/lpse/Rencana_Standarisasi/AKSI/Standar10/Form_Daftar_Informasi.docx
+App/lpse/Rencana_Standarisasi/AKSI/Standar10/Form_Daftar_Informasi.md
+App/lpse/Rencana_Standarisasi/AKSI/Standar10/Form_Pencatatan_Data_Akses.docx
+App/lpse/Rencana_Standarisasi/AKSI/Standar10/Form_Pencatatan_Data_Akses.md
+App/lpse/Rencana_Standarisasi/AKSI/Standar10/SOP_Pemberian_Remote_Akses.docx
+App/lpse/Rencana_Standarisasi/AKSI/Standar10/SOP_Pemberian_Remote_Akses.md
+App/lpse/Rencana_Standarisasi/AKSI/Standar10/SOP_Pengelolaan_Informasi.docx
+App/lpse/Rencana_Standarisasi/AKSI/Standar10/SOP_Pengelolaan_Informasi.md
+App/lpse/Rencana_Standarisasi/AKSI/Standar11/
+App/lpse/Rencana_Standarisasi/AKSI/Standar11/BA_Pemantauan_Log_Activity.docx
+App/lpse/Rencana_Standarisasi/AKSI/Standar11/BA_Pemantauan_Log_Activity.md
+App/lpse/Rencana_Standarisasi/AKSI/Standar11/SOP_Backup_Restore_Data.docx
+App/lpse/Rencana_Standarisasi/AKSI/Standar11/SOP_Backup_Restore_Data.md
+App/lpse/Rencana_Standarisasi/AKSI/Standar11/SOP_Pengelolaan_Log_Activity.docx
+App/lpse/Rencana_Standarisasi/AKSI/Standar11/SOP_Pengelolaan_Log_Activity.md
+App/lpse/Rencana_Standarisasi/AKSI/Standar12/
+App/lpse/Rencana_Standarisasi/AKSI/Standar12/SK Kebijakan Keamanan Informasi.docx
+App/lpse/Rencana_Standarisasi/AKSI/Standar12/SK_Tim_Kelangsungan_Layanan.docx
+App/lpse/Rencana_Standarisasi/AKSI/Standar12/SK_Tim_Kelangsungan_Layanan.md
+App/lpse/Rencana_Standarisasi/AKSI/Standar12/SOP_Pengelolaan_Kelangsungan_Layanan.docx
+App/lpse/Rencana_Standarisasi/AKSI/Standar12/SOP_Pengelolaan_Kelangsungan_Layanan.md
+App/lpse/Rencana_Standarisasi/AKSI/Standar12/Screenshot 2025-10-03 160408.png
+App/lpse/Rencana_Standarisasi/AKSI/Standar14/
+App/lpse/Rencana_Standarisasi/AKSI/Standar14/Dokumen BCP_DRP.docx
+App/lpse/Rencana_Standarisasi/AKSI/Standar14/Form_Daftar_Pendukung_Layanan.docx
+App/lpse/Rencana_Standarisasi/AKSI/Standar14/Form_Daftar_Pendukung_Layanan.md
+App/lpse/Rencana_Standarisasi/AKSI/Standar14/Form_Evaluasi_Pendukung_Layanan.docx
+App/lpse/Rencana_Standarisasi/AKSI/Standar14/Form_Evaluasi_Pendukung_Layanan.md
+App/lpse/Rencana_Standarisasi/AKSI/Standar14/SOP_Pemantauan_Kinerja_Pendukung_Layanan.docx
+App/lpse/Rencana_Standarisasi/AKSI/Standar14/SOP_Pemantauan_Kinerja_Pendukung_Layanan.md
+App/lpse/Rencana_Standarisasi/AKSI/Standar14/SOP_Pengelolaan_Pendukung_Layanan.docx
+App/lpse/Rencana_Standarisasi/AKSI/Standar14/SOP_Pengelolaan_Pendukung_Layanan.md
+App/lpse/Rencana_Standarisasi/AKSI/Standar14/Screenshot 2025-10-03 160532.png
+App/lpse/Rencana_Standarisasi/AKSI/Standar15/
+App/lpse/Rencana_Standarisasi/AKSI/Standar15/Form_Survey_Kepuasan_Pengguna.docx
+App/lpse/Rencana_Standarisasi/AKSI/Standar15/Form_Survey_Kepuasan_Pengguna.md
+App/lpse/Rencana_Standarisasi/AKSI/Standar15/Laporan_Hasil_Survey_Kepuasan_Pengguna.docx
+App/lpse/Rencana_Standarisasi/AKSI/Standar15/Laporan_Hasil_Survey_Kepuasan_Pengguna.md
+App/lpse/Rencana_Standarisasi/AKSI/Standar15/SOP Helpdesk.docx
+App/lpse/Rencana_Standarisasi/AKSI/Standar15/SOP_Pengelolaan_Kepuasan_Pengguna.docx
+App/lpse/Rencana_Standarisasi/AKSI/Standar15/SOP_Pengelolaan_Kepuasan_Pengguna.md
+App/lpse/Rencana_Standarisasi/AKSI/Standar15/Screenshot 2025-10-03 160557.png
+App/lpse/Rencana_Standarisasi/AKSI/Standar16/
+App/lpse/Rencana_Standarisasi/AKSI/Standar16/Daftar_Peraturan_Perundangan.docx
+App/lpse/Rencana_Standarisasi/AKSI/Standar16/Daftar_Peraturan_Perundangan.md
+App/lpse/Rencana_Standarisasi/AKSI/Standar16/SOP_Kepatuhan_Peraturan_Perundangan.docx
+App/lpse/Rencana_Standarisasi/AKSI/Standar16/SOP_Kepatuhan_Peraturan_Perundangan.md
+App/lpse/Rencana_Standarisasi/AKSI/Standar17/
+App/lpse/Rencana_Standarisasi/AKSI/Standar17/Program_Jadwal_Audit_Internal.docx
+App/lpse/Rencana_Standarisasi/AKSI/Standar17/Program_Jadwal_Audit_Internal.md
+App/lpse/Rencana_Standarisasi/AKSI/Standar17/SK_Tim_Auditor_Internal.docx
+App/lpse/Rencana_Standarisasi/AKSI/Standar17/SK_Tim_Auditor_Internal.md
+App/lpse/Rencana_Standarisasi/AKSI/Standar17/SOP_Audit_Internal.docx
+App/lpse/Rencana_Standarisasi/AKSI/Standar17/SOP_Audit_Internal.md
+App/lpse/Rencana_Standarisasi/AKSI/Standar17/SOP_Tinjauan_Manajemen.docx
+App/lpse/Rencana_Standarisasi/AKSI/Standar17/SOP_Tinjauan_Manajemen.md
+App/lpse/Rencana_Standarisasi/AKSI/Standar9/
+App/lpse/Rencana_Standarisasi/AKSI/Standar9/Form_Pencatatan_Penggunaan_Fasilitas.docx
+App/lpse/Rencana_Standarisasi/AKSI/Standar9/Form_Pencatatan_Penggunaan_Fasilitas.md
+App/lpse/Rencana_Standarisasi/AKSI/Standar9/Laporan_Pengelolaan_Keamanan_Perangkat.docx
+App/lpse/Rencana_Standarisasi/AKSI/Standar9/Laporan_Pengelolaan_Keamanan_Perangkat.md
+App/lpse/Rencana_Standarisasi/AKSI/Standar9/SOP_Penggunaan_Fasilitas_LPSE.docx
+App/lpse/Rencana_Standarisasi/AKSI/Standar9/SOP_Penggunaan_Fasilitas_LPSE.md
+App/lpse/Standarisasi_LPSE_2026_Output/
+App/lpse/Standarisasi_LPSE_2026_Output/Panduan Pengisian Form dan BA.docx
+App/lpse/Standarisasi_LPSE_2026_Output/Panduan Standarisasi LPSE 2022 (Migrasi Basis Data & Aplikasi).docx
+App/lpse/Standarisasi_LPSE_2026_Output/Paparan Standarisasi LPSE 2022.pdf
+App/lpse/Standarisasi_LPSE_2026_Output/ceklist.xlsx
+App/lpse/Standarisasi_LPSE_2026_Output/AKSI/
+App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar10/
+App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar10/Form_Daftar_Informasi.docx
+App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar10/Form_Pencatatan_Data_Akses.docx
+App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar10/SOP_Pemberian_Remote_Akses.docx
+App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar10/SOP_Pengelolaan_Informasi.docx
+App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar11/
+App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar11/BA_Pemantauan_Log_Activity.docx
+App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar11/SOP_Backup_Restore_Data.docx
+App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar11/SOP_Pengelolaan_Log_Activity.docx
+App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar12/
+App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar12/SK Kebijakan Keamanan Informasi.docx
+App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar12/SK_Tim_Kelangsungan_Layanan.docx
+App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar12/SOP_Pengelolaan_Kelangsungan_Layanan.docx
+App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar12/Screenshot 2025-10-03 160408.png
+App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar14/
+App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar14/Dokumen BCP_DRP.docx
+App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar14/Form_Daftar_Pendukung_Layanan.docx
+App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar14/Form_Evaluasi_Pendukung_Layanan.docx
+App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar14/SOP_Pemantauan_Kinerja_Pendukung_Layanan.docx
+App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar14/SOP_Pengelolaan_Pendukung_Layanan.docx
+App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar14/Screenshot 2025-10-03 160532.png
+App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar15/
+App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar15/Form_Survey_Kepuasan_Pengguna.docx
+App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar15/Laporan_Hasil_Survey_Kepuasan_Pengguna.docx
+App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar15/SOP Helpdesk.docx
+App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar15/SOP_Pengelolaan_Kepuasan_Pengguna.docx
+App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar15/Screenshot 2025-10-03 160557.png
+App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar16/
+App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar16/Daftar_Peraturan_Perundangan.docx
+App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar16/SOP_Kepatuhan_Peraturan_Perundangan.docx
+App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar17/
+App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar17/Program_Jadwal_Audit_Internal.docx
+App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar17/SK_Tim_Auditor_Internal.docx
+App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar17/SOP_Audit_Internal.docx
+App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar17/SOP_Tinjauan_Manajemen.docx
+App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar9/
+App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar9/Form_Pencatatan_Penggunaan_Fasilitas.docx
+App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar9/Laporan_Pengelolaan_Keamanan_Perangkat.docx
+App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar9/SOP_Penggunaan_Fasilitas_LPSE.docx
+App/sirup_bulukumba/
+App/sirup_bulukumba/app.py
+App/sirup_bulukumba/bulukumba.db
+App/sirup_bulukumba/prepare_db.py
+App/sirup_bulukumba/visitor_count.json
+App/sirup_bulukumba/data/
+App/sirup_bulukumba/data/Penyedia_blk.xlsx
+App/sirup_bulukumba/data/date_field_debug.png
+App/sirup_bulukumba/data/error_debug.png
+App/sirup_bulukumba/data/inaproc_content.html
+App/sirup_bulukumba/data/inaproc_home.png
+App/sirup_bulukumba/data/modal_dump.html
+App/sirup_bulukumba/data/sirup_debug.png
+App/sirup_bulukumba/data/sirup_debug_content.html
+App/sirup_bulukumba/data/tender_D411_2026.json
+App/sirup_bulukumba/data/tender_D411_2026_cloud.json
+App/sirup_bulukumba/scripts/
+App/sirup_bulukumba/scripts/ambil_data.py
+App/sirup_bulukumba/scripts/ambil_data_debug.py
+App/sirup_bulukumba/scripts/ambil_data_fast.py
+App/sirup_bulukumba/scripts/ambil_data_final.py
+App/sirup_bulukumba/scripts/ambil_data_siput.py
+App/sirup_bulukumba/scripts/check_inaproc.py
+App/sirup_bulukumba/scripts/convert_docs.py
+App/sirup_bulukumba/scripts/convert_md_to_docx.py
+App/sirup_bulukumba/scripts/db.py
+App/sirup_bulukumba/scripts/debug_sirup.py
+App/sirup_bulukumba/scripts/dikerja_automation.py
+App/sirup_bulukumba/scripts/fix_badge.py
+App/sirup_bulukumba/scripts/fix_html.py
+App/sirup_bulukumba/scripts/fix_html2.py
+App/sirup_bulukumba/scripts/fix_html_final.py
+App/sirup_bulukumba/scripts/fix_modal_final_revert.py
+App/sirup_bulukumba/scripts/fix_modal_look.py
+App/sirup_bulukumba/scripts/make_word.py
+App/sirup_bulukumba/scripts/test_scrape.py
+App/sirup_bulukumba/templates/
+App/sirup_bulukumba/templates/index.html
+App/sirup_bulukumba/templates/penyedia.html
+Trading/
+Trading/DA_Trading_Assistant.mq4
+Trading/DA_Trading_Assistant.pine
+Trading/FX_Hedge_Scalper_EA.mq4
+Trading/FX_Hedge_Scalper_EA.pine
+Trading/InovaPrime_EA.mq4
+Trading/InovaPrime_EA.pine
+Trading/NexusReversalEA.mq4
+Trading/UFO_Indicator_Dwiyan.pine
+Trading/UFO_Strategy.pine
+Trading/UFO_Trading_Assistant.mq4
+backup/
+backup/backup_log.txt
+backup/backup_to_github.sh
+memory/
+memory/2026-05-01-pine-script-error.md
+memory/2026-05-01-server-hardening-recap.md
+memory/2026-05-02-2248.md
+memory/2026-05-02-health-check-audit.md
+memory/2026-05-02-mancing-bulukumba.md
+memory/2026-05-02-nginx-subpath-proxy.md
+memory/2026-05-02-proximity-alert-spots.md
+memory/2026-05-02.md
+memory/2026-05-03-mt4-object-style.md
+memory/2026-05-03-ui-consistency-refinement.md
+memory/2026-05-03.md
+
+sent 92,112,449 bytes  received 3,686 bytes  61,410,756.67 bytes/sec
+total size is 95,188,809  speedup is 1.03
+[master 934ee0d] Daily Backup from Cuy - 2026-05-04 03:00
+ 178 files changed, 13433 insertions(+), 1944 deletions(-)
+ create mode 100644 App/filebox/app.log
+ create mode 100644 App/filebox/app.py
+ create mode 100644 App/filebox/templates/index.html
+ create mode 100644 App/filebox/templates/login.html
+ create mode 100644 "App/filebox/uploads/Limbangmi Taung \342\200\223 Ridwan Sau _ AI Orchestral.mp4"
+ create mode 100644 App/fishing/Mancing Bulukumba+.aab
+ create mode 100644 App/fishing/Mancing Bulukumba+.apk
+ create mode 100644 App/fishing/Readme.html
+ create mode 100644 App/fishing/assetlinks.json
+ create mode 100644 App/fishing/favicon-96.png
+ create mode 100644 App/fishing/favicon.ico
+ create mode 100644 App/fishing/icon-192.png
+ create mode 100644 App/fishing/icon-512.png
+ create mode 100644 App/fishing/index.html
+ create mode 100644 App/fishing/manifest.json
+ create mode 100644 App/fishing/signing-key-info.txt
+ create mode 100644 App/fishing/signing.keystore
+ create mode 100644 App/fishing/sw.js
+ create mode 100644 App/lpse/Dokumen_Standarisasi_LPSE_Cetak.zip
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar10/Form_Daftar_Informasi.docx
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar10/Form_Daftar_Informasi.md
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar10/Form_Pencatatan_Data_Akses.docx
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar10/Form_Pencatatan_Data_Akses.md
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar10/SOP_Pemberian_Remote_Akses.docx
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar10/SOP_Pemberian_Remote_Akses.md
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar10/SOP_Pengelolaan_Informasi.docx
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar10/SOP_Pengelolaan_Informasi.md
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar11/BA_Pemantauan_Log_Activity.docx
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar11/BA_Pemantauan_Log_Activity.md
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar11/SOP_Backup_Restore_Data.docx
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar11/SOP_Backup_Restore_Data.md
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar11/SOP_Pengelolaan_Log_Activity.docx
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar11/SOP_Pengelolaan_Log_Activity.md
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar12/SK Kebijakan Keamanan Informasi.docx
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar12/SK_Tim_Kelangsungan_Layanan.docx
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar12/SK_Tim_Kelangsungan_Layanan.md
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar12/SOP_Pengelolaan_Kelangsungan_Layanan.docx
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar12/SOP_Pengelolaan_Kelangsungan_Layanan.md
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar12/Screenshot 2025-10-03 160408.png
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar14/Dokumen BCP_DRP.docx
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar14/Form_Daftar_Pendukung_Layanan.docx
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar14/Form_Daftar_Pendukung_Layanan.md
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar14/Form_Evaluasi_Pendukung_Layanan.docx
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar14/Form_Evaluasi_Pendukung_Layanan.md
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar14/SOP_Pemantauan_Kinerja_Pendukung_Layanan.docx
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar14/SOP_Pemantauan_Kinerja_Pendukung_Layanan.md
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar14/SOP_Pengelolaan_Pendukung_Layanan.docx
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar14/SOP_Pengelolaan_Pendukung_Layanan.md
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar14/Screenshot 2025-10-03 160532.png
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar15/Form_Survey_Kepuasan_Pengguna.docx
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar15/Form_Survey_Kepuasan_Pengguna.md
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar15/Laporan_Hasil_Survey_Kepuasan_Pengguna.docx
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar15/Laporan_Hasil_Survey_Kepuasan_Pengguna.md
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar15/SOP Helpdesk.docx
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar15/SOP_Pengelolaan_Kepuasan_Pengguna.docx
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar15/SOP_Pengelolaan_Kepuasan_Pengguna.md
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar15/Screenshot 2025-10-03 160557.png
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar16/Daftar_Peraturan_Perundangan.docx
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar16/Daftar_Peraturan_Perundangan.md
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar16/SOP_Kepatuhan_Peraturan_Perundangan.docx
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar16/SOP_Kepatuhan_Peraturan_Perundangan.md
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar17/Program_Jadwal_Audit_Internal.docx
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar17/Program_Jadwal_Audit_Internal.md
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar17/SK_Tim_Auditor_Internal.docx
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar17/SK_Tim_Auditor_Internal.md
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar17/SOP_Audit_Internal.docx
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar17/SOP_Audit_Internal.md
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar17/SOP_Tinjauan_Manajemen.docx
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar17/SOP_Tinjauan_Manajemen.md
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar9/Form_Pencatatan_Penggunaan_Fasilitas.docx
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar9/Form_Pencatatan_Penggunaan_Fasilitas.md
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar9/Laporan_Pengelolaan_Keamanan_Perangkat.docx
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar9/Laporan_Pengelolaan_Keamanan_Perangkat.md
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar9/SOP_Penggunaan_Fasilitas_LPSE.docx
+ create mode 100644 App/lpse/Rencana_Standarisasi/AKSI/Standar9/SOP_Penggunaan_Fasilitas_LPSE.md
+ create mode 100644 App/lpse/Rencana_Standarisasi/Panduan Pengisian Form dan BA.docx
+ create mode 100644 App/lpse/Rencana_Standarisasi/Panduan Standarisasi LPSE 2022 (Migrasi Basis Data & Aplikasi).docx
+ create mode 100644 App/lpse/Rencana_Standarisasi/Paparan Standarisasi LPSE 2022.pdf
+ create mode 100644 App/lpse/Rencana_Standarisasi/Standar Atas-20251003T074130Z-1-001.zip
+ create mode 100644 App/lpse/Rencana_Standarisasi/Standar Faktual-20251003T074319Z-1-001.zip
+ create mode 100644 App/lpse/Rencana_Standarisasi/ceklist.xlsx
+ create mode 100644 App/lpse/SK LPSE LKPP.pdf
+ create mode 100644 App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar10/Form_Daftar_Informasi.docx
+ create mode 100644 App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar10/Form_Pencatatan_Data_Akses.docx
+ create mode 100644 App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar10/SOP_Pemberian_Remote_Akses.docx
+ create mode 100644 App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar10/SOP_Pengelolaan_Informasi.docx
+ create mode 100644 App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar11/BA_Pemantauan_Log_Activity.docx
+ create mode 100644 App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar11/SOP_Backup_Restore_Data.docx
+ create mode 100644 App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar11/SOP_Pengelolaan_Log_Activity.docx
+ create mode 100644 App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar12/SK Kebijakan Keamanan Informasi.docx
+ create mode 100644 App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar12/SK_Tim_Kelangsungan_Layanan.docx
+ create mode 100644 App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar12/SOP_Pengelolaan_Kelangsungan_Layanan.docx
+ create mode 100644 App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar12/Screenshot 2025-10-03 160408.png
+ create mode 100644 App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar14/Dokumen BCP_DRP.docx
+ create mode 100644 App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar14/Form_Daftar_Pendukung_Layanan.docx
+ create mode 100644 App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar14/Form_Evaluasi_Pendukung_Layanan.docx
+ create mode 100644 App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar14/SOP_Pemantauan_Kinerja_Pendukung_Layanan.docx
+ create mode 100644 App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar14/SOP_Pengelolaan_Pendukung_Layanan.docx
+ create mode 100644 App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar14/Screenshot 2025-10-03 160532.png
+ create mode 100644 App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar15/Form_Survey_Kepuasan_Pengguna.docx
+ create mode 100644 App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar15/Laporan_Hasil_Survey_Kepuasan_Pengguna.docx
+ create mode 100644 App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar15/SOP Helpdesk.docx
+ create mode 100644 App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar15/SOP_Pengelolaan_Kepuasan_Pengguna.docx
+ create mode 100644 App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar15/Screenshot 2025-10-03 160557.png
+ create mode 100644 App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar16/Daftar_Peraturan_Perundangan.docx
+ create mode 100644 App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar16/SOP_Kepatuhan_Peraturan_Perundangan.docx
+ create mode 100644 App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar17/Program_Jadwal_Audit_Internal.docx
+ create mode 100644 App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar17/SK_Tim_Auditor_Internal.docx
+ create mode 100644 App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar17/SOP_Audit_Internal.docx
+ create mode 100644 App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar17/SOP_Tinjauan_Manajemen.docx
+ create mode 100644 App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar9/Form_Pencatatan_Penggunaan_Fasilitas.docx
+ create mode 100644 App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar9/Laporan_Pengelolaan_Keamanan_Perangkat.docx
+ create mode 100644 App/lpse/Standarisasi_LPSE_2026_Output/AKSI/Standar9/SOP_Penggunaan_Fasilitas_LPSE.docx
+ create mode 100644 App/lpse/Standarisasi_LPSE_2026_Output/Panduan Pengisian Form dan BA.docx
+ create mode 100644 App/lpse/Standarisasi_LPSE_2026_Output/Panduan Standarisasi LPSE 2022 (Migrasi Basis Data & Aplikasi).docx
+ create mode 100644 App/lpse/Standarisasi_LPSE_2026_Output/Paparan Standarisasi LPSE 2022.pdf
+ create mode 100644 App/lpse/Standarisasi_LPSE_2026_Output/ceklist.xlsx
+ create mode 100644 App/lpse/convert_all.py
+ create mode 100644 App/sirup_bulukumba/data/Penyedia_blk.xlsx
+ create mode 100644 App/sirup_bulukumba/data/date_field_debug.png
+ create mode 100644 App/sirup_bulukumba/data/error_debug.png
+ create mode 100644 App/sirup_bulukumba/data/inaproc_content.html
+ create mode 100644 App/sirup_bulukumba/data/inaproc_home.png
+ create mode 100644 App/sirup_bulukumba/data/modal_dump.html
+ create mode 100644 App/sirup_bulukumba/data/sirup_debug.png
+ create mode 100644 App/sirup_bulukumba/data/sirup_debug_content.html
+ create mode 100644 App/sirup_bulukumba/data/tender_D411_2026.json
+ create mode 100644 App/sirup_bulukumba/data/tender_D411_2026_cloud.json
+ create mode 100644 App/sirup_bulukumba/scripts/ambil_data.py
+ create mode 100644 App/sirup_bulukumba/scripts/ambil_data_debug.py
+ create mode 100644 App/sirup_bulukumba/scripts/ambil_data_fast.py
+ create mode 100644 App/sirup_bulukumba/scripts/ambil_data_final.py
+ create mode 100644 App/sirup_bulukumba/scripts/ambil_data_siput.py
+ create mode 100644 App/sirup_bulukumba/scripts/check_inaproc.py
+ create mode 100644 App/sirup_bulukumba/scripts/convert_docs.py
+ create mode 100644 App/sirup_bulukumba/scripts/convert_md_to_docx.py
+ create mode 100644 App/sirup_bulukumba/scripts/db.py
+ create mode 100644 App/sirup_bulukumba/scripts/debug_sirup.py
+ create mode 100644 App/sirup_bulukumba/scripts/dikerja_automation.py
+ create mode 100644 App/sirup_bulukumba/scripts/fix_badge.py
+ create mode 100644 App/sirup_bulukumba/scripts/fix_html.py
+ create mode 100644 App/sirup_bulukumba/scripts/fix_html2.py
+ create mode 100644 App/sirup_bulukumba/scripts/fix_html_final.py
+ create mode 100644 App/sirup_bulukumba/scripts/fix_modal_final_revert.py
+ create mode 100644 App/sirup_bulukumba/scripts/fix_modal_look.py
+ create mode 100644 App/sirup_bulukumba/scripts/make_word.py
+ create mode 100644 App/sirup_bulukumba/scripts/test_scrape.py
+ create mode 100644 Trading/DA_Trading_Assistant.mq4
+ create mode 100644 Trading/DA_Trading_Assistant.pine
+ create mode 100644 Trading/FX_Hedge_Scalper_EA.mq4
+ create mode 100644 Trading/FX_Hedge_Scalper_EA.pine
+ create mode 100644 Trading/InovaPrime_EA.mq4
+ create mode 100644 Trading/InovaPrime_EA.pine
+ create mode 100644 Trading/NexusReversalEA.mq4
+ create mode 100644 Trading/UFO_Indicator_Dwiyan.pine
+ create mode 100644 Trading/UFO_Strategy.pine
+ create mode 100644 Trading/UFO_Trading_Assistant.mq4
+ create mode 100644 backup/backup_log.txt
+ create mode 100755 backup/backup_to_github.sh
+ create mode 100644 memory/2026-05-01-pine-script-error.md
+ create mode 100644 memory/2026-05-01-server-hardening-recap.md
+ create mode 100644 memory/2026-05-02-2248.md
+ create mode 100644 memory/2026-05-02-health-check-audit.md
+ create mode 100644 memory/2026-05-02-mancing-bulukumba.md
+ create mode 100644 memory/2026-05-02-nginx-subpath-proxy.md
+ create mode 100644 memory/2026-05-02-proximity-alert-spots.md
+ create mode 100644 memory/2026-05-02.md
+ create mode 100644 memory/2026-05-03-mt4-object-style.md
+ create mode 100644 memory/2026-05-03-ui-consistency-refinement.md
+ create mode 100644 memory/2026-05-03.md
+error: src refspec main does not match any
+error: failed to push some refs to 'github.com:callunk76-max/openclaw-backup.git'

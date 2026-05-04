@@ -7,9 +7,11 @@
     <link rel="icon" type="image/png" href="/static/favicon.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; background-color: #f8fafc; }
+        select { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e"); background-position: right 0.5rem center; background-repeat: no-repeat; background-size: 1.5em 1.5em; -webkit-appearance: none; -moz-appearance: none; appearance: none; padding-right: 2.5rem; }
+        input::placeholder { color: #b0b7c3; }
         .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); }
         .pagination-btn {
             display: inline-flex; align-items: center; justify-content: center;
@@ -60,6 +62,7 @@
             border-color: #6366f1;
             box-shadow: 0 0 0 3px rgba(99,102,241,0.15);
         }
+        .modal-inactive { filter: blur(3px) opacity(0.7); pointer-events: none; }
         .pagination-jump .go-btn {
             padding: 6px 16px;
             background: #6366f1;
@@ -196,36 +199,40 @@
 <body class="bg-slate-50 text-slate-900 min-h-screen">
 
     <!-- Header -->
-    <header class="bg-indigo-700 text-white py-8 px-4 shadow-lg">
-        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+    <header class="bg-gradient-to-r from-indigo-700 to-indigo-600 text-white px-4 shadow-lg">
+        <div class="container mx-auto max-w-7xl flex flex-col md:flex-row justify-between items-center gap-3 py-5">
             <div>
-                <h1 class="text-3xl font-extrabold tracking-tight">LPSE UKPBJ Setda Kab. Bulukumba present:</h1>
-                <h2 class="text-2xl font-bold text-indigo-200">SIRUP Bulukumba Explorer 🚀</h2>
-                <p class="text-indigo-100 opacity-80">Analisis Data Pengadaan Kabupaten Bulukumba</p>
-                <p class="text-indigo-200 text-[11px] font-medium tracking-wide mt-1">Terahir update: {{ last_update }}</p>
+                <p class="text-[10px] font-semibold text-indigo-300 uppercase tracking-[0.2em]">LPSE UKPBJ Setda Kab. Bulukumba</p>
+                <h1 class="text-2xl md:text-3xl font-black tracking-tight text-white">SIRUP Explorer <span class="text-indigo-200">🚀</span></h1>
+                <p class="text-xs text-indigo-200/80 font-medium">Analisis Data Pengadaan Kabupaten Bulukumba</p>
+                <p class="text-[10px] text-indigo-300/60 font-medium mt-0.5">Terakhir update: {{ last_update }}</p>
             </div>
-            <div class="flex gap-3">
+            <div class="flex gap-2">
                 <a href="/export?format=pdf&search={{ search_query }}&method={{ m_filter }}&type={{ type_filter }}&cara={{ cara_filter }}"
-                   class="bg-white text-indigo-700 px-4 py-2 rounded-lg font-bold hover:bg-indigo-50 transition flex items-center gap-2">
+                   class="bg-white/10 backdrop-blur-sm text-white px-4 py-2 rounded-xl font-bold text-xs hover:bg-white/20 transition flex items-center gap-1.5 border border-white/10">
                    <span>📄</span> PDF
                 </a>
                 <a href="/export?format=xlsx&search={{ search_query }}&method={{ m_filter }}&type={{ type_filter }}&cara={{ cara_filter }}"
-                   class="bg-white text-indigo-700 px-4 py-2 rounded-lg font-bold hover:bg-indigo-50 transition flex items-center gap-2">
+                   class="bg-white/10 backdrop-blur-sm text-white px-4 py-2 rounded-xl font-bold text-xs hover:bg-white/20 transition flex items-center gap-1.5 border border-white/10">
                    <span>📊</span> Excel
                 </a>
                 <button onclick="openAnomalyModal()"
-                   class="relative bg-white text-red-600 px-4 py-2 rounded-lg font-bold hover:bg-red-50 transition flex items-center gap-2 shadow-md {% if pl_anomaly_count == 0 and pagu_anomaly_count == 0 and splash_orphan_real_cnt == 0 %}hidden{% endif %}">
+                   class="relative bg-red-500/20 backdrop-blur-sm text-red-200 px-4 py-2 rounded-xl font-bold text-xs hover:bg-red-500/30 transition flex items-center gap-1.5 border border-red-400/20 {% if pl_anomaly_count == 0 and pagu_anomaly_count == 0 and splash_orphan_real_cnt == 0 %}hidden{% endif %}">
                    <span>⚠️</span> Anomali
                    <span class="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] px-1.5 h-5 rounded-full flex items-center justify-center whitespace-nowrap font-bold shadow-md">{{ pl_anomaly_count }}+{{ pagu_anomaly_count }}+{{ splash_orphan_real_cnt }}</span>
+                </button>
+                <button onclick="openFeeModal()"
+                   class="bg-emerald-500/20 backdrop-blur-sm text-emerald-200 px-4 py-2 rounded-xl font-bold text-xs hover:bg-emerald-500/30 transition flex items-center gap-1.5 border border-emerald-400/20">
+                   <span>📐</span> Konsultansi
                 </button>
             </div>
         </div>
     </header>
 
-    <main class="container mx-auto py-8 px-6 lg:px-12 max-w-7xl">
+    <main class="container mx-auto py-6 px-6 lg:px-12 max-w-7xl">
 
         <!-- Package Detail Modal -->
-        <div id="packageModal" class="fixed inset-0 z-[60] hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div id="packageModal" class="fixed inset-0 z-[80] hidden flex items-center justify-center p-4">
             <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col overflow-hidden transform transition-all">
                 <div class="bg-indigo-700 px-6 py-4 flex justify-between items-center text-white shrink-0">
                     <h3 class="text-xl font-bold">Detail Paket Pengadaan</h3>
@@ -298,8 +305,82 @@
             </div>
         </div>
 
+        <!-- Fee Konsultan Modal -->
+        <div id="feeModal" class="fixed inset-0 z-[70] hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="bg-white rounded-2xl shadow-2xl max-w-6xl w-full max-h-[90vh] flex flex-col overflow-hidden transform transition-all">
+                <div class="bg-gradient-to-r from-emerald-700 to-teal-600 px-6 py-4 flex justify-between items-center text-white shrink-0">
+                    <h3 class="text-xl font-bold">📐 Analisa Konsultansi</h3>
+                    <button onclick="closeFeeModal()" class="text-white hover:text-emerald-200 transition text-2xl">&times;</button>
+                </div>
+                <div class="p-6 overflow-y-auto">
+                    <!-- Legend -->
+                    <!-- Summary bar -->
+                <div id="fee-summary" class="grid grid-cols-4 gap-3 mb-4">
+                    <div class="fee-card bg-slate-50 rounded-xl p-3 text-center border-2 border-slate-300 cursor-pointer transition hover:shadow-md" onclick="filterFee('all')" id="fee-card-all">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase">Total Grup</span>
+                        <p id="fee-total-groups" class="text-2xl font-black text-slate-700">-</p>
+                    </div>
+                    <div class="fee-card bg-red-50 rounded-xl p-3 text-center border-2 border-transparent cursor-pointer transition hover:shadow-md hover:border-red-300" onclick="filterFee('danger')" id="fee-card-danger">
+                        <span class="text-[10px] font-bold text-red-400 uppercase">🔴 Overflow</span>
+                        <p id="fee-danger-count" class="text-2xl font-black text-red-600">-</p>
+                    </div>
+                    <div class="fee-card bg-amber-50 rounded-xl p-3 text-center border-2 border-transparent cursor-pointer transition hover:shadow-md hover:border-amber-300" onclick="filterFee('warning')" id="fee-card-warning">
+                        <span class="text-[10px] font-bold text-amber-400 uppercase">🟡 Sedang</span>
+                        <p id="fee-warning-count" class="text-2xl font-black text-amber-600">-</p>
+                    </div>
+                    <div class="fee-card bg-emerald-50 rounded-xl p-3 text-center border-2 border-transparent cursor-pointer transition hover:shadow-md hover:border-emerald-300" onclick="filterFee('safe')" id="fee-card-safe">
+                        <span class="text-[10px] font-bold text-emerald-400 uppercase">✅ Aman</span>
+                        <p id="fee-safe-count" class="text-2xl font-black text-emerald-600">-</p>
+                    </div>
+                </div>
+                <div class="flex flex-wrap items-center gap-2 mb-2 text-xs">
+                        <span class="font-semibold text-slate-600">Keterangan:</span>
+                        <span class="text-slate-500">Perencanaan ≤3.5% | Pengawasan ≤2.5% | Total ≤6%</span>
+                    </div>
+                    <div class="text-[10px] text-slate-400 mb-1 leading-relaxed">
+                        <span class="font-medium">Dasar regulasi:</span> 
+                        Biaya perencanaan &amp; pengawasan konstruksi mengacu pada standar industri yg diakui dlm 
+                        <strong>Permen PUPR No.22/PRT/M/2018</strong> jo. <strong>Permen PUPR No.8/2023</strong> 
+                        tentang Pedoman Penyusunan Perkiraan Biaya Pekerjaan Konstruksi, 
+                        serta <strong>Perpres No.46/2025</strong> (perubahan kedua Perpres 16/2018) 
+                        tentang Pengadaan Barang/Jasa Pemerintah.
+                    </div>
+                    <div class="overflow-x-auto rounded-xl border border-slate-200">
+                        <table class="w-full text-left text-xs">
+                            <thead>
+                                <tr class="bg-slate-100 text-slate-600">
+                                    <th class="p-3 font-bold">#</th>
+                                    <th class="p-3 font-bold">Nama Paket Konstruksi</th>
+                                    <th class="p-3 font-bold">Satker</th>
+                                    <th class="p-3 font-bold">Pagu Konstruksi</th>
+                                    <th class="p-3 font-bold">Total Konsultan</th>
+                                    <th class="p-3 font-bold">% Fee</th>
+                                    <th class="p-3 font-bold">Rincian</th>
+                                    <th class="p-3 font-bold">Keyakinan</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100" id="fee-tbody">
+                                <tr><td colspan="8" class="p-8 text-center text-slate-400 italic">Memuat data...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="fee-pagination" class="flex items-center justify-center gap-2 mt-4"></div>
+                    <!-- Confidence legend -->
+                    <div class="text-[10px] text-slate-400 mt-4 leading-relaxed border-t border-slate-100 pt-3">
+                        <span class="font-medium">🎯 Level keyakinan matching:</span><br>
+                        <span class="inline-block px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-700 font-bold mr-1">Pasti</span> Nama proyek cocok persis setelah dipotong prefix &nbsp;|&nbsp;
+                        <span class="inline-block px-1.5 py-0.5 rounded bg-sky-100 text-sky-700 font-bold mr-1">Yakin</span> Nama proyek adalah awal dari nama konstruksi &nbsp;|&nbsp;
+                        <span class="inline-block px-1.5 py-0.5 rounded bg-blue-100 text-blue-700 font-bold mr-1">Sesuai</span> Nama proyek terkandung di nama konstruksi &nbsp;|&nbsp;
+                        <span class="inline-block px-1.5 py-0.5 rounded bg-violet-100 text-violet-700 font-bold mr-1">Mirip</span> 30 karakter pertama cocok &nbsp;|&nbsp;
+                        <span class="inline-block px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 font-bold mr-1">Kemungkinan</span> 20 karakter pertama cocok &nbsp;|&nbsp;
+                        <span class="inline-block px-1.5 py-0.5 rounded bg-gray-100 text-gray-500 font-bold mr-1">Perkiraan</span> Skor minimal, perlu validasi manual
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Penyedia Detail Modal -->
-        <div id="penyediaModal" class="fixed inset-0 z-[65] hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div id="penyediaModal" class="fixed inset-0 z-[90] hidden flex items-center justify-center p-4">
             <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] flex flex-col overflow-hidden transform transition-all">
                 <div class="bg-gradient-to-r from-emerald-700 to-teal-600 px-6 py-4 flex justify-between items-center text-white shrink-0">
                     <h3 class="text-xl font-bold">🏢 Detail Penyedia</h3>
@@ -431,28 +512,11 @@
                             👻 RUP Orphan <span class="bg-amber-500 text-white text-[10px] px-2 py-0.5 rounded-full">{{ splash_orphan_real_cnt }}</span>
                         </button>
                     </div>
-                    <!-- Filter modes untuk pagu anomalies -->
-                    <div id="pagu-mode-filters" class="flex flex-wrap gap-2 mb-3 mt-2 hidden">
-                        <button onclick="applyPaguMode('default')" id="pmode-default"
-                                class="py-3 px-4 rounded-xl font-bold text-[11px] leading-tight transition border-2 flex-1 min-w-[130px] text-center
-                                       border-indigo-400 bg-indigo-50 text-indigo-700 shadow-sm">
-                            🔵 Logic 1<br><span class="font-normal text-[10px] text-indigo-500">Gabung Kode RUP + Nama Paket</span>
-                        </button>
-                        <button onclick="applyPaguMode('strict')" id="pmode-strict"
-                                class="py-3 px-4 rounded-xl font-bold text-[11px] leading-tight transition border-2 flex-1 min-w-[130px] text-center
-                                       border-slate-200 bg-white text-slate-500 hover:border-emerald-300 hover:bg-emerald-50">
-                            🟢 Standar<br><span class="font-normal text-[10px]">Cocokkan Kode RUP saja</span>
-                        </button>
-                        <button onclick="applyPaguMode('threshold')" id="pmode-threshold"
-                                class="py-3 px-4 rounded-xl font-bold text-[11px] leading-tight transition border-2 flex-1 min-w-[130px] text-center
-                                       border-slate-200 bg-white text-slate-500 hover:border-amber-300 hover:bg-amber-50">
-                            🟡 Logic 2<br><span class="font-normal text-[10px]">Abaikan jika >10% / >Rp1jt</span>
-                        </button>
-                        <button onclick="applyPaguMode('both')" id="pmode-both"
-                                class="py-3 px-4 rounded-xl font-bold text-[11px] leading-tight transition border-2 flex-1 min-w-[130px] text-center
-                                       border-slate-200 bg-white text-slate-500 hover:border-red-300 hover:bg-red-50">
-                            🔴 Logic 3<br><span class="font-normal text-[10px]">Kode RUP + Threshold</span>
-                        </button>
+                    <div class="text-[10px] text-slate-400 mb-4 leading-relaxed border-b border-slate-100 pb-4">
+                        <span class="font-medium">Dasar regulasi ambang batas:</span><br>
+                        PL Konstruksi ≤Rp400jt (Ps.38 <strong>Perpres No.46/2025</strong>) | 
+                        PL Jasa Konsultansi ≤Rp100jt | PL Barang/Jasa Lainnya ≤Rp200jt.<br>
+                        Biaya Langsung Non Personel per Konsultan ≤40% (<strong>Perka LKPP No.9/2018</strong>).
                     </div>
                     <div class="relative max-w-md mb-4 ml-auto">
                         <div class="search-wrapper">
@@ -590,20 +654,20 @@
         <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 mb-8">
             <form id="filter-form" class="grid grid-cols-1 md:grid-cols-5 gap-4 items-end">
                 <div class="md:col-span-2 relative">
-                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Cari Paket / Satker</label>
+                    <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Cari Paket / Satker</label>
                     <div class="search-wrapper">
                         <input type="text" name="search" id="search-input" value="{{ search_query }}"
                                placeholder="Ketik nama paket atau dinas..."
-                               class="w-full p-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none transition"
+                               class="w-full p-2.5 border border-slate-200 rounded-xl bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition text-sm text-slate-700 shadow-sm"
                                oninput="document.getElementById('search-clear-btn').style.display=this.value?'block':'none'">
-                        <span id="search-clear-btn" class="search-clear" onclick="document.getElementById('search-input').value='';this.style.display='none';document.getElementById('search-input').focus();document.getElementById('method-filter').value='';document.getElementById('type-filter').value='';document.getElementById('cara-filter').value='';searchTerm='';methodVal='';typeVal='';caraVal='';fetchTable(1, currentSort, currentSortDir);"
+                        <span id="search-clear-btn" class="search-clear" onclick="document.getElementById('search-input').value='';this.style.display='none';document.getElementById('search-input').focus();document.getElementById('method-filter').value='';document.getElementById('type-filter').value='';document.getElementById('cara-filter').value='';searchTerm='';quickSearchTerm='';if(document.getElementById('table-filter'))document.getElementById('table-filter').value='';document.getElementById('table-clear-btn').style.display='none';methodVal='';typeVal='';caraVal='';fetchTable(1, currentSort, currentSortDir);"
                               style="display:{{ 'block' if search_query else 'none' }}">&times;</span>
                     </div>
                     <div id="suggestions" class="hidden absolute z-10 w-full bg-white border border-slate-200 rounded-lg shadow-xl mt-1 max-h-60 overflow-y-auto"></div>
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Metode</label>
-                    <select name="method" id="method-filter" class="w-full p-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none transition">
+                    <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Metode</label>
+                    <select name="method" id="method-filter" class="w-full p-2.5 border border-slate-200 rounded-xl bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition text-sm text-slate-700 font-medium shadow-sm">
                         <option value="">Semua Metode</option>
                         {% for m in methods %}
                         <option value="{{ m[0] }}" {% if m[0] == m_filter %}selected{% endif %}>{{ m[0] }}</option>
@@ -611,8 +675,8 @@
                     </select>
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Tipe</label>
-                    <select name="type" id="type-filter" class="w-full p-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none transition">
+                    <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Tipe</label>
+                    <select name="type" id="type-filter" class="w-full p-2.5 border border-slate-200 rounded-xl bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition text-sm text-slate-700 font-medium shadow-sm">
                         <option value="">Semua Tipe</option>
                         {% for t in types %}
                         <option value="{{ t[0] }}" {% if t[0] == type_filter %}selected{% endif %}>{{ t[0] }}</option>
@@ -620,8 +684,8 @@
                     </select>
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Cara Pengadaan</label>
-                    <select name="cara" id="cara-filter" class="w-full p-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none transition">
+                    <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Cara Pengadaan</label>
+                    <select name="cara" id="cara-filter" class="w-full p-2.5 border border-slate-200 rounded-xl bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition text-sm text-slate-700 font-medium shadow-sm">
                         <option value="">Semua Cara</option>
                         {% for c in cara_list %}
                         <option value="{{ c[0] }}" {% if c[0] == cara_filter %}selected{% endif %}>{{ c[0] }}</option>
@@ -637,29 +701,27 @@
         <div id="table-container">
             <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
                 <div class="px-6 py-4 border-b border-slate-200 bg-slate-50/50 space-y-4">
-                    <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-                        <h2 class="font-bold text-slate-700 text-lg">Hasil Pencarian</h2>
-                        <p class="text-sm text-slate-500" id="showing-info">Menampilkan <b>{{ (packages|length) }}</b> dari <b>{{ "{:,}".format(filtered_count) }}</b> data</p>
+                    <div class="flex flex-col md:flex-row justify-between items-center gap-2">
+                        <h2 class="font-bold text-slate-800 text-base tracking-tight">Hasil Pencarian</h2>
+                        <p class="text-xs text-slate-400 font-medium" id="showing-info">Menampilkan <b class="text-indigo-600">{{ (packages|length) }}</b> dari <b class="text-indigo-600">{{ "{:,}".format(filtered_count) }}</b> data</p>
                     </div>
-                    <div class="relative max-w-md">
-                        <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1 ml-1">Quick Search Page</label>
-                        <div class="relative">
+                    <div class="relative max-w-sm">
+                        <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1 ml-1">Quick Search</label>
                         <div class="search-wrapper">
+                            <span class="absolute left-3 top-2.5 text-slate-400 text-sm pointer-events-none z-10">🔍</span>
                             <input type="text" id="table-filter"
-                                   placeholder="Cari cepat di semua halaman..."
-                                   class="w-full p-2 pl-9 pr-8 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none transition shadow-sm text-sm"
+                                   placeholder="Cari di semua halaman..."
+                                   class="w-full pl-9 pr-8 p-2 border border-slate-200 rounded-xl bg-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition text-sm text-slate-700 shadow-sm"
                                    oninput="document.getElementById('table-clear-btn').style.display=this.value?'block':'none'">
-                            <span class="absolute left-3 top-2.5 text-slate-400 text-sm">🔍</span>
-                            <span id="table-clear-btn" class="search-clear" onclick="document.getElementById('table-filter').value='';this.style.display='none';document.getElementById('table-filter').focus();document.getElementById('table-filter').dispatchEvent(new Event('input'))"
+                            <span id="table-clear-btn" class="search-clear" onclick="document.getElementById('table-filter').value='';this.style.display='none';document.getElementById('table-filter').focus();quickSearchTerm='';methodVal=document.getElementById('method-filter')?.value||'';typeVal=document.getElementById('type-filter')?.value||'';caraVal=document.getElementById('cara-filter')?.value||'';fetchTable(1, currentSort, currentSortDir);"
                                   style="display:none">&times;</span>
-                        </div>
                         </div>
                     </div>
                 </div>
-                <div id="pagination-container-top" class="px-6 py-3 border-b border-slate-200 bg-white/50 flex flex-col items-center gap-2"></div>
+                <div id="pagination-container-top" class="px-6 py-3 border-b border-slate-100 bg-slate-50/30 flex flex-col items-center gap-2"></div>
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse text-xs">
-                        <thead class="bg-slate-50 border-b border-slate-200">
+                    <table class="w-full text-left border-collapse">
+                        <thead class="bg-slate-50 border-b border-slate-100">
                             <tr>
                                 <th class="p-3 text-[10px] font-bold text-slate-500 uppercase w-16 cursor-pointer hover:text-indigo-600 transition sort-header" data-sort="id">
                                     # <span class="sort-indicator">{% if sort_by == 'id' %}{{ '▲' if sort_dir == 'ASC' else '▼' }}{% endif %}</span>
@@ -688,8 +750,8 @@
                                     {% endif %}
                                 </td>
                                 <td class="p-3">
-                                    <div class="font-semibold text-slate-800">{{ p['package_name'] }}</div>
-                                    <div class="text-xs text-slate-400 truncate max-w-xs">{{ p['work_description'] }}</div>
+                                    <div class="text-xs text-slate-600">{{ p['package_name'] }}</div>
+                                    <div class="text-[11px] text-slate-400 truncate max-w-xs">{{ p['work_description'] }}</div>
                                 </td>
                                 <td class="p-3 text-xs text-slate-600">{{ p['satker'] }}</td>
                                 <td class="p-3">
@@ -729,8 +791,8 @@
 
     </main>
 
-    <footer class="bg-slate-100 py-6 border-t border-slate-200 text-center">
-        <p class="text-slate-500 text-sm font-medium cursor-pointer hover:text-indigo-600 transition inline-block" onclick="openAdminModal()">by callunk@2026</p>
+    <footer class="bg-slate-50 py-5 border-t border-slate-100 text-center">
+        <p class="text-xs text-slate-400 font-medium cursor-pointer hover:text-indigo-500 transition inline-block" onclick="openAdminModal()">by callunk@2026</p>
         <p class="text-slate-400 text-[10px] font-mono mt-1">Total Visit : {{ "{:,.0f}".format(total_visits)|replace(",", ".") }}</p>
     </footer>
 
@@ -776,6 +838,7 @@
         let totalPages = {{ total_pages }};
         let filteredCount = {{ filtered_count }};
         let searchTerm = '{{ search_query|e }}';
+        let quickSearchTerm = '';
         let methodVal = '{{ m_filter|e }}';
         let typeVal = '{{ type_filter|e }}';
         let caraVal = '{{ cara_filter|e }}';
@@ -798,6 +861,7 @@
         async function fetchTable(page, sortBy, sortDir) {
             const params = new URLSearchParams({
                 search: searchTerm,
+                quick_search: quickSearchTerm,
                 method: methodVal,
                 type: typeVal,
                 cara: caraVal,
@@ -891,8 +955,8 @@
                 return `<tr class="cursor-pointer transition package-row ${rowClass}" data-package='${pJson}'>
                     <td class="p-3 text-sm ${numClass} font-mono">${rowNum}${realBadge}</td>
                     <td class="p-3">
-                        <div class="font-semibold text-slate-800">${escHtml(p.package_name || '')}</div>
-                        <div class="text-xs text-slate-400 truncate max-w-xs">${escHtml(p.work_description || '')}</div>
+                        <div class="text-xs text-slate-600">${escHtml(p.package_name || '')}</div>
+                        <div class="text-[11px] text-slate-400 truncate max-w-xs">${escHtml(p.work_description || '')}</div>
                     </td>
                     <td class="p-3 text-xs text-slate-600">${escHtml(p.satker || '')}</td>
                     <td class="p-3">
@@ -1068,7 +1132,7 @@
             }
         });
 
-        // ===== QUICK TABLE FILTER (server-side, all pages) =====
+        // ===== QUICK TABLE FILTER (server-side, within current search results) =====
         let quickSearchTimer = null;
         tableFilter.addEventListener('input', function() {
             clearTimeout(quickSearchTimer);
@@ -1078,17 +1142,12 @@
             
             // Debounce 400ms then do server-side search
             quickSearchTimer = setTimeout(() => {
-                // Set the main search input value
-                const mainSearch = document.getElementById('search-input');
-                if (mainSearch) {
-                    mainSearch.value = term;
-                    // Trigger the server-side search (fetch page 1)
-                    searchTerm = term;
-                    methodVal = document.getElementById('method-filter')?.value || '';
-                    typeVal = document.getElementById('type-filter')?.value || '';
-                    caraVal = document.getElementById('cara-filter')?.value || '';
-                    fetchTable(1, currentSort, currentSortDir);
-                }
+                quickSearchTerm = term;
+                // Keep the main search intact — quick search narrows within it
+                methodVal = document.getElementById('method-filter')?.value || '';
+                typeVal = document.getElementById('type-filter')?.value || '';
+                caraVal = document.getElementById('cara-filter')?.value || '';
+                fetchTable(1, currentSort, currentSortDir);
             }, 400);
         });
         
@@ -1096,17 +1155,21 @@
         tableFilter.addEventListener('keydown', function(e) {
             if (e.key === 'Enter') {
                 clearTimeout(quickSearchTimer);
-                const term = this.value.trim();
-                const mainSearch = document.getElementById('search-input');
-                if (mainSearch) {
-                    mainSearch.value = term;
-                    searchTerm = term;
-                    methodVal = document.getElementById('method-filter')?.value || '';
-                    typeVal = document.getElementById('type-filter')?.value || '';
-                    caraVal = document.getElementById('cara-filter')?.value || '';
-                    fetchTable(1, currentSort, currentSortDir);
-                }
+                quickSearchTerm = this.value.trim();
+                methodVal = document.getElementById('method-filter')?.value || '';
+                typeVal = document.getElementById('type-filter')?.value || '';
+                caraVal = document.getElementById('cara-filter')?.value || '';
+                fetchTable(1, currentSort, currentSortDir);
             }
+        });
+
+        // Clear quick search when main search changes
+        const origSearchInput = searchInput;
+        origSearchInput.addEventListener('input', function() {
+            // If user types a new main search, reset quick search
+            quickSearchTerm = '';
+            if (tableFilter) tableFilter.value = '';
+            document.getElementById('table-clear-btn').style.display = 'none';
         });
 
         // ===== DATA MASKING =====
@@ -1133,6 +1196,10 @@
             }
             const modal = document.getElementById('penyediaModal');
             modal.classList.remove('hidden');
+            // Blur modal di belakangnya (package & fee)
+            document.querySelectorAll('[id$=Modal]:not(.hidden):not(#penyediaModal)').forEach(el => {
+                el.classList.add('modal-inactive');
+            });
             document.body.style.overflow = 'hidden';
             document.getElementById('penyedia-loading').classList.remove('hidden');
             document.getElementById('penyedia-content').classList.add('hidden');
@@ -1169,7 +1236,17 @@
         }
         function closePenyediaModal() {
             document.getElementById('penyediaModal').classList.add('hidden');
-            document.body.style.overflow = '';
+            // Unblur modal di belakangnya
+            document.querySelectorAll('.modal-inactive').forEach(el => el.classList.remove('modal-inactive'));
+            // If package modal still open, re-blur the fee modal
+            const pm = document.getElementById('packageModal');
+            if (pm && !pm.classList.contains('hidden')) {
+                const fm = document.getElementById('feeModal');
+                if (fm && !fm.classList.contains('hidden')) fm.classList.add('modal-inactive');
+            }
+            if (document.querySelectorAll('[id$=Modal]:not(.hidden)').length === 0) {
+                document.body.style.overflow = '';
+            }
         }
         // Only close via X button — backdrop click does nothing
         document.getElementById('penyediaModal').addEventListener('click', function(e) {
@@ -1193,6 +1270,10 @@
         });
 
         function openPackageModal(p) {
+            // Blur semua modal yang kebuka di belakang packageModal
+            document.querySelectorAll('[id$=Modal]:not(.hidden):not(#packageModal)').forEach(el => {
+                el.classList.add('modal-inactive');
+            });
             document.getElementById('modal-package-name').textContent = p.package_name || '-';
             document.getElementById('modal-satker').textContent = p.satker || '-';
             document.getElementById('modal-kode-rup').textContent = p.id || '-';
@@ -1289,7 +1370,11 @@
 
         function closePackageModal() {
             document.getElementById('packageModal').classList.add('hidden');
-            document.body.style.overflow = '';
+            // Unblur modal di belakangnya
+            document.querySelectorAll('.modal-inactive').forEach(el => el.classList.remove('modal-inactive'));
+            if (document.querySelectorAll('[id$=Modal]:not(.hidden)').length === 0) {
+                document.body.style.overflow = '';
+            }
         }
 
         function openOrphanModal(r) {
@@ -1350,6 +1435,158 @@
         function closeAnomalyModal() {
             document.getElementById('anomalyModal').classList.add('hidden');
             document.body.style.overflow = '';
+        }
+
+        function closeFeeModal() {
+            document.getElementById('feeModal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        let _feeData = [];
+        let _feeFilter = 'all';
+        let _feePage = 1;
+        const _feePerPage = 15;
+
+        function filterFee(filter) {
+            _feeFilter = filter;
+            _feePage = 1;
+            // Update card active state
+            ['all','danger','warning','safe'].forEach(f => {
+                const el = document.getElementById('fee-card-' + f);
+                if (!el) return;
+                if (f === filter) {
+                    if (f === 'all') el.className = 'fee-card bg-slate-50 rounded-xl p-3 text-center border-2 border-slate-400 cursor-pointer transition shadow-md';
+                    else if (f === 'danger') el.className = 'fee-card bg-red-50 rounded-xl p-3 text-center border-2 border-red-400 cursor-pointer transition shadow-md';
+                    else if (f === 'warning') el.className = 'fee-card bg-amber-50 rounded-xl p-3 text-center border-2 border-amber-400 cursor-pointer transition shadow-md';
+                    else if (f === 'safe') el.className = 'fee-card bg-emerald-50 rounded-xl p-3 text-center border-2 border-emerald-400 cursor-pointer transition shadow-md';
+                } else {
+                    if (f === 'all') el.className = 'fee-card bg-slate-50 rounded-xl p-3 text-center border-2 border-slate-200 cursor-pointer transition hover:shadow-md hover:border-slate-300';
+                    else if (f === 'danger') el.className = 'fee-card bg-red-50 rounded-xl p-3 text-center border-2 border-transparent cursor-pointer transition hover:shadow-md hover:border-red-300';
+                    else if (f === 'warning') el.className = 'fee-card bg-amber-50 rounded-xl p-3 text-center border-2 border-transparent cursor-pointer transition hover:shadow-md hover:border-amber-300';
+                    else if (f === 'safe') el.className = 'fee-card bg-emerald-50 rounded-xl p-3 text-center border-2 border-transparent cursor-pointer transition hover:shadow-md hover:border-emerald-300';
+                }
+            });
+            renderFeePage();
+        }
+
+        function openFeeModal() {
+            document.getElementById('feeModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            _feePage = 1;
+            fetchFeeData();
+        }
+
+        async function fetchFeeData() {
+            const tbody = document.getElementById('fee-tbody');
+            tbody.innerHTML = '<tr><td colspan="8" class="p-8 text-center text-slate-400 italic">Memuat data...</td></tr>';
+            try {
+                const res = await fetch('/api/konsultan_check');
+                const data = await res.json();
+                if (!data.success) throw new Error(data.message);
+                _feeData = data.grouped;
+                // Update summary
+                const danger = data.grouped.filter(g => g.flag_total === 'danger').length;
+                const warning = data.grouped.filter(g => g.flag_total === 'warning').length;
+                const safe = data.grouped.filter(g => g.flag_total === 'safe').length;
+                document.getElementById('fee-total-groups').textContent = data.grouped.length;
+                document.getElementById('fee-danger-count').textContent = danger;
+                document.getElementById('fee-warning-count').textContent = warning;
+                document.getElementById('fee-safe-count').textContent = safe;
+                renderFeePage();
+            } catch(e) {
+                tbody.innerHTML = '<tr><td colspan="8" class="p-8 text-center text-red-500 font-bold">❌ Gagal memuat data: ' + e.message + '</td></tr>';
+            }
+        }
+
+        function renderFeePage() {
+            const tbody = document.getElementById('fee-tbody');
+            // Filter data
+            let filtered = _feeData;
+            if (_feeFilter !== 'all') {
+                filtered = _feeData.filter(g => g.flag_total === _feeFilter);
+            }
+            const start = (_feePage - 1) * _feePerPage;
+            const end = start + _feePerPage;
+            const pageData = filtered.slice(start, end);
+
+            if (pageData.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" class="p-8 text-center text-green-600 font-bold">✅ Semua data sesuai batas wajar</td></tr>';
+                document.getElementById('fee-pagination').innerHTML = '';
+                return;
+            }
+
+            let html = '';
+            pageData.forEach((g, i) => {
+                const idx = start + i + 1;
+                const flagIcon = g.flag_total === 'danger' ? '🔴' : g.flag_total === 'warning' ? '🟡' : '✅';
+                const rowBg = g.flag_total === 'danger' ? 'bg-red-50' : g.flag_total === 'warning' ? 'bg-amber-50' : '';
+
+                // Confidence: lowest match_label among konsultan
+                const confOrder = {'Pasti':0,'Yakin':1,'Sesuai':2,'Mirip':3,'Kemungkinan':4,'Perkiraan':5};
+                let worstConf = 'Pasti';
+                g.konsultan.forEach(k => { if ((confOrder[k.match_label]||5) > (confOrder[worstConf]||0)) worstConf = k.match_label; });
+                const confBadge = {'Pasti':'bg-indigo-100 text-indigo-700','Yakin':'bg-sky-100 text-sky-700','Sesuai':'bg-blue-100 text-blue-700','Mirip':'bg-violet-100 text-violet-700','Kemungkinan':'bg-slate-100 text-slate-600','Perkiraan':'bg-gray-100 text-gray-500'};
+
+                let rincianHtml = '';
+                g.konsultan.forEach(k => {
+                    const kf = k.flag === 'danger' ? '🔴' : k.flag === 'warning' ? '🟡' : '✅';
+                    const kc = k.flag === 'danger' ? 'text-red-600' : k.flag === 'warning' ? 'text-amber-600' : 'text-emerald-600';
+                    const kl = {'Pasti':'🎯','Yakin':'👍','Sesuai':'📌','Mirip':'🔍','Kemungkinan':'❓','Perkiraan':'⚠️'};
+                    rincianHtml += `<div class="${kc} text-[10px] font-semibold leading-tight">${kf} ${k.tipe}: <span class="font-mono">Rp ${k.nilai.toLocaleString()}</span> (<span class="font-bold">${k.fee_persen}%</span>) <span class="text-slate-400">${kl[k.match_label]||''}${k.match_label}</span></div>`;
+                });
+
+                // Clickable row - open detail modal for construction package
+                const constrData = JSON.stringify({
+                    id: g.konstruksi_id,
+                    package_name: g.konstruksi_nama,
+                    budget: g.konstruksi_budget,
+                    satker: g.satker,
+                    procurement_method: g.konstruksi_metode,
+                }).replace(/'/g, "\\'");
+
+                html += `<tr class="${rowBg} hover:bg-slate-50/50 transition cursor-pointer" onclick='openPackageModal(${constrData})'>
+                    <td class="p-3 text-slate-400 font-mono">${idx}</td>
+                    <td class="p-3 font-semibold text-slate-700 max-w-[320px]">
+                        <span class="truncate block" title="${g.konstruksi_nama}">${g.konstruksi_nama}</span>
+                    </td>
+                    <td class="p-3 text-slate-500 max-w-[160px] truncate text-[10px]" title="${g.satker}">${g.satker}</td>
+                    <td class="p-3 font-mono text-slate-600">Rp ${g.konstruksi_nilai.toLocaleString()}</td>
+                    <td class="p-3 font-mono text-slate-600">Rp ${g.total_fee.toLocaleString()}</td>
+                    <td class="p-3">
+                        <span class="px-2 py-1 rounded-full font-bold text-[10px] inline-block
+                            ${g.flag_total === 'danger' ? 'bg-red-100 text-red-700' : g.flag_total === 'warning' ? 'bg-amber-100 text-amber-700' : 'bg-emerald-100 text-emerald-700'}">
+                            ${flagIcon} ${g.total_persen}%
+                        </span>
+                    </td>
+                    <td class="p-3 max-w-[200px]">${rincianHtml}</td>
+                    <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${confBadge[worstConf]||'bg-slate-100 text-slate-500'}">${worstConf}</span></td>
+                </tr>`;
+            });
+
+            tbody.innerHTML = html;
+            renderFeePagination();
+        }
+
+        function renderFeePagination() {
+            const container = document.getElementById('fee-pagination');
+            const filteredCount = (_feeFilter === 'all') ? _feeData.length : _feeData.filter(g => g.flag_total === _feeFilter).length;
+            const totalPages = Math.ceil(filteredCount / _feePerPage);
+            if (totalPages <= 1) {
+                container.innerHTML = '';
+                return;
+            }
+            let html = '';
+            // Prev
+            html += `<button onclick="_feePage=Math.max(1,_feePage-1);renderFeePage()" class="pagination-btn pagination-btn-inactive text-[11px]" ${_feePage === 1 ? 'disabled style="opacity:0.4"' : ''}>&larr;</button>`;
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === _feePage || i === 1 || i === totalPages || Math.abs(i - _feePage) <= 2) {
+                    html += `<button onclick="_feePage=${i};renderFeePage()" class="pagination-btn ${i === _feePage ? 'pagination-btn-active' : 'pagination-btn-inactive'}">${i}</button>`;
+                } else if (i === _feePage - 3 || i === _feePage + 3) {
+                    html += '<span class="pagination-ellipsis">…</span>';
+                }
+            }
+            html += `<button onclick="_feePage=Math.min(totalPages,_feePage+1);renderFeePage()" class="pagination-btn pagination-btn-inactive text-[11px]" ${_feePage === totalPages ? 'disabled style="opacity:0.4"' : ''}>&rarr;</button>`;
+            container.innerHTML = html;
         }
 
         function paginateTable(tbodyId, paginationId, searchTerm) {
@@ -1440,13 +1677,6 @@
             document.getElementById('anomaly-content-pl').classList.toggle('hidden', tab !== 'pl');
             document.getElementById('anomaly-content-pagu').classList.toggle('hidden', tab !== 'pagu');
             document.getElementById('anomaly-content-orphan').classList.toggle('hidden', tab !== 'orphan');
-            // Tampilkan filter mode hanya di tab Pagu
-            const filterDiv = document.getElementById('pagu-mode-filters');
-            if (tab === 'pagu') {
-                filterDiv.classList.remove('hidden');
-            } else {
-                filterDiv.classList.add('hidden');
-            }
             // Clear search and re-paginate new tab
             const searchInput = document.getElementById('anomaly-search');
             if (searchInput.value) {
@@ -1455,46 +1685,17 @@
             }
             if (tab === 'pl') paginateTable('pl-tbody', 'pl-pagination');
             else if (tab === 'pagu') {
-                // Default ke Solusi 1 (strict Kode RUP match)
-                applyPaguMode('default', true);
-                setTimeout(() => applyPaguMode('strict'), 150);
-                paginateTable('pagu-tbody', 'pagu-pagination');
+                loadPaguDataDefault();
             } else if (tab === 'orphan') {
                 loadOrphanData();
             }
         }
 
-        // ===== PAGU ANOMALY MODE FILTERS =====
-        let paguModeActive = 'default';
-
-        function applyPaguMode(mode, silent) {
-            paguModeActive = mode;
-
-            // Update button styles
-            ['default','strict','threshold','both'].forEach(m => {
-                const btn = document.getElementById('pmode-' + m);
-                if (!btn) return;
-                if (m === mode) {
-                    // Active
-                    const activeColors = {
-                        'default': 'border-indigo-400 bg-indigo-50 text-indigo-700',
-                        'strict': 'border-emerald-400 bg-emerald-50 text-emerald-700',
-                        'threshold': 'border-amber-400 bg-amber-50 text-amber-700',
-                        'both': 'border-red-400 bg-red-50 text-red-700'
-                    };
-                    btn.className = 'py-3 px-4 rounded-xl font-bold text-[11px] leading-tight transition border-2 flex-1 min-w-[130px] text-center ' + (activeColors[m] || '');
-                } else {
-                    btn.className = 'py-3 px-4 rounded-xl font-bold text-[11px] leading-tight transition border-2 flex-1 min-w-[130px] text-center border-slate-200 bg-white text-slate-500 hover:border-slate-300 hover:bg-slate-50';
-                }
-            });
-
-            if (silent) return;
-
-            // Fetch filtered data from API
+        function loadPaguDataDefault() {
             const tbody = document.getElementById('pagu-tbody');
             tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-slate-400 italic">Memuat data...</td></tr>';
 
-            fetch('/api/anomalies/pagu?mode=' + encodeURIComponent(mode))
+            fetch('/api/anomalies/pagu?mode=strict')
                 .then(res => res.json())
                 .then(result => {
                     if (!result.success) {

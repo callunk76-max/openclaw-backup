@@ -1,0 +1,217 @@
+//@version=6
+indicator(
+  title="UFO Indicator Pro [Cuy]",
+  shorttitle="UFO Pro",
+  overlay=true,
+  format=format.price,
+  precision=2
+)
+
+// ═══════════════════════════════════════════════════════════════════
+// UFO INDICATOR PRO — Full Dwiyan Anggara UFO Implementation
+// ═══════════════════════════════════════════════════════════════════
+
+// ── SETTINGS ──────────────────────────────────────────────────
+showDemand      = input.bool(true,  "🟢 Demand Zone")
+showSupply      = input.bool(true,  "🔴 Supply Zone")
+showEma9        = input.bool(true,  "📈 EMA 9")
+showEma50       = input.bool(true,  "📈 EMA 50 Daily")
+useDailyTrend   = input.bool(true,  "🌊 Filter Trend Daily")
+useEmaFilter    = input.bool(true,  "🎯 Filter EMA 9 dlm Zone")
+useSessionFilter= input.bool(false, "⏰ Filter Sesi")
+sessions        = input.string("London+NewYork", "Sesi", options=["Asian","London","NewYork","London+NewYork","All"])
+useScoring      = input.bool(true,  "📊 Scoring Detail")
+minScore        = input.int(8, "Min Score (max 18)", 0, 18)
+useUFODetect    = input.bool(true,  "🛸 UFO Origin Detection")
+showSaucers     = input.bool(true,  "🛸 Flying Saucers")
+
+pivotStrength   = input.int(2, "Swing Strength", 1, 5)
+maxBaseCandles  = input.int(5, "Max Base", 1, 10)
+legMultiplier   = input.float(1.5, "Leg Mult", 1.0, 5.0, 0.1)
+zoneExpiry      = input.int(50, "Expiry (bar)", 10, 200)
+ufoMoveMult     = input.float(2.0, "UFO Move (xATR)", 1.0, 5.0, 0.1)
+ufoVolRatio     = input.float(1.5, "UFO Vol Ratio", 1.0, 5.0, 0.1)
+
+// ── CORE INDICATORS ──────────────────────────────────────────
+atr14 = ta.atr(14)
+ema9  = ta.ema(close, 9)
+ema50 = ta.ema(close, 50)
+avgVol = ta.sma(volume, 14)
+avgRange = ta.sma(high - low, 14)
+
+plot(showEma9  ? ema9  : na, "EMA 9",  #FF9800, 2)
+plot(showEma50 ? ema50 : na, "EMA 50", #2196F3, 1)
+
+// ── MTF ──────────────────────────────────────────────────────
+dailyClose = request.security(syminfo.tickerid, "D", close[1])
+dailyEma50 = request.security(syminfo.tickerid, "D", ta.ema(close, 50)[1])
+dailyBull  = dailyClose > dailyEma50
+
+// ── SESSION ──────────────────────────────────────────────────
+isAsian   = hour(time('1D', '0000-0900')) >= 0 and hour(time) < 9
+isLondon  = hour(time) >= 8 and hour(time) < 17
+isNewYork = hour(time) >= 13 and hour(time) < 22
+sessionOk = switch sessions
+    "Asian"          => isAsian
+    "London"         => isLondon
+    "NewYork"        => isNewYork
+    "London+NewYork" => isLondon or isNewYork
+    => true
+
+// ── UFO ORIGIN DETECTION ─────────────────────────────────────
+var float[] ufoLevel   = array.new<float>()
+var float[] ufoStr     = array.new<float>()
+var int[]   ufoBar     = array.new<int>()
+var bool[]  ufoActive  = array.new<bool>()
+
+cRange  = high - low
+rRatio  = cRange / (avgRange > 0 ? avgRange : 1)
+vRatio  = volume / (avgVol > 0 ? avgVol : 1)
+mATR    = math.abs(close - open) / (atr14 > 0 ? atr14 : 1)
+bigMove = mATR >= ufoMoveMult and rRatio >= ufoMoveMult * 0.8
+hiVol   = vRatio >= ufoVolRatio
+
+if useUFODetect and bigMove and hiVol
+    lvl = open
+    s   = math.min(100, rRatio * 20 + vRatio * 20 + mATR * 10)
+    dup = false
+    for j = 0 to array.size(ufoLevel) - 1
+        if math.abs(lvl - array.get(ufoLevel, j)) < atr14 * 0.3
+            dup := true
+    if not dup
+        array.push(ufoLevel,  lvl)
+        array.push(ufoStr,    s)
+        array.push(ufoBar,    bar_index)
+        array.push(ufoActive, true)
+
+// ── BASE DETECTION ───────────────────────────────────────────
+isBase   = cRange < atr14 * 0.6 and volume < avgVol * 1.2
+runHigh10 = ta.highest(high, 10)
+runLow10  = ta.lowest(low, 10)
+
+var int   baseCnt=0; var float baseLo=na; var float baseHi=na
+var int   baseSt=0; var float baseVol=0; var float lInHi=na; var float lInLo=na
+
+var zProx  = array.new<float>()
+var zDist  = array.new<float>()
+var zDem   = array.new<bool>()
+var zPat   = array.new<string>()
+var zBar   = array.new<int>()
+var zScr   = array.new<int>()
+var zEma   = array.new<bool>()
+var zAct   = array.new<bool>()
+var zTch   = array.new<int>()
+
+if isBase
+    if baseCnt == 0
+        baseLo := low; baseHi := high; baseSt := bar_index
+        baseVol := volume; lInHi := runHigh10; lInLo := runLow10
+    else
+        baseLo := math.min(baseLo, low); baseHi := math.max(baseHi, high)
+        baseVol := (baseVol * baseCnt + volume) / (baseCnt + 1)
+    baseCnt += 1
+else
+    if baseCnt >= 1 and baseCnt <= maxBaseCandles
+        bRng  = baseHi - baseLo
+        lORng = high - low
+        vBk   = lORng >= bRng * legMultiplier
+        if vBk
+            rB4 = lInHi > baseHi; dB4 = lInLo < baseLo
+            rAf = high > baseHi; dAf = low < baseLo
+            isRBR = rB4 and rAf; isDBD = dB4 and dAf
+            isRBD = rB4 and dAf; isDBR = dB4 and rAf
+
+            // Scoring
+            sA = 0
+            lRng = math.abs(lInHi - lInLo)
+            sA := sA + (lRng > atr14*1.5 ? 4 : lRng > atr14*0.8 ? 2 : 1)
+            gap = (isRBR or isRBD) ? lInHi - baseHi : baseLo - lInLo
+            sA := sA + (gap > atr14*0.3 ? 2 : gap > 0 ? 1 : 0)
+            sA := sA + (baseVol > avgVol*1.3 ? 2 : baseVol > avgVol ? 1 : 0)
+            sB = 0
+            lRt = lORng / (bRng > 0 ? bRng : 1)
+            sB := sB + (lRt >= 3 ? 4 : lRt >= 2 ? 3 : lRt >= 1.5 ? 2 : 1)
+            sB := sB + (volume > avgVol*2 ? 3 : volume > avgVol*1.5 ? 2 : volume > avgVol*1.2 ? 1 : 0)
+            sB := sB + (baseCnt==1 ? 3 : baseCnt<=2 ? 2 : baseCnt<=4 ? 1 : 0)
+            tScr = sA + sB
+
+            eZ = ema9 >= baseLo and ema9 <= baseHi
+            tB = isRBR or isDBR; tS = isDBD or isRBD
+            tO = not useDailyTrend or (tB and dailyBull) or (tS and not dailyBull)
+            eO = not useEmaFilter or eZ; sO = not useScoring or tScr >= minScore
+
+            if tO and eO and sO
+                buf = atr14 * 0.1
+                if (isRBR or isDBR) and showDemand
+                    array.push(zProx, baseHi+buf); array.push(zDist, baseLo-buf)
+                    array.push(zDem, true); array.push(zPat, isRBR?"RBR":"DBR")
+                    array.push(zBar, bar_index); array.push(zScr, tScr)
+                    array.push(zEma, eZ); array.push(zAct, true); array.push(zTch, 0)
+                if (isDBD or isRBD) and showSupply
+                    array.push(zProx, baseLo-buf); array.push(zDist, baseHi+buf)
+                    array.push(zDem, false); array.push(zPat, isDBD?"DBD":"RBD")
+                    array.push(zBar, bar_index); array.push(zScr, tScr)
+                    array.push(zEma, eZ); array.push(zAct, true); array.push(zTch, 0)
+    baseCnt:=0; baseLo:=na; baseHi:=na
+
+// ── TOUCH TRACKING ───────────────────────────────────────────
+zc = array.size(zProx)
+for i = 0 to zc - 1
+    if not array.get(zAct, i) or bar_index - array.get(zBar, i) > zoneExpiry
+        if bar_index - array.get(zBar, i) > zoneExpiry
+            array.set(zAct, i, false)
+        continue
+    pTop = math.max(array.get(zProx,i), array.get(zDist,i))
+    pBot = math.min(array.get(zProx,i), array.get(zDist,i))
+    if low <= pTop and high >= pBot
+        array.set(zTch, i, array.get(zTch, i) + 1)
+
+// ── RENDER ───────────────────────────────────────────────────
+if barstate.islast
+    for i = 0 to zc - 1
+        if not array.get(zAct, i) or bar_index - array.get(zBar, i) > zoneExpiry
+            continue
+        pX=array.get(zProx,i); pD=array.get(zDist,i); d=array.get(zDem,i)
+        p=array.get(zPat,i); s=array.get(zScr,i); e=array.get(zEma,i); t=array.get(zTch,i)
+        ag = bar_index - array.get(zBar, i)
+        aa = math.max(20, 85 - int(ag*65/math.max(zoneExpiry,1)))
+        tp = t * 10; av = math.max(15, aa-tp)
+        it = math.min(1, s/18.0)
+        cl = d ? color.new(color.green, 100-int(av*it)) : color.new(color.red, 100-int(av*it))
+        cb = d ? color.new(#00E676, 100-math.min(aa+10,100)) : color.new(#FF5252, 100-math.min(aa+10,100))
+        tL = math.max(pX,pD); bL = math.min(pX,pD)
+        line.new(array.get(zBar,i), pX, bar_index, pX, color=cb, width=1)
+        line.new(array.get(zBar,i), pD, bar_index, pD, color=color.new(color.gray,100-aa), width=1, style=line.style_dashed)
+        lb = p + " S:" + str.tostring(s) + (e?"✓":"") + (t>0?" x"+str.tostring(t):"")
+        label.new(array.get(zBar,i), d?pX:pD, lb, color=cl, textcolor=color.white,
+                  style=d?label.style_label_down:label.style_label_up, size=size.small)
+
+    // UFO Flying Saucers
+    if showSaucers
+        uc = array.size(ufoLevel)
+        for i = 0 to uc - 1
+            if not array.get(ufoActive, i)
+                continue
+            ag = bar_index - array.get(ufoBar, i)
+            if ag > zoneExpiry
+                continue
+            lv = array.get(ufoLevel, i); ss = array.get(ufoStr, i)
+            al = math.max(20, 80 - int(ag*60/zoneExpiry))
+            ch = ss >= 70 ? "🛸" : ss >= 40 ? "◉" : "○"
+            cl = ss >= 70 ? color.new(#FF6D00, 100-al) : ss >= 40 ? color.new(#FFB300, 100-al) : color.new(#9E9E9E, 100-al)
+            label.new(array.get(ufoBar, i), lv, ch, color=color.new(#0D0D1A, 80),
+                      textcolor=cl, style=label.style_none, size=ss>=70?size.large:size.normal)
+
+// ── TABLE ─────────────────────────────────────────────────────
+var table info = table.new(position.top_right, 1, 1,
+                            bgcolor=color.new(#0D0D1A, 95),
+                            border_color=color.new(#555555, 60))
+if barstate.islast
+    sStr = isAsian ? "🇯🇵 Asian" : isLondon ? "🇬🇧 London" : isNewYork ? "🇺🇸 NY" : "🌙 Off"
+    tx  = "🛸 UFO INDICATOR PRO\n═══════════════\n"
+    tx += "⏰ " + sStr + "\n🌊 " + (dailyBull?"🟢 Bull":"🔴 Bear") + "\n"
+    tx += "───────────\n🏗 Zones: " + str.tostring(zc) + "\n"
+    tx += "🛸 UFOs: " + str.tostring(array.size(ufoLevel)) + "\n"
+    tx += "🎯 Min Score: " + str.tostring(minScore) + "/18\n"
+    tx += "🔄 Fresh/Tested: " + str.tostring(array.sum(zAct ? 1 : 0)) + "/" + str.tostring(zc)
+    table.cell(info, 0, 0, tx, text_color=#AAAAAA, text_size=size.small)

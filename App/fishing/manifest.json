@@ -1,7 +1,7 @@
 {
   "name": "Mancing Bulukumba 🎣",
   "short_name": "MancingBLK",
-  "description": "Spot pemancingan & prakiraan laut Kabupaten Bulukumba",
+  "description": "Spot pemancingan & prakiraan laut Kabupaten Bulukumba + Sinjai + Selayar",
   "start_url": "/fish/",
   "scope": "/fish/",
   "display": "standalone",

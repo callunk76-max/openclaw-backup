@@ -6,9 +6,10 @@
     <title>Daftar Penyedia Bulukumba</title>
     <link rel="icon" type="image/png" href="/static/favicon.png">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; background-color: #f8fafc; }
+        input::placeholder { color: #b0b7c3; }
         .table-wrap { overflow-x: auto; max-width: 100%; }
         .table-wrap table { width: 100%; min-width: 680px; border-collapse: collapse; }
         .table-wrap th, .table-wrap td { padding: 10px 12px; text-align: left; font-size: 13px; border-bottom: 1px solid #e2e8f0; }
@@ -31,19 +32,17 @@
 </head>
 <body class="bg-slate-50 text-slate-900 min-h-screen">
 
-<header class="bg-gradient-to-r from-emerald-800 via-emerald-700 to-teal-600 text-white py-6 px-4 shadow-lg">
-    <div class="container mx-auto max-w-6xl">
-        <div class="flex flex-col md:flex-row justify-between items-center gap-3">
-            <div>
-                <p class="text-emerald-200 text-[11px] font-bold tracking-widest uppercase">LPSE UKPBJ Setda Kab. Bulukumba</p>
-                <h1 class="text-3xl font-extrabold tracking-tight">📋 Database Penyedia</h1>
-                <p class="text-emerald-100/70 text-sm">{{ "{:,}".format(total_count) }} data terdaftar</p>
-            </div>
-            <div class="flex gap-2">
-                <a href="/penyedia/export?search={{ search_query }}&verif={{ verif_filter }}&format=xlsx" class="bg-white/10 backdrop-blur text-white border border-white/20 px-3 py-2 rounded-lg font-bold hover:bg-white/20 text-sm">📊 Excel</a>
-                <a href="/penyedia/export?search={{ search_query }}&verif={{ verif_filter }}&format=pdf" class="bg-white/10 backdrop-blur text-white border border-white/20 px-3 py-2 rounded-lg font-bold hover:bg-white/20 text-sm">📄 PDF</a>
-                <a href="/" class="bg-white/10 backdrop-blur text-white border border-white/20 px-3 py-2 rounded-lg font-bold hover:bg-white/20 text-sm">🏠 SIRUP</a>
-            </div>
+<header class="bg-gradient-to-r from-emerald-700 to-emerald-600 text-white px-4 shadow-lg">
+    <div class="container mx-auto max-w-7xl flex flex-col md:flex-row justify-between items-center gap-3 py-5">
+        <div>
+            <p class="text-[10px] font-semibold text-emerald-300 uppercase tracking-[0.2em]">LPSE UKPBJ Setda Kab. Bulukumba</p>
+            <h1 class="text-2xl md:text-3xl font-black tracking-tight text-white">Database Penyedia <span class="text-emerald-200">📋</span></h1>
+            <p class="text-xs text-emerald-200/80 font-medium">{{ "{:,}".format(total_count) }} data terdaftar</p>
+        </div>
+        <div class="flex gap-2">
+            <a href="/penyedia/export?search={{ search_query }}&verif={{ verif_filter }}&format=xlsx" class="bg-white/10 backdrop-blur-sm text-white border border-white/10 px-4 py-2 rounded-xl font-bold text-xs hover:bg-white/20 transition">📊 Excel</a>
+            <a href="/penyedia/export?search={{ search_query }}&verif={{ verif_filter }}&format=pdf" class="bg-white/10 backdrop-blur-sm text-white border border-white/10 px-4 py-2 rounded-xl font-bold text-xs hover:bg-white/20 transition">📄 PDF</a>
+            <a href="/" class="bg-white/10 backdrop-blur-sm text-white border border-white/10 px-4 py-2 rounded-xl font-bold text-xs hover:bg-white/20 transition">🏠 SIRUP</a>
         </div>
     </div>
 </header>
@@ -71,29 +70,29 @@
     </div>
 
     <!-- Search & Filter -->
-    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 mb-5">
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 mb-5">
         <div class="space-y-3">
             <div class="relative">
-                <input type="text" id="search-input" value="{{ search_query }}" placeholder="Cari nama, NPWP, jenis usaha, atau alamat..." class="w-full py-2.5 pl-9 pr-20 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none text-sm">
-                <span class="absolute left-3 top-2.5 text-slate-400">🔍</span>
-                <button id="search-btn" class="absolute right-1.5 top-1.5 bg-emerald-600 text-white px-4 py-1.5 rounded-md font-bold hover:bg-emerald-700 text-xs">Cari</button>
+                <input type="text" id="search-input" value="{{ search_query }}" placeholder="Cari nama, NPWP, jenis usaha, atau alamat..." class="w-full py-2.5 pl-9 pr-20 border border-slate-200 rounded-xl bg-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition text-sm text-slate-700 shadow-sm">
+                <span class="absolute left-3 top-2.5 text-slate-400 pointer-events-none">🔍</span>
+                <button id="search-btn" class="absolute right-1.5 top-1.5 bg-emerald-600 text-white px-4 py-1.5 rounded-lg font-bold hover:bg-emerald-700 text-xs transition shadow-sm">Cari</button>
             </div>
-            <div class="flex gap-3 text-xs">
-                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="verif" value="" {% if not verif_filter %}checked{% endif %} class="text-emerald-600 verif-radio"> <span>Semua</span></label>
-                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="verif" value="verified" {% if verif_filter == 'verified' %}checked{% endif %} class="text-emerald-600 verif-radio"> <span>✅ Terverifikasi</span></label>
-                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="verif" value="unverified" {% if verif_filter == 'unverified' %}checked{% endif %} class="text-emerald-600 verif-radio"> <span class="text-red-600">⬜ Belum</span></label>
+            <div class="flex gap-4 text-xs">
+                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="verif" value="" {% if not verif_filter %}checked{% endif %} class="accent-emerald-600 verif-radio"> <span class="text-slate-600 font-medium">Semua</span></label>
+                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="verif" value="verified" {% if verif_filter == 'verified' %}checked{% endif %} class="accent-emerald-600 verif-radio"> <span class="text-emerald-700 font-medium">✅ Terverifikasi</span></label>
+                <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="verif" value="unverified" {% if verif_filter == 'unverified' %}checked{% endif %} class="accent-emerald-600 verif-radio"> <span class="text-red-600 font-medium">⬜ Belum</span></label>
             </div>
             {% if search_query %}
-            <div class="flex items-center gap-2"><span class="text-sm text-slate-500">Hasil untuk: <b>{{ search_query }}</b></span> <a href="/penyedia" id="reset-link" class="text-xs text-red-500 hover:text-red-700 font-bold">✕ Reset</a></div>
+            <div class="flex items-center gap-2"><span class="text-sm text-slate-500">Hasil untuk: <b>{{ search_query }}</b></span> <a href="/penyedia" id="reset-link" class="text-xs text-red-500 hover:text-red-700 font-bold transition">✕ Reset</a></div>
             {% endif %}
         </div>
     </div>
 
     <!-- Table -->
-    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden mb-6">
-        <div class="px-4 py-3 border-b border-slate-200 bg-slate-50 flex justify-between items-center">
-            <h2 class="font-bold text-slate-700 text-sm">📋 Daftar Penyedia</h2>
-            <p class="text-xs text-slate-500" id="showing-info">Menampilkan <b>{{ vendors|length }}</b> dari <b>{{ "{:,}".format(total_count) }}</b> data</p>
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden mb-6">
+        <div class="px-5 py-3.5 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
+            <h2 class="font-bold text-slate-800 text-sm tracking-tight">📋 Daftar Penyedia</h2>
+            <p class="text-xs text-slate-400 font-medium" id="showing-info">Menampilkan <b class="text-emerald-600">{{ vendors|length }}</b> dari <b class="text-emerald-600">{{ "{:,}".format(total_count) }}</b> data</p>
         </div>
         <div id="penyedia-pagination-top" class="px-4 py-2.5 border-b border-slate-200 bg-slate-50/50 flex flex-col items-center gap-2">
         {% if total_count > per_page %}
@@ -128,8 +127,8 @@
         {% endif %}
         </div>
         <div class="table-wrap">
-            <table>
-                <thead><tr><th>#</th><th>Nama Penyedia</th><th class="hide-mobile">NPWP</th><th>Jenis</th><th class="hide-mobile">Tgl Daftar</th><th>Status</th><th></th></tr></thead>
+            <table class="w-full text-left border-collapse">
+                <thead class="bg-slate-50 border-b border-slate-100"><tr><th class="p-3 text-[10px] font-bold text-slate-500 uppercase">#</th><th class="p-3 text-[10px] font-bold text-slate-500 uppercase">Nama Penyedia</th><th class="p-3 text-[10px] font-bold text-slate-500 uppercase hide-mobile">NPWP</th><th class="p-3 text-[10px] font-bold text-slate-500 uppercase">Jenis</th><th class="p-3 text-[10px] font-bold text-slate-500 uppercase hide-mobile">Tgl Daftar</th><th class="p-3 text-[10px] font-bold text-slate-500 uppercase">Status</th><th class="p-3"></th></tr></thead>
                 <tbody id="penyedia-tbody">
                     {% for v in vendors %}
                     {% set rn = (page - 1) * per_page + loop.index %}
@@ -209,9 +208,9 @@
     </div>
 </div>
 
-<footer class="bg-white border-t border-slate-200 py-4 text-center">
-    <p class="text-slate-400 text-xs">
-        <span class="cursor-pointer hover:text-emerald-600 font-medium" onclick="openUpload()">by callunk@2026</span>
+<footer class="bg-slate-50 py-5 border-t border-slate-100 text-center">
+    <p class="text-xs text-slate-400">
+        <span class="cursor-pointer hover:text-emerald-500 font-medium" onclick="openUpload()">by callunk@2026</span>
         <span class="mx-2">·</span> LPSE UKPBJ Kab. Bulukumba
         <span class="mx-2">·</span> <span id="footer-count">{{ "{:,}".format(total_count) }}</span> penyedia
     </p>
