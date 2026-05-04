@@ -12070,3 +12070,5 @@ Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
 📉 Gap   : 6.29 (+0.4) Pts
 📈 Action: 🟢 STRONG BUY ⬆️
 🎯 Status: ☑️ WAIT FOR DIP ⏳
+✅ Sent via Telegram. Message ID: 3633
+Message sent status: 0
