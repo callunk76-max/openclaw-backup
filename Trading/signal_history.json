@@ -1,5 +1,10 @@
 {
     "history": {
+        "NZD/JPY": {
+            "consecutive": 1,
+            "stars": 0,
+            "crown_date": "2026-05-04"
+        },
         "GBP/AUD": {
             "consecutive": 1,
             "stars": 0,
@@ -45,11 +50,6 @@
             "stars": 3,
             "crown_date": "2026-04-30"
         },
-        "NZD/JPY": {
-            "consecutive": 1,
-            "stars": 1,
-            "crown_date": "2026-04-30"
-        },
         "CAD/JPY": {
             "consecutive": 10,
             "stars": 0,
@@ -77,6 +77,6 @@
         }
     },
     "last_pairs": [
-        "GBP/AUD"
+        "NZD/JPY"
     ]
 }

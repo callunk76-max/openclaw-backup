@@ -1283,8 +1283,14 @@ def api_konsultan_check():
             total_persen = round(total_fee / g['konstruksi_nilai'] * 100, 2) if g['konstruksi_nilai'] > 0 else 0
             g['total_fee'] = total_fee
             g['total_persen'] = total_persen
-            # Total fee perencanaan+pengawasan wajar ≤6% (Permen PUPR praktik)
-            g['flag_total'] = 'danger' if total_persen > 7.0 else ('warning' if total_persen > 6.0 else 'safe')
+            # Group flag = flag terparah dari konsultan di dalamnya
+            flags = set(k['flag'] for k in g['konsultan'])
+            if 'danger' in flags:
+                g['flag_total'] = 'danger'
+            elif 'warning' in flags:
+                g['flag_total'] = 'warning'
+            else:
+                g['flag_total'] = 'safe'
             konsolidasi.append(g)
 
         konsolidasi.sort(key=lambda g: g['total_persen'], reverse=True)

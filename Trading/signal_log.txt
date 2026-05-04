@@ -12006,3 +12006,25 @@ Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
    └ Wait for wider spread between currencies
 ✅ Sent via Telegram. Message ID: 3606
 Message sent status: 0
+--- Running Signal at Mon May  4 10:15:01 AM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 10:15 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 8.14 (+1.0)
+🥈 AUD : 6.43 (-0.6)
+🥉 USD : 6.00
+🔹 CHF : 4.71 (+0.1)
+🔹 CAD : 3.71 (-0.7)
+🔹 GBP : 3.00 (+0.6)
+🔹 EUR : 2.71
+💀 JPY : 1.29 (-0.4)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP OPPORTUNITY**
+1️⃣ **NZD/JPY 👑1**
+⚡ Power : NZD (8.14) vs JPY (1.29)
+📉 Gap   : 6.86 (+1.4) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ☑️ WAIT FOR DIP ⏳
+✅ Sent via Telegram. Message ID: 3614
+Message sent status: 0
