@@ -1560,12 +1560,10 @@
                     if (f === 'all') el.className = 'fee-card bg-slate-50 rounded-xl p-3 text-center border-2 border-slate-400 cursor-pointer transition shadow-md';
                     else if (f === 'danger') el.className = 'fee-card bg-red-50 rounded-xl p-3 text-center border-2 border-red-400 cursor-pointer transition shadow-md';
                     else if (f === 'warning') el.className = 'fee-card bg-amber-50 rounded-xl p-3 text-center border-2 border-amber-400 cursor-pointer transition shadow-md';
-                    else if (f === 'safe') el.className = 'fee-card bg-emerald-50 rounded-xl p-3 text-center border-2 border-emerald-400 cursor-pointer transition shadow-md';
                 } else {
                     if (f === 'all') el.className = 'fee-card bg-slate-50 rounded-xl p-3 text-center border-2 border-slate-200 cursor-pointer transition hover:shadow-md hover:border-slate-300';
                     else if (f === 'danger') el.className = 'fee-card bg-red-50 rounded-xl p-3 text-center border-2 border-transparent cursor-pointer transition hover:shadow-md hover:border-red-300';
                     else if (f === 'warning') el.className = 'fee-card bg-amber-50 rounded-xl p-3 text-center border-2 border-transparent cursor-pointer transition hover:shadow-md hover:border-amber-300';
-                    else if (f === 'safe') el.className = 'fee-card bg-emerald-50 rounded-xl p-3 text-center border-2 border-transparent cursor-pointer transition hover:shadow-md hover:border-emerald-300';
                 }
             });
             renderFeePage();
@@ -1588,12 +1586,10 @@
                 _feeData = data.grouped;
                 // Update summary
                 const danger = data.grouped.filter(g => g.flag_total === 'danger').length;
-                const warning = data.grouped.filter(g => g.flag_total === 'warning').length;
                 const safe = data.grouped.filter(g => g.flag_total === 'safe').length;
                 document.getElementById('fee-total-groups').textContent = data.grouped.length;
                 document.getElementById('fee-danger-count').textContent = danger;
                 document.getElementById('fee-warning-count').textContent = warning;
-                document.getElementById('fee-safe-count').textContent = safe;
                 renderFeePage();
             } catch(e) {
                 tbody.innerHTML = '<tr><td colspan="7" class="p-8 text-center text-red-500 font-bold">❌ Gagal memuat data: ' + e.message + '</td></tr>';
