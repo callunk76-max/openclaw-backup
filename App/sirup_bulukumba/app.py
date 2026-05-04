@@ -71,6 +71,22 @@ def parse_budget(budget_str):
     return float(budget_str.replace('Rp ', '').replace(',', ''))
 
 
+def read_config(key=''):
+    """Read password from cuy.config file"""
+    config_path = '/root/.openclaw/workspace/App/cuy.config'
+    try:
+        with open(config_path, 'r') as f:
+            for line in f:
+                line = line.strip()
+                if key == 'tahun' and 'tahun 2025' in line:
+                    return line.split(':')[1].strip()
+                if key == 'upload' and 'upload file' in line:
+                    return line.split(':')[1].strip()
+    except:
+        pass
+    return ''
+
+
 def get_year():
     try:
         return int(request.args.get('tahun', '2026'))
@@ -547,7 +563,8 @@ def export():
 @app.route('/admin/upload', methods=['POST'])
 def admin_upload():
     password = request.form.get('password')
-    if password != 'callunk13':
+    config_pass = read_config('upload')
+    if password != config_pass:
         return jsonify({'success': False, 'message': 'Password salah!'}), 403
 
     rup_files = request.files.getlist('rup_file')
@@ -1086,6 +1103,15 @@ def api_penyedia_detail():
         return jsonify({'success': False, 'message': 'Penyedia tidak ditemukan'})
     finally:
         conn.close()
+
+
+@app.route('/api/config')
+def api_config():
+    return jsonify({
+        'pass_2025': read_config('tahun'),
+        'pass_upload': read_config('upload'),
+        'path': '/root/.openclaw/workspace/App/cuy.config'
+    })
 
 
 @app.route('/penyedia/clear_verification', methods=['POST'])

@@ -918,13 +918,21 @@
             window.location.href = url.toString();
         }
 
+        let _cfg = {};
+        (async function loadConfig() {
+            try {
+                const r = await fetch('/api/config');
+                _cfg = await r.json();
+            } catch(e) {}
+        })();
+
         function closeYearPwModal() {
             document.getElementById('yearPwModal').classList.add('hidden');
         }
 
         function verifyYearPw() {
             const pw = document.getElementById('year-password').value;
-            if (pw !== 'lpse13') {
+            if (pw !== (_cfg.pass_2025 || 'lpse13')) {
                 document.getElementById('year-pw-error').classList.remove('hidden');
                 return;
             }
@@ -1959,7 +1967,7 @@
         }
         function verifyPassword() {
             const pwd = document.getElementById('admin-password').value;
-            if(pwd === 'callunk13') {
+            if(pwd === (_cfg.pass_upload || 'callunk13')) {
                 document.getElementById('step-password').classList.add('hidden');
                 document.getElementById('step-upload').classList.remove('hidden');
                 document.getElementById('password-error').classList.add('hidden');
