@@ -497,11 +497,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="text-center">
-                        <button onclick="closeSplash()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-8 py-3 rounded-xl transition text-base shadow-md">
-                            Tutup ℹ️
-                        </button>
-                    </div>
                 </div>
             </div>
         </div>
@@ -862,6 +857,24 @@
         </div>
     </div>
 
+    <!-- Year Password Modal -->
+    <div id="yearPwModal" class="fixed inset-0 z-[100] hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-sm w-full overflow-hidden transform transition-all">
+            <div class="bg-indigo-700 px-6 py-4 flex justify-between items-center text-white">
+                <h3 class="text-xl font-bold">🔐 Akses Tahun 2025</h3>
+                <button onclick="closeYearPwModal()" class="text-white hover:text-indigo-200 transition text-2xl">&times;</button>
+            </div>
+            <div class="p-6">
+                <div id="year-pw-step">
+                    <label class="block text-xs font-bold text-slate-700 mb-2">Masukkan password untuk mengakses data tahun 2025</label>
+                    <input type="password" id="year-password" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none transition mb-4" onkeydown="if(event.key==='Enter')verifyYearPw()">
+                    <button onclick="verifyYearPw()" class="w-full bg-indigo-600 text-white py-3 rounded-lg font-bold hover:bg-indigo-700 transition">Verifikasi</button>
+                    <p id="year-pw-error" class="text-red-500 text-sm hidden mt-2">Password salah!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         // ===== STATE =====
         let currentSort = '{{ sort_by }}';
@@ -887,20 +900,37 @@
             }
         });
 
+        let _targetYear = 2026;
+
         function switchYear(year) {
             document.getElementById('year-menu').classList.add('hidden');
             if (year === currentTahun) return;
-            // If switching to 2025, require password
             if (year === 2025) {
-                const pw = prompt('Masukkan password untuk mengakses data tahun 2025:');
-                if (pw !== 'Callunk13') {
-                    alert('Password salah!');
-                    return;
-                }
+                _targetYear = year;
+                document.getElementById('year-password').value = '';
+                document.getElementById('year-pw-error').classList.add('hidden');
+                document.getElementById('yearPwModal').classList.remove('hidden');
+                document.getElementById('year-password').focus();
+                return;
             }
-            // Reload page with new year
             const url = new URL(window.location);
             url.searchParams.set('tahun', year);
+            window.location.href = url.toString();
+        }
+
+        function closeYearPwModal() {
+            document.getElementById('yearPwModal').classList.add('hidden');
+        }
+
+        function verifyYearPw() {
+            const pw = document.getElementById('year-password').value;
+            if (pw !== 'Callunk13') {
+                document.getElementById('year-pw-error').classList.remove('hidden');
+                return;
+            }
+            document.getElementById('yearPwModal').classList.add('hidden');
+            const url = new URL(window.location);
+            url.searchParams.set('tahun', _targetYear);
             window.location.href = url.toString();
         }
         let currentPage = {{ page }};
@@ -1254,8 +1284,13 @@
                 const data = await res.json();
                 if (data.success && data.group_count > 0) {
                     const badge = document.getElementById('konsultan-badge');
-                    badge.textContent = data.group_count;
-                    badge.classList.remove('hidden');
+                    const danger = data.grouped.filter(g => g.flag_total === 'danger').length;
+                    const warning = data.grouped.filter(g => g.flag_total === 'warning').length;
+                    const total = danger + warning;
+                    if (total > 0) {
+                        badge.textContent = total;
+                        badge.classList.remove('hidden');
+                    }
                 }
             } catch(e) {}
         })();
@@ -1591,9 +1626,11 @@
 
         function renderFeePage() {
             const tbody = document.getElementById('fee-tbody');
-            // Filter data
+            // Filter: 'all' = danger+warning only, exclude safe
             let filtered = _feeData;
-            if (_feeFilter !== 'all') {
+            if (_feeFilter === 'all') {
+                filtered = _feeData.filter(g => g.flag_total !== 'safe');
+            } else {
                 filtered = _feeData.filter(g => g.flag_total === _feeFilter);
             }
             const start = (_feePage - 1) * _feePerPage;
@@ -1653,7 +1690,7 @@
 
         function renderFeePagination() {
             const container = document.getElementById('fee-pagination');
-            const filteredCount = (_feeFilter === 'all') ? _feeData.length : _feeData.filter(g => g.flag_total === _feeFilter).length;
+            const filteredCount = (_feeFilter === 'all') ? _feeData.filter(g => g.flag_total !== 'safe').length : _feeData.filter(g => g.flag_total === _feeFilter).length;
             const totalPages = Math.ceil(filteredCount / _feePerPage);
             if (totalPages <= 1) {
                 container.innerHTML = '';
