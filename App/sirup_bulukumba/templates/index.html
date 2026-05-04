@@ -1579,7 +1579,7 @@
                 _feeData = data.grouped;
                 // Update summary
                 const danger = data.grouped.filter(g => g.flag_total === 'danger').length;
-
+                const warning = data.grouped.filter(g => g.flag_total === 'warning').length;
                 document.getElementById('fee-total-groups').textContent = data.grouped.length;
                 document.getElementById('fee-danger-count').textContent = danger;
                 document.getElementById('fee-warning-count').textContent = warning;
