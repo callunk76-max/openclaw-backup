@@ -1546,6 +1546,7 @@
             _feeFilter = filter;
             _feePage = 1;
             // Update card active state
+            ['all','danger','warning'].forEach(function(f) {
                 const el = document.getElementById('fee-card-' + f);
                 if (!el) return;
                 if (f === filter) {
