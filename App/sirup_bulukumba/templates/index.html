@@ -1685,7 +1685,7 @@
                 html += '<td class="p-3"><span class="px-2 py-1 rounded-full font-bold text-[10px] inline-block '+(g.flag_total === 'danger' ? 'bg-red-100 text-red-700' : g.flag_total === 'warning' ? 'bg-amber-100 text-amber-700' : 'bg-emerald-100 text-emerald-700')+'">'+flagIcon+' '+g.total_persen+'%</span></td>';
                 html += '</tr>';
                 html += '<tr id="'+detailId+'" class="hidden"><td colspan="7" class="p-0"><table class="w-full"><tbody>'+subHtml+'</tbody></table></td></tr>';
-            }););
+            });
 
             tbody.innerHTML = html;
             renderFeePagination();
