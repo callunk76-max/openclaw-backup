@@ -363,13 +363,13 @@
                         <table class="w-full text-left text-xs">
                             <thead>
                                 <tr class="bg-slate-100 text-slate-600">
+                                    <th class="p-3 font-bold w-8"></th>
                                     <th class="p-3 font-bold">#</th>
                                     <th class="p-3 font-bold">Nama Paket Konstruksi</th>
                                     <th class="p-3 font-bold">Satker</th>
                                     <th class="p-3 font-bold">Pagu Konstruksi</th>
                                     <th class="p-3 font-bold">Total Konsultan</th>
                                     <th class="p-3 font-bold">% Fee</th>
-                                    <th class="p-3 font-bold">Rincian</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-100" id="fee-tbody">
@@ -1643,49 +1643,62 @@
                 return;
             }
 
-            let html = '';
+                        let html = '';
             pageData.forEach((g, i) => {
                 const idx = start + i + 1;
+                const detailId = 'fee-detail-' + g.konstruksi_id;
                 const flagIcon = g.flag_total === 'danger' ? '🔴' : g.flag_total === 'warning' ? '🟡' : '✅';
                 const rowBg = g.flag_total === 'danger' ? 'bg-red-50' : g.flag_total === 'warning' ? 'bg-amber-50' : '';
 
-                let rincianHtml = '';
-                g.konsultan.forEach(k => {
+                let subHtml = '';
+                g.konsultan.forEach((k, ki) => {
                     const kf = k.flag === 'danger' ? '🔴' : k.flag === 'warning' ? '🟡' : '✅';
-                    const kc = k.flag === 'danger' ? 'text-red-600' : k.flag === 'warning' ? 'text-amber-600' : 'text-emerald-600';
+                    const kc = k.flag === 'danger' ? 'text-red-700' : k.flag === 'warning' ? 'text-amber-700' : 'text-emerald-700';
+                    const kb = k.flag === 'danger' ? 'bg-red-100' : k.flag === 'warning' ? 'bg-amber-100' : 'bg-emerald-100';
                     const kl = {'Pasti':'🎯','Yakin':'👍','Sesuai':'📌','Mirip':'🔍','Kemungkinan':'❓','Perkiraan':'⚠️'};
-                    rincianHtml += `<div class="${kc} text-[10px] font-semibold leading-tight">${kf} ${k.tipe}: <span class="font-mono">Rp ${k.nilai.toLocaleString()}</span> (<span class="font-bold">${k.fee_persen}%</span>) <span class="text-slate-400">${kl[k.match_label]||''}${k.match_label}</span></div>`;
+                    const konsultanData = JSON.stringify({
+                        id: k.id, package_name: k.nama, budget: k.budget,
+                        satker: g.satker, procurement_method: k.metode,
+                    }).replace(/'/g, "\\'");
+                    subHtml += '<tr class="'+kb+' border-t border-white/50 cursor-pointer hover:opacity-80 transition" onclick=\'openPackageModal('+konsultanData+')\'>';
+                    subHtml += '<td class="p-2"></td>';
+                    subHtml += '<td class="p-2 text-slate-400 font-mono text-[10px]">'+idx+'.'+(ki+1)+'</td>';
+                    subHtml += '<td class="p-2 font-medium text-slate-700 text-xs" colspan="2">'+kf+' '+k.tipe+': '+k.nama.substring(0,60)+(k.nama.length>60?'...':'')+'</td>';
+                    subHtml += '<td class="p-2 font-mono text-xs text-slate-600">Rp '+k.nilai.toLocaleString()+'</td>';
+                    subHtml += '<td class="p-2 font-mono text-xs font-bold '+kc+'">'+k.fee_persen+'% <span class="text-slate-400 font-normal">'+(kl[k.match_label]||'')+'</span></td>';
+                    subHtml += '<td class="p-2"></td></tr>';
                 });
 
-                // Clickable row - open detail modal for construction package
                 const constrData = JSON.stringify({
-                    id: g.konstruksi_id,
-                    package_name: g.konstruksi_nama,
-                    budget: g.konstruksi_budget,
-                    satker: g.satker,
+                    id: g.konstruksi_id, package_name: g.konstruksi_nama,
+                    budget: g.konstruksi_budget, satker: g.satker,
                     procurement_method: g.konstruksi_metode,
                 }).replace(/'/g, "\\'");
 
-                html += `<tr class="${rowBg} hover:bg-slate-50/50 transition cursor-pointer" onclick='openPackageModal(${constrData})'>
-                    <td class="p-3 text-slate-400 font-mono">${idx}</td>
-                    <td class="p-3 font-semibold text-slate-700 max-w-[320px]">
-                        <span class="truncate block" title="${g.konstruksi_nama}">${g.konstruksi_nama}</span>
-                    </td>
-                    <td class="p-3 text-slate-500 max-w-[160px] truncate text-[10px]" title="${g.satker}">${g.satker}</td>
-                    <td class="p-3 font-mono text-slate-600">Rp ${g.konstruksi_nilai.toLocaleString()}</td>
-                    <td class="p-3 font-mono text-slate-600">Rp ${g.total_fee.toLocaleString()}</td>
-                    <td class="p-3">
-                        <span class="px-2 py-1 rounded-full font-bold text-[10px] inline-block
-                            ${g.flag_total === 'danger' ? 'bg-red-100 text-red-700' : g.flag_total === 'warning' ? 'bg-amber-100 text-amber-700' : 'bg-emerald-100 text-emerald-700'}">
-                            ${flagIcon} ${g.total_persen}%
-                        </span>
-                    </td>
-                    <td class="p-3 max-w-[200px]">${rincianHtml}</td>
-                </tr>`;
-            });
+                html += '<tr class="'+rowBg+' hover:bg-slate-50/50 transition cursor-pointer" onclick=\'openPackageModal('+constrData+')\'>';
+                html += '<td class="p-3 text-center"><span class="expand-btn text-slate-400 hover:text-indigo-600 transition text-xs font-bold cursor-pointer select-none" onclick="event.stopPropagation();toggleFeeDetail(\''+detailId+'\')">\u25b6</span></td>';
+                html += '<td class="p-3 text-slate-400 font-mono">'+idx+'</td>';
+                html += '<td class="p-3 font-semibold text-slate-700 max-w-[320px]"><span class="truncate block" title="'+g.konstruksi_nama+'">'+g.konstruksi_nama+'</span></td>';
+                html += '<td class="p-3 text-slate-500 max-w-[160px] truncate text-[10px]" title="'+g.satker+'">'+g.satker+'</td>';
+                html += '<td class="p-3 font-mono text-slate-600">Rp '+g.konstruksi_nilai.toLocaleString()+'</td>';
+                html += '<td class="p-3 font-mono text-slate-600">Rp '+g.total_fee.toLocaleString()+'</td>';
+                html += '<td class="p-3"><span class="px-2 py-1 rounded-full font-bold text-[10px] inline-block '+(g.flag_total === 'danger' ? 'bg-red-100 text-red-700' : g.flag_total === 'warning' ? 'bg-amber-100 text-amber-700' : 'bg-emerald-100 text-emerald-700')+'">'+flagIcon+' '+g.total_persen+'%</span></td>';
+                html += '</tr>';
+                html += '<tr id="'+detailId+'" class="hidden"><td colspan="7" class="p-0"><table class="w-full"><tbody>'+subHtml+'</tbody></table></td></tr>';
+            }););
 
             tbody.innerHTML = html;
             renderFeePagination();
+        }
+
+        function toggleFeeDetail(id) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            const isHidden = el.classList.contains('hidden');
+            el.classList.toggle('hidden', !isHidden);
+            // Rotate arrow
+            const btn = el.previousElementSibling?.querySelector('.expand-btn');
+            if (btn) btn.style.transform = isHidden ? 'rotate(90deg)' : 'rotate(0deg)';
         }
 
         function renderFeePagination() {
