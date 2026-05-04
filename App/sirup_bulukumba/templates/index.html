@@ -235,8 +235,16 @@
                    {% endif %}
                 </button>
                 <button onclick="openFeeModal()"
-                   class="bg-emerald-500/20 backdrop-blur-sm text-emerald-200 px-4 py-2 rounded-xl font-bold text-xs hover:bg-emerald-500/30 transition flex items-center gap-1.5 border border-emerald-400/20">
+                   class="relative bg-emerald-500/20 backdrop-blur-sm text-emerald-200 px-4 py-2 rounded-xl font-bold text-xs hover:bg-emerald-500/30 transition flex items-center gap-1.5 border border-emerald-400/20">
                    <span>📐</span> Konsultansi
+                   <span id="konsultan-badge" class="absolute -top-2 -right-2 bg-emerald-500 text-white text-[10px] px-1.5 h-5 rounded-full flex items-center justify-center whitespace-nowrap font-bold shadow-md hidden">0</span>
+                </button>
+                <button onclick="openSplash()"
+                   class="relative bg-teal-500/20 backdrop-blur-sm text-teal-200 px-4 py-2 rounded-xl font-bold text-xs hover:bg-teal-500/30 transition flex items-center gap-1.5 border border-teal-400/20">
+                   <span>📦</span> Realisasi
+                   {% if count_realized > 0 %}
+                   <span class="absolute -top-2 -right-2 bg-teal-500 text-white text-[10px] px-1.5 h-5 rounded-full flex items-center justify-center whitespace-nowrap font-bold shadow-md">{{ count_realized }}</span>
+                   {% endif %}
                 </button>
             </div>
         </div>
@@ -369,11 +377,10 @@
                                     <th class="p-3 font-bold">Total Konsultan</th>
                                     <th class="p-3 font-bold">% Fee</th>
                                     <th class="p-3 font-bold">Rincian</th>
-                                    <th class="p-3 font-bold">Keyakinan</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-100" id="fee-tbody">
-                                <tr><td colspan="8" class="p-8 text-center text-slate-400 italic">Memuat data...</td></tr>
+                                <tr><td colspan="7" class="p-8 text-center text-slate-400 italic">Memuat data...</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -498,8 +505,8 @@
                         </div>
                     </div>
                     <div class="text-center">
-                        <button onclick="closeSplashAndOpenAnomaly()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-8 py-3 rounded-xl transition text-base shadow-md">
-                            Lanjut ke Anomali ⚠️
+                        <button onclick="closeSplash()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-8 py-3 rounded-xl transition text-base shadow-md">
+                            Tutup ℹ️
                         </button>
                     </div>
                 </div>
@@ -1247,6 +1254,19 @@
             }
         });
 
+        // Load konsultan badge count
+        (async function loadKonsultanBadge() {
+            try {
+                const res = await fetch('/api/konsultan_check?tahun=' + currentTahun);
+                const data = await res.json();
+                if (data.success && data.group_count > 0) {
+                    const badge = document.getElementById('konsultan-badge');
+                    badge.textContent = data.group_count;
+                    badge.classList.remove('hidden');
+                }
+            } catch(e) {}
+        })();
+
         // Clear quick search when main search changes
         const origSearchInput = searchInput;
         origSearchInput.addEventListener('input', function() {
@@ -1499,7 +1519,12 @@
 
         // ===== SPLASH MODAL =====
         function openAnomalyModal() {
-            // Show splash first (no auto-close, user clicks to proceed)
+            document.getElementById('anomalyModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => paginateTable('pl-tbody', 'pl-pagination'), 100);
+        }
+
+        function openSplash() {
             document.getElementById('splashModal').classList.remove('hidden');
             document.body.style.overflow = 'hidden';
         }
@@ -1507,13 +1532,6 @@
         function closeSplash() {
             document.getElementById('splashModal').classList.add('hidden');
             document.body.style.overflow = '';
-        }
-
-        function closeSplashAndOpenAnomaly() {
-            document.getElementById('splashModal').classList.add('hidden');
-            document.getElementById('anomalyModal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-            setTimeout(() => paginateTable('pl-tbody', 'pl-pagination'), 100);
         }
 
         function closeAnomalyModal() {
@@ -1562,7 +1580,7 @@
 
         async function fetchFeeData() {
             const tbody = document.getElementById('fee-tbody');
-            tbody.innerHTML = '<tr><td colspan="8" class="p-8 text-center text-slate-400 italic">Memuat data...</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="7" class="p-8 text-center text-slate-400 italic">Memuat data...</td></tr>';
             try {
                 const res = await fetch('/api/konsultan_check?tahun=' + currentTahun);
                 const data = await res.json();
@@ -1578,7 +1596,7 @@
                 document.getElementById('fee-safe-count').textContent = safe;
                 renderFeePage();
             } catch(e) {
-                tbody.innerHTML = '<tr><td colspan="8" class="p-8 text-center text-red-500 font-bold">❌ Gagal memuat data: ' + e.message + '</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="7" class="p-8 text-center text-red-500 font-bold">❌ Gagal memuat data: ' + e.message + '</td></tr>';
             }
         }
 
@@ -1594,7 +1612,7 @@
             const pageData = filtered.slice(start, end);
 
             if (pageData.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="8" class="p-8 text-center text-green-600 font-bold">✅ Semua data sesuai batas wajar</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="7" class="p-8 text-center text-green-600 font-bold">✅ Semua data sesuai batas wajar</td></tr>';
                 document.getElementById('fee-pagination').innerHTML = '';
                 return;
             }
@@ -1604,12 +1622,6 @@
                 const idx = start + i + 1;
                 const flagIcon = g.flag_total === 'danger' ? '🔴' : g.flag_total === 'warning' ? '🟡' : '✅';
                 const rowBg = g.flag_total === 'danger' ? 'bg-red-50' : g.flag_total === 'warning' ? 'bg-amber-50' : '';
-
-                // Confidence: lowest match_label among konsultan
-                const confOrder = {'Pasti':0,'Yakin':1,'Sesuai':2,'Mirip':3,'Kemungkinan':4,'Perkiraan':5};
-                let worstConf = 'Pasti';
-                g.konsultan.forEach(k => { if ((confOrder[k.match_label]||5) > (confOrder[worstConf]||0)) worstConf = k.match_label; });
-                const confBadge = {'Pasti':'bg-indigo-100 text-indigo-700','Yakin':'bg-sky-100 text-sky-700','Sesuai':'bg-blue-100 text-blue-700','Mirip':'bg-violet-100 text-violet-700','Kemungkinan':'bg-slate-100 text-slate-600','Perkiraan':'bg-gray-100 text-gray-500'};
 
                 let rincianHtml = '';
                 g.konsultan.forEach(k => {
@@ -1643,7 +1655,6 @@
                         </span>
                     </td>
                     <td class="p-3 max-w-[200px]">${rincianHtml}</td>
-                    <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${confBadge[worstConf]||'bg-slate-100 text-slate-500'}">${worstConf}</span></td>
                 </tr>`;
             });
 
