@@ -229,7 +229,10 @@
                 <button onclick="openAnomalyModal()"
                    class="relative bg-red-500/20 backdrop-blur-sm text-red-200 px-4 py-2 rounded-xl font-bold text-xs hover:bg-red-500/30 transition flex items-center gap-1.5 border border-red-400/20">
                    <span>⚠️</span> Anomali
-                   <span class="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] px-1.5 h-5 rounded-full flex items-center justify-center whitespace-nowrap font-bold shadow-md">{{ pl_anomaly_count }}+{{ pagu_anomaly_count }}+{{ splash_orphan_real_cnt }}</span>
+                   {% set total_anomali = pl_anomaly_count + pagu_anomaly_count + splash_orphan_real_cnt %}
+                   {% if total_anomali > 0 %}
+                   <span class="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] px-1.5 h-5 rounded-full flex items-center justify-center whitespace-nowrap font-bold shadow-md">{{ total_anomali }}</span>
+                   {% endif %}
                 </button>
                 <button onclick="openFeeModal()"
                    class="bg-emerald-500/20 backdrop-blur-sm text-emerald-200 px-4 py-2 rounded-xl font-bold text-xs hover:bg-emerald-500/30 transition flex items-center gap-1.5 border border-emerald-400/20">
