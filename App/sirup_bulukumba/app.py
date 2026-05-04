@@ -547,7 +547,7 @@ def export():
 @app.route('/admin/upload', methods=['POST'])
 def admin_upload():
     password = request.form.get('password')
-    if password != 'Callunk13':
+    if password != 'callunk13':
         return jsonify({'success': False, 'message': 'Password salah!'}), 403
 
     rup_files = request.files.getlist('rup_file')

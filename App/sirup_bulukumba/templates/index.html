@@ -250,7 +250,7 @@
     <main class="container mx-auto py-6 px-6 lg:px-12 max-w-7xl">
 
         <!-- Package Detail Modal -->
-        <div id="packageModal" class="fixed inset-0 z-[80] hidden flex items-center justify-center p-4">
+        <div id="packageModal" class="fixed inset-0 z-[80] hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
             <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col overflow-hidden transform transition-all">
                 <div class="bg-indigo-700 px-6 py-4 flex justify-between items-center text-white shrink-0">
                     <h3 class="text-xl font-bold">Detail Paket Pengadaan</h3>
@@ -393,7 +393,7 @@
         </div>
 
         <!-- Penyedia Detail Modal -->
-        <div id="penyediaModal" class="fixed inset-0 z-[90] hidden flex items-center justify-center p-4">
+        <div id="penyediaModal" class="fixed inset-0 z-[90] hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
             <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] flex flex-col overflow-hidden transform transition-all">
                 <div class="bg-gradient-to-r from-emerald-700 to-teal-600 px-6 py-4 flex justify-between items-center text-white shrink-0">
                     <h3 class="text-xl font-bold">🏢 Detail Penyedia</h3>
@@ -924,7 +924,7 @@
 
         function verifyYearPw() {
             const pw = document.getElementById('year-password').value;
-            if (pw !== 'Callunk13') {
+            if (pw !== 'lpse13') {
                 document.getElementById('year-pw-error').classList.remove('hidden');
                 return;
             }
@@ -1959,7 +1959,7 @@
         }
         function verifyPassword() {
             const pwd = document.getElementById('admin-password').value;
-            if(pwd === 'Callunk13') {
+            if(pwd === 'callunk13') {
                 document.getElementById('step-password').classList.add('hidden');
                 document.getElementById('step-upload').classList.remove('hidden');
                 document.getElementById('password-error').classList.add('hidden');
