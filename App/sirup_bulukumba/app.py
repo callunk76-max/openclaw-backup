@@ -383,7 +383,7 @@ def index():
     splash_no_realisasi_total = splash1['total']
 
     splash2 = conn.execute(f"""
-        SELECT COUNT(*) as cnt, COALESCE(SUM(r."Total Nilai (Rp)"), 0) as total
+        SELECT COUNT(DISTINCT r."Kode RUP") as cnt, COALESCE(SUM(r."Total Nilai (Rp)"), 0) as total
         FROM realisasi r
         WHERE r."Tahun Anggaran" = {tahun}
         AND r."Kode RUP" NOT IN (SELECT id FROM procurement WHERE "Tahun Anggaran" = {tahun})
@@ -748,28 +748,64 @@ def api_anomalies_pagu():
 
 @app.route('/api/anomalies/orphan')
 def api_anomalies_orphan():
-    """Return orphan realisasi (no parent RUP in procurement table)"""
+    """Return orphan realisasi grouped by Kode RUP (no parent RUP in procurement table)"""
     tahun = get_year()
     conn = get_db_connection()
+    
+    # Get unique Kode RUP count
     count = conn.execute(
-        'SELECT COUNT(*) FROM realisasi WHERE "Tahun Anggaran" = ? AND "Kode RUP" NOT IN (SELECT id FROM procurement WHERE "Tahun Anggaran" = ?)',
+        'SELECT COUNT(DISTINCT "Kode RUP") FROM realisasi WHERE "Tahun Anggaran" = ? AND "Kode RUP" NOT IN (SELECT id FROM procurement WHERE "Tahun Anggaran" = ?)',
         (tahun, tahun)
     ).fetchone()[0] or 0
+    
+    # Get grouped data with sum and child records
+    import json
     rows = conn.execute('''
         SELECT "Kode RUP" as kode_rup, "Nama Paket" as nama_paket,
-               "Nama Satuan Kerja" as satker, "Nama Penyedia" as penyedia,
-               "Total Nilai (Rp)" as total_nilai, "Metode Pengadaan" as metode,
-               "Jenis Pengadaan" as jenis, "Tahun Anggaran" as tahun,
-               "Status Paket" as status_paket
+               "Nama Satuan Kerja" as satker,
+               SUM("Total Nilai (Rp)") as total_nilai,
+               "Metode Pengadaan" as metode, "Jenis Pengadaan" as jenis,
+               "Tahun Anggaran" as tahun, "Status Paket" as status_paket
         FROM realisasi
         WHERE "Tahun Anggaran" = ? AND "Kode RUP" NOT IN (SELECT id FROM procurement WHERE "Tahun Anggaran" = ?)
-        ORDER BY "Nama Paket" ASC
+        GROUP BY "Kode RUP"
+        ORDER BY MIN(ROWID) ASC
     ''', (tahun, tahun)).fetchall()
+    
+    # Fetch child records for each Kode RUP
+    kode_list = [row['kode_rup'] for row in rows]
+    child_map = {}
+    if kode_list:
+        placeholders = ','.join(['?'] * len(kode_list))
+        child_rows = conn.execute(f'''
+            SELECT "Kode RUP" as kode_rup, "Nama Penyedia" as penyedia,
+                   "Total Nilai (Rp)" as total_nilai, "Status Paket" as status_paket
+            FROM realisasi
+            WHERE "Tahun Anggaran" = ? AND "Kode RUP" IN ({placeholders})
+            ORDER BY "Kode RUP", "Nama Penyedia" ASC
+        ''', (tahun, *kode_list)).fetchall()
+        for cr in child_rows:
+            kr = cr['kode_rup']
+            if kr not in child_map:
+                child_map[kr] = []
+            child_map[kr].append({
+                'penyedia': cr['penyedia'],
+                'total_nilai': cr['total_nilai'],
+                'status_paket': cr['status_paket'],
+            })
+    
     conn.close()
+    
+    data = []
+    for row in rows:
+        d = dict(row)
+        d['records'] = child_map.get(d['kode_rup'], [])
+        data.append(d)
+    
     return jsonify({
         'success': True,
         'count': count,
-        'data': [dict(r) for r in rows]
+        'data': data
     })
 
 

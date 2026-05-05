@@ -392,3 +392,37 @@ total size is 95,188,809  speedup is 1.03
 error: src refspec main does not match any
 error: failed to push some refs to 'github.com:callunk76-max/openclaw-backup.git'
 sending incremental file list
+backup_log.txt
+App/
+App/cuy.config
+App/geoportal/
+App/sirup_bulukumba/
+App/sirup_bulukumba/app.py
+App/sirup_bulukumba/bulukumba.db
+App/sirup_bulukumba/restart_log.txt
+App/sirup_bulukumba/visitor_count.json
+App/sirup_bulukumba/templates/
+App/sirup_bulukumba/templates/index.html
+Trading/
+Trading/previous_signal.json
+Trading/signal_history.json
+Trading/signal_log.txt
+memory/
+memory/2026-05-03-monero-xmrig-troubleshoot.md
+memory/2026-05-04-config-pass-reader.md
+memory/2026-05-04.md
+
+sent 6,707,466 bytes  received 369 bytes  13,415,670.00 bytes/sec
+total size is 97,860,453  speedup is 14.59
+[master d85da8f] Daily Backup from Cuy - 2026-05-05 03:00
+ 13 files changed, 3421 insertions(+), 300 deletions(-)
+ create mode 100644 App/cuy.config
+ create mode 100644 memory/2026-05-03-monero-xmrig-troubleshoot.md
+ create mode 100644 memory/2026-05-04-config-pass-reader.md
+ create mode 100644 memory/2026-05-04.md
+error: src refspec main does not match any
+error: failed to push some refs to 'github.com:callunk76-max/openclaw-backup.git'
+sending incremental file list
+./
+.gitignore
+MEMORY.md
