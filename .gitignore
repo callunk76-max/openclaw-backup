@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.db
+*.sqlite3
+
+# Logs
+*.log
+signal_log.txt
+backup_log.txt
+restart_log.txt
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Trading temp
+Trading/tv_snapshot.jpg
+
+# Keys & Secrets
+*.pem
+*.key
+.env

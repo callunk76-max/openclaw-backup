@@ -296,7 +296,7 @@ def generate_signal():
     
     # Track signal history for consecutive numbering
     current_pairs = [s['pair'] for s in top_3]
-    signal_counts = update_signal_history(current_pairs) if current_pairs else {}
+    signal_counts = update_signal_history(current_pairs)
     
     # ---------------- LOAD PREVIOUS STATE FOR DELTAS ---------------- #
     prev = load_prev_signal()
