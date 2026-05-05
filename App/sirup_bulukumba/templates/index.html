@@ -229,7 +229,7 @@
                 <button onclick="openAnomalyModal()"
                    class="relative bg-red-500/20 backdrop-blur-sm text-red-200 px-4 py-2 rounded-xl font-bold text-xs hover:bg-red-500/30 transition flex items-center gap-1.5 border border-red-400/20">
                    <span>⚠️</span> Anomali
-                   {% set total_anomali = pl_anomaly_count + pagu_anomaly_count + splash_orphan_real_cnt %}
+                   {% set total_anomali = pl_anomaly_count + pagu_anomaly_count %}
                    {% if total_anomali > 0 %}
                    <span class="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] px-1.5 h-5 rounded-full flex items-center justify-center whitespace-nowrap font-bold shadow-md">{{ total_anomali }}</span>
                    {% endif %}
@@ -242,6 +242,9 @@
                 <button onclick="openSplash()"
                    class="relative bg-teal-500/20 backdrop-blur-sm text-teal-200 px-4 py-2 rounded-xl font-bold text-xs hover:bg-teal-500/30 transition flex items-center gap-1.5 border border-teal-400/20">
                    <span>📦</span> Realisasi
+                   {% if splash_orphan_real_cnt > 0 %}
+                   <span class="absolute -top-2 -right-2 bg-amber-500 text-white text-[10px] px-1.5 h-5 rounded-full flex items-center justify-center whitespace-nowrap font-bold shadow-md">{{ splash_orphan_real_cnt }}</span>
+                   {% endif %}
                 </button>
             </div>
         </div>
@@ -280,7 +283,7 @@
         </div>
 
         <!-- Orphan Realisasi Detail Modal -->
-        <div id="orphanModal" class="fixed inset-0 z-[65] hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div id="orphanModal" class="fixed inset-0 z-[80] hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
             <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col overflow-hidden transform transition-all">
                 <div class="bg-gradient-to-r from-amber-600 to-orange-500 px-6 py-4 flex justify-between items-center text-white shrink-0">
                     <h3 class="text-xl font-bold">👻 Detail Realisasi Orphan</h3>
@@ -314,9 +317,22 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="mt-3">
-                            <span class="text-[10px] uppercase text-slate-400 font-bold">Penyedia</span>
-                            <p class="text-sm font-semibold text-slate-700" id="orphan-modal-penyedia">-</p>
+                        <div id="orphan-modal-records-wrap" class="mt-3">
+                            <span class="text-[10px] uppercase text-slate-400 font-bold">Daftar Realisasi <span id="orphan-modal-rec-count"></span></span>
+                            <div class="overflow-x-auto rounded-lg border border-slate-200 mt-2">
+                                <table class="w-full text-left text-xs">
+                                    <thead>
+                                        <tr class="bg-slate-100 text-slate-500">
+                                            <th class="p-2.5 font-bold w-8 text-center">#</th>
+                                            <th class="p-2.5 font-bold">Penyedia</th>
+                                            <th class="p-2.5 font-bold text-right">Nilai</th>
+                                            <th class="p-2.5 font-bold">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-100" id="orphan-modal-records">
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -335,7 +351,7 @@
                     <!-- Summary bar -->
                 <div id="fee-summary" class="grid grid-cols-3 gap-3 mb-4">
                     <div class="fee-card bg-slate-50 rounded-xl p-3 text-center border-2 border-slate-300 cursor-pointer transition hover:shadow-md" onclick="filterFee('all')" id="fee-card-all">
-                        <span class="text-[10px] font-bold text-slate-400 uppercase">Total Grup</span>
+                        <span class="text-[10px] font-bold text-slate-400 uppercase">Total</span>
                         <p id="fee-total-groups" class="text-2xl font-black text-slate-700">-</p>
                     </div>
                     <div class="fee-card bg-red-50 rounded-xl p-3 text-center border-2 border-transparent cursor-pointer transition hover:shadow-md hover:border-red-300" onclick="filterFee('danger')" id="fee-card-danger">
@@ -378,16 +394,7 @@
                         </table>
                     </div>
                     <div id="fee-pagination" class="flex items-center justify-center gap-2 mt-4"></div>
-                    <!-- Confidence legend -->
-                    <div class="text-[10px] text-slate-400 mt-4 leading-relaxed border-t border-slate-100 pt-3">
-                        <span class="font-medium">🎯 Level keyakinan matching:</span><br>
-                        <span class="inline-block px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-700 font-bold mr-1">Pasti</span> Nama proyek cocok persis setelah dipotong prefix &nbsp;|&nbsp;
-                        <span class="inline-block px-1.5 py-0.5 rounded bg-sky-100 text-sky-700 font-bold mr-1">Yakin</span> Nama proyek adalah awal dari nama konstruksi &nbsp;|&nbsp;
-                        <span class="inline-block px-1.5 py-0.5 rounded bg-blue-100 text-blue-700 font-bold mr-1">Sesuai</span> Nama proyek terkandung di nama konstruksi &nbsp;|&nbsp;
-                        <span class="inline-block px-1.5 py-0.5 rounded bg-violet-100 text-violet-700 font-bold mr-1">Mirip</span> 30 karakter pertama cocok &nbsp;|&nbsp;
-                        <span class="inline-block px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 font-bold mr-1">Kemungkinan</span> 20 karakter pertama cocok &nbsp;|&nbsp;
-                        <span class="inline-block px-1.5 py-0.5 rounded bg-gray-100 text-gray-500 font-bold mr-1">Perkiraan</span> Skor minimal, perlu validasi manual
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -497,6 +504,10 @@
                             </div>
                         </div>
                     </div>
+                    <button onclick="closeSplash(); setTimeout(function(){ openOrphanStandaloneModal(); }, 200);"
+                       class="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white px-5 py-3 rounded-xl font-bold text-sm hover:from-amber-600 hover:to-orange-600 transition flex items-center justify-center gap-2 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transform">
+                       👻 Lihat RUP tak berinduk
+                    </button>
                 </div>
             </div>
         </div>
@@ -516,11 +527,9 @@
                         <button onclick="switchAnomalyTab('pagu')" id="antab-pagu" class="px-5 py-2.5 rounded-lg font-bold text-sm transition flex items-center gap-2 bg-slate-100 text-slate-500">
                             💰 Realisasi > Pagu <span class="bg-orange-500 text-white text-[10px] px-2 py-0.5 rounded-full">{{ pagu_anomaly_count }}</span>
                         </button>
-                        <button onclick="switchAnomalyTab('orphan')" id="antab-orphan" class="px-5 py-2.5 rounded-lg font-bold text-sm transition flex items-center gap-2 bg-slate-100 text-slate-500">
-                            👻 RUP Orphan <span class="bg-amber-500 text-white text-[10px] px-2 py-0.5 rounded-full">{{ splash_orphan_real_cnt }}</span>
-                        </button>
+
                     </div>
-                    <div class="text-[10px] text-slate-400 mb-4 leading-relaxed border-b border-slate-100 pb-4">
+                    <div id="anomaly-reg-info" class="text-[10px] text-slate-400 mb-4 leading-relaxed border-b border-slate-100 pb-4">
                         <span class="font-medium">Dasar regulasi ambang batas:</span><br>
                         PL Konstruksi ≤Rp400jt (Ps.38 <strong>Perpres No.46/2025</strong>) | 
                         PL Jasa Konsultansi ≤Rp100jt | PL Barang/Jasa Lainnya ≤Rp200jt.<br>
@@ -600,26 +609,46 @@
                             <div id="pagu-pagination" class="flex items-center justify-center gap-2 mt-4"></div>
                         </div>
                     </div>
-                    <div id="anomaly-content-orphan" class="hidden">
-                        <div class="overflow-x-auto rounded-xl border border-amber-100">
-                            <table class="w-full text-left text-xs">
-                                <thead>
-                                    <tr class="bg-amber-50 text-slate-600">
-                                        <th class="p-3 font-bold">#</th>
-                                        <th class="p-3 font-bold">Kode RUP</th>
-                                        <th class="p-3 font-bold">Nama Paket</th>
-                                        <th class="p-3 font-bold">Satker</th>
-                                        <th class="p-3 font-bold">Penyedia</th>
-                                        <th class="p-3 font-bold">Nilai</th>
-                                        <th class="p-3 font-bold">Metode</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-amber-50" id="orphan-tbody" data-per-page="50">
-                                    <tr><td colspan="7" class="p-8 text-center text-slate-400 italic">Memuat data...</td></tr>
-                                </tbody>
-                            </table>
-                            <div id="orphan-pagination" class="flex items-center justify-center gap-2 mt-4"></div>
+
+                </div>
+            </div>
+        </div>
+
+        
+        <!-- Orphan Standalone Modal -->
+        <div id="orphanStandaloneModal" class="fixed inset-0 z-[70] hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="bg-white rounded-2xl shadow-2xl max-w-5xl w-full max-h-[90vh] flex flex-col overflow-hidden transform transition-all">
+                <div class="bg-gradient-to-r from-amber-600 to-orange-500 px-6 py-4 flex justify-between items-center text-white shrink-0">
+                    <h3 class="text-xl font-bold flex items-center gap-2">👻 RUP tak berinduk</h3>
+                    <button onclick="closeOrphanStandaloneModal()" class="text-white hover:text-amber-200 transition text-2xl">&times;</button>
+                </div>
+                <div class="p-6 overflow-y-auto">
+                    <div class="relative max-w-md mb-4 ml-auto">
+                        <div class="search-wrapper">
+                            <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                            <input type="text" id="orphan-standalone-search" placeholder="Cari RUP orphan..." oninput="filterOrphanStandaloneTable()"
+                                class="w-full pl-9 pr-8 py-2 border border-slate-200 rounded-xl text-xs font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition bg-white">
+                            <button id="orphan-standalone-clear-btn" onclick="clearOrphanStandaloneSearch()" class="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 hidden">&times;</button>
                         </div>
+                    </div>
+                    <div class="overflow-x-auto rounded-xl border border-amber-100">
+                        <table class="w-full text-left text-xs">
+                            <thead>
+                                <tr class="bg-amber-50 text-slate-600">
+                                    <th class="p-3 font-bold">#</th>
+                                    <th class="p-3 font-bold">Kode RUP</th>
+                                    <th class="p-3 font-bold">Nama Paket</th>
+                                    <th class="p-3 font-bold">Satker</th>
+                                    <th class="p-3 font-bold text-center">Realisasi</th>
+                                    <th class="p-3 font-bold">Nilai</th>
+                                    <th class="p-3 font-bold">Metode</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-amber-50" id="orphan-tbody" data-per-page="50">
+                                <tr><td colspan="7" class="p-8 text-center text-slate-400 italic">Memuat data...</td></tr>
+                            </tbody>
+                        </table>
+                        <div id="orphan-pagination" class="flex items-center justify-center gap-2 mt-4"></div>
                     </div>
                 </div>
             </div>
@@ -1518,6 +1547,15 @@
         }
 
         function openOrphanModal(r) {
+            // Blur the parent orphan standalone modal
+            const standaloneParent = document.getElementById('orphanStandaloneModal');
+            if (standaloneParent && !standaloneParent.classList.contains('hidden')) {
+                standaloneParent.classList.add('modal-inactive');
+            }
+            const anomalyParent = document.getElementById('anomalyModal');
+            if (anomalyParent && !anomalyParent.classList.contains('hidden')) {
+                anomalyParent.classList.add('modal-inactive');
+            }
             document.getElementById('orphan-modal-nama').textContent = (r.nama_paket || '-').replace(/^,/, '');
             document.getElementById('orphan-modal-satker').textContent = r.satker || '-';
             document.getElementById('orphan-modal-kode-rup').textContent = r.kode_rup || '-';
@@ -1525,7 +1563,30 @@
             document.getElementById('orphan-modal-jenis').textContent = r.jenis || '-';
             document.getElementById('orphan-modal-nilai').textContent = 'Rp ' + Number(r.total_nilai || 0).toLocaleString('id-ID');
             document.getElementById('orphan-modal-tahun').textContent = 'Tahun ' + (r.tahun || '-');
-            document.getElementById('orphan-modal-penyedia').textContent = r.penyedia || 'Penyedia Tidak Diketahui';
+            
+            // Render child records (all realisasi for this Kode RUP)
+            const recordsEl = document.getElementById('orphan-modal-records');
+            const recs = r.records || [];
+            if (recs.length > 0) {
+                let html = '';
+                recs.forEach((rec, ri) => {
+                    const valStr = 'Rp ' + Number(rec.total_nilai || 0).toLocaleString('id-ID');
+                    const st = rec.status_paket || '-';
+                    const stClass = st.toUpperCase() === 'SELESAI' ? 'text-emerald-700 bg-emerald-50' : 
+                                    st.toUpperCase().includes('BATAL') ? 'text-red-600 bg-red-50' : 'text-blue-600 bg-blue-50';
+                    html += '<tr class="border-t border-slate-100 hover:bg-slate-50 transition">';
+                    html += '<td class="p-2.5 text-slate-400 font-mono text-xs text-center">' + (ri + 1) + '</td>';
+                    html += '<td class="p-2.5 text-slate-700 font-medium text-xs">' + escHtml(rec.penyedia || '-') + '</td>';
+                    html += '<td class="p-2.5 font-mono text-emerald-700 font-bold text-xs text-right">' + valStr + '</td>';
+                    html += '<td class="p-2.5"><span class="px-2 py-0.5 rounded text-[10px] font-bold ' + stClass + '">' + escHtml(st) + '</span></td>';
+                    html += '</tr>';
+                });
+                recordsEl.innerHTML = html;
+                document.getElementById('orphan-modal-records-wrap').classList.remove('hidden');
+            } else {
+                document.getElementById('orphan-modal-records-wrap').classList.add('hidden');
+            }
+            
             const statusEl = document.getElementById('orphan-modal-status');
             const status = r.status_paket || '-';
             statusEl.textContent = 'Status: ' + status;
@@ -1543,6 +1604,11 @@
         function closeOrphanModal() {
             document.getElementById('orphanModal').classList.add('hidden');
             document.body.style.overflow = '';
+            // Remove blur from parent modals
+            const anomalyParent = document.getElementById('anomalyModal');
+            if (anomalyParent) anomalyParent.classList.remove('modal-inactive');
+            const standaloneParent = document.getElementById('orphanStandaloneModal');
+            if (standaloneParent) standaloneParent.classList.remove('modal-inactive');
         }
         document.getElementById('orphanModal')?.addEventListener('click', function(e) {
             if (e.target === this) closeOrphanModal();
@@ -1550,8 +1616,41 @@
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 if (!document.getElementById('orphanModal')?.classList.contains('hidden')) closeOrphanModal();
+                if (!document.getElementById('orphanStandaloneModal')?.classList.contains('hidden')) closeOrphanStandaloneModal();
             }
         });
+
+        // ===== ORPHAN STANDALONE MODAL =====
+        function openOrphanStandaloneModal() {
+            document.getElementById('orphanStandaloneModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            loadOrphanData();
+        }
+        function closeOrphanStandaloneModal() {
+            document.getElementById('orphanStandaloneModal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+        document.getElementById('orphanStandaloneModal')?.addEventListener('click', function(e) {
+            if (e.target === this) closeOrphanStandaloneModal();
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                if (!document.getElementById('orphanStandaloneModal')?.classList.contains('hidden')) closeOrphanStandaloneModal();
+            }
+        });
+
+        function filterOrphanStandaloneTable() {
+            const input = document.getElementById('orphan-standalone-search');
+            const term = input.value.toLowerCase().trim();
+            document.getElementById('orphan-standalone-clear-btn').style.display = term ? 'block' : 'none';
+            paginateTable('orphan-tbody', 'orphan-pagination', term);
+        }
+        function clearOrphanStandaloneSearch() {
+            document.getElementById('orphan-standalone-search').value = '';
+            document.getElementById('orphan-standalone-clear-btn').style.display = 'none';
+            paginateTable('orphan-tbody', 'orphan-pagination');
+            document.getElementById('orphan-standalone-search').focus();
+        }
 
         // ===== SPLASH MODAL =====
         function openAnomalyModal() {
@@ -1684,7 +1783,7 @@
                 }).replace(/'/g, "\\'");
 
                 html += '<tr class="'+rowBg+' hover:bg-slate-50/50 transition cursor-pointer" onclick=\'openPackageModal('+constrData+')\'>';
-                html += '<td class="p-3 text-center"><span class="expand-btn text-slate-400 hover:text-indigo-600 transition text-xs font-bold cursor-pointer select-none" onclick="event.stopPropagation();toggleFeeDetail(\''+detailId+'\')">\u25b6</span></td>';
+                html += '<td class="p-3 text-center"><span class="expand-btn text-slate-400 hover:text-indigo-600 transition text-xs font-bold cursor-pointer select-none" style="transform:rotate(90deg);display:inline-block" onclick="event.stopPropagation();toggleFeeDetail(\''+detailId+'\')">\u25b6</span></td>';
                 html += '<td class="p-3 text-slate-400 font-mono">'+idx+'</td>';
                 html += '<td class="p-3 font-semibold text-slate-700 max-w-[320px]"><span class="truncate block" title="'+g.konstruksi_nama+'">'+g.konstruksi_nama+'</span></td>';
                 html += '<td class="p-3 text-slate-500 max-w-[160px] truncate text-[10px]" title="'+g.satker+'">'+g.satker+'</td>';
@@ -1692,7 +1791,7 @@
                 html += '<td class="p-3 font-mono text-slate-600">Rp '+g.total_fee.toLocaleString()+'</td>';
                 html += '<td class="p-3"><span class="px-2 py-1 rounded-full font-bold text-[10px] inline-block '+(g.flag_total === 'danger' ? 'bg-red-100 text-red-700' : g.flag_total === 'warning' ? 'bg-amber-100 text-amber-700' : 'bg-emerald-100 text-emerald-700')+'">'+flagIcon+' '+g.total_persen+'%</span></td>';
                 html += '</tr>';
-                html += '<tr id="'+detailId+'" class="hidden"><td colspan="7" class="p-0"><table class="w-full"><tbody>'+subHtml+'</tbody></table></td></tr>';
+                html += '<tr id="'+detailId+'"><td colspan="7" class="p-0"><table class="w-full"><tbody>'+subHtml+'</tbody></table></td></tr>';
             });
 
             tbody.innerHTML = html;
@@ -1802,7 +1901,6 @@
             const isPagu = !document.getElementById('anomaly-content-pagu').classList.contains('hidden');
             if (isPl) paginateTable('pl-tbody', 'pl-pagination', term);
             else if (isPagu) paginateTable('pagu-tbody', 'pagu-pagination', term);
-            else paginateTable('orphan-tbody', 'orphan-pagination', term);
         }
 
         function clearAnomalySearch() {
@@ -1815,10 +1913,9 @@
         function switchAnomalyTab(tab) {
             document.getElementById('antab-pl').className = 'px-5 py-2.5 rounded-lg font-bold text-sm transition flex items-center gap-2 ' + (tab === 'pl' ? 'bg-red-50 text-red-700 antab-active' : 'bg-slate-100 text-slate-500');
             document.getElementById('antab-pagu').className = 'px-5 py-2.5 rounded-lg font-bold text-sm transition flex items-center gap-2 ' + (tab === 'pagu' ? 'bg-orange-50 text-orange-700 antab-active' : 'bg-slate-100 text-slate-500');
-            document.getElementById('antab-orphan').className = 'px-5 py-2.5 rounded-lg font-bold text-sm transition flex items-center gap-2 ' + (tab === 'orphan' ? 'bg-amber-50 text-amber-700 antab-active' : 'bg-slate-100 text-slate-500');
             document.getElementById('anomaly-content-pl').classList.toggle('hidden', tab !== 'pl');
             document.getElementById('anomaly-content-pagu').classList.toggle('hidden', tab !== 'pagu');
-            document.getElementById('anomaly-content-orphan').classList.toggle('hidden', tab !== 'orphan');
+            document.getElementById('anomaly-reg-info').style.display = (tab === 'pl' ? 'block' : 'none');
             // Clear search and re-paginate new tab
             const searchInput = document.getElementById('anomaly-search');
             if (searchInput.value) {
@@ -1828,8 +1925,6 @@
             if (tab === 'pl') paginateTable('pl-tbody', 'pl-pagination');
             else if (tab === 'pagu') {
                 loadPaguDataDefault();
-            } else if (tab === 'orphan') {
-                loadOrphanData();
             }
         }
 
@@ -1885,12 +1980,13 @@
                 tr.className = 'hover:bg-amber-50/50 transition paginated-row cursor-pointer';
                 tr.addEventListener('click', function() { openOrphanModal(r); });
                 const nilaiStr = 'Rp ' + Number(r.total_nilai || 0).toLocaleString('id-ID');
+                const recCount = (r.records || []).length;
                 tr.innerHTML = `
                     <td class="p-3 text-slate-400 font-mono idx-col">${idx + 1}</td>
                     <td class="p-3 font-mono text-amber-700 font-bold">${escHtml(r.kode_rup || '')}</td>
                     <td class="p-3 font-semibold text-slate-700 max-w-[200px] truncate">${escHtml((r.nama_paket || '').replace(/^,/, ''))}</td>
                     <td class="p-3 text-slate-500 max-w-[150px] truncate">${escHtml(r.satker || '')}</td>
-                    <td class="p-3 text-slate-600 max-w-[120px] truncate">${escHtml(r.penyedia || '-')}</td>
+                    <td class="p-3 text-center"><span class="inline-flex items-center justify-center w-7 h-7 bg-amber-100 text-amber-700 rounded-full text-[11px] font-bold">${recCount}</span></td>
                     <td class="p-3 font-mono text-emerald-600 font-bold">${nilaiStr}</td>
                     <td class="p-3"><span class="px-2 py-1 bg-amber-50 text-amber-600 rounded text-[10px] font-bold">${escHtml(r.metode || '')}</span></td>
                 `;
