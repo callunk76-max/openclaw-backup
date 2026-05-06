@@ -152,6 +152,12 @@ int CalcSig(string sym,int idx){
    }else{ccsData[idx].warning="";ccsData[idx].score=0;return 0;}
    string w="";if(aN&&r>70)w="VolTop";else if(aN&&r<30)w="VolBot";else if(ccsData[idx].bbTouchHigh&&rOb)w="OB+BB";else if(ccsData[idx].bbTouchLow&&rOs)w="OS+BB";
    else if(nR&&gb>=3)w="~Res";else if(nS&&gs>=3)w="~Sup";else if(atp>0&&at>atp*1.5)w="ATR+";ccsData[idx].warning=w;
+   // Warning penalty
+   if(w=="VolTop"||w=="OB+BB")bs-=2;
+   else if(w=="VolBot"||w=="OS+BB")ss-=2;
+   else if(w=="~Res")bs-=1;
+   else if(w=="~Sup")ss-=1;
+   else if(w=="ATR+"){bs-=1;ss-=1;}
    ccsData[idx].score=(bs>ss)?bs:(ss>bs)?-ss:0;
    if(bs>=7)return 2;if(bs>=4)return 1;if(ss>=7)return -2;if(ss>=4)return -1;return 0;
 }
