@@ -904,21 +904,22 @@ void RunAutoTrade() {
    }
 }
 
-// ===== ALERTS =====
+// ===== ALERTS (sama logic dgn Auto Trade: cuma STRONG) =====
 void CheckAlerts() {
    for(int i=0;i<totalPairs;i++) {
-      if(ccsData[i].signal==0) continue;
-      string dir = "";
-      if(ccsData[i].signal==2) dir="STRONG BUY";
-      else if(ccsData[i].signal==1) dir="BUY";
-      else if(ccsData[i].signal==-1) dir="SELL";
-      else if(ccsData[i].signal==-2) dir="STRONG SELL";
-      else continue;
-      if(lastAlertSignal[i]==dir && TimeCurrent()-lastAlertTime[i]<300) continue;
+      int sig = ccsData[i].signal;
+      if(sig != 2 && sig != -2) continue; // cuma STRONG
+      
+      string dir = (sig==2) ? "STRONG BUY" : "STRONG SELL";
+      
+      // Cooldown 10 menit biar gak spam
+      if(lastAlertSignal[i]==dir && TimeCurrent()-lastAlertTime[i]<600) continue;
       lastAlertSignal[i]=dir;
       lastAlertTime[i]=TimeCurrent();
+      
       string w = (StringLen(ccsData[i].warning)>0) ? " ["+ccsData[i].warning+"]" : "";
-      string msg = "CCS: "+dir+" "+pairs[i]+" G:"+IntegerToString(ccsData[i].gateBull)+"/"+IntegerToString(ccsData[i].gateBear)+" RSI:"+DoubleToString(ccsData[i].rsi,1)+w;
+      string gt = IntegerToString(ccsData[i].gateBull)+"/"+IntegerToString(ccsData[i].gateBear);
+      string msg = "CCS: "+dir+" "+pairs[i]+" GAP:"+DoubleToString(MathAbs(ccsData[i].ccyGap),1)+" GT:"+gt+" RSI:"+DoubleToString(ccsData[i].rsi,1)+w;
       if(alertON) { Alert(msg); SendNotification(msg); }
       Print(msg);
    }
