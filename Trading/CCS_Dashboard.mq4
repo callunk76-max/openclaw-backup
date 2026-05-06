@@ -145,7 +145,7 @@ int CalcSig(string sym,int idx){
 void CreateDashboard(){
    int x=StartX,y=StartY,fs=runtimeFontSize,useLH=(int)(fs*1.8+1); double cs=(double)fs/8.0; if(cs<1.0)cs=1.0;
    // Column layout: PAIR | PL | SIG | % | GAP | GT | RSI | SnR | ATR | BB | WARN | B | S | X
-   int c0=x, c1=c0+(int)(45*cs), c2=c1+(int)(50*cs), c3=c2+(int)(50*cs), cPct=c3+(int)(28*cs);
+   int c0=x, c1=c0+(int)(45*cs), c2=c1+(int)(50*cs), c3=c2+(int)(55*cs), cPct=c3+(int)(28*cs);
    int c4=cPct+(int)(28*cs), c5=c4+(int)(45*cs), c6=c5+(int)(45*cs);
    int cSnR=c6+(int)(45*cs), cATR=cSnR+(int)(40*cs), cBB=cATR+(int)(35*cs);
    int cWarn=cBB+(int)(35*cs);
@@ -199,8 +199,8 @@ void HDR(string n,string t,int x,int y,int w,int h,int fs){
 
 void UpdateDashboard(){
    for(int i=0;i<totalPairs;i++){
-      int sg=ccsData[i].signal; string st="-"; color sc=clrGray;
-      if(sg==2){st="SB";sc=clrLime;}else if(sg==1){st="B";sc=clrMediumSeaGreen;}else if(sg==-1){st="S";sc=clrTomato;}else if(sg==-2){st="SS";sc=clrRed;}
+      int sg=ccsData[i].signal; string st="Wait"; color sc=clrGray;
+      if(sg==2){st="StrB";sc=clrLime;}else if(sg==1){st="Buy";sc=clrMediumSeaGreen;}else if(sg==-1){st="Sel";sc=clrTomato;}else if(sg==-2){st="StrS";sc=clrRed;}
       ObjectSetString(0,"SG_"+IntegerToString(i),OBJPROP_TEXT,st); ObjectSetInteger(0,"SG_"+IntegerToString(i),OBJPROP_COLOR,sc);
       // Score %
       int rs=ccsData[i].score; int pct=(int)(MathAbs(rs)*100/14); if(pct>100)pct=100;
