@@ -333,7 +333,8 @@ void RunAutoTrade(){for(int i=0;i<totalPairs;i++){if(ccsData[i].signal!=2&&ccsDa
    for(int j=0;j<OrdersTotal();j++){if(!OrderSelect(j,SELECT_BY_POS,MODE_TRADES))continue;if(OrderSymbol()!=pairs[i]||OrderMagicNumber()!=MagicNumber)continue;if(OrderType()==dt)hD=true;if(OrderType()==ot)hO=true;}
    if(hO){CloseSymbol(pairs[i]);Sleep(200);}if(hD)continue;int tt=0;for(int j=0;j<OrdersTotal();j++){if(!OrderSelect(j,SELECT_BY_POS,MODE_TRADES))continue;if(OrderMagicNumber()==MagicNumber&&(OrderType()==OP_BUY||OrderType()==OP_SELL))tt++;}if(tt>=runtimeMaxPos)break;OpenTrade(pairs[i],dt);}
 }
-void CheckAlerts(){for(int i=0;i<totalPairs;i++){int s=ccsData[i].signal;if(s!=2&&s!=-2)continue;string d=(s==2)?"SB":"SS";
+void CheckAlerts(){for(int i=0;i<totalPairs;i++){int s=ccsData[i].signal;if(s==0)continue;string d="";
+   if(s==2)d="SB";else if(s==1)d="B";else if(s==-1)d="S";else if(s==-2)d="SS";
    if(lastAlertSignal[i]==d&&TimeCurrent()-lastAlertTime[i]<600)continue;lastAlertSignal[i]=d;lastAlertTime[i]=TimeCurrent();
    string w=(StringLen(ccsData[i].warning)>0)?"["+ccsData[i].warning+"]":"";
    string m="CCS:"+d+" "+pairs[i]+" G:"+DoubleToString(MathAbs(ccsData[i].ccyGap),1)+" GT:"+IntegerToString(ccsData[i].gateBull)+"/"+IntegerToString(ccsData[i].gateBear)+" R:"+DoubleToString(ccsData[i].rsi,1)+" "+IntegerToString(MathAbs(ccsData[i].score))+"/10"+w;
