@@ -10,7 +10,7 @@
 
 input int    FontSize     =  8;  input color TextColor=clrWhite; input color HeaderColor=clrYellow;
 input int    StartX=10, StartY=25;
-input string CustomPairs="AUDCAD,AUDCHF,AUDJPY,AUDNZD,AUDUSD,CADCHF,CADJPY,CHFJPY,EURAUD,EURCAD,EURCHF,EURGBP,EURJPY,EURNZD,EURUSD,GBPAUD,GBPCAD,GBPCHF,GBPJPY,GBPNZD,GBPUSD,NZDCAD,NZDCHF,NZDJPY,NZDUSD,USDCAD,USDCHF,USDJPY,XAUUSD";
+input string CustomPairs="AUDCAD,AUDCHF,AUDJPY,AUDNZD,AUDUSD,CADCHF,CADJPY,CHFJPY,EURAUD,EURCAD,EURCHF,EURGBP,EURJPY,EURNZD,EURUSD,GBPAUD,GBPCAD,GBPCHF,GBPJPY,GBPNZD,GBPUSD,NZDCAD,NZDCHF,NZDJPY,NZDUSD,USDCAD,USDCHF,USDJPY";
 input double LotSize=0.01; input int MagicNumber=20260506, MaxOpenPositions=3, Slippage=10;
 input double ATR_SL_Mult=1.5, ATR_TP_Mult=2.0;
 input int BB_Period=20; input double BB_Deviation=2.0;
@@ -21,7 +21,7 @@ input double CS_Strong_Threshold=5.0;
 
 string pairs[]; int totalPairs; bool autoTradeON=false, alertON=true;
 int runtimeMaxPos=0, runtimeFontSize=8; datetime lastUpdateTime=0; int updateCounter=0;
-struct CCSData{string pair;int signal,prevSignal,gateBull,gateBear,score;double rsi,atr,ccyGap;bool bbTouchLow,bbTouchHigh,atrNaik;string regime,warning,nearestSup,nearestRes;};
+struct CCSData{string pair;int signal,prevSignal,gateBull,gateBear,score;double rsi,atr,ccyGap,snrDist;bool bbTouchLow,bbTouchHigh,atrNaik;string regime,warning;};
 CCSData ccsData[]; string lastAlertSignal[]; datetime lastAlertTime[];
 bool tog_RSI=true, tog_VOL=true, tog_SnR=true, tog_BB=true; // Default ALL ON
 struct TrailData{int ticket;double peak;bool active;}; TrailData trailData[]; int trailCount=0;
@@ -104,7 +104,7 @@ int CalcSig(string sym,int idx){
    int gb=0,gs=0; if(e20>0&&c>e20)gb++;else if(e20>0&&c<e20)gs++;
    if(e50>0&&c>e50)gb++;else if(e50>0&&c<e50)gs++;if(e100>0&&c>e100)gb++;else if(e100>0&&c<e100)gs++;
    if(e200>0&&c>e200)gb++;else if(e200>0&&c<e200)gs++;ccsData[idx].gateBull=gb;ccsData[idx].gateBear=gs;
-   double ns=0,nr=0,nsD=999999,nrD=999999; int bars=MathMin(200,iBars(sym,PERIOD_H1));
+   double ns=0,nr=0,nsD=999999,nrD=999999; ccsData[idx].snrDist=999; int bars=MathMin(200,iBars(sym,PERIOD_H1));
    if(bars>=SnR_BarsLeft+SnR_BarsRight+1){
       for(int b=SnR_BarsLeft;b<bars-SnR_BarsRight;b++){double sh=iHigh(sym,PERIOD_H1,b),sl=iLow(sym,PERIOD_H1,b);bool isSH=true,isSL=true;
          for(int j=1;j<=SnR_BarsLeft;j++){if(sh<=iHigh(sym,PERIOD_H1,b+j))isSH=false;if(sl>=iLow(sym,PERIOD_H1,b+j))isSL=false;}
@@ -112,6 +112,7 @@ int CalcSig(string sym,int idx){
          if(isSH==isSL)continue;if(isSH){double d2=MathAbs(sh-c);if(c<sh&&d2<nrD){nr=sh;nrD=d2;}}if(isSL){double d3=MathAbs(sl-c);if(c>sl&&d3<nsD){ns=sl;nsD=d3;}}}
    }
    double aS=(at>0)?at:1; bool nS=(ns>0&&nsD<aS*1.5),nR=(nr>0&&nrD<aS*1.5);
+   if(nS)ccsData[idx].snrDist=nsD/aS; if(nR)ccsData[idx].snrDist=nrD/aS;
    bool rOs=(r>0&&r<RSI_Oversold),rOb=(r>RSI_Overbought),rTu=(r>rp&&rp<RSI_Oversold),rTd=(r<rp&&rp>RSI_Overbought);
    bool pv=(atp>0),aN=(pv&&at>atp),aT=(pv&&at<atp); ccsData[idx].atrNaik=aN;
    string vt="=Nor"; if(aT)vt="Sta";else if(aN)vt="Vol"; ccsData[idx].regime=vt;
@@ -200,7 +201,7 @@ void HDR(string n,string t,int x,int y,int w,int h,int fs){
 void UpdateDashboard(){
    for(int i=0;i<totalPairs;i++){
       int sg=ccsData[i].signal; string st="Wait"; color sc=clrGray;
-      if(sg==2){st="StrB";sc=clrLime;}else if(sg==1){st="Buy";sc=clrMediumSeaGreen;}else if(sg==-1){st="Sel";sc=clrTomato;}else if(sg==-2){st="StrS";sc=clrRed;}
+      if(sg==2){st="StrB";sc=clrLime;}else if(sg==1){st="Buy";sc=clrMediumSeaGreen;}else if(sg==-1){st="Sell";sc=clrTomato;}else if(sg==-2){st="StrS";sc=clrRed;}
       ObjectSetString(0,"SG_"+IntegerToString(i),OBJPROP_TEXT,st); ObjectSetInteger(0,"SG_"+IntegerToString(i),OBJPROP_COLOR,sc);
       // Score %
       int rs=ccsData[i].score; int pct=(int)(MathAbs(rs)*100/14); if(pct>100)pct=100;
@@ -216,17 +217,13 @@ void UpdateDashboard(){
       double rv=ccsData[i].rsi; ObjectSetString(0,"RS_"+IntegerToString(i),OBJPROP_TEXT,DoubleToString(rv,1));
       ObjectSetInteger(0,"RS_"+IntegerToString(i),OBJPROP_COLOR,tog_RSI?((rv>0&&rv<RSI_Oversold)?clrLime:(rv>RSI_Overbought)?clrRed:clrWhite):clrGray);
       // SnR -- show distance to nearest S/R in ATR
-      double aS2=(ccsData[i].atr>0)?ccsData[i].atr:1; string srT="-";
-      if(ccsData[i].signal>=1){//BUY: show support dist
-         ObjectSetString(0,"SR_"+IntegerToString(i),OBJPROP_TEXT,DoubleToString(ccsData[i].atr,1));
-         ObjectSetInteger(0,"SR_"+IntegerToString(i),OBJPROP_COLOR,tog_SnR?clrMediumSeaGreen:clrGray);
-      }else{
-         ObjectSetString(0,"SR_"+IntegerToString(i),OBJPROP_TEXT,DoubleToString(ccsData[i].atr,1));
-         ObjectSetInteger(0,"SR_"+IntegerToString(i),OBJPROP_COLOR,clrGray);
-      }
+      double sd=ccsData[i].snrDist; string srT=(sd>0&&sd<999)?DoubleToString(sd,1):"-";
+      ObjectSetString(0,"SR_"+IntegerToString(i),OBJPROP_TEXT,srT);
+      ObjectSetInteger(0,"SR_"+IntegerToString(i),OBJPROP_COLOR,tog_SnR?((sd>0&&sd<1.5)?clrMediumSeaGreen:clrWhite):clrGray);
       // ATR
-      double av=ccsData[i].atr; string ad2=ccsData[i].atrNaik?"^":"v"; ObjectSetString(0,"AV_"+IntegerToString(i),OBJPROP_TEXT,DoubleToString(av,1)+ad2);
-      ObjectSetInteger(0,"AV_"+IntegerToString(i),OBJPROP_COLOR,tog_VOL?(ccsData[i].atrNaik?clrOrange:clrWhite):clrGray);
+      double av=ccsData[i].atr; string avT=(av>0)?(DoubleToString(av,1)+(ccsData[i].atrNaik?"^":"v")):"-";
+      ObjectSetString(0,"AV_"+IntegerToString(i),OBJPROP_TEXT,avT);
+      ObjectSetInteger(0,"AV_"+IntegerToString(i),OBJPROP_COLOR,tog_VOL?((av>0)?(ccsData[i].atrNaik?clrOrange:clrWhite):clrGray):clrGray);
       // BB
       string bt="M"; color bc2=clrGray; if(ccsData[i].bbTouchLow){bt="L";bc2=clrLime;}else if(ccsData[i].bbTouchHigh){bt="H";bc2=clrRed;}
       ObjectSetString(0,"BB_"+IntegerToString(i),OBJPROP_TEXT,bt); ObjectSetInteger(0,"BB_"+IntegerToString(i),OBJPROP_COLOR,tog_BB?bc2:clrGray);
