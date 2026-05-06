@@ -122,18 +122,32 @@ int CalcSig(string sym,int idx){
       // GAP kontribusi: 5.0→+2, 6.0→+3, 7.0→+4, 8.0→+5, 9.0→+6
       bs+=MathMax(0,(int)(gap-3));
       if(gb>=4)bs+=3;else if(gb>=3)bs+=2;else if(gb>=2)bs+=1;
-      if(tog_RSI){if(ccsData[idx].bbTouchLow&&rOs){bs+=1;}else if(rTu)bs+=1;}
-      if(tog_BB&&!tog_RSI&&ccsData[idx].bbTouchLow)bs+=1;
+      if(tog_RSI){
+         if(ccsData[idx].bbTouchLow&&rOs)bs+=1;
+         else if(rTu)bs+=1;
+         else if(ccsData[idx].bbTouchHigh&&rOb)bs-=1; // kontradiksi: BB high + RSI overbought
+      }
+      if(tog_BB){
+         if(ccsData[idx].bbTouchLow)bs+=1;
+         else if(ccsData[idx].bbTouchHigh)bs-=1; // kontradiksi
+      }
       if(tog_VOL){if(aT)bs+=1;else if(aN)bs-=1;}
-      if(tog_SnR&&nS)bs+=1;
+      if(tog_SnR){if(nS)bs+=1;else if(nR)bs-=1;} // kontradiksi: dekat resist
       if(gs>gb)bs-=2;
    }else if(gBear){
       ss+=MathMax(0,(int)(MathAbs(gap)-3));
       if(gs>=4)ss+=3;else if(gs>=3)ss+=2;else if(gs>=2)ss+=1;
-      if(tog_RSI){if(ccsData[idx].bbTouchHigh&&rOb){ss+=1;}else if(rTd)ss+=1;}
-      if(tog_BB&&!tog_RSI&&ccsData[idx].bbTouchHigh)ss+=1;
+      if(tog_RSI){
+         if(ccsData[idx].bbTouchHigh&&rOb)ss+=1;
+         else if(rTd)ss+=1;
+         else if(ccsData[idx].bbTouchLow&&rOs)ss-=1; // kontradiksi: BB low + RSI oversold
+      }
+      if(tog_BB){
+         if(ccsData[idx].bbTouchHigh)ss+=1;
+         else if(ccsData[idx].bbTouchLow)ss-=1; // kontradiksi
+      }
       if(tog_VOL){if(aT)ss+=1;else if(aN)ss-=1;}
-      if(tog_SnR&&nR)ss+=1;
+      if(tog_SnR){if(nR)ss+=1;else if(nS)ss-=1;} // kontradiksi: dekat support
       if(gb>gs)ss-=2;
    }else{ccsData[idx].warning="";ccsData[idx].score=0;return 0;}
    string w="";if(aN&&r>70)w="VolTop";else if(aN&&r<30)w="VolBot";else if(ccsData[idx].bbTouchHigh&&rOb)w="OB+BB";else if(ccsData[idx].bbTouchLow&&rOs)w="OS+BB";
