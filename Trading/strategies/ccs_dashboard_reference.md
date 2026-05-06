@@ -81,38 +81,35 @@ GAP = −6.0 (bearish) tapi GT = 4/0 (bullish) → Score −2
 - Timeframe: **H1**
 - Harga: Close
 
-### Kombinasi dengan BB (Entry Trigger)
+### Kombinasi dengan BB (Entry Trigger — max +1)
 ```
-RSI < 30 + BB LOW touch  = +2 (sinyal BUY kuat)
-RSI < 30 saja / BB saja  = +1 (cukup)
+RSI < 30 + BB LOW touch  = +1 (konfirmasi)
 RSI turning up            = +1 (momentum shift)
 
-RSI > 70 + BB HIGH touch = +2 (sinyal SELL kuat)
-RSI > 70 saja / BB saja  = +1 (cukup)
-RSI turning down         = +1 (momentum shift)
+RSI > 70 + BB HIGH touch = +1 (konfirmasi)
+RSI turning down          = +1 (momentum shift)
 ```
+> RSI cuma 1 kondisi di antara 3: (BB+RSI konfirmasi) ATAU (turning). Gak ditumpuk.
 
 ---
 
-## 5. REG — ATR + RSI Regime (H1)
+## 5. VOL — Volatility Regime (H1)
 
-| Tampilan | Kondisi | Arti | Warna |
-|----------|---------|------|-------|
-| **StBl** | ATR ↓ + RSI > 60 | **Stable Bullish** — tren naik stabil, volatilitas turun | 🟢 Hijau Muda |
-| **StBe** | ATR ↓ + RSI < 40 | **Stable Bearish** — tren turun stabil | 🟠 Salmon |
-| **VHiR** | ATR ↑ + RSI > 60 | **Volatile High RSI** — tren naik tp volatilitas tinggi, rawan koreksi | 🟡 Orange |
-| **VLoR** | ATR ↑ + RSI < 40 | **Volatile Low RSI** — tren turun dgn volatilitas tinggi, rawan bounce | 🟡 Orange |
-| **Norm** | Lainnya | **Normal** — gak ada kondisi khusus | ⚪ Abu |
+| Tampilan | Kondisi | Arti | Warna | Scoring |
+|----------|---------|------|-------|---------|
+| **Sta** | ATR ↓ (menyempit) | **Stable** — volatilitas menurun, tren stabil | 🟢 Hijau Muda | +1 |
+| **Vol** | ATR ↑ (melebar) | **Volatile** — volatilitas meningkat, rawan reversal | 🟡 Orange | −1 |
+| **=Nor** | ATR tetap (±5%) | **Normal** — volatilitas stabil | ⚪ Abu | 0 |
 
-### Interpretasi untuk Entry:
+### Dampak ke Scoring:
+```
+VOL = Sta → score +1 (keyakinan tambahan)
+VOL = Vol → score −1 (kurangi keyakinan)
+VOL = Nor → 0 (netral)
+```
 
-| Regime | Implikasi |
-|--------|-----------|
-| **StBl** 🟢 | BUY aman — TP bisa jauh, volatilitas terkendali |
-| **StBe** 🟠 | SELL aman — TP bisa jauh |
-| **VHiR** 🟡 | ⚠️ Hati-hati BUY! Volatilitas tinggi, siap-siap TP lebih cepat |
-| **VLoR** 🟡 | ⚠️ Hati-hati SELL! Bisa reversal mendadak |
-| **Norm** ⚪ | Kondisi normal — ikuti signal seperti biasa |
+> **Catatan:** VOL murni ATR direction, TIDAK campur RSI. Jadi gak overlap.
+> RSI = momentum oscillator, VOL = volatility indicator. Dua hal beda.
 
 ---
 
@@ -153,17 +150,20 @@ RSI turning down         = +1 (momentum shift)
 
 ```
 GAP ≥ 5 → Boleh lanjut
-    ├── 4/4 EMA gate    → +3
-    ├── 3/4             → +2
-    ├── 2/4             → +1
+    ├── 4/4 EMA gate        → +3   30%
+    ├── 3/4                 → +2
+    ├── 2/4                 → +1
     │
-    ├── BB touch + RSI  → +2
-    ├── BB/RSI sendiri  → +1
+    ├── BB + RSI konfirm   → +1   20%  (max +1, gak double-dip)
+    ├── RSI turning         → +1
     │
-    ├── Dekat SnR       → +1
-    ├── GAP ≥ 7         → +2
+    ├── VOL Sta (stabil)    → +1   15%  (ATR turun)
+    ├── VOL Vol (volatile)  → −1       (ATR naik)
     │
-    └── EMA lawan GAP   → −2
+    ├── Dekat SnR           → +1   10%
+    ├── GAP ≥ 7 bonus       → +2
+    │
+    └── EMA lawan GAP       → −2   Penalty
           ──────────
           ≥ 7  = STRONG
           ≥ 4  = Regular

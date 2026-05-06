@@ -473,12 +473,10 @@ int CalculateCCS_Signal(string sym, int idx) {
    bool atrTurun = (pv && atr_val<atr_prev);
    ccsData[idx].atrNaik = atrNaik2;
    
-   string regTxt = "Norm";
-   if(atrTurun && rsi_val>60) regTxt = "StBl";
-   else if(atrTurun && rsi_val<40) regTxt = "StBe";
-   else if(atrNaik2 && rsi_val>60) regTxt = "VHiR";
-   else if(atrNaik2 && rsi_val<40) regTxt = "VLoR";
-   ccsData[idx].regime = regTxt;
+   string volTxt = "=Nor"; color volCol = clrGray;
+   if(atrTurun) { volTxt = "Sta"; volCol = clrLimeGreen; }
+   else if(atrNaik2) { volTxt = "Vol"; volCol = clrOrange; }
+   ccsData[idx].regime = volTxt;
    
    // ── SCORING: GAP AS GATEKEEPER ──
    double gap = ccsData[idx].ccyGap;
@@ -496,10 +494,13 @@ int CalculateCCS_Signal(string sym, int idx) {
       else if(gb >= 3) bs += 2;
       else if(gb >= 2) bs += 1;
       
-      // BB + RSI Entry Trigger (25%) — max 2
-      if(ccsData[idx].bbTouchLow && rsiOversold) bs += 2;
-      else if(ccsData[idx].bbTouchLow || rsiOversold) bs += 1;
+      // BB + RSI Entry Trigger (20%) — max +1
+      if(ccsData[idx].bbTouchLow && rsiOversold) bs += 1;
       else if(rsiTurningUp) bs += 1;
+      
+      // VOL Modifier (15%) — ±1
+      if(atrTurun) bs += 1;
+      else if(atrNaik2) bs -= 1;
       
       // SnR Proximity (10%) — max 1
       if(nearSupport) bs += 1;
@@ -516,10 +517,13 @@ int CalculateCCS_Signal(string sym, int idx) {
       else if(gs >= 3) ss += 2;
       else if(gs >= 2) ss += 1;
       
-      // BB + RSI Entry Trigger (25%) — max 2
-      if(ccsData[idx].bbTouchHigh && rsiOverbought) ss += 2;
-      else if(ccsData[idx].bbTouchHigh || rsiOverbought) ss += 1;
+      // BB + RSI Entry Trigger (20%) — max +1
+      if(ccsData[idx].bbTouchHigh && rsiOverbought) ss += 1;
       else if(rsiTurningDn) ss += 1;
+      
+      // VOL Modifier (15%) — ±1
+      if(atrTurun) ss += 1;
+      else if(atrNaik2) ss -= 1;
       
       // SnR Proximity (10%) — max 1
       if(nearResist) ss += 1;
@@ -569,7 +573,7 @@ void CreateDashboard() {
    int c4 = c3 + (int)(60 * cs);    // GAP
    int c5 = c4 + (int)(60 * cs);    // GATES
    int c6 = c5 + (int)(45 * cs);    // RSI
-   int c7 = c6 + (int)(45 * cs);    // REG
+   int c7 = c6 + (int)(40 * cs);    // VOL
    int c8 = c7 + (int)(55 * cs);    // WARN
    int c9 = c8 + (int)(35 * cs);    // BUY
    int c10= c9 + (int)(35 * cs);    // SELL
@@ -585,7 +589,7 @@ void CreateDashboard() {
    CreateLabel("H_Gap","GAP",       c3, y, HeaderColor, fs);
    CreateLabel("H_Gates","GT",      c4, y, HeaderColor, fs);
    CreateLabel("H_RSI","RSI",       c5, y, HeaderColor, fs);
-   CreateLabel("H_Reg","REG",       c6, y, HeaderColor, fs);
+   CreateLabel("H_Vol","VOL",       c6, y, HeaderColor, fs);
    CreateLabel("H_Warn","WARN",     c7, y, HeaderColor, fs);
    CreateButton("HeaderCloseAll","CLOSE", c8, y-2, (int)(90*cs), 18, clrGray, clrBlack);
    
@@ -616,7 +620,7 @@ void CreateDashboard() {
       CreateLabel("Gap_"+IntegerToString(i),    "--",      c3, ly, clrGray,  fs);
       CreateLabel("Gates_"+IntegerToString(i),  "--",      c4, ly, clrGray,  fs);
       CreateLabel("RSI_"+IntegerToString(i),    "--",      c5, ly, clrGray,  fs);
-      CreateLabel("Reg_"+IntegerToString(i),    "--",      c6, ly, clrGray,  fs);
+      CreateLabel("Vol_"+IntegerToString(i),    "--",      c6, ly, clrGray,  fs);
       CreateLabel("Warn_"+IntegerToString(i),   "",        c7, ly, clrGray,  fs);
       CreateButton("BtnBuy_"+IntegerToString(i),  "B", c8, ry+1, (int)(30*cs), btnH, clrForestGreen, clrWhite);
       CreateButton("BtnSell_"+IntegerToString(i), "S", c9, ry+1, (int)(30*cs), btnH, clrCrimson, clrWhite);
@@ -673,12 +677,11 @@ void UpdateDashboard() {
       ObjectSetString(0,"RSI_"+IntegerToString(i),OBJPROP_TEXT,rt);
       ObjectSetInteger(0,"RSI_"+IntegerToString(i),OBJPROP_COLOR,rc);
       
-      ObjectSetString(0,"Reg_"+IntegerToString(i),OBJPROP_TEXT,ccsData[i].regime);
-      color regCol = clrGray;
-      if(ccsData[i].regime=="StBl") regCol=clrLimeGreen;
-      else if(ccsData[i].regime=="StBe") regCol=clrLightSalmon;
-      else if(ccsData[i].regime=="VHiR"||ccsData[i].regime=="VLoR") regCol=clrOrange;
-      ObjectSetInteger(0,"Reg_"+IntegerToString(i),OBJPROP_COLOR,regCol);
+      ObjectSetString(0,"Vol_"+IntegerToString(i),OBJPROP_TEXT,ccsData[i].regime);
+      color volCol = clrGray;
+      if(ccsData[i].regime=="Sta") volCol=clrLimeGreen;
+      else if(ccsData[i].regime=="Vol") volCol=clrOrange;
+      ObjectSetInteger(0,"Vol_"+IntegerToString(i),OBJPROP_COLOR,volCol);
       
       ObjectSetString(0,"Warn_"+IntegerToString(i),OBJPROP_TEXT,ccsData[i].warning);
       color wc = clrGray;
@@ -779,7 +782,7 @@ void DeleteAllObjects() {
       if(StringFind(n,"RowBG_")==0||StringFind(n,"Pair_")==0||StringFind(n,"Profit_")==0||
          StringFind(n,"Signal_")==0||StringFind(n,"Gap_")==0||
          StringFind(n,"Gates_")==0||StringFind(n,"RSI_")==0||
-         StringFind(n,"Reg_")==0||StringFind(n,"Warn_")==0||
+         StringFind(n,"Vol_")==0||StringFind(n,"Warn_")==0||
          StringFind(n,"BtnBuy_")==0||StringFind(n,"BtnSell_")==0||StringFind(n,"BtnClose_")==0||
          StringFind(n,"BtnAutoTrade")==0||StringFind(n,"BtnAlert")==0||
          StringFind(n,"BtnFont")==0||
