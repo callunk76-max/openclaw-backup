@@ -72,6 +72,7 @@ struct CCSData {
    double nearestSup;
    double nearestRes;
    double ccyGap;       // currency strength gap (0.0 - 9.0)
+   int    score;         // raw score value (0-10+)
 };
 
 CCSData ccsData[];
@@ -86,6 +87,12 @@ struct TrailData {
 };
 TrailData trailData[];
 int trailCount = 0;
+
+// ─── TOGGLE FLAGS (default: GAP & GT ON, lainnya OFF) ─────────
+bool tog_RSI = false;
+bool tog_VOL = false;
+bool tog_SnR = false;
+bool tog_BB  = false;
 
 // ─── CURRENCY NAMES ───────────────────────────────────────────────
 string ccyList[8] = {"USD","EUR","GBP","CHF","CAD","AUD","JPY","NZD"};
@@ -167,6 +174,12 @@ void OnChartEvent(const int id, const long &lparam, const double &dparam, const 
    if(sparam=="HeaderCloseAll") { CloseAllPositions(); ChartRedraw(); ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false); return; }
    if(sparam=="BtnFontMinus") { ResizeFont(runtimeFontSize-1); ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false); return; }
    if(sparam=="BtnFontPlus")  { ResizeFont(runtimeFontSize+1); ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false); return; }
+   
+   // Toggle buttons
+   if(sparam=="Tog_RSI") { tog_RSI=!tog_RSI; UpdateToggles(); ChartRedraw(); ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false); return; }
+   if(sparam=="Tog_VOL") { tog_VOL=!tog_VOL; UpdateToggles(); ChartRedraw(); ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false); return; }
+   if(sparam=="Tog_SnR") { tog_SnR=!tog_SnR; UpdateToggles(); ChartRedraw(); ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false); return; }
+   if(sparam=="Tog_BB")  { tog_BB=!tog_BB;  UpdateToggles(); ChartRedraw(); ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false); return; }
    
    if(StringFind(sparam,"BtnBuy_")==0) {
       int i=(int)StringToInteger(StringSubstr(sparam,7));
@@ -494,16 +507,27 @@ int CalculateCCS_Signal(string sym, int idx) {
       else if(gb >= 3) bs += 2;
       else if(gb >= 2) bs += 1;
       
-      // BB + RSI Entry Trigger (20%) — max +1
-      if(ccsData[idx].bbTouchLow && rsiOversold) bs += 1;
-      else if(rsiTurningUp) bs += 1;
+      // ── RSI Entry Trigger (20%) — toggle ──
+      if(tog_RSI) {
+         if(ccsData[idx].bbTouchLow && rsiOversold) bs += 1;
+         else if(rsiTurningUp) bs += 1;
+      }
       
-      // VOL Modifier (15%) — ±1
-      if(atrTurun) bs += 1;
-      else if(atrNaik2) bs -= 1;
+      // ── BB Standalone (bonus) — toggle ──
+      if(tog_BB && !tog_RSI) {
+         if(ccsData[idx].bbTouchLow) bs += 1;
+      }
       
-      // SnR Proximity (10%) — max 1
-      if(nearSupport) bs += 1;
+      // ── VOL Modifier (15%) — toggle ──
+      if(tog_VOL) {
+         if(atrTurun) bs += 1;
+         else if(atrNaik2) bs -= 1;
+      }
+      
+      // ── SnR Proximity (10%) — toggle ──
+      if(tog_SnR) {
+         if(nearSupport) bs += 1;
+      }
       
       // GAP ≥ 7 bonus
       if(gap >= 7.0) bs += 2;
@@ -517,16 +541,27 @@ int CalculateCCS_Signal(string sym, int idx) {
       else if(gs >= 3) ss += 2;
       else if(gs >= 2) ss += 1;
       
-      // BB + RSI Entry Trigger (20%) — max +1
-      if(ccsData[idx].bbTouchHigh && rsiOverbought) ss += 1;
-      else if(rsiTurningDn) ss += 1;
+      // ── RSI Entry Trigger (20%) — toggle ──
+      if(tog_RSI) {
+         if(ccsData[idx].bbTouchHigh && rsiOverbought) ss += 1;
+         else if(rsiTurningDn) ss += 1;
+      }
       
-      // VOL Modifier (15%) — ±1
-      if(atrTurun) ss += 1;
-      else if(atrNaik2) ss -= 1;
+      // ── BB Standalone (bonus) — toggle ──
+      if(tog_BB && !tog_RSI) {
+         if(ccsData[idx].bbTouchHigh) ss += 1;
+      }
       
-      // SnR Proximity (10%) — max 1
-      if(nearResist) ss += 1;
+      // ── VOL Modifier (15%) — toggle ──
+      if(tog_VOL) {
+         if(atrTurun) ss += 1;
+         else if(atrNaik2) ss -= 1;
+      }
+      
+      // ── SnR Proximity (10%) — toggle ──
+      if(tog_SnR) {
+         if(nearResist) ss += 1;
+      }
       
       // GAP ≤ -7 bonus
       if(gap <= -7.0) ss += 2;
@@ -537,6 +572,7 @@ int CalculateCCS_Signal(string sym, int idx) {
    else {
       // GAP < 5: NO TRADING — neutral
       ccsData[idx].warning = "NoGAP";
+      ccsData[idx].score = 0;
       return 0;
    }
    
@@ -551,11 +587,14 @@ int CalculateCCS_Signal(string sym, int idx) {
    else if(atr_prev>0 && atr_val>atr_prev*1.5) w = "ATR+";
    ccsData[idx].warning = w;
    
+   // Store raw score
+   ccsData[idx].score = (bs > ss) ? bs : (ss > bs) ? -ss : 0;
+   
    // Final threshold
-   if(bs >= 7) return 2;  // STRONG BUY
-   if(bs >= 4) return 1;  // BUY
-   if(ss >= 7) return -2; // STRONG SELL
-   if(ss >= 4) return -1; // SELL
+   if(bs >= 7) return 2;
+   if(bs >= 4) return 1;
+   if(ss >= 7) return -2;
+   if(ss >= 4) return -1;
    return 0;
 }
 
@@ -568,16 +607,18 @@ void CreateDashboard() {
    
    int c0 = x;
    int c1 = x + (int)(50 * cs);     // PAIR
-   int c2 = c1 + (int)(60 * cs);    // PROFIT
-   int c3 = c2 + (int)(65 * cs);    // SIGNAL
-   int c4 = c3 + (int)(60 * cs);    // GAP
-   int c5 = c4 + (int)(60 * cs);    // GATES
+   int c2 = c1 + (int)(55 * cs);    // PROFIT
+   int c3 = c2 + (int)(60 * cs);    // SIGNAL
+   int cBar= c3 + (int)(35 * cs);   // Score progress bar
+   int c4 = cBar + (int)(25 * cs);  // GAP (shifted)
+   int c5 = c4 + (int)(55 * cs);    // GATES
    int c6 = c5 + (int)(45 * cs);    // RSI
-   int c7 = c6 + (int)(40 * cs);    // VOL
-   int c8 = c7 + (int)(55 * cs);    // WARN
-   int c9 = c8 + (int)(35 * cs);    // BUY
-   int c10= c9 + (int)(35 * cs);    // SELL
-   int totalW = c10 + (int)(50 * cs) + 20; // total width
+   int c7 = c6 + (int)(35 * cs);    // VOL
+   int c8 = c7 + (int)(45 * cs);    // WARN
+   int c9 = c8 + (int)(30 * cs);    // BUY
+   int c10= c9 + (int)(30 * cs);    // SELL
+   int c11= c10 + (int)(40 * cs);   // CLOSE
+   int totalW = c11 + (int)(10 * cs);
    
    int btnH = useLH - 2;
    if(btnH < 12) btnH = 12;
@@ -586,12 +627,13 @@ void CreateDashboard() {
    CreateLabel("H_Pair","PAIR",     c0, y, HeaderColor, fs);
    CreateLabel("H_Profit","PL",     c1, y, HeaderColor, fs);
    CreateLabel("H_Signal","SIG",    c2, y, HeaderColor, fs);
-   CreateLabel("H_Gap","GAP",       c3, y, HeaderColor, fs);
-   CreateLabel("H_Gates","GT",      c4, y, HeaderColor, fs);
-   CreateLabel("H_RSI","RSI",       c5, y, HeaderColor, fs);
-   CreateLabel("H_Vol","VOL",       c6, y, HeaderColor, fs);
-   CreateLabel("H_Warn","WARN",     c7, y, HeaderColor, fs);
-   CreateButton("HeaderCloseAll","CLOSE", c8, y-2, (int)(90*cs), 18, clrGray, clrBlack);
+   CreateLabel("H_Bar","",          cBar,y, clrDodgerBlue, fs);
+   CreateLabel("H_Gap","GAP",       c4, y, HeaderColor, fs);
+   CreateLabel("H_Gates","GT",      c5, y, HeaderColor, fs);
+   CreateLabel("H_RSI","RSI",       c6, y, HeaderColor, fs);
+   CreateLabel("H_Vol","VOL",       c7, y, HeaderColor, fs);
+   CreateLabel("H_Warn","WARN",     c8, y, HeaderColor, fs);
+   CreateButton("HeaderCloseAll","CLOSE", c9, y-2, (int)(90*cs), 18, clrGray, clrBlack);
    
    y += useLH + 5;
    
@@ -617,14 +659,41 @@ void CreateDashboard() {
       CreateLabel("Pair_"+IntegerToString(i),   pairs[i], c0, ly, TextColor, fs);
       CreateLabel("Profit_"+IntegerToString(i), "--",      c1, ly, clrGray,  fs);
       CreateLabel("Signal_"+IntegerToString(i), "WAIT",    c2, ly, clrGray,  fs);
-      CreateLabel("Gap_"+IntegerToString(i),    "--",      c3, ly, clrGray,  fs);
-      CreateLabel("Gates_"+IntegerToString(i),  "--",      c4, ly, clrGray,  fs);
-      CreateLabel("RSI_"+IntegerToString(i),    "--",      c5, ly, clrGray,  fs);
-      CreateLabel("Vol_"+IntegerToString(i),    "--",      c6, ly, clrGray,  fs);
-      CreateLabel("Warn_"+IntegerToString(i),   "",        c7, ly, clrGray,  fs);
-      CreateButton("BtnBuy_"+IntegerToString(i),  "B", c8, ry+1, (int)(30*cs), btnH, clrForestGreen, clrWhite);
-      CreateButton("BtnSell_"+IntegerToString(i), "S", c9, ry+1, (int)(30*cs), btnH, clrCrimson, clrWhite);
-      CreateButton("BtnClose_"+IntegerToString(i),"NO",c10,ry+1, (int)(40*cs), btnH, clrGray, clrBlack);
+      // Score bar
+      string barName = "Bar_"+IntegerToString(i);
+      ObjectCreate(0,barName,OBJ_RECTANGLE_LABEL,0,0,0);
+      ObjectSetInteger(0,barName,OBJPROP_XDISTANCE,cBar);
+      ObjectSetInteger(0,barName,OBJPROP_YDISTANCE,ry+2);
+      ObjectSetInteger(0,barName,OBJPROP_XSIZE,(int)(20*cs));
+      ObjectSetInteger(0,barName,OBJPROP_YSIZE,useLH-5);
+      ObjectSetInteger(0,barName,OBJPROP_CORNER,CORNER_LEFT_UPPER);
+      ObjectSetInteger(0,barName,OBJPROP_BGCOLOR,clrDimGray);
+      ObjectSetInteger(0,barName,OBJPROP_BORDER_COLOR,clrDimGray);
+      ObjectSetInteger(0,barName,OBJPROP_BACK,false);
+      ObjectSetInteger(0,barName,OBJPROP_SELECTABLE,false);
+      ObjectSetInteger(0,barName,OBJPROP_HIDDEN,true);
+      // Second bar (fill) on top
+      string barF = "BarF_"+IntegerToString(i);
+      ObjectCreate(0,barF,OBJ_RECTANGLE_LABEL,0,0,0);
+      ObjectSetInteger(0,barF,OBJPROP_XDISTANCE,cBar);
+      ObjectSetInteger(0,barF,OBJPROP_YDISTANCE,ry+2);
+      ObjectSetInteger(0,barF,OBJPROP_XSIZE,0);
+      ObjectSetInteger(0,barF,OBJPROP_YSIZE,useLH-5);
+      ObjectSetInteger(0,barF,OBJPROP_CORNER,CORNER_LEFT_UPPER);
+      ObjectSetInteger(0,barF,OBJPROP_BGCOLOR,clrDimGray);
+      ObjectSetInteger(0,barF,OBJPROP_BORDER_COLOR,clrDimGray);
+      ObjectSetInteger(0,barF,OBJPROP_BACK,false);
+      ObjectSetInteger(0,barF,OBJPROP_SELECTABLE,false);
+      ObjectSetInteger(0,barF,OBJPROP_HIDDEN,true);
+      
+      CreateLabel("Gap_"+IntegerToString(i),    "--",      c4, ly, clrGray,  fs);
+      CreateLabel("Gates_"+IntegerToString(i),  "--",      c5, ly, clrGray,  fs);
+      CreateLabel("RSI_"+IntegerToString(i),    "--",      c6, ly, clrGray,  fs);
+      CreateLabel("Vol_"+IntegerToString(i),    "--",      c7, ly, clrGray,  fs);
+      CreateLabel("Warn_"+IntegerToString(i),   "",        c8, ly, clrGray,  fs);
+      CreateButton("BtnBuy_"+IntegerToString(i),  "B", c9, ry+1, (int)(30*cs), btnH, clrForestGreen, clrWhite);
+      CreateButton("BtnSell_"+IntegerToString(i), "S", c10, ry+1, (int)(30*cs), btnH, clrCrimson, clrWhite);
+      CreateButton("BtnClose_"+IntegerToString(i),"NO",c11,ry+1, (int)(40*cs), btnH, clrGray, clrBlack);
    }
    
    // ── BOTTOM ──
@@ -645,6 +714,30 @@ void CreateDashboard() {
    CreateButton("BtnFontPlus","F+", b, botY2-2, (int)(22*cs), (int)(16*cs), clrLime, clrBlack); b += (int)(40*cs);
    CreateButton("BtnAutoTrade","AUTO:OFF", b, botY2-2, (int)(80*cs), (int)(16*cs), C'50,50,50', clrGray); b += (int)(85*cs);
    CreateButton("BtnAlert","ALERT:ON", b, botY2-2, (int)(70*cs), (int)(16*cs), C'0,100,0', clrLime);
+   
+   // ── TOGGLE ROW ──
+   int togY = botY2 + useLH;
+   CreateLabel("L_Toggle","[+]ACTIVE: GAP GT  |  TOGGLE:", x, togY, clrLightGray, fs);
+   CreateButton("Tog_RSI",tog_RSI?"+RSI":"RSI", x+(int)(170*cs), togY-2, (int)(38*cs), (int)(14*cs), tog_RSI?clrDarkGreen:clrDimGray, tog_RSI?clrLime:clrGray);
+   CreateButton("Tog_VOL",tog_VOL?"+VOL":"VOL", x+(int)(210*cs), togY-2, (int)(38*cs), (int)(14*cs), tog_VOL?clrDarkGreen:clrDimGray, tog_VOL?clrLime:clrGray);
+   CreateButton("Tog_SnR",tog_SnR?"+SnR":"SnR", x+(int)(250*cs), togY-2, (int)(38*cs), (int)(14*cs), tog_SnR?clrDarkGreen:clrDimGray, tog_SnR?clrLime:clrGray);
+   CreateButton("Tog_BB",tog_BB?"+BB ":"BB ", x+(int)(290*cs), togY-2, (int)(38*cs), (int)(14*cs), tog_BB?clrDarkGreen:clrDimGray, tog_BB?clrLime:clrGray);
+}
+
+// ===== UPDATE TOGGLE BUTTONS =====
+void UpdateToggles() {
+   ObjectSetString(0,"Tog_RSI",OBJPROP_TEXT,tog_RSI?"+RSI":"RSI");
+   ObjectSetInteger(0,"Tog_RSI",OBJPROP_BGCOLOR,tog_RSI?clrDarkGreen:clrDimGray);
+   ObjectSetInteger(0,"Tog_RSI",OBJPROP_COLOR,tog_RSI?clrLime:clrGray);
+   ObjectSetString(0,"Tog_VOL",OBJPROP_TEXT,tog_VOL?"+VOL":"VOL");
+   ObjectSetInteger(0,"Tog_VOL",OBJPROP_BGCOLOR,tog_VOL?clrDarkGreen:clrDimGray);
+   ObjectSetInteger(0,"Tog_VOL",OBJPROP_COLOR,tog_VOL?clrLime:clrGray);
+   ObjectSetString(0,"Tog_SnR",OBJPROP_TEXT,tog_SnR?"+SnR":"SnR");
+   ObjectSetInteger(0,"Tog_SnR",OBJPROP_BGCOLOR,tog_SnR?clrDarkGreen:clrDimGray);
+   ObjectSetInteger(0,"Tog_SnR",OBJPROP_COLOR,tog_SnR?clrLime:clrGray);
+   ObjectSetString(0,"Tog_BB",OBJPROP_TEXT,tog_BB?"+BB":"BB");
+   ObjectSetInteger(0,"Tog_BB",OBJPROP_BGCOLOR,tog_BB?clrDarkGreen:clrDimGray);
+   ObjectSetInteger(0,"Tog_BB",OBJPROP_COLOR,tog_BB?clrLime:clrGray);
 }
 
 // ===== UPDATE DASHBOARD =====
@@ -659,6 +752,22 @@ void UpdateDashboard() {
       }
       ObjectSetString(0,"Signal_"+IntegerToString(i),OBJPROP_TEXT,sigTxt);
       ObjectSetInteger(0,"Signal_"+IntegerToString(i),OBJPROP_COLOR,sigCol);
+      
+      // Score progress bar
+      int rawScore = ccsData[i].score;
+      int barMax = 20;
+      int barFill = (int)(MathAbs(rawScore) * barMax / 10);
+      if(barFill > barMax) barFill = barMax;
+      if(barFill < 0) barFill = 0;
+      color barCol = clrDimGray;
+      if(rawScore >= 7) barCol = clrLime;
+      else if(rawScore >= 4) barCol = clrMediumSeaGreen;
+      else if(rawScore <= -7) barCol = clrRed;
+      else if(rawScore <= -4) barCol = clrTomato;
+      else barCol = clrDimGray;
+      ObjectSetInteger(0,"BarF_"+IntegerToString(i),OBJPROP_XSIZE,barFill);
+      ObjectSetInteger(0,"BarF_"+IntegerToString(i),OBJPROP_BGCOLOR,barCol);
+      ObjectSetInteger(0,"Bar_"+IntegerToString(i),OBJPROP_XSIZE,barMax);
       
       // GAP
       double gv = ccsData[i].ccyGap;
@@ -783,9 +892,10 @@ void DeleteAllObjects() {
          StringFind(n,"Signal_")==0||StringFind(n,"Gap_")==0||
          StringFind(n,"Gates_")==0||StringFind(n,"RSI_")==0||
          StringFind(n,"Vol_")==0||StringFind(n,"Warn_")==0||
+         StringFind(n,"Bar_")==0||StringFind(n,"BarF_")==0||
          StringFind(n,"BtnBuy_")==0||StringFind(n,"BtnSell_")==0||StringFind(n,"BtnClose_")==0||
          StringFind(n,"BtnAutoTrade")==0||StringFind(n,"BtnAlert")==0||
-         StringFind(n,"BtnFont")==0||
+         StringFind(n,"BtnFont")==0||StringFind(n,"Tog_")==0||
          StringFind(n,"H_")==0||StringFind(n,"L_")==0||StringFind(n,"Header")==0||
          StringFind(n,"Max")==0) ObjectDelete(0,n);
    }
