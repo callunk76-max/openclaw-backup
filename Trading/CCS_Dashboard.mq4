@@ -199,7 +199,7 @@ void HDR(string n,string t,int x,int y,int w,int h,int fs){
 
 void UpdateDashboard(){
    for(int i=0;i<totalPairs;i++){
-      int sg=ccsData[i].signal; string st="W"; color sc=clrGray;
+      int sg=ccsData[i].signal; string st="-"; color sc=clrGray;
       if(sg==2){st="SB";sc=clrLime;}else if(sg==1){st="B";sc=clrMediumSeaGreen;}else if(sg==-1){st="S";sc=clrTomato;}else if(sg==-2){st="SS";sc=clrRed;}
       ObjectSetString(0,"SG_"+IntegerToString(i),OBJPROP_TEXT,st); ObjectSetInteger(0,"SG_"+IntegerToString(i),OBJPROP_COLOR,sc);
       // Score %
@@ -214,7 +214,7 @@ void UpdateDashboard(){
       ObjectSetInteger(0,"GT_"+IntegerToString(i),OBJPROP_COLOR,(ccsData[i].gateBull>ccsData[i].gateBear)?clrMediumSeaGreen:(ccsData[i].gateBear>ccsData[i].gateBull)?clrTomato:clrGray);
       // RSI
       double rv=ccsData[i].rsi; ObjectSetString(0,"RS_"+IntegerToString(i),OBJPROP_TEXT,DoubleToString(rv,1));
-      ObjectSetInteger(0,"RS_"+IntegerToString(i),OBJPROP_COLOR,(rv>0&&rv<RSI_Oversold)?clrLime:(rv>RSI_Overbought)?clrRed:clrWhite);
+      ObjectSetInteger(0,"RS_"+IntegerToString(i),OBJPROP_COLOR,tog_RSI?((rv>0&&rv<RSI_Oversold)?clrLime:(rv>RSI_Overbought)?clrRed:clrWhite):clrGray);
       // SnR -- show distance to nearest S/R in ATR
       double aS2=(ccsData[i].atr>0)?ccsData[i].atr:1; string srT="-";
       if(ccsData[i].signal>=1){//BUY: show support dist
@@ -226,10 +226,10 @@ void UpdateDashboard(){
       }
       // ATR
       double av=ccsData[i].atr; string ad2=ccsData[i].atrNaik?"^":"v"; ObjectSetString(0,"AV_"+IntegerToString(i),OBJPROP_TEXT,DoubleToString(av,1)+ad2);
-      ObjectSetInteger(0,"AV_"+IntegerToString(i),OBJPROP_COLOR,ccsData[i].atrNaik?clrOrange:clrWhite);
+      ObjectSetInteger(0,"AV_"+IntegerToString(i),OBJPROP_COLOR,tog_VOL?(ccsData[i].atrNaik?clrOrange:clrWhite):clrGray);
       // BB
       string bt="M"; color bc2=clrGray; if(ccsData[i].bbTouchLow){bt="L";bc2=clrLime;}else if(ccsData[i].bbTouchHigh){bt="H";bc2=clrRed;}
-      ObjectSetString(0,"BB_"+IntegerToString(i),OBJPROP_TEXT,bt); ObjectSetInteger(0,"BB_"+IntegerToString(i),OBJPROP_COLOR,bc2);
+      ObjectSetString(0,"BB_"+IntegerToString(i),OBJPROP_TEXT,bt); ObjectSetInteger(0,"BB_"+IntegerToString(i),OBJPROP_COLOR,tog_BB?bc2:clrGray);
       // WARN
       ObjectSetString(0,"WN_"+IntegerToString(i),OBJPROP_TEXT,ccsData[i].warning); color wc2=clrGray;
       if(StringFind(ccsData[i].warning,"Vol")==0||StringFind(ccsData[i].warning,"OB+")==0||StringFind(ccsData[i].warning,"OS+")==0)wc2=clrRed;
