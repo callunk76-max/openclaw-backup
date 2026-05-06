@@ -23,7 +23,7 @@ string pairs[]; int totalPairs; bool autoTradeON=false, alertON=true;
 int runtimeMaxPos=0, runtimeFontSize=8; datetime lastUpdateTime=0; int updateCounter=0;
 struct CCSData{string pair;int signal,prevSignal,gateBull,gateBear,score;double rsi,atr,ccyGap,snrDist;bool bbTouchLow,bbTouchHigh,atrNaik;string regime,warning;};
 CCSData ccsData[]; string lastAlertSignal[]; datetime lastAlertTime[];
-bool tog_RSI=true, tog_VOL=true, tog_SnR=true, tog_BB=true; // Default ALL ON
+bool tog_RSI=true, tog_VOL=true, tog_SnR=true, tog_BB=true, tog_WARN=true;
 struct TrailData{int ticket;double peak;bool active;}; TrailData trailData[]; int trailCount=0;
 string ccyList[8]={"USD","EUR","GBP","CHF","CAD","AUD","JPY","NZD"};
 int cci(string c){for(int i=0;i<8;i++)if(ccyList[i]==c)return i;return -1;}
@@ -54,6 +54,7 @@ void OnChartEvent(const int id,const long&lparam,const double&dparam,const strin
    if(sparam=="HDR_SnR"){tog_SnR=!tog_SnR;UpdateHD();ChartRedraw();ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
    if(sparam=="HDR_ATR"){tog_VOL=!tog_VOL;UpdateHD();ChartRedraw();ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
    if(sparam=="HDR_BB"){tog_BB=!tog_BB;UpdateHD();ChartRedraw();ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
+   if(sparam=="HDR_WARN"){tog_WARN=!tog_WARN;UpdateHD();ChartRedraw();ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
    if(StringFind(sparam,"BK_")==0){int i=(int)StringToInteger(StringSubstr(sparam,3));if(i>=0&&i<totalPairs){OpenTrade(pairs[i],OP_BUY);ChartRedraw();}ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
    if(StringFind(sparam,"BS_")==0){int i=(int)StringToInteger(StringSubstr(sparam,3));if(i>=0&&i<totalPairs){OpenTrade(pairs[i],OP_SELL);ChartRedraw();}ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
    if(StringFind(sparam,"BX_")==0){int i=(int)StringToInteger(StringSubstr(sparam,3));if(i>=0&&i<totalPairs){CloseSymbol(pairs[i]);ChartRedraw();}ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
@@ -66,6 +67,7 @@ void UpdateHD(){
    ObjectSetInteger(0,"HDR_SnR",OBJPROP_COLOR,tog_SnR?clrYellow:clrDimGray);
    ObjectSetInteger(0,"HDR_ATR",OBJPROP_COLOR,tog_VOL?clrYellow:clrDimGray);
    ObjectSetInteger(0,"HDR_BB", OBJPROP_COLOR,tog_BB?clrYellow:clrDimGray);
+   ObjectSetInteger(0,"HDR_WARN",OBJPROP_COLOR,tog_WARN?clrYellow:clrDimGray);
 }
 
 // ===== SIGNALS =====
@@ -152,12 +154,14 @@ int CalcSig(string sym,int idx){
    }else{ccsData[idx].warning="";ccsData[idx].score=0;return 0;}
    string w="";if(aN&&r>70)w="VolTop";else if(aN&&r<30)w="VolBot";else if(ccsData[idx].bbTouchHigh&&rOb)w="OB+BB";else if(ccsData[idx].bbTouchLow&&rOs)w="OS+BB";
    else if(nR&&gb>=3)w="~Res";else if(nS&&gs>=3)w="~Sup";else if(atp>0&&at>atp*1.5)w="ATR+";ccsData[idx].warning=w;
-   // Warning penalty
-   if(w=="VolTop"||w=="OB+BB")bs-=2;
-   else if(w=="VolBot"||w=="OS+BB")ss-=2;
-   else if(w=="~Res")bs-=1;
-   else if(w=="~Sup")ss-=1;
-   else if(w=="ATR+"){bs-=1;ss-=1;}
+   // Warning penalty (hanya jika toggle WARN ON)
+   if(tog_WARN){
+      if(w=="VolTop"||w=="OB+BB")bs-=2;
+      else if(w=="VolBot"||w=="OS+BB")ss-=2;
+      else if(w=="~Res")bs-=1;
+      else if(w=="~Sup")ss-=1;
+      else if(w=="ATR+"){bs-=1;ss-=1;}
+   }
    ccsData[idx].score=(bs>ss)?bs:(ss>bs)?-ss:0;
    if(bs>=7)return 2;if(bs>=4)return 1;if(ss>=7)return -2;if(ss>=4)return -1;return 0;
 }
@@ -178,7 +182,7 @@ void CreateDashboard(){
    CreateLabel("H_Gap","GAP",c4,hy,HeaderColor,fs); CreateLabel("H_Gates","GT",c5,hy,HeaderColor,fs);
    HDR("HDR_RSI","RSI",c6,hy,(int)(45*cs),useLH,fs); HDR("HDR_SnR","SnR",cSnR,hy,(int)(40*cs),useLH,fs);
    HDR("HDR_ATR","ATR",cATR,hy,(int)(35*cs),useLH,fs); HDR("HDR_BB","BB",cBB,hy,(int)(35*cs),useLH,fs);
-   CreateLabel("H_Warn","WN",cWarn,hy,HeaderColor,fs);
+   HDR("HDR_WARN","WN",cWarn,hy,(int)(40*cs),useLH,fs);
    CreateButton("HeaderCloseAll","X",cB,hy-2,(int)(80*cs),18,clrGray,clrBlack);
    y+=useLH+5;
    for(int i=0;i<totalPairs;i++){
@@ -224,7 +228,7 @@ void UpdateDashboard(){
       if(sg==2){st="StrB";sc=clrLime;}else if(sg==1){st="Buy";sc=clrMediumSeaGreen;}else if(sg==-1){st="Sell";sc=clrTomato;}else if(sg==-2){st="StrS";sc=clrRed;}
       ObjectSetString(0,"SG_"+IntegerToString(i),OBJPROP_TEXT,st); ObjectSetInteger(0,"SG_"+IntegerToString(i),OBJPROP_COLOR,sc);
       // Score %
-      int rs=ccsData[i].score; int pct=(int)(MathAbs(rs)*100/14); if(pct>100)pct=100;
+      int rs=ccsData[i].score; int dynMax=9+(tog_RSI?1:0)+(tog_SnR?1:0)+(tog_VOL?1:0)+(tog_BB?1:0)+(tog_WARN?0:0); int pct=(dynMax>0)?(int)(MathAbs(rs)*100/dynMax):0; if(pct>100)pct=100;
       color pc2=clrGray; if(rs>=7)pc2=clrLime;else if(rs>=4)pc2=clrMediumSeaGreen;else if(rs<=-7)pc2=clrRed;else if(rs<=-4)pc2=clrTomato;
       ObjectSetString(0,"PC_"+IntegerToString(i),OBJPROP_TEXT,(pct>0)?(IntegerToString(pct)+"%"):""); ObjectSetInteger(0,"PC_"+IntegerToString(i),OBJPROP_COLOR,pc2);
       // GAP
