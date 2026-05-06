@@ -426,3 +426,78 @@ sending incremental file list
 ./
 .gitignore
 MEMORY.md
+backup_log.txt
+.learnings/
+.learnings/ERRORS.md
+.learnings/FEATURE_REQUESTS.md
+.learnings/LEARNINGS.md
+App/sirup_bulukumba/
+App/sirup_bulukumba/app.log
+App/sirup_bulukumba/app.py
+App/sirup_bulukumba/bulukumba.db
+App/sirup_bulukumba/restart_log.txt
+App/sirup_bulukumba/visitor_count.json
+App/sirup_bulukumba/templates/
+App/sirup_bulukumba/templates/index.html
+Trading/previous_signal.json
+Trading/signal_history.json
+Trading/signal_log.txt
+Trading/trading_signal.py
+memory/
+memory/2026-05-04-cpu-overheating.md
+memory/2026-05-05-rup-grouping.md
+memory/2026-05-05.md
+skills/
+skills/self-improving-agent/
+skills/self-improving-agent/README.md
+skills/self-improving-agent/SKILL.md
+skills/self-improving-agent/_meta.json
+skills/self-improving-agent/assets/
+skills/self-improving-agent/assets/ERRORS.md
+skills/self-improving-agent/assets/FEATURE_REQUESTS.md
+skills/self-improving-agent/assets/LEARNINGS.md
+skills/self-improving-agent/assets/SKILL-TEMPLATE.md
+skills/self-improving-agent/hooks/
+skills/self-improving-agent/hooks/openclaw/
+skills/self-improving-agent/hooks/openclaw/HOOK.md
+skills/self-improving-agent/hooks/openclaw/handler.js
+skills/self-improving-agent/hooks/openclaw/handler.ts
+skills/self-improving-agent/references/
+skills/self-improving-agent/references/examples.md
+skills/self-improving-agent/references/hooks-setup.md
+skills/self-improving-agent/references/openclaw-integration.md
+skills/self-improving-agent/scripts/
+skills/self-improving-agent/scripts/activator.sh
+skills/self-improving-agent/scripts/error-detector.sh
+skills/self-improving-agent/scripts/extract-skill.sh
+
+sent 6,914,804 bytes  received 820 bytes  13,831,248.00 bytes/sec
+total size is 98,010,537  speedup is 14.17
+[master 4dd01bc] Daily Backup from Cuy - 2026-05-06 03:00
+ 35 files changed, 5625 insertions(+), 116 deletions(-)
+ create mode 100644 .gitignore
+ create mode 100644 .learnings/ERRORS.md
+ create mode 100644 .learnings/FEATURE_REQUESTS.md
+ create mode 100644 .learnings/LEARNINGS.md
+ create mode 100644 memory/2026-05-04-cpu-overheating.md
+ create mode 100644 memory/2026-05-05-rup-grouping.md
+ create mode 100644 memory/2026-05-05.md
+ create mode 100644 skills/self-improving-agent/README.md
+ create mode 100644 skills/self-improving-agent/SKILL.md
+ create mode 100644 skills/self-improving-agent/_meta.json
+ create mode 100644 skills/self-improving-agent/assets/ERRORS.md
+ create mode 100644 skills/self-improving-agent/assets/FEATURE_REQUESTS.md
+ create mode 100644 skills/self-improving-agent/assets/LEARNINGS.md
+ create mode 100644 skills/self-improving-agent/assets/SKILL-TEMPLATE.md
+ create mode 100644 skills/self-improving-agent/hooks/openclaw/HOOK.md
+ create mode 100644 skills/self-improving-agent/hooks/openclaw/handler.js
+ create mode 100644 skills/self-improving-agent/hooks/openclaw/handler.ts
+ create mode 100644 skills/self-improving-agent/references/examples.md
+ create mode 100644 skills/self-improving-agent/references/hooks-setup.md
+ create mode 100644 skills/self-improving-agent/references/openclaw-integration.md
+ create mode 100644 skills/self-improving-agent/scripts/activator.sh
+ create mode 100644 skills/self-improving-agent/scripts/error-detector.sh
+ create mode 100644 skills/self-improving-agent/scripts/extract-skill.sh
+error: src refspec main does not match any
+error: failed to push some refs to 'github.com:callunk76-max/openclaw-backup.git'
+sending incremental file list

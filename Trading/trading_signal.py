@@ -3,6 +3,7 @@ from datetime import datetime
 import time
 import json
 import os
+import math
 from position_manager import load_positions
 
 # Signal history tracking for consecutive numbering
@@ -141,23 +142,18 @@ def get_all_strengths():
             l = float(row["d"][2])
             
             if h == l:
-                strengths[pair] = 0
+                strengths[pair] = 4.5
                 continue
-                
-            # Callunk / Giraia ratio logic
-            ratio = (c - l) / (h - l)
-            ratio = max(0, min(1, ratio))
-            
-            if ratio >= 0.97: strengths[pair] = 9
-            elif ratio >= 0.90: strengths[pair] = 8
-            elif ratio >= 0.75: strengths[pair] = 7
-            elif ratio >= 0.60: strengths[pair] = 6
-            elif ratio >= 0.50: strengths[pair] = 5
-            elif ratio >= 0.40: strengths[pair] = 4
-            elif ratio >= 0.25: strengths[pair] = 3
-            elif ratio >= 0.10: strengths[pair] = 2
-            elif ratio >= 0.03: strengths[pair] = 1
-            else: strengths[pair] = 0
+
+            # Distance dari midpoint (satuan half-range)
+            mid = (h + l) / 2
+            half_range = (h - l) / 2
+            distance = (c - mid) / half_range
+
+            # Sigmoid mapping: distance -> 0-9
+            # Jarak 0 -> 4.5, breakout jauh tetep smooth ke 0/9 (gak clamping mentah)
+            score = round(9 / (1 + math.exp(-distance * 0.4)), 2)
+            strengths[pair] = score
             
         return strengths
     except Exception as e:
@@ -206,11 +202,205 @@ def fmt_delta(current, previous):
     return f' ({diff:+.1f})'
 
 
+def get_ema_gates():
+    """Fetch EMA20/50/100/200 (H1) via TradingView scanner, return pair -> gate data."""
+    try:
+        tickers = [f"OANDA:{p.replace('/', '')}" for p in PAIRS]
+        payload = {
+            "symbols": {"tickers": tickers},
+            "columns": ["close|60", "EMA20|60", "EMA50|60", "EMA100|60", "EMA200|60"]
+        }
+        url = "https://scanner.tradingview.com/forex/scan"
+        headers = {"User-Agent": "Mozilla/5.0"}
+        response = requests.post(url, json=payload, headers=headers).json()
+
+        gates = {}
+        for row in response.get("data", []):
+            symbol = row["s"].replace("OANDA:", "")
+            pair = f"{symbol[:3]}/{symbol[3:]}"
+
+            if row["d"] is None:
+                gates[pair] = {"bull": 0, "bear": 0, "emas": {}, "close": 0}
+                continue
+
+            close = float(row["d"][0])
+            ema20 = float(row["d"][1])
+            ema50 = float(row["d"][2])
+            ema100 = float(row["d"][3])
+            ema200 = float(row["d"][4])
+
+            bull = bear = 0
+            if close > ema20: bull += 1
+            if close > ema50: bull += 1
+            if close > ema100: bull += 1
+            if close > ema200: bull += 1
+            if close < ema20: bear += 1
+            if close < ema50: bear += 1
+            if close < ema100: bear += 1
+            if close < ema200: bear += 1
+
+            gates[pair] = {
+                "bull": bull, "bear": bear, "close": close,
+                "emas": {"20": ema20, "50": ema50, "100": ema100, "200": ema200}
+            }
+
+        return gates
+    except Exception as e:
+        print(f"Error fetching EMA gates: {e}")
+        return {}
+
+
+def fmt_gate_line(pair, gates, is_buy):
+    """Format EMA gate display, e.g. '🟢 EMA: 3/4 (20 ✓ 50 ✓ 100 ✓ 200 ✗)'"""
+    g = gates.get(pair, {})
+    if not g.get("emas"):
+        return None
+
+    close = g["close"]
+    emas = g["emas"]
+    bull = g["bull"]
+    periods = ["20", "50", "100", "200"]
+
+    # Show checkmarks aligned with trade direction:
+    # For BUY trades: ✓ if close > EMA, ✗ if close < EMA
+    # For SELL trades: ✓ if close < EMA, ✗ if close > EMA
+    parts = []
+    for p in periods:
+        ema = emas.get(p)
+        if ema is None or ema == 0:
+            parts.append(f"E{p}?")
+        else:
+            above = close > ema
+            ok = above if is_buy else not above
+            mark = "✅" if ok else "❌"
+            parts.append(f"E{p}{mark}")
+
+    count = bull if is_buy else g["bear"]
+    icon = "🟢" if count >= 3 else "🟡" if count >= 2 else "🔴"
+    return f"{icon} EMA: {count}/4 ({' '.join(parts)})"
+
+
 def get_decision_label(gap):
-    if gap >= 7.0: return "ENTER NOW 🔥", "✅"
-    elif gap >= 5.0: return "WAIT FOR DIP ⏳", "☑️"
-    elif gap >= 4.0: return "WATCH CLOSELY 👀", "⚠️"
+    # Threshold disesuaikan untuk sigmoid scaling (range efektif ~2-7)
+    if gap >= 4.0: return "ENTER NOW 🔥", "✅"
+    elif gap >= 3.0: return "WAIT FOR DIP ⏳", "☑️"
+    elif gap >= 2.0: return "WATCH CLOSELY 👀", "⚠️"
     else: return "AVOID / CHOPPY ❌", "🛑"
+
+def get_pivot_levels(pairs_list):
+    """Fetch H[1], L[1], C[1] (H1) and calculate floor pivot points for listed pairs.
+    Returns dict: pair -> {pivot, r1, r2, r3, s1, s2, s3}
+    """
+    try:
+        tickers = [f"OANDA:{p.replace('/', '')}" for p in pairs_list]
+        payload = {
+            "symbols": {"tickers": tickers},
+            "columns": ["high[1]|60", "low[1]|60", "close[1]|60"]
+        }
+        url = "https://scanner.tradingview.com/forex/scan"
+        headers = {"User-Agent": "Mozilla/5.0"}
+        response = requests.post(url, json=payload, headers=headers).json()
+
+        pivots = {}
+        for row in response.get("data", []):
+            symbol = row["s"].replace("OANDA:", "")
+            pair = f"{symbol[:3]}/{symbol[3:]}"
+
+            if row["d"] is None or None in row["d"]:
+                continue
+
+            h1 = float(row["d"][0])
+            l1 = float(row["d"][1])
+            c1 = float(row["d"][2])
+
+            if h1 == l1:
+                continue
+
+            p = (h1 + l1 + c1) / 3
+            pivots[pair] = {
+                "pivot": round(p, 5),
+                "r1": round(2 * p - l1, 5),
+                "r2": round(p + (h1 - l1), 5),
+                "r3": round(h1 + 2 * (p - l1), 5),
+                "s1": round(2 * p - h1, 5),
+                "s2": round(p - (h1 - l1), 5),
+                "s3": round(l1 - 2 * (h1 - p), 5),
+            }
+
+        return pivots
+    except Exception as e:
+        print(f"Error fetching pivot data: {e}")
+        return {}
+
+
+def fmt_snr_advice(pair, pivots, current_price, direction):
+    """Practical SnR advice based on pivot proximity and trade direction.
+    direction: 'BUY', 'SELL', or 'NEUTRAL'
+    Returns: short practical string like 'BUY ✅🛣️ PANJANG'
+    """
+    pv = pivots.get(pair)
+    if not pv or current_price <= 0:
+        return None
+
+    supports = [pv["s1"], pv["s2"], pv["s3"]]
+    resists  = [pv["r1"], pv["r2"], pv["r3"]]
+
+    # Nearest resistance above price
+    near_res_dist = None
+    for r in resists:
+        if r > current_price:
+            d = (r - current_price) / current_price * 100
+            if near_res_dist is None or d < near_res_dist:
+                near_res_dist = d
+
+    # Nearest support below price
+    near_sup_dist = None
+    for s in supports:
+        if s < current_price:
+            d = (current_price - s) / current_price * 100
+            if near_sup_dist is None or d < near_sup_dist:
+                near_sup_dist = d
+
+    # Count broken resistances (R below price = bullish breakout)
+    broken_res = sum(1 for r in resists if r < current_price)
+    broken_sup = sum(1 for s in supports if s > current_price)
+
+    if direction == "BUY":
+        # BUY: cares about resistance ahead
+        if near_res_dist is None:
+            # All R broken, open road
+            return "BUY ✅🛣️ PANJANG"
+        elif near_res_dist >= 1.0:
+            return "BUY ✅ MASIH OK"
+        elif near_res_dist >= 0.3:
+            return "BUY ⚠️ MENTOK"
+        else:
+            return "BUY 🚧 MENTOK!"
+
+    elif direction == "SELL":
+        # SELL: cares about support below
+        if near_sup_dist is None:
+            return "SELL ✅🛣️ PANJANG"
+        elif near_sup_dist >= 1.0:
+            return "SELL ✅ MASIH OK"
+        elif near_sup_dist >= 0.3:
+            return "SELL ⚠️ MENTOK"
+        else:
+            return "SELL 🚧 MENTOK!"
+
+    # NEUTRAL — show what needs to happen
+    if broken_res >= 2:
+        # Price has broken resistances (bullish structure)
+        if near_res_dist and near_res_dist < 0.5:
+            return "NUNGGU PULLBACK"
+        return "NUNGGU BUY OK ⬆️"
+    elif broken_sup >= 2:
+        if near_sup_dist and near_sup_dist < 0.5:
+            return "NUNGGU PULLBACK"
+        return "NUNGGU SELL OK ⬇️"
+    else:
+        return "NUNGGU SINYAL ⏳"
+
 
 def generate_signal():
     sorted_powers, all_powers = calculate_powers()
@@ -277,26 +467,25 @@ def generate_signal():
                 if gap < 4.0: 
                     action = "⚪ NEUTRAL ↔️"
                 
-                decision, conf_emoji = get_decision_label(gap)
-                
                 all_gaps.append({
                     'pair': actual_pair, 
                     'gap': gap, 
                     'base_val': all_powers[base],
                     'quote_val': all_powers[quote],
-                    'action': action, 
-                    'decision': decision, 
-                    'conf': conf_emoji
+                    'action': action
                 })
 
-    # Filter by minimum gap 5.5, then take top 3 or fewer
-    MIN_GAP = 5.5
-    top_3 = sorted([g for g in all_gaps if g['gap'] >= MIN_GAP],
-                   key=lambda x: x['gap'], reverse=True)[:3]
+    # Filter by minimum gap, then take top 5
+    MIN_GAP = 2.0
+    top_5 = sorted([g for g in all_gaps if g['gap'] >= MIN_GAP],
+                   key=lambda x: x['gap'], reverse=True)[:5]
     
     # Track signal history for consecutive numbering
-    current_pairs = [s['pair'] for s in top_3]
+    current_pairs = [s['pair'] for s in top_5]
     signal_counts = update_signal_history(current_pairs)
+
+    # Fetch pivot levels for top pairs
+    pivot_data = get_pivot_levels(current_pairs) if current_pairs else {}
     
     # ---------------- LOAD PREVIOUS STATE FOR DELTAS ---------------- #
     prev = load_prev_signal()
@@ -307,6 +496,9 @@ def generate_signal():
     current_strengths = {c: round(v, 2) for c, v in all_powers.items()}
     current_gaps = {g['pair']: round(g['gap'], 2) for g in all_gaps}
     save_prev_signal({'strengths': current_strengths, 'gaps': current_gaps})
+
+    # ---------------- FETCH EMA GATES & PIVOTS ---------------- #
+    all_gates = get_ema_gates()
 
     # ---------------- BUILD MESSAGE ---------------- #
     msg_parts = []
@@ -334,28 +526,46 @@ def generate_signal():
         msg_parts.extend(position_updates)
         msg_parts.append(f"〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️")
 
-    # Top opportunities (minimum gap 5.5)
-    if top_3:
-        count = len(top_3)
+    # Top 5 signals
+    if top_5:
+        count = len(top_5)
         if count == 1:
             msg_parts.append(f"🎯 **TOP OPPORTUNITY**")
         else:
-            msg_parts.append(f"🎯 **TOP {count} OPPORTUNITIES**")
+            msg_parts.append(f"🎯 **TOP {count} SIGNALS**")
     else:
-        msg_parts.append(f"🎯 **NO SIGNALS** | Min gap 5.5, none qualified ✅")
+        msg_parts.append(f"🎯 **NO SIGNALS** | Min gap 2.0, none qualified ✅")
         msg_parts.append(f"   └ Wait for wider spread between currencies")
-    for idx, s in enumerate(top_3, 1):
-        base, quote = s['pair'].split('/')
-        
+    for idx, s in enumerate(top_5, 1):
         display_pair = get_pair_display(s['pair'], signal_counts)
-        prev_gap_val = prev_gaps.get(s['pair'])
-        gap_delta = fmt_delta(s['gap'], prev_gap_val) if prev_gap_val is not None else ''
         msg_parts.append(f"{idx}️⃣ **{display_pair}**")
-        msg_parts.append(f"⚡ Power : {base} ({s['base_val']:.2f}) vs {quote} ({s['quote_val']:.2f})")
-        msg_parts.append(f"📉 Gap   : {s['gap']:.2f}{gap_delta} Pts")
-        msg_parts.append(f"📈 Action: {s['action']}")
-        msg_parts.append(f"🎯 Status: {s['conf']} {s['decision']}")
-        if idx < 3: msg_parts.append("")
+        
+        # Indicator: EMA Gates
+        if "BUY" in s['action']:
+            gate_is_buy = True
+        elif "SELL" in s['action']:
+            gate_is_buy = False
+        else:
+            g = all_gates.get(s['pair'], {})
+            gate_is_buy = g.get("bull", 0) >= g.get("bear", 0)
+        gate_line = fmt_gate_line(s['pair'], all_gates, gate_is_buy)
+        if gate_line:
+            msg_parts.append(f"   {gate_line}")
+
+        # Indicator: SnR Advice
+        g = all_gates.get(s['pair'], {})
+        cur_price = g.get("close", 0)
+        if "BUY" in s['action']:
+            snr_dir = "BUY"
+        elif "SELL" in s['action']:
+            snr_dir = "SELL"
+        else:
+            snr_dir = "NEUTRAL"
+        advice = fmt_snr_advice(s['pair'], pivot_data, cur_price, snr_dir) if cur_price else None
+        if advice:
+            msg_parts.append(f"   {advice}")
+
+        if idx < count: msg_parts.append("")
 
     return "\n".join(msg_parts)
 

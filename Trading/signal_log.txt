@@ -14631,3 +14631,2007 @@ Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
 [session-write-lock] releasing lock held for 62713ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
 ✅ Sent via Telegram. Message ID: 4027
 Message sent status: 0
+--- Running Signal at Wed May  6 08:00:02 AM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 08:00 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 8.71 (+4.0)
+🥈 NZD : 6.71 (+2.3)
+🥉 CHF : 5.71 (+1.0)
+🔹 EUR : 4.86 (+1.1)
+🔹 GBP : 3.86 (-2.4)
+🔹 CAD : 3.43 (-2.0)
+🔹 USD : 1.57 (-4.7)
+💀 JPY : 1.14 (+0.7)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **AUD/JPY 👑1**
+⚡ Power : AUD (8.71) vs JPY (1.14)
+📉 Gap   : 7.57 (+3.3) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **AUD/USD 👑1**
+⚡ Power : AUD (8.71) vs USD (1.57)
+📉 Gap   : 7.14 (+5.6) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **NZD/JPY 👑1**
+⚡ Power : NZD (6.71) vs JPY (1.14)
+📉 Gap   : 5.57 (+1.6) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ☑️ WAIT FOR DIP ⏳
+[session-write-lock] releasing lock held for 62226ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4028
+Message sent status: 0
+--- Running Signal at Wed May  6 08:15:01 AM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 08:15 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 8.71
+🥈 NZD : 7.43 (+0.7)
+🥉 CHF : 4.86 (-0.9)
+🔹 EUR : 4.57 (-0.3)
+🔹 GBP : 4.00 (+0.1)
+🔹 CAD : 3.43
+🔹 USD : 1.71 (+0.1)
+💀 JPY : 1.29 (+0.1)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **AUD/JPY 👑2**
+⚡ Power : AUD (8.71) vs JPY (1.29)
+📉 Gap   : 7.43 (-0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **AUD/USD 👑2**
+⚡ Power : AUD (8.71) vs USD (1.71)
+📉 Gap   : 7.00 (-0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ☑️ WAIT FOR DIP ⏳
+
+3️⃣ **NZD/JPY 👑2**
+⚡ Power : NZD (7.43) vs JPY (1.29)
+📉 Gap   : 6.14 (+0.6) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ☑️ WAIT FOR DIP ⏳
+✅ Sent via Telegram. Message ID: 4029
+Message sent status: 0
+--- Running Signal at Wed May  6 08:30:01 AM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 08:30 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 8.57 (-0.1)
+🥈 NZD : 8.14 (+0.7)
+🥉 CHF : 4.57 (-0.3)
+🔹 EUR : 4.29 (-0.3)
+🔹 GBP : 4.00
+🔹 CAD : 3.29 (-0.1)
+🔹 USD : 1.57 (-0.1)
+💀 JPY : 1.57 (+0.3)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **AUD/USD 👑3**
+⚡ Power : AUD (8.57) vs USD (1.57)
+📉 Gap   : 7.00 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **AUD/JPY 👑3**
+⚡ Power : AUD (8.57) vs JPY (1.57)
+📉 Gap   : 7.00 (-0.4) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **NZD/USD 👑1**
+⚡ Power : NZD (8.14) vs USD (1.57)
+📉 Gap   : 6.57 (+0.9) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ☑️ WAIT FOR DIP ⏳
+[session-write-lock] releasing lock held for 62003ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4030
+Message sent status: 0
+--- Running Signal at Wed May  6 08:45:01 AM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 08:45 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 8.57
+🥈 NZD : 8.14
+🥉 CHF : 5.00 (+0.4)
+🔹 EUR : 4.43 (+0.1)
+🔹 GBP : 4.43 (+0.4)
+🔹 CAD : 3.29
+🔹 JPY : 1.29 (-0.3)
+💀 USD : 0.86 (-0.7)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **AUD/USD 👑4**
+⚡ Power : AUD (8.57) vs USD (0.86)
+📉 Gap   : 7.71 (+0.7) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **NZD/USD 👑2**
+⚡ Power : NZD (8.14) vs USD (0.86)
+📉 Gap   : 7.29 (+0.7) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **AUD/JPY 👑4**
+⚡ Power : AUD (8.57) vs JPY (1.29)
+📉 Gap   : 7.29 (+0.3) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+✅ Sent via Telegram. Message ID: 4033
+Message sent status: 0
+--- Running Signal at Wed May  6 09:00:01 AM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 09:00 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 8.57
+🥈 NZD : 8.14
+🥉 CHF : 5.00
+🔹 EUR : 4.43
+🔹 GBP : 4.29 (-0.1)
+🔹 CAD : 3.43 (+0.1)
+🔹 JPY : 1.14 (-0.1)
+💀 USD : 1.00 (+0.1)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **AUD/USD 👑5**
+⚡ Power : AUD (8.57) vs USD (1.00)
+📉 Gap   : 7.57 (-0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **AUD/JPY 👑5**
+⚡ Power : AUD (8.57) vs JPY (1.14)
+📉 Gap   : 7.43 (+0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **NZD/USD 👑3**
+⚡ Power : NZD (8.14) vs USD (1.00)
+📉 Gap   : 7.14 (-0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+[session-write-lock] releasing lock held for 63043ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4034
+Message sent status: 0
+--- Running Signal at Wed May  6 09:15:02 AM CST 2026 ---
+Signal Result: [TRACK] NZD/JPY REAPPEARED → stars=1, consecutive=1
+🤖 **CALLUNK AI TRADING AGENT**
+🕒 09:15 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 8.57
+🥈 NZD : 8.14
+🥉 CHF : 5.14 (+0.1)
+🔹 EUR : 4.57 (+0.1)
+🔹 GBP : 4.29
+🔹 CAD : 3.57 (+0.1)
+🔹 USD : 1.00
+💀 JPY : 0.71 (-0.4)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **AUD/JPY 👑6**
+⚡ Power : AUD (8.57) vs JPY (0.71)
+📉 Gap   : 7.86 (+0.4) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **AUD/USD 👑6**
+⚡ Power : AUD (8.57) vs USD (1.00)
+📉 Gap   : 7.57 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **NZD/JPY ⭐1**
+⚡ Power : NZD (8.14) vs JPY (0.71)
+📉 Gap   : 7.43 (+0.4) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+✅ Sent via Telegram. Message ID: 4035
+Message sent status: 0
+--- Running Signal at Wed May  6 09:30:01 AM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 09:30 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 8.57
+🥈 NZD : 8.14
+🥉 CHF : 5.00 (-0.1)
+🔹 EUR : 4.86 (+0.3)
+🔹 GBP : 4.14 (-0.1)
+🔹 CAD : 3.57
+🔹 USD : 1.00
+💀 JPY : 0.71
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **AUD/JPY 👑7**
+⚡ Power : AUD (8.57) vs JPY (0.71)
+📉 Gap   : 7.86 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **AUD/USD 👑7**
+⚡ Power : AUD (8.57) vs USD (1.00)
+📉 Gap   : 7.57 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **NZD/JPY ⭐2**
+⚡ Power : NZD (8.14) vs JPY (0.71)
+📉 Gap   : 7.43 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+[session-write-lock] releasing lock held for 62117ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4036
+Message sent status: 0
+--- Running Signal at Wed May  6 09:45:01 AM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 09:45 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 8.57
+🥈 NZD : 8.14
+🥉 CHF : 5.00
+🔹 EUR : 4.86
+🔹 GBP : 4.71 (+0.6)
+🔹 CAD : 3.29 (-0.3)
+🔹 USD : 0.86 (-0.1)
+💀 JPY : 0.57 (-0.1)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **AUD/JPY 👑8**
+⚡ Power : AUD (8.57) vs JPY (0.57)
+📉 Gap   : 8.00 (+0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **AUD/USD 👑8**
+⚡ Power : AUD (8.57) vs USD (0.86)
+📉 Gap   : 7.71 (+0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **NZD/JPY ⭐3**
+⚡ Power : NZD (8.14) vs JPY (0.57)
+📉 Gap   : 7.57 (+0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+✅ Sent via Telegram. Message ID: 4039
+Message sent status: 0
+--- Running Signal at Wed May  6 10:00:01 AM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 10:00 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 8.57
+🥈 NZD : 8.14
+🥉 CHF : 5.00
+🔹 EUR : 4.86
+🔹 GBP : 4.29 (-0.4)
+🔹 CAD : 3.71 (+0.4)
+🔹 USD : 1.00 (+0.1)
+💀 JPY : 0.43 (-0.1)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **AUD/JPY 👑9**
+⚡ Power : AUD (8.57) vs JPY (0.43)
+📉 Gap   : 8.14 (+0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **NZD/JPY ⭐4**
+⚡ Power : NZD (8.14) vs JPY (0.43)
+📉 Gap   : 7.71 (+0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **AUD/USD 👑9**
+⚡ Power : AUD (8.57) vs USD (1.00)
+📉 Gap   : 7.57 (-0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+[session-write-lock] releasing lock held for 63634ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4048
+Message sent status: 0
+--- Running Signal at Wed May  6 10:15:01 AM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 10:15 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 8.57
+🥈 NZD : 8.14
+🥉 CHF : 5.00
+🔹 EUR : 4.86
+🔹 GBP : 4.29
+🔹 CAD : 3.71
+🔹 USD : 1.00
+💀 JPY : 0.43
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **AUD/JPY 👑10**
+⚡ Power : AUD (8.57) vs JPY (0.43)
+📉 Gap   : 8.14 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **NZD/JPY ⭐5**
+⚡ Power : NZD (8.14) vs JPY (0.43)
+📉 Gap   : 7.71 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **AUD/USD 👑10**
+⚡ Power : AUD (8.57) vs USD (1.00)
+📉 Gap   : 7.57 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+✅ Sent via Telegram. Message ID: 4057
+Message sent status: 0
+--- Running Signal at Wed May  6 10:30:01 AM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 10:30 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 8.57
+🥈 NZD : 8.14
+🥉 EUR : 4.86
+🔹 CHF : 4.86 (-0.1)
+🔹 GBP : 4.14 (-0.1)
+🔹 CAD : 3.71
+🔹 USD : 1.43 (+0.4)
+💀 JPY : 0.29 (-0.1)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **AUD/JPY 👑11**
+⚡ Power : AUD (8.57) vs JPY (0.29)
+📉 Gap   : 8.29 (+0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **NZD/JPY ⭐6**
+⚡ Power : NZD (8.14) vs JPY (0.29)
+📉 Gap   : 7.86 (+0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **AUD/USD 👑11**
+⚡ Power : AUD (8.57) vs USD (1.43)
+📉 Gap   : 7.14 (-0.4) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+[session-write-lock] releasing lock held for 61125ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4065
+Message sent status: 0
+--- Running Signal at Wed May  6 10:45:01 AM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 10:45 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 8.57
+🥈 NZD : 8.14
+🥉 EUR : 5.00 (+0.1)
+🔹 CHF : 4.57 (-0.3)
+🔹 GBP : 4.14
+🔹 CAD : 3.71
+🔹 USD : 1.57 (+0.1)
+💀 JPY : 0.29
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **AUD/JPY 👑12**
+⚡ Power : AUD (8.57) vs JPY (0.29)
+📉 Gap   : 8.29 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **NZD/JPY ⭐7**
+⚡ Power : NZD (8.14) vs JPY (0.29)
+📉 Gap   : 7.86 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **AUD/USD 👑12**
+⚡ Power : AUD (8.57) vs USD (1.57)
+📉 Gap   : 7.00 (-0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+✅ Sent via Telegram. Message ID: 4068
+Message sent status: 0
+--- Running Signal at Wed May  6 11:00:02 AM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 11:00 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 8.57
+🥈 NZD : 8.14
+🥉 EUR : 5.00
+🔹 CHF : 4.57
+🔹 GBP : 4.14
+🔹 CAD : 3.71
+🔹 USD : 1.57
+💀 JPY : 0.29
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **AUD/JPY 👑13**
+⚡ Power : AUD (8.57) vs JPY (0.29)
+📉 Gap   : 8.29 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **NZD/JPY ⭐8**
+⚡ Power : NZD (8.14) vs JPY (0.29)
+📉 Gap   : 7.86 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **AUD/USD 👑13**
+⚡ Power : AUD (8.57) vs USD (1.57)
+📉 Gap   : 7.00 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+[session-write-lock] releasing lock held for 61232ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4076
+Message sent status: 0
+--- Running Signal at Wed May  6 11:15:02 AM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 11:15 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 8.57
+🥈 NZD : 8.14
+🥉 CHF : 5.14 (+0.6)
+🔹 EUR : 5.00
+🔹 GBP : 3.86 (-0.3)
+🔹 CAD : 3.71
+🔹 USD : 1.43 (-0.1)
+💀 JPY : 0.14 (-0.1)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **AUD/JPY 👑14**
+⚡ Power : AUD (8.57) vs JPY (0.14)
+📉 Gap   : 8.43 (+0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **NZD/JPY ⭐9**
+⚡ Power : NZD (8.14) vs JPY (0.14)
+📉 Gap   : 8.00 (+0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **AUD/USD 👑14**
+⚡ Power : AUD (8.57) vs USD (1.43)
+📉 Gap   : 7.14 (+0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+✅ Sent via Telegram. Message ID: 4084
+Message sent status: 0
+--- Running Signal at Wed May  6 11:30:02 AM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 11:30 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 8.57
+🥈 NZD : 8.14
+🥉 EUR : 5.00
+🔹 CHF : 5.00 (-0.1)
+🔹 GBP : 3.86
+🔹 CAD : 3.71
+🔹 USD : 1.57 (+0.1)
+💀 JPY : 0.14
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **AUD/JPY 👑15**
+⚡ Power : AUD (8.57) vs JPY (0.14)
+📉 Gap   : 8.43 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **NZD/JPY ⭐10**
+⚡ Power : NZD (8.14) vs JPY (0.14)
+📉 Gap   : 8.00 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **AUD/USD 👑15**
+⚡ Power : AUD (8.57) vs USD (1.57)
+📉 Gap   : 7.00 (-0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+[session-write-lock] releasing lock held for 61879ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4094
+Message sent status: 0
+--- Running Signal at Wed May  6 11:45:01 AM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 11:45 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 8.57
+🥈 NZD : 8.14
+🥉 EUR : 5.00
+🔹 CHF : 5.00
+🔹 GBP : 3.86
+🔹 CAD : 3.71
+🔹 USD : 1.43 (-0.1)
+💀 JPY : 0.29 (+0.1)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **AUD/JPY 👑16**
+⚡ Power : AUD (8.57) vs JPY (0.29)
+📉 Gap   : 8.29 (-0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **NZD/JPY ⭐11**
+⚡ Power : NZD (8.14) vs JPY (0.29)
+📉 Gap   : 7.86 (-0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **AUD/USD 👑16**
+⚡ Power : AUD (8.57) vs USD (1.43)
+📉 Gap   : 7.14 (+0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+✅ Sent via Telegram. Message ID: 4102
+Message sent status: 0
+--- Running Signal at Wed May  6 12:00:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 12:00 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 8.57
+🥈 NZD : 8.14
+🥉 CHF : 5.14 (+0.1)
+🔹 EUR : 5.00
+🔹 CAD : 3.86 (+0.1)
+🔹 GBP : 3.43 (-0.4)
+🔹 USD : 1.43
+💀 JPY : 0.43 (+0.1)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **AUD/JPY 👑17**
+⚡ Power : AUD (8.57) vs JPY (0.43)
+📉 Gap   : 8.14 (-0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **NZD/JPY ⭐12**
+⚡ Power : NZD (8.14) vs JPY (0.43)
+📉 Gap   : 7.71 (-0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **AUD/USD 👑17**
+⚡ Power : AUD (8.57) vs USD (1.43)
+📉 Gap   : 7.14 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+[session-write-lock] releasing lock held for 63868ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4113
+Message sent status: 0
+--- Running Signal at Wed May  6 12:15:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 12:15 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 8.57
+🥈 NZD : 8.14
+🥉 EUR : 5.00
+🔹 CHF : 5.00 (-0.1)
+🔹 CAD : 3.86
+🔹 GBP : 3.71 (+0.3)
+🔹 USD : 1.43
+💀 JPY : 0.29 (-0.1)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **AUD/JPY 👑18**
+⚡ Power : AUD (8.57) vs JPY (0.29)
+📉 Gap   : 8.29 (+0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **NZD/JPY ⭐13**
+⚡ Power : NZD (8.14) vs JPY (0.29)
+📉 Gap   : 7.86 (+0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **AUD/USD 👑18**
+⚡ Power : AUD (8.57) vs USD (1.43)
+📉 Gap   : 7.14 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+✅ Sent via Telegram. Message ID: 4114
+Message sent status: 0
+--- Running Signal at Wed May  6 12:30:01 PM CST 2026 ---
+Signal Result: [TRACK] NZD/USD REAPPEARED → stars=1, consecutive=1
+🤖 **CALLUNK AI TRADING AGENT**
+🕒 12:30 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 8.43 (-0.1)
+🥈 NZD : 8.29 (+0.1)
+🥉 CHF : 5.00
+🔹 EUR : 4.43 (-0.6)
+🔹 JPY : 4.43 (+4.1)
+🔹 GBP : 3.29 (-0.4)
+🔹 CAD : 2.14 (-1.7)
+💀 USD : 0.00 (-1.4)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **AUD/USD 👑19**
+⚡ Power : AUD (8.43) vs USD (0.00)
+📉 Gap   : 8.43 (+1.3) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **NZD/USD ⭐1**
+⚡ Power : NZD (8.29) vs USD (0.00)
+📉 Gap   : 8.29 (+1.6) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **AUD/CAD 👑1**
+⚡ Power : AUD (8.43) vs CAD (2.14)
+📉 Gap   : 6.29 (+1.6) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ☑️ WAIT FOR DIP ⏳
+[session-write-lock] releasing lock held for 62373ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4115
+Message sent status: 0
+--- Running Signal at Wed May  6 12:45:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 12:45 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 7.86 (-0.4)
+🥈 AUD : 7.71 (-0.7)
+🥉 JPY : 7.57 (+3.1)
+🔹 CHF : 4.86 (-0.1)
+🔹 EUR : 3.71 (-0.7)
+🔹 GBP : 2.71 (-0.6)
+🔹 CAD : 1.57 (-0.6)
+💀 USD : 0.00
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **NZD/USD ⭐2**
+⚡ Power : NZD (7.86) vs USD (0.00)
+📉 Gap   : 7.86 (-0.4) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **AUD/USD 👑20**
+⚡ Power : AUD (7.71) vs USD (0.00)
+📉 Gap   : 7.71 (-0.7) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **USD/JPY 👑1**
+⚡ Power : USD (0.00) vs JPY (7.57)
+📉 Gap   : 7.57 (+3.1) Pts
+📈 Action: 🔴 STRONG SELL ⬇️
+🎯 Status: ✅ ENTER NOW 🔥
+✅ Sent via Telegram. Message ID: 4116
+Message sent status: 0
+--- Running Signal at Wed May  6 01:00:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 13:00 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 7.86
+🥈 AUD : 7.71
+🥉 JPY : 7.57
+🔹 CHF : 5.14 (+0.3)
+🔹 EUR : 3.43 (-0.3)
+🔹 GBP : 2.71
+🔹 CAD : 1.57
+💀 USD : 0.00
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **NZD/USD ⭐3**
+⚡ Power : NZD (7.86) vs USD (0.00)
+📉 Gap   : 7.86 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **AUD/USD 👑21**
+⚡ Power : AUD (7.71) vs USD (0.00)
+📉 Gap   : 7.71 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **USD/JPY 👑2**
+⚡ Power : USD (0.00) vs JPY (7.57)
+📉 Gap   : 7.57 Pts
+📈 Action: 🔴 STRONG SELL ⬇️
+🎯 Status: ✅ ENTER NOW 🔥
+[session-write-lock] releasing lock held for 64643ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4125
+Message sent status: 0
+--- Running Signal at Wed May  6 01:15:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 13:15 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 8.14 (+0.3)
+🥈 AUD : 8.00 (+0.3)
+🥉 JPY : 7.00 (-0.6)
+🔹 CHF : 4.71 (-0.4)
+🔹 EUR : 3.57 (+0.1)
+🔹 GBP : 2.86 (+0.1)
+🔹 CAD : 1.71 (+0.1)
+💀 USD : 0.00
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **NZD/USD ⭐4**
+⚡ Power : NZD (8.14) vs USD (0.00)
+📉 Gap   : 8.14 (+0.3) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **AUD/USD 👑22**
+⚡ Power : AUD (8.00) vs USD (0.00)
+📉 Gap   : 8.00 (+0.3) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **USD/JPY 👑3**
+⚡ Power : USD (0.00) vs JPY (7.00)
+📉 Gap   : 7.00 (-0.6) Pts
+📈 Action: 🔴 STRONG SELL ⬇️
+🎯 Status: ✅ ENTER NOW 🔥
+✅ Sent via Telegram. Message ID: 4131
+Message sent status: 0
+--- Running Signal at Wed May  6 01:30:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 13:30 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 8.14
+🥈 AUD : 8.00
+🥉 JPY : 7.00
+🔹 CHF : 4.71
+🔹 EUR : 3.57
+🔹 GBP : 2.86
+🔹 CAD : 1.71
+💀 USD : 0.00
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **NZD/USD ⭐5**
+⚡ Power : NZD (8.14) vs USD (0.00)
+📉 Gap   : 8.14 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **AUD/USD 👑23**
+⚡ Power : AUD (8.00) vs USD (0.00)
+📉 Gap   : 8.00 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **USD/JPY 👑4**
+⚡ Power : USD (0.00) vs JPY (7.00)
+📉 Gap   : 7.00 Pts
+📈 Action: 🔴 STRONG SELL ⬇️
+🎯 Status: ✅ ENTER NOW 🔥
+[session-write-lock] releasing lock held for 60368ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4140
+Message sent status: 0
+--- Running Signal at Wed May  6 01:45:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 13:45 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 8.14 (+0.1)
+🥈 NZD : 8.00 (-0.1)
+🥉 JPY : 7.00
+🔹 CHF : 4.71
+🔹 EUR : 3.71 (+0.1)
+🔹 GBP : 2.71 (-0.1)
+🔹 CAD : 1.71
+💀 USD : 0.00
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **AUD/USD 👑24**
+⚡ Power : AUD (8.14) vs USD (0.00)
+📉 Gap   : 8.14 (+0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **NZD/USD ⭐6**
+⚡ Power : NZD (8.00) vs USD (0.00)
+📉 Gap   : 8.00 (-0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **USD/JPY 👑5**
+⚡ Power : USD (0.00) vs JPY (7.00)
+📉 Gap   : 7.00 Pts
+📈 Action: 🔴 STRONG SELL ⬇️
+🎯 Status: ✅ ENTER NOW 🔥
+✅ Sent via Telegram. Message ID: 4145
+Message sent status: 0
+--- Running Signal at Wed May  6 02:00:02 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 14:00 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 8.14
+🥈 NZD : 8.00
+🥉 JPY : 7.00
+🔹 CHF : 4.71
+🔹 EUR : 3.57 (-0.1)
+🔹 GBP : 2.86 (+0.1)
+🔹 CAD : 1.71
+💀 USD : 0.00
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **AUD/USD 👑25**
+⚡ Power : AUD (8.14) vs USD (0.00)
+📉 Gap   : 8.14 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **NZD/USD ⭐7**
+⚡ Power : NZD (8.00) vs USD (0.00)
+📉 Gap   : 8.00 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **USD/JPY 👑6**
+⚡ Power : USD (0.00) vs JPY (7.00)
+📉 Gap   : 7.00 Pts
+📈 Action: 🔴 STRONG SELL ⬇️
+🎯 Status: ✅ ENTER NOW 🔥
+[session-write-lock] releasing lock held for 61316ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4146
+Message sent status: 0
+--- Running Signal at Wed May  6 02:15:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 14:15 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 8.29 (+0.3)
+🥈 AUD : 8.00 (-0.1)
+🥉 JPY : 6.86 (-0.1)
+🔹 CHF : 4.71
+🔹 EUR : 3.86 (+0.3)
+🔹 GBP : 2.86
+🔹 CAD : 1.43 (-0.3)
+💀 USD : 0.00
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **NZD/USD ⭐8**
+⚡ Power : NZD (8.29) vs USD (0.00)
+📉 Gap   : 8.29 (+0.3) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **AUD/USD 👑26**
+⚡ Power : AUD (8.00) vs USD (0.00)
+📉 Gap   : 8.00 (-0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **NZD/CAD 👑1**
+⚡ Power : NZD (8.29) vs CAD (1.43)
+📉 Gap   : 6.86 (+0.6) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ☑️ WAIT FOR DIP ⏳
+[session-write-lock] releasing lock held for 61896ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4149
+Message sent status: 0
+--- Running Signal at Wed May  6 02:30:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 14:30 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 8.43 (+0.1)
+🥈 AUD : 7.86 (-0.1)
+🥉 JPY : 6.86
+🔹 CHF : 4.57 (-0.1)
+🔹 EUR : 3.71 (-0.1)
+🔹 GBP : 3.14 (+0.3)
+🔹 CAD : 1.43
+💀 USD : 0.00
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **NZD/USD ⭐9**
+⚡ Power : NZD (8.43) vs USD (0.00)
+📉 Gap   : 8.43 (+0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **AUD/USD 👑27**
+⚡ Power : AUD (7.86) vs USD (0.00)
+📉 Gap   : 7.86 (-0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **NZD/CAD 👑2**
+⚡ Power : NZD (8.43) vs CAD (1.43)
+📉 Gap   : 7.00 (+0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+[session-write-lock] releasing lock held for 61830ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4156
+Message sent status: 0
+--- Running Signal at Wed May  6 02:45:01 PM CST 2026 ---
+Signal Result: [TRACK] USD/JPY REAPPEARED → stars=1, consecutive=1
+🤖 **CALLUNK AI TRADING AGENT**
+🕒 14:45 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 8.29 (-0.1)
+🥈 AUD : 7.86
+🥉 JPY : 7.00 (+0.1)
+🔹 CHF : 4.00 (-0.6)
+🔹 EUR : 3.86 (+0.1)
+🔹 GBP : 3.14
+🔹 CAD : 1.86 (+0.4)
+💀 USD : 0.00
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **NZD/USD ⭐10**
+⚡ Power : NZD (8.29) vs USD (0.00)
+📉 Gap   : 8.29 (-0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **AUD/USD 👑28**
+⚡ Power : AUD (7.86) vs USD (0.00)
+📉 Gap   : 7.86 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **USD/JPY ⭐1**
+⚡ Power : USD (0.00) vs JPY (7.00)
+📉 Gap   : 7.00 (+0.1) Pts
+📈 Action: 🔴 STRONG SELL ⬇️
+🎯 Status: ✅ ENTER NOW 🔥
+✅ Sent via Telegram. Message ID: 4166
+Message sent status: 0
+--- Running Signal at Wed May  6 03:00:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 15:00 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 8.57 (+0.3)
+🥈 AUD : 7.86
+🥉 JPY : 6.71 (-0.3)
+🔹 CHF : 3.86 (-0.1)
+🔹 EUR : 3.57 (-0.3)
+🔹 GBP : 3.29 (+0.1)
+🔹 CAD : 2.14 (+0.3)
+💀 USD : 0.00
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **NZD/USD ⭐11**
+⚡ Power : NZD (8.57) vs USD (0.00)
+📉 Gap   : 8.57 (+0.3) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **AUD/USD 👑29**
+⚡ Power : AUD (7.86) vs USD (0.00)
+📉 Gap   : 7.86 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **USD/JPY ⭐2**
+⚡ Power : USD (0.00) vs JPY (6.71)
+📉 Gap   : 6.71 (-0.3) Pts
+📈 Action: 🔴 STRONG SELL ⬇️
+🎯 Status: ☑️ WAIT FOR DIP ⏳
+[session-write-lock] releasing lock held for 61269ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4167
+Message sent status: 0
+--- Running Signal at Wed May  6 03:15:02 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 15:15 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 8.43 (-0.1)
+🥈 AUD : 7.86
+🥉 JPY : 6.71
+🔹 EUR : 4.00 (+0.4)
+🔹 GBP : 4.00 (+0.7)
+🔹 CHF : 3.00 (-0.9)
+🔹 CAD : 2.00 (-0.1)
+💀 USD : 0.00
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **NZD/USD ⭐12**
+⚡ Power : NZD (8.43) vs USD (0.00)
+📉 Gap   : 8.43 (-0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **AUD/USD 👑30**
+⚡ Power : AUD (7.86) vs USD (0.00)
+📉 Gap   : 7.86 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **USD/JPY ⭐3**
+⚡ Power : USD (0.00) vs JPY (6.71)
+📉 Gap   : 6.71 Pts
+📈 Action: 🔴 STRONG SELL ⬇️
+🎯 Status: ☑️ WAIT FOR DIP ⏳
+✅ Sent via Telegram. Message ID: 4168
+Message sent status: 0
+--- Running Signal at Wed May  6 03:30:02 PM CST 2026 ---
+Signal Result: [TRACK] NZD/CAD REAPPEARED → stars=1, consecutive=1
+🤖 **CALLUNK AI TRADING AGENT**
+🕒 15:30 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 8.71 (+0.3)
+🥈 AUD : 7.71 (-0.1)
+🥉 JPY : 6.57 (-0.1)
+🔹 GBP : 4.71 (+0.7)
+🔹 EUR : 4.00
+🔹 CHF : 2.14 (-0.9)
+🔹 CAD : 2.00
+💀 USD : 0.14 (+0.1)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **NZD/USD ⭐13**
+⚡ Power : NZD (8.71) vs USD (0.14)
+📉 Gap   : 8.57 (+0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **AUD/USD 👑31**
+⚡ Power : AUD (7.71) vs USD (0.14)
+📉 Gap   : 7.57 (-0.3) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **NZD/CAD ⭐1**
+⚡ Power : NZD (8.71) vs CAD (2.00)
+📉 Gap   : 6.71 (+0.3) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ☑️ WAIT FOR DIP ⏳
+[session-write-lock] releasing lock held for 62225ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4169
+Message sent status: 0
+--- Running Signal at Wed May  6 03:45:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 15:45 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 8.57 (-0.1)
+🥈 AUD : 7.71
+🥉 JPY : 6.71 (+0.1)
+🔹 GBP : 4.86 (+0.1)
+🔹 EUR : 4.00
+🔹 CHF : 2.14
+🔹 CAD : 1.86 (-0.1)
+💀 USD : 0.14
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **NZD/USD ⭐14**
+⚡ Power : NZD (8.57) vs USD (0.14)
+📉 Gap   : 8.43 (-0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **AUD/USD 👑32**
+⚡ Power : AUD (7.71) vs USD (0.14)
+📉 Gap   : 7.57 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **NZD/CAD ⭐2**
+⚡ Power : NZD (8.57) vs CAD (1.86)
+📉 Gap   : 6.71 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ☑️ WAIT FOR DIP ⏳
+✅ Sent via Telegram. Message ID: 4170
+Message sent status: 0
+--- Running Signal at Wed May  6 04:00:02 PM CST 2026 ---
+Signal Result: [TRACK] USD/JPY REAPPEARED → stars=2, consecutive=1
+🤖 **CALLUNK AI TRADING AGENT**
+🕒 16:00 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 8.29 (-0.3)
+🥈 JPY : 7.57 (+0.9)
+🥉 AUD : 7.29 (-0.4)
+🔹 CHF : 4.57 (+2.4)
+🔹 GBP : 3.71 (-1.1)
+🔹 EUR : 3.29 (-0.7)
+🔹 CAD : 1.29 (-0.6)
+💀 USD : 0.00 (-0.1)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **NZD/USD ⭐15**
+⚡ Power : NZD (8.29) vs USD (0.00)
+📉 Gap   : 8.29 (-0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **USD/JPY ⭐⭐1**
+⚡ Power : USD (0.00) vs JPY (7.57)
+📉 Gap   : 7.57 (+1.0) Pts
+📈 Action: 🔴 STRONG SELL ⬇️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **AUD/USD 👑33**
+⚡ Power : AUD (7.29) vs USD (0.00)
+📉 Gap   : 7.29 (-0.3) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+[session-write-lock] releasing lock held for 69434ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4178
+Message sent status: 0
+--- Running Signal at Wed May  6 04:15:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 16:15 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 8.57 (+0.3)
+🥈 AUD : 7.43 (+0.1)
+🥉 JPY : 7.14 (-0.4)
+🔹 GBP : 4.00 (+0.3)
+🔹 EUR : 3.86 (+0.6)
+🔹 CHF : 3.43 (-1.1)
+🔹 CAD : 1.57 (+0.3)
+💀 USD : 0.00
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **NZD/USD ⭐16**
+⚡ Power : NZD (8.57) vs USD (0.00)
+📉 Gap   : 8.57 (+0.3) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **AUD/USD 👑34**
+⚡ Power : AUD (7.43) vs USD (0.00)
+📉 Gap   : 7.43 (+0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **USD/JPY ⭐⭐2**
+⚡ Power : USD (0.00) vs JPY (7.14)
+📉 Gap   : 7.14 (-0.4) Pts
+📈 Action: 🔴 STRONG SELL ⬇️
+🎯 Status: ✅ ENTER NOW 🔥
+[session-write-lock] releasing lock held for 64358ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4185
+Message sent status: 0
+--- Running Signal at Wed May  6 04:30:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 16:30 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 8.57
+🥈 AUD : 7.57 (+0.1)
+🥉 JPY : 7.00 (-0.1)
+🔹 GBP : 4.29 (+0.3)
+🔹 EUR : 3.57 (-0.3)
+🔹 CHF : 3.43
+🔹 CAD : 1.57
+💀 USD : 0.00
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **NZD/USD ⭐17**
+⚡ Power : NZD (8.57) vs USD (0.00)
+📉 Gap   : 8.57 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **AUD/USD 👑35**
+⚡ Power : AUD (7.57) vs USD (0.00)
+📉 Gap   : 7.57 (+0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **USD/JPY ⭐⭐3**
+⚡ Power : USD (0.00) vs JPY (7.00)
+📉 Gap   : 7.00 (-0.1) Pts
+📈 Action: 🔴 STRONG SELL ⬇️
+🎯 Status: ✅ ENTER NOW 🔥
+[session-write-lock] releasing lock held for 60791ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4190
+Message sent status: 0
+--- Running Signal at Wed May  6 04:45:02 PM CST 2026 ---
+Signal Result: [TRACK] NZD/CAD REAPPEARED → stars=2, consecutive=1
+🤖 **CALLUNK AI TRADING AGENT**
+🕒 16:45 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 8.57
+🥈 AUD : 7.71 (+0.1)
+🥉 JPY : 6.86 (-0.1)
+🔹 GBP : 4.29
+🔹 EUR : 3.71 (+0.1)
+🔹 CHF : 3.43
+🔹 CAD : 1.43 (-0.1)
+💀 USD : 0.00
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **NZD/USD ⭐18**
+⚡ Power : NZD (8.57) vs USD (0.00)
+📉 Gap   : 8.57 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **AUD/USD 👑36**
+⚡ Power : AUD (7.71) vs USD (0.00)
+📉 Gap   : 7.71 (+0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **NZD/CAD ⭐⭐1**
+⚡ Power : NZD (8.57) vs CAD (1.43)
+📉 Gap   : 7.14 (+0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+[session-write-lock] releasing lock held for 63716ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4197
+Message sent status: 0
+--- Running Signal at Wed May  6 05:00:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 17:00 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 8.86 (+0.3)
+🥈 AUD : 7.57 (-0.1)
+🥉 JPY : 6.71 (-0.1)
+🔹 GBP : 4.00 (-0.3)
+🔹 EUR : 3.86 (+0.1)
+🔹 CHF : 3.71 (+0.3)
+🔹 CAD : 1.29 (-0.1)
+💀 USD : 0.00
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **NZD/USD ⭐19**
+⚡ Power : NZD (8.86) vs USD (0.00)
+📉 Gap   : 8.86 (+0.3) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **NZD/CAD ⭐⭐2**
+⚡ Power : NZD (8.86) vs CAD (1.29)
+📉 Gap   : 7.57 (+0.4) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **AUD/USD 👑37**
+⚡ Power : AUD (7.57) vs USD (0.00)
+📉 Gap   : 7.57 (-0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+[session-write-lock] releasing lock held for 62096ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4201
+Message sent status: 0
+--- Running Signal at Wed May  6 05:15:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 17:15 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 8.57 (-0.3)
+🥈 AUD : 7.57
+🥉 JPY : 7.00 (+0.3)
+🔹 EUR : 4.57 (+0.7)
+🔹 GBP : 4.43 (+0.4)
+🔹 CHF : 2.57 (-1.1)
+🔹 CAD : 1.29
+💀 USD : 0.00
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **NZD/USD ⭐20**
+⚡ Power : NZD (8.57) vs USD (0.00)
+📉 Gap   : 8.57 (-0.3) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **AUD/USD 👑38**
+⚡ Power : AUD (7.57) vs USD (0.00)
+📉 Gap   : 7.57 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **NZD/CAD ⭐⭐3**
+⚡ Power : NZD (8.57) vs CAD (1.29)
+📉 Gap   : 7.29 (-0.3) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+✅ Sent via Telegram. Message ID: 4207
+Message sent status: 0
+--- Running Signal at Wed May  6 05:30:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 17:30 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 8.71 (+0.1)
+🥈 AUD : 7.71 (+0.1)
+🥉 JPY : 6.57 (-0.4)
+🔹 EUR : 4.71 (+0.1)
+🔹 GBP : 4.43
+🔹 CHF : 2.57
+🔹 CAD : 1.29
+💀 USD : 0.00
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **NZD/USD ⭐21**
+⚡ Power : NZD (8.71) vs USD (0.00)
+📉 Gap   : 8.71 (+0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **AUD/USD 👑39**
+⚡ Power : AUD (7.71) vs USD (0.00)
+📉 Gap   : 7.71 (+0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **NZD/CAD ⭐⭐4**
+⚡ Power : NZD (8.71) vs CAD (1.29)
+📉 Gap   : 7.43 (+0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+[session-write-lock] releasing lock held for 64648ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4219
+Message sent status: 0
+--- Running Signal at Wed May  6 05:45:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 17:45 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 8.57 (-0.1)
+🥈 AUD : 7.71
+🥉 JPY : 6.86 (+0.3)
+🔹 EUR : 4.86 (+0.1)
+🔹 GBP : 4.00 (-0.4)
+🔹 CHF : 2.71 (+0.1)
+🔹 CAD : 1.29
+💀 USD : 0.00
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **NZD/USD ⭐22**
+⚡ Power : NZD (8.57) vs USD (0.00)
+📉 Gap   : 8.57 (-0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **AUD/USD 👑40**
+⚡ Power : AUD (7.71) vs USD (0.00)
+📉 Gap   : 7.71 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **NZD/CAD ⭐⭐5**
+⚡ Power : NZD (8.57) vs CAD (1.29)
+📉 Gap   : 7.29 (-0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+✅ Sent via Telegram. Message ID: 4220
+Message sent status: 0
+--- Running Signal at Wed May  6 06:00:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 18:00 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 8.71 (+0.1)
+🥈 AUD : 7.71
+🥉 JPY : 6.71 (-0.1)
+🔹 EUR : 4.86
+🔹 GBP : 3.71 (-0.3)
+🔹 CHF : 3.00 (+0.3)
+🔹 CAD : 1.29
+💀 USD : 0.00
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **NZD/USD ⭐23**
+⚡ Power : NZD (8.71) vs USD (0.00)
+📉 Gap   : 8.71 (+0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **AUD/USD 👑41**
+⚡ Power : AUD (7.71) vs USD (0.00)
+📉 Gap   : 7.71 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **NZD/CAD ⭐⭐6**
+⚡ Power : NZD (8.71) vs CAD (1.29)
+📉 Gap   : 7.43 (+0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+[session-write-lock] releasing lock held for 62911ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4221
+Message sent status: 0
+--- Running Signal at Wed May  6 06:15:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 18:15 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 8.71
+🥈 AUD : 7.43 (-0.3)
+🥉 JPY : 7.00 (+0.3)
+🔹 EUR : 5.00 (+0.1)
+🔹 GBP : 3.29 (-0.4)
+🔹 CHF : 3.29 (+0.3)
+🔹 CAD : 1.29
+💀 USD : 0.00
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **NZD/USD ⭐24**
+⚡ Power : NZD (8.71) vs USD (0.00)
+📉 Gap   : 8.71 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **AUD/USD 👑42**
+⚡ Power : AUD (7.43) vs USD (0.00)
+📉 Gap   : 7.43 (-0.3) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **NZD/CAD ⭐⭐7**
+⚡ Power : NZD (8.71) vs CAD (1.29)
+📉 Gap   : 7.43 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+✅ Sent via Telegram. Message ID: 4222
+Message sent status: 0
+--- Running Signal at Wed May  6 06:30:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 18:30 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 8.71
+🥈 AUD : 7.43
+🥉 JPY : 7.00
+🔹 EUR : 4.86 (-0.1)
+🔹 GBP : 3.43 (+0.1)
+🔹 CHF : 3.29
+🔹 CAD : 1.29
+💀 USD : 0.00
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **NZD/USD ⭐25**
+⚡ Power : NZD (8.71) vs USD (0.00)
+📉 Gap   : 8.71 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **AUD/USD 👑43**
+⚡ Power : AUD (7.43) vs USD (0.00)
+📉 Gap   : 7.43 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **NZD/CAD ⭐⭐8**
+⚡ Power : NZD (8.71) vs CAD (1.29)
+📉 Gap   : 7.43 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+[session-write-lock] releasing lock held for 60758ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4231
+Message sent status: 0
+--- Running Signal at Wed May  6 06:45:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 18:45 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 8.86 (+0.1)
+🥈 AUD : 7.57 (+0.1)
+🥉 JPY : 6.71 (-0.3)
+🔹 EUR : 5.14 (+0.3)
+🔹 CHF : 3.57 (+0.3)
+🔹 GBP : 2.86 (-0.6)
+🔹 CAD : 1.29
+💀 USD : 0.00
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **NZD/USD ⭐26**
+⚡ Power : NZD (8.86) vs USD (0.00)
+📉 Gap   : 8.86 (+0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **NZD/CAD ⭐⭐9**
+⚡ Power : NZD (8.86) vs CAD (1.29)
+📉 Gap   : 7.57 (+0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **AUD/USD 👑44**
+⚡ Power : AUD (7.57) vs USD (0.00)
+📉 Gap   : 7.57 (+0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+✅ Sent via Telegram. Message ID: 4234
+Message sent status: 0
+--- Running Signal at Wed May  6 07:00:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 19:00 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 9.00
+🥈 AUD : 7.43
+🥉 JPY : 6.71
+🔹 EUR : 5.00
+🔹 CHF : 3.83
+🔹 GBP : 2.74
+🔹 CAD : 1.29
+💀 USD : 0.00
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **NZD/USD ⭐29**
+⚡ Power : NZD (9.00) vs USD (0.00)
+📉 Gap   : 9.00 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **NZD/CAD ⭐⭐12**
+⚡ Power : NZD (9.00) vs CAD (1.29)
+📉 Gap   : 7.71 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **AUD/USD 👑47**
+⚡ Power : AUD (7.43) vs USD (0.00)
+📉 Gap   : 7.43 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+[session-write-lock] releasing lock held for 61545ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4246
+Message sent status: 0
+--- Running Signal at Wed May  6 07:15:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 19:15 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 6.93 (-0.1)
+🥈 AUD : 5.89
+🥉 JPY : 5.43 (-0.1)
+🔹 EUR : 5.09 (+0.2)
+🔹 CHF : 4.18 (-0.1)
+🔹 GBP : 4.05
+🔹 CAD : 2.38
+💀 USD : 2.04 (+0.2)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **NZD/USD ⭐⭐2**
+⚡ Power : NZD (6.93) vs USD (2.04)
+📉 Gap   : 4.89 (-0.3) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **NZD/CAD ⭐⭐⭐2**
+⚡ Power : NZD (6.93) vs CAD (2.38)
+📉 Gap   : 4.55 (-0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **AUD/USD ⭐2**
+⚡ Power : AUD (5.89) vs USD (2.04)
+📉 Gap   : 3.85 (-0.2) Pts
+📈 Action: ⚪ NEUTRAL ↔️
+🎯 Status: ☑️ WAIT FOR DIP ⏳
+✅ Sent via Telegram. Message ID: 4247
+Message sent status: 0
+--- Running Signal at Wed May  6 07:30:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 19:30 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 6.94
+🥈 AUD : 5.86
+🥉 JPY : 5.42
+🔹 EUR : 5.01 (-0.1)
+🔹 CHF : 4.25 (+0.1)
+🔹 GBP : 4.22 (+0.2)
+🔹 CAD : 2.32 (-0.1)
+💀 USD : 1.98 (-0.1)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **NZD/USD ⭐⭐3**
+⚡ Power : NZD (6.94) vs USD (1.98)
+📉 Gap   : 4.96 (+0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **NZD/CAD ⭐⭐⭐3**
+⚡ Power : NZD (6.94) vs CAD (2.32)
+📉 Gap   : 4.62 (+0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **AUD/USD ⭐3**
+⚡ Power : AUD (5.86) vs USD (1.98)
+📉 Gap   : 3.88 Pts
+📈 Action: ⚪ NEUTRAL ↔️
+🎯 Status: ☑️ WAIT FOR DIP ⏳
+[session-write-lock] releasing lock held for 62645ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4248
+Message sent status: 0
+--- Running Signal at Wed May  6 07:45:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 19:45 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 6.97
+🥈 AUD : 5.68
+🥉 JPY : 5.32
+🔹 EUR : 4.94
+🔹 CHF : 4.26
+🔹 GBP : 4.20
+🔹 CAD : 2.44
+💀 USD : 2.19
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **NZD/USD ⭐⭐9**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   🛡️ S1 0.58599 (−1.9%)
+⚡ Power : NZD (6.97) vs USD (2.19)
+📉 Gap   : 4.79 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+2️⃣ **NZD/CAD ⭐⭐⭐9**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   🛡️ S1 0.79868 (−1.7%)
+⚡ Power : NZD (6.97) vs CAD (2.44)
+📉 Gap   : 4.53 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+🎯 Status: ✅ ENTER NOW 🔥
+
+3️⃣ **AUD/USD ⭐9**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   🛡️ S1 0.71463 (−1.4%)  |  R3 0.72705 (+0.3%)
+⚡ Power : AUD (5.68) vs USD (2.19)
+📉 Gap   : 3.49 Pts
+📈 Action: ⚪ NEUTRAL ↔️
+🎯 Status: ☑️ WAIT FOR DIP ⏳
+[session-write-lock] releasing lock held for 63729ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4262
+Message sent status: 0
+--- Running Signal at Wed May  6 08:00:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 20:00 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 6.92 (-0.1)
+🥈 AUD : 5.71
+🥉 JPY : 5.33 (-0.1)
+🔹 EUR : 4.78 (-0.1)
+🔹 CHF : 4.30 (+0.1)
+🔹 GBP : 4.10 (-0.1)
+🔹 CAD : 2.67 (+0.3)
+💀 USD : 2.19
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **NZD/USD ⭐⭐12**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   BUY ✅🛣️ PANJANG
+⚡ Power : NZD (6.92) vs USD (2.19)
+📉 Gap   : 4.73 Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+
+2️⃣ **NZD/CAD ⭐⭐⭐12**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   BUY ✅🛣️ PANJANG
+⚡ Power : NZD (6.92) vs CAD (2.67)
+📉 Gap   : 4.25 (-0.3) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+
+3️⃣ **AUD/USD ⭐12**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU PULLBACK
+⚡ Power : AUD (5.71) vs USD (2.19)
+📉 Gap   : 3.52 Pts
+📈 Action: ⚪ NEUTRAL ↔️
+[session-write-lock] releasing lock held for 64922ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4266
+Message sent status: 0
+--- Running Signal at Wed May  6 08:15:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 20:15 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 6.78 (-0.1)
+🥈 AUD : 5.59 (-0.1)
+🥉 JPY : 5.30
+🔹 EUR : 4.68 (-0.1)
+🔹 CHF : 4.23 (-0.1)
+🔹 GBP : 4.21 (+0.1)
+🔹 CAD : 2.68
+💀 USD : 2.53 (+0.3)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 3 OPPORTUNITIES**
+1️⃣ **NZD/USD ⭐⭐13**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   BUY ✅🛣️ PANJANG
+⚡ Power : NZD (6.78) vs USD (2.53)
+📉 Gap   : 4.26 (-0.5) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+
+2️⃣ **NZD/CAD ⭐⭐⭐13**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   BUY ✅🛣️ PANJANG
+⚡ Power : NZD (6.78) vs CAD (2.68)
+📉 Gap   : 4.10 (-0.1) Pts
+📈 Action: 🟢 STRONG BUY ⬆️
+
+3️⃣ **AUD/USD ⭐13**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU PULLBACK
+⚡ Power : AUD (5.59) vs USD (2.53)
+📉 Gap   : 3.06 (-0.5) Pts
+📈 Action: ⚪ NEUTRAL ↔️
+✅ Sent via Telegram. Message ID: 4267
+Message sent status: 0
+--- Running Signal at Wed May  6 08:30:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 20:30 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 6.78
+🥈 AUD : 5.72 (+0.1)
+🥉 JPY : 5.32 (-0.1)
+🔹 EUR : 4.64 (+0.1)
+🔹 CHF : 4.29 (+0.1)
+🔹 GBP : 4.25
+🔹 CAD : 2.60
+💀 USD : 2.39 (-0.1)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 5 SIGNALS**
+1️⃣ **NZD/USD ⭐⭐15**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   BUY ✅🛣️ PANJANG
+
+2️⃣ **NZD/CAD ⭐⭐⭐15**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   BUY ✅🛣️ PANJANG
+
+3️⃣ **AUD/USD ⭐15**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU PULLBACK
+
+4️⃣ **AUD/CAD ⭐2**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU PULLBACK
+
+5️⃣ **USD/JPY ⭐⭐⭐2**
+   🟢 EMA: 3/4 (E20✅ E50✅ E100✅ E200❌)
+   NUNGGU SELL OK ⬇️
+[session-write-lock] releasing lock held for 61089ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4270
+Message sent status: 0
+--- Running Signal at Wed May  6 08:45:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 20:45 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 6.77
+🥈 AUD : 5.65
+🥉 JPY : 5.42
+🔹 EUR : 4.71
+🔹 CHF : 4.40
+🔹 GBP : 4.17
+🔹 USD : 2.45 (-0.1)
+💀 CAD : 2.43
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 5 SIGNALS**
+1️⃣ **NZD/CAD ⭐⭐⭐18**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   BUY 🚧 MENTOK!
+
+2️⃣ **NZD/USD ⭐⭐18**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   BUY 🚧 MENTOK!
+
+3️⃣ **AUD/CAD ⭐5**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+
+4️⃣ **AUD/USD ⭐18**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+
+5️⃣ **CAD/JPY 👑3**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+✅ Sent via Telegram. Message ID: 4277
+Message sent status: 0
+--- Running Signal at Wed May  6 09:00:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 21:00 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 6.77
+🥈 AUD : 5.58 (-0.1)
+🥉 JPY : 5.31 (-0.1)
+🔹 EUR : 4.62 (-0.1)
+🔹 CHF : 4.32 (-0.1)
+🔹 GBP : 4.26 (+0.1)
+🔹 USD : 2.59 (+0.1)
+💀 CAD : 2.54 (+0.1)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 5 SIGNALS**
+1️⃣ **NZD/CAD ⭐⭐⭐19**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   BUY 🚧 MENTOK!
+
+2️⃣ **NZD/USD ⭐⭐19**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   BUY ⚠️ MENTOK
+
+3️⃣ **AUD/CAD ⭐6**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+
+4️⃣ **AUD/USD ⭐19**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+
+5️⃣ **CAD/JPY 👑4**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+[session-write-lock] releasing lock held for 62620ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4278
+Message sent status: 0
+--- Running Signal at Wed May  6 09:15:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 21:15 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 6.69 (-0.1)
+🥈 AUD : 5.59
+🥉 JPY : 5.36
+🔹 EUR : 4.76 (+0.1)
+🔹 GBP : 4.25
+🔹 CHF : 4.22 (-0.1)
+🔹 USD : 2.61
+💀 CAD : 2.53
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 5 SIGNALS**
+1️⃣ **NZD/CAD ⭐⭐⭐20**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   BUY 🚧 MENTOK!
+
+2️⃣ **NZD/USD ⭐⭐20**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   BUY 🚧 MENTOK!
+
+3️⃣ **AUD/CAD ⭐7**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+
+4️⃣ **AUD/USD ⭐20**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+
+5️⃣ **CAD/JPY 👑5**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+✅ Sent via Telegram. Message ID: 4279
+Message sent status: 0
+--- Running Signal at Wed May  6 09:30:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 21:30 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 6.60 (-0.1)
+🥈 AUD : 5.54 (-0.1)
+🥉 JPY : 5.45 (+0.1)
+🔹 EUR : 4.66 (-0.1)
+🔹 GBP : 4.23
+🔹 CHF : 4.21
+🔹 USD : 2.71 (+0.1)
+💀 CAD : 2.61 (+0.1)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 5 SIGNALS**
+1️⃣ **NZD/CAD ⭐⭐⭐21**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+
+2️⃣ **NZD/USD ⭐⭐21**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+
+3️⃣ **AUD/CAD ⭐8**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+
+4️⃣ **CAD/JPY 👑6**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+
+5️⃣ **AUD/USD ⭐21**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+[session-write-lock] releasing lock held for 60900ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4280
+Message sent status: 0
+--- Running Signal at Wed May  6 09:45:01 PM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 21:45 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 6.62
+🥈 AUD : 5.61 (+0.1)
+🥉 JPY : 5.59 (+0.1)
+🔹 EUR : 4.70
+🔹 GBP : 4.22
+🔹 CHF : 4.10 (-0.1)
+🔹 USD : 2.68
+💀 CAD : 2.48 (-0.1)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 5 SIGNALS**
+1️⃣ **NZD/CAD ⭐⭐⭐22**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   BUY 🚧 MENTOK!
+
+2️⃣ **NZD/USD ⭐⭐22**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+
+3️⃣ **AUD/CAD ⭐9**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+
+4️⃣ **CAD/JPY 👑7**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+
+5️⃣ **AUD/USD ⭐22**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+✅ Sent via Telegram. Message ID: 4281
+Message sent status: 0
+--- Running Signal at Wed May  6 10:00:01 PM CST 2026 ---
+Signal Result: [TRACK] USD/JPY REAPPEARED → stars=4, consecutive=1
+🤖 **CALLUNK AI TRADING AGENT**
+🕒 22:00 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 6.61
+🥈 JPY : 5.62
+🥉 AUD : 5.58
+🔹 EUR : 4.70
+🔹 GBP : 4.27 (+0.1)
+🔹 CHF : 4.10
+🔹 USD : 2.71
+💀 CAD : 2.41 (-0.1)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 5 SIGNALS**
+1️⃣ **NZD/CAD ⭐⭐⭐23**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   BUY 🚧 MENTOK!
+
+2️⃣ **NZD/USD ⭐⭐23**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+
+3️⃣ **CAD/JPY 👑8**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+
+4️⃣ **AUD/CAD ⭐10**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+
+5️⃣ **USD/JPY ⭐⭐⭐⭐1**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+[session-write-lock] releasing lock held for 61161ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4282
+Message sent status: 0
