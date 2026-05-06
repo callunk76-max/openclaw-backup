@@ -48,13 +48,13 @@ void OnChartEvent(const int id,const long&lparam,const double&dparam,const strin
    if(sparam=="AUTO"){autoTradeON=!autoTradeON;ChartRedraw();ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
    if(sparam=="ALERT"){alertON=!alertON;ChartRedraw();ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
    if(sparam=="HeaderCloseAll"){CloseAllPositions();ChartRedraw();ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
-   if(sparam=="BtnFontMinus"){ResizeFont(runtimeFontSize-1);ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
-   if(sparam=="BtnFontPlus"){ResizeFont(runtimeFontSize+1);ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
+   if(sparam=="F-"){ResizeFont(runtimeFontSize-1);ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
+   if(sparam=="F+"){ResizeFont(runtimeFontSize+1);ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
    if(sparam=="HDR_RSI"){tog_RSI=!tog_RSI;UpdateHD();ChartRedraw();ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
    if(sparam=="HDR_SnR"){tog_SnR=!tog_SnR;UpdateHD();ChartRedraw();ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
    if(sparam=="HDR_ATR"){tog_VOL=!tog_VOL;UpdateHD();ChartRedraw();ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
    if(sparam=="HDR_BB"){tog_BB=!tog_BB;UpdateHD();ChartRedraw();ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
-   if(StringFind(sparam,"BB_")==0){int i=(int)StringToInteger(StringSubstr(sparam,3));if(i>=0&&i<totalPairs){OpenTrade(pairs[i],OP_BUY);ChartRedraw();}ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
+   if(StringFind(sparam,"BK_")==0){int i=(int)StringToInteger(StringSubstr(sparam,3));if(i>=0&&i<totalPairs){OpenTrade(pairs[i],OP_BUY);ChartRedraw();}ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
    if(StringFind(sparam,"BS_")==0){int i=(int)StringToInteger(StringSubstr(sparam,3));if(i>=0&&i<totalPairs){OpenTrade(pairs[i],OP_SELL);ChartRedraw();}ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
    if(StringFind(sparam,"BX_")==0){int i=(int)StringToInteger(StringSubstr(sparam,3));if(i>=0&&i<totalPairs){CloseSymbol(pairs[i]);ChartRedraw();}ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
    if(sparam=="M1"){if(runtimeMaxPos>1)runtimeMaxPos--;ObjectSetString(0,"L1",OBJPROP_TEXT,IntegerToString(runtimeMaxPos));ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
@@ -115,11 +115,11 @@ int CalcSig(string sym,int idx){
    bool rOs=(r>0&&r<RSI_Oversold),rOb=(r>RSI_Overbought),rTu=(r>rp&&rp<RSI_Oversold),rTd=(r<rp&&rp>RSI_Overbought);
    bool pv=(atp>0),aN=(pv&&at>atp),aT=(pv&&at<atp); ccsData[idx].atrNaik=aN;
    string vt="=Nor"; if(aT)vt="Sta";else if(aN)vt="Vol"; ccsData[idx].regime=vt;
-   double gap=ccsData[idx].ccyGap; bool gBull=(gap>=CS_Strong_Threshold),gBear=(gap<=-CS_Strong_Threshold);
+   double gap=ccsData[idx].ccyGap; bool gBull=(gap>0.5),gBear=(gap<-0.5);
    int bs=0,ss=0;
    if(gBull){
       // GAP kontribusi: 5.0→+2, 6.0→+3, 7.0→+4, 8.0→+5, 9.0→+6
-      double gs2=gap; if(gs2<5)gs2=5; bs+=(int)(gs2-3);
+      bs+=MathMax(0,(int)(gap-3));
       if(gb>=4)bs+=3;else if(gb>=3)bs+=2;else if(gb>=2)bs+=1;
       if(tog_RSI){if(ccsData[idx].bbTouchLow&&rOs){bs+=1;}else if(rTu)bs+=1;}
       if(tog_BB&&!tog_RSI&&ccsData[idx].bbTouchLow)bs+=1;
@@ -127,14 +127,14 @@ int CalcSig(string sym,int idx){
       if(tog_SnR&&nS)bs+=1;
       if(gs>gb)bs-=2;
    }else if(gBear){
-      double gs2=MathAbs(gap); if(gs2<5)gs2=5; ss+=(int)(gs2-3);
+      ss+=MathMax(0,(int)(MathAbs(gap)-3));
       if(gs>=4)ss+=3;else if(gs>=3)ss+=2;else if(gs>=2)ss+=1;
       if(tog_RSI){if(ccsData[idx].bbTouchHigh&&rOb){ss+=1;}else if(rTd)ss+=1;}
       if(tog_BB&&!tog_RSI&&ccsData[idx].bbTouchHigh)ss+=1;
       if(tog_VOL){if(aT)ss+=1;else if(aN)ss-=1;}
       if(tog_SnR&&nR)ss+=1;
       if(gb>gs)ss-=2;
-   }else{ccsData[idx].warning="NoGAP";ccsData[idx].score=0;return 0;}
+   }else{ccsData[idx].warning="";ccsData[idx].score=0;return 0;}
    string w="";if(aN&&r>70)w="VolTop";else if(aN&&r<30)w="VolBot";else if(ccsData[idx].bbTouchHigh&&rOb)w="OB+BB";else if(ccsData[idx].bbTouchLow&&rOs)w="OS+BB";
    else if(nR&&gb>=3)w="~Res";else if(nS&&gs>=3)w="~Sup";else if(atp>0&&at>atp*1.5)w="ATR+";ccsData[idx].warning=w;
    ccsData[idx].score=(bs>ss)?bs:(ss>bs)?-ss:0;
@@ -174,7 +174,7 @@ void CreateDashboard(){
       CreateLabel("RS_"+IntegerToString(i),"--",c6,ly,clrGray,fs); CreateLabel("SR_"+IntegerToString(i),"--",cSnR,ly,clrGray,fs);
       CreateLabel("AV_"+IntegerToString(i),"--",cATR,ly,clrGray,fs); CreateLabel("BB_"+IntegerToString(i),"--",cBB,ly,clrGray,fs);
       CreateLabel("WN_"+IntegerToString(i),"",cWarn,ly,clrGray,fs);
-      CreateButton("BB_"+IntegerToString(i),"B",cB,ry+1,(int)(28*cs),btnH,clrForestGreen,clrWhite);
+      CreateButton("BK_"+IntegerToString(i),"B",cB,ry+1,(int)(28*cs),btnH,clrForestGreen,clrWhite);
       CreateButton("BS_"+IntegerToString(i),"S",cS,ry+1,(int)(28*cs),btnH,clrCrimson,clrWhite);
       CreateButton("BX_"+IntegerToString(i),"NO",cX,ry+1,(int)(35*cs),btnH,clrGray,clrBlack);
    }
@@ -205,7 +205,7 @@ void UpdateDashboard(){
       // Score %
       int rs=ccsData[i].score; int pct=(int)(MathAbs(rs)*100/14); if(pct>100)pct=100;
       color pc2=clrGray; if(rs>=7)pc2=clrLime;else if(rs>=4)pc2=clrMediumSeaGreen;else if(rs<=-7)pc2=clrRed;else if(rs<=-4)pc2=clrTomato;
-      ObjectSetString(0,"PC_"+IntegerToString(i),OBJPROP_TEXT,IntegerToString(pct)+"%"); ObjectSetInteger(0,"PC_"+IntegerToString(i),OBJPROP_COLOR,pc2);
+      ObjectSetString(0,"PC_"+IntegerToString(i),OBJPROP_TEXT,(pct>0)?(IntegerToString(pct)+"%"):""); ObjectSetInteger(0,"PC_"+IntegerToString(i),OBJPROP_COLOR,pc2);
       // GAP
       double gv=ccsData[i].ccyGap; color goc=(gv>=CS_Strong_Threshold)?clrLime:(gv<=-CS_Strong_Threshold)?clrRed:clrGray;
       ObjectSetString(0,"GP_"+IntegerToString(i),OBJPROP_TEXT,DoubleToString(MathAbs(gv),1)); ObjectSetInteger(0,"GP_"+IntegerToString(i),OBJPROP_COLOR,goc);
@@ -270,7 +270,7 @@ void DeleteAllObjects(){
       if(StringFind(n,"RBG_")==0||StringFind(n,"PR_")==0||StringFind(n,"PL_")==0||StringFind(n,"SG_")==0||
          StringFind(n,"PC_")==0||StringFind(n,"GP_")==0||StringFind(n,"GT_")==0||StringFind(n,"RS_")==0||
          StringFind(n,"SR_")==0||StringFind(n,"AV_")==0||StringFind(n,"WN_")==0||StringFind(n,"H_")==0||
-         StringFind(n,"BB_")==0||StringFind(n,"BS_")==0||StringFind(n,"BX_")==0||
+         StringFind(n,"BB_")==0||StringFind(n,"BK_")==0||StringFind(n,"BS_")==0||StringFind(n,"BX_")==0||
          StringFind(n,"HDR_")==0||StringFind(n,"Header")==0||
          StringFind(n,"M1")==0||StringFind(n,"M2")==0||
          n=="F-"||n=="F+"||n=="AUTO"||n=="ALERT"||StringFind(n,"L")==0) ObjectDelete(0,n);
