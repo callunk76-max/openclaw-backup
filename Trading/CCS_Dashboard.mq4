@@ -31,7 +31,7 @@ color RGB(int r,int g,int b){return(color)((r&0xFF)|((g&0xFF)<<8)|((b&0xFF)<<16)
 
 int OnInit(){
    runtimeMaxPos=MaxOpenPositions; runtimeFontSize=FontSize;
-   string s=CustomPairs; StringReplace(s," "); totalPairs=1;
+   string s=CustomPairs; totalPairs=1;
    for(int i=0;i<StringLen(s);i++)if(StringGetCharacter(s,i)==',')totalPairs++;
    ArrayResize(pairs,totalPairs); int start=0,idx=0;
    for(int i=0;i<=StringLen(s);i++){if(i==StringLen(s)||StringGetCharacter(s,i)==','){if(i>start){string p=StringSubstr(s,start,i-start);if(StringLen(p)>0)pairs[idx++]=p;}start=i+1;}}
@@ -45,8 +45,8 @@ void OnTick(){datetime n=TimeCurrent();if(n==lastUpdateTime)return;lastUpdateTim
 void OnTimer(){datetime n=TimeCurrent();if(n==lastUpdateTime)return;lastUpdateTime=n;updateCounter++;UpdateAllSignals();if(updateCounter%2==0){CheckAlerts();if(autoTradeON)RunAutoTrade();}ManageTrailingStops();UpdateDashboard();}
 void OnChartEvent(const int id,const long&lparam,const double&dparam,const string&sparam){
    if(id!=CHARTEVENT_OBJECT_CLICK)return;
-   if(sparam=="BtnAutoTrade"){autoTradeON=!autoTradeON;UpdateAutoTradeBtn();ChartRedraw();ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
-   if(sparam=="BtnAlert"){alertON=!alertON;UpdateAlertBtn();ChartRedraw();ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
+   if(sparam=="AUTO"){autoTradeON=!autoTradeON;ChartRedraw();ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
+   if(sparam=="ALERT"){alertON=!alertON;ChartRedraw();ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
    if(sparam=="HeaderCloseAll"){CloseAllPositions();ChartRedraw();ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
    if(sparam=="BtnFontMinus"){ResizeFont(runtimeFontSize-1);ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
    if(sparam=="BtnFontPlus"){ResizeFont(runtimeFontSize+1);ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
@@ -54,11 +54,11 @@ void OnChartEvent(const int id,const long&lparam,const double&dparam,const strin
    if(sparam=="HDR_SnR"){tog_SnR=!tog_SnR;UpdateHD();ChartRedraw();ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
    if(sparam=="HDR_ATR"){tog_VOL=!tog_VOL;UpdateHD();ChartRedraw();ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
    if(sparam=="HDR_BB"){tog_BB=!tog_BB;UpdateHD();ChartRedraw();ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
-   if(StringFind(sparam,"BtnBuy_")==0){int i=(int)StringToInteger(StringSubstr(sparam,7));if(i>=0&&i<totalPairs){OpenTrade(pairs[i],OP_BUY);ChartRedraw();}ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
-   if(StringFind(sparam,"BtnSell_")==0){int i=(int)StringToInteger(StringSubstr(sparam,8));if(i>=0&&i<totalPairs){OpenTrade(pairs[i],OP_SELL);ChartRedraw();}ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
-   if(StringFind(sparam,"BtnClose_")==0){int i=(int)StringToInteger(StringSubstr(sparam,9));if(i>=0&&i<totalPairs){CloseSymbol(pairs[i]);ChartRedraw();}ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
-   if(StringFind(sparam,"MaxMinus")==0){if(runtimeMaxPos>1)runtimeMaxPos--;UpdateMaxOrder();ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
-   if(StringFind(sparam,"MaxPlus")==0){if(runtimeMaxPos<10)runtimeMaxPos++;UpdateMaxOrder();ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
+   if(StringFind(sparam,"BB_")==0){int i=(int)StringToInteger(StringSubstr(sparam,3));if(i>=0&&i<totalPairs){OpenTrade(pairs[i],OP_BUY);ChartRedraw();}ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
+   if(StringFind(sparam,"BS_")==0){int i=(int)StringToInteger(StringSubstr(sparam,3));if(i>=0&&i<totalPairs){OpenTrade(pairs[i],OP_SELL);ChartRedraw();}ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
+   if(StringFind(sparam,"BX_")==0){int i=(int)StringToInteger(StringSubstr(sparam,3));if(i>=0&&i<totalPairs){CloseSymbol(pairs[i]);ChartRedraw();}ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
+   if(sparam=="M1"){if(runtimeMaxPos>1)runtimeMaxPos--;ObjectSetString(0,"L1",OBJPROP_TEXT,IntegerToString(runtimeMaxPos));ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
+   if(sparam=="M2"){if(runtimeMaxPos<10)runtimeMaxPos++;ObjectSetString(0,"L1",OBJPROP_TEXT,IntegerToString(runtimeMaxPos));ObjectSetInteger(0,sparam,OBJPROP_SELECTED,false);return;}
 }
 void ResizeFont(int n){if(n<6||n>22)return;runtimeFontSize=n;DeleteAllObjects();CreateDashboard();ChartRedraw();}
 void UpdateHD(){
@@ -266,8 +266,15 @@ void CreateButton(string n,string t,int x,int y,int w,int h,color bg,color tc){
    ObjectSetInteger(0,n,OBJPROP_CORNER,CORNER_LEFT_UPPER); ObjectSetInteger(0,n,OBJPROP_BACK,false); ObjectSetInteger(0,n,OBJPROP_SELECTABLE,true); ObjectSetInteger(0,n,OBJPROP_SELECTED,false);
 }
 void DeleteAllObjects(){
-   string all="RBG_|PR_|PL_|SG_|PC_|GP_|GT_|RS_|SR_|AV_|BB_|WN_|H_|L|M1|M2|F-|F+|AUTO|ALERT|Header|HDR_|BB_|BS_|BX_";
-   for(int i=ObjectsTotal(-1)-1;i>=0;i--){string n=ObjectName(i);int p=StringFind(all,n);if(p>=0||StringFind(n,"BB_")==0||StringFind(n,"BS_")==0||StringFind(n,"BX_")==0)ObjectDelete(0,n);}
+   for(int i=ObjectsTotal(-1)-1;i>=0;i--){string n=ObjectName(i);
+      if(StringFind(n,"RBG_")==0||StringFind(n,"PR_")==0||StringFind(n,"PL_")==0||StringFind(n,"SG_")==0||
+         StringFind(n,"PC_")==0||StringFind(n,"GP_")==0||StringFind(n,"GT_")==0||StringFind(n,"RS_")==0||
+         StringFind(n,"SR_")==0||StringFind(n,"AV_")==0||StringFind(n,"WN_")==0||StringFind(n,"H_")==0||
+         StringFind(n,"BB_")==0||StringFind(n,"BS_")==0||StringFind(n,"BX_")==0||
+         StringFind(n,"HDR_")==0||StringFind(n,"Header")==0||
+         StringFind(n,"M1")==0||StringFind(n,"M2")==0||
+         n=="F-"||n=="F+"||n=="AUTO"||n=="ALERT"||StringFind(n,"L")==0) ObjectDelete(0,n);
+   }
 }
 
 // ===== TRAILING =====
