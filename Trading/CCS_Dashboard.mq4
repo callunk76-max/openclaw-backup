@@ -123,9 +123,9 @@ int CalcSig(string sym,int idx){
       bs+=MathMax(0,(int)(gap-3));
       if(gb>=4)bs+=3;else if(gb>=3)bs+=2;else if(gb>=2)bs+=1;
       if(tog_RSI){
-         if(ccsData[idx].bbTouchLow&&rOs)bs+=1;
-         else if(rTu)bs+=1;
-         else if(ccsData[idx].bbTouchHigh&&rOb)bs-=1; // kontradiksi: BB high + RSI overbought
+         if(rOs)bs+=1;             // RSI oversold = konfirmasi
+         else if(rOb)bs-=1;        // RSI overbought = kontradiksi
+         else if(rTu)bs+=1;        // RSI turning up = momentum
       }
       if(tog_BB){
          if(ccsData[idx].bbTouchLow)bs+=1;
@@ -138,9 +138,9 @@ int CalcSig(string sym,int idx){
       ss+=MathMax(0,(int)(MathAbs(gap)-3));
       if(gs>=4)ss+=3;else if(gs>=3)ss+=2;else if(gs>=2)ss+=1;
       if(tog_RSI){
-         if(ccsData[idx].bbTouchHigh&&rOb)ss+=1;
-         else if(rTd)ss+=1;
-         else if(ccsData[idx].bbTouchLow&&rOs)ss-=1; // kontradiksi: BB low + RSI oversold
+         if(rOb)ss+=1;             // RSI overbought = konfirmasi
+         else if(rOs)ss-=1;        // RSI oversold = kontradiksi
+         else if(rTd)ss+=1;        // RSI turning down = momentum
       }
       if(tog_BB){
          if(ccsData[idx].bbTouchHigh)ss+=1;
