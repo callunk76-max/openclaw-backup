@@ -269,6 +269,10 @@ def index():
     stats = conn.execute(
         f"SELECT COUNT(*) as total, COALESCE(SUM({BUDGET_SQL}), 0) as total_budget FROM procurement WHERE \"Tahun Anggaran\" = {tahun}"
     ).fetchone()
+    satker_count = conn.execute(
+        f'SELECT COUNT(DISTINCT satker) as cnt FROM procurement WHERE "Tahun Anggaran" = {tahun}'
+    ).fetchone()['cnt'] or 0
+
 
     detail_grouped = conn.execute(f"""
         SELECT
@@ -434,7 +438,8 @@ def index():
         splash_no_realisasi_cnt=splash_no_realisasi_cnt,
         splash_no_realisasi_total=splash_no_realisasi_total,
         splash_orphan_real_cnt=splash_orphan_real_cnt,
-        splash_orphan_real_total=splash_orphan_real_total
+        splash_orphan_real_total=splash_orphan_real_total,
+        satker_count=satker_count
     )
 
 
@@ -1137,6 +1142,158 @@ def api_penyedia_detail():
             return jsonify({'success': True, 'data': dict(rows[0])})
 
         return jsonify({'success': False, 'message': 'Penyedia tidak ditemukan'})
+    finally:
+        conn.close()
+
+
+@app.route('/api/satker_stats')
+def api_satker_stats():
+    """
+    Return statistik per Satuan Kerja: jumlah paket, pagu, realisasi, dll.
+    """
+    tahun = get_year()
+    conn = get_db_connection()
+    try:
+        # Realisasi per satker (matched via Kode RUP)
+        rows = conn.execute(f"""
+            SELECT
+                p.satker,
+                COUNT(*) as total_paket,
+                COALESCE(SUM({BUDGET_SQL}), 0) as total_pagu,
+                COALESCE(SUM(CASE WHEN r.kr IS NOT NULL THEN 1 ELSE 0 END), 0) as total_terealisasi,
+                COALESCE(SUM(r.real_nilai), 0) as total_realisasi
+            FROM procurement p
+            LEFT JOIN (
+                SELECT "Kode RUP" as kr, SUM("Total Nilai (Rp)") as real_nilai
+                FROM realisasi WHERE "Tahun Anggaran" = {tahun}
+                GROUP BY "Kode RUP"
+            ) r ON r.kr = CAST(p.id AS TEXT)
+            WHERE p."Tahun Anggaran" = {tahun}
+            GROUP BY p.satker
+            ORDER BY total_paket DESC
+        """).fetchall()
+
+        # Grand totals (matching main page logic)
+        grand_real = conn.execute(
+            f'SELECT COALESCE(SUM("Total Nilai (Rp)"), 0) FROM realisasi WHERE "Tahun Anggaran" = {tahun}'
+        ).fetchone()[0] or 0
+
+        orphan_real = conn.execute(
+            f'SELECT COALESCE(SUM("Total Nilai (Rp)"), 0) FROM realisasi WHERE "Tahun Anggaran" = {tahun} AND "Kode RUP" NOT IN (SELECT id FROM procurement WHERE "Tahun Anggaran" = {tahun})'
+        ).fetchone()[0] or 0
+
+        result = []
+        for r in rows:
+            pagu = r['total_pagu'] or 0
+            real = r['total_realisasi'] or 0
+            persen = round(real / pagu * 100, 2) if pagu > 0 else 0
+            full_name = r['satker'] or ''
+            short = full_name.split(' - ')[0].strip() if ' - ' in full_name else full_name
+            short = short.replace('KAB. BULUKUMBA', '').replace('KAB. BULUKUMBA', '').strip().rstrip(',').strip()
+            result.append({
+                'satker': full_name,
+                'short': short,
+                'total_paket': r['total_paket'],
+                'total_pagu': pagu,
+                'total_terealisasi': r['total_terealisasi'],
+                'total_realisasi': real,
+                'persen_realisasi': persen
+            })
+
+        matched_real = grand_real - orphan_real
+
+        # Method distribution (global, for donut chart)
+        method_dist = conn.execute(f"""
+            SELECT
+                CASE WHEN procurement_method IN ('E-Purchasing', 'Pengadaan Langsung', 'Dikecualikan', 'Seleksi')
+                     THEN procurement_method ELSE 'Lainnya' END as metode,
+                COUNT(*) as total_paket,
+                COALESCE(SUM({BUDGET_SQL}), 0) as total_pagu
+            FROM procurement WHERE "Tahun Anggaran" = {tahun}
+            GROUP BY metode ORDER BY total_paket DESC
+        """).fetchall()
+        method_dist_data = [
+            {'metode': r['metode'], 'total_paket': r['total_paket'], 'total_pagu': r['total_pagu'] or 0}
+            for r in method_dist
+        ]
+
+        return jsonify({
+            'success': True,
+            'data': result,
+            'total_satker': len(result),
+            'grand_total_realisasi': grand_real,
+            'orphan_realisasi': orphan_real,
+            'matched_realisasi': matched_real,
+            'method_dist': method_dist_data
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)})
+    finally:
+        conn.close()
+
+
+@app.route('/api/satker_detail')
+def api_satker_detail():
+    """
+    Return detail realisasi per metode untuk satu Satuan Kerja.
+    """
+    satker = request.args.get('satker', '').strip()
+    tahun = get_year()
+    conn = get_db_connection()
+    try:
+        # Summary per metode
+        rows = conn.execute(f"""
+            SELECT
+                CASE WHEN p.procurement_method IN ('E-Purchasing', 'Pengadaan Langsung', 'Dikecualikan', 'Seleksi')
+                     THEN p.procurement_method ELSE 'Lainnya' END as metode,
+                COUNT(*) as total_paket,
+                COALESCE(SUM({BUDGET_SQL}), 0) as total_pagu,
+                COALESCE(SUM(CASE WHEN r.kr IS NOT NULL THEN 1 ELSE 0 END), 0) as total_terealisasi,
+                COALESCE(SUM(r.real_nilai), 0) as total_realisasi
+            FROM procurement p
+            LEFT JOIN (
+                SELECT "Kode RUP" as kr, SUM("Total Nilai (Rp)") as real_nilai
+                FROM realisasi WHERE "Tahun Anggaran" = {tahun}
+                GROUP BY "Kode RUP"
+            ) r ON r.kr = CAST(p.id AS TEXT)
+            WHERE p."Tahun Anggaran" = {tahun}
+            AND p.satker = ?
+            GROUP BY metode
+            ORDER BY total_paket DESC
+        """, (satker,)).fetchall()
+
+        metode_list = []
+        grand_pagu = 0
+        grand_terealisasi = 0
+        grand_realisasi = 0
+        for r in rows:
+            pagu = r['total_pagu'] or 0
+            real = r['total_realisasi'] or 0
+            persen = round(real / pagu * 100, 2) if pagu > 0 else 0
+            grand_pagu += pagu
+            grand_terealisasi += r['total_terealisasi']
+            grand_realisasi += real
+            metode_list.append({
+                'metode': r['metode'],
+                'total_paket': r['total_paket'],
+                'total_pagu': pagu,
+                'total_terealisasi': r['total_terealisasi'],
+                'total_realisasi': real,
+                'persen_realisasi': persen
+            })
+
+        return jsonify({
+            'success': True,
+            'satker': satker,
+            'metode': metode_list,
+            'total_paket': sum(m['total_paket'] for m in metode_list),
+            'total_pagu': grand_pagu,
+            'total_terealisasi': grand_terealisasi,
+            'total_realisasi': grand_realisasi,
+            'persen_realisasi': round(grand_realisasi / grand_pagu * 100, 2) if grand_pagu > 0 else 0
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)})
     finally:
         conn.close()
 

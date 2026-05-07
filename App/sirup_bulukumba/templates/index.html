@@ -228,7 +228,7 @@
             <div class="flex gap-2">
                 <button onclick="openAnomalyModal()"
                    class="relative bg-red-500/20 backdrop-blur-sm text-red-200 px-4 py-2 rounded-xl font-bold text-xs hover:bg-red-500/30 transition flex items-center gap-1.5 border border-red-400/20">
-                   <span>⚠️</span> Anomali
+                   <span>⚠️</span> OVER
                    {% set total_anomali = pl_anomaly_count + pagu_anomaly_count %}
                    {% if total_anomali > 0 %}
                    <span class="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] px-1.5 h-5 rounded-full flex items-center justify-center whitespace-nowrap font-bold shadow-md">{{ total_anomali }}</span>
@@ -236,15 +236,20 @@
                 </button>
                 <button onclick="openFeeModal()"
                    class="relative bg-red-500/20 backdrop-blur-sm text-red-200 px-4 py-2 rounded-xl font-bold text-xs hover:bg-red-500/30 transition flex items-center gap-1.5 border border-red-400/20">
-                   <span>📐</span> Konsultansi
+                   <span>📐</span> FEE
                    <span id="konsultan-badge" class="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] px-1.5 h-5 rounded-full flex items-center justify-center whitespace-nowrap font-bold shadow-md hidden">0</span>
                 </button>
                 <button onclick="openSplash()"
                    class="relative bg-teal-500/20 backdrop-blur-sm text-teal-200 px-4 py-2 rounded-xl font-bold text-xs hover:bg-teal-500/30 transition flex items-center gap-1.5 border border-teal-400/20">
-                   <span>📦</span> Realisasi
+                   <span>📦</span> ORPHAN
                    {% if splash_orphan_real_cnt > 0 %}
                    <span class="absolute -top-2 -right-2 bg-amber-500 text-white text-[10px] px-1.5 h-5 rounded-full flex items-center justify-center whitespace-nowrap font-bold shadow-md">{{ splash_orphan_real_cnt }}</span>
                    {% endif %}
+                </button>
+                <button onclick="openSatkerModal()"
+                   class="relative bg-purple-500/20 backdrop-blur-sm text-purple-200 px-4 py-2 rounded-xl font-bold text-xs hover:bg-purple-500/30 transition flex items-center gap-1.5 border border-purple-400/20">
+                   <span>🏛️</span> MONITORING
+                   <span class="absolute -top-2 -right-2 bg-purple-500 text-white text-[10px] px-1.5 h-5 rounded-full flex items-center justify-center whitespace-nowrap font-bold shadow-md">{{ satker_count }}</span>
                 </button>
             </div>
         </div>
@@ -654,7 +659,132 @@
             </div>
         </div>
 
-        <!-- 5 BOLA STATS -->
+        <!-- Satker Stats Modal -->
+        <div id="satkerModal" class="fixed inset-0 z-[90] hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="bg-white rounded-2xl shadow-2xl max-w-6xl w-full max-h-[90vh] flex flex-col overflow-hidden transform transition-all">
+                <div class="bg-gradient-to-r from-purple-700 to-violet-600 px-6 py-4 flex justify-between items-center text-white shrink-0">
+                    <h3 class="text-xl font-bold flex items-center gap-2">🏛️ Statistik per Satuan Kerja</h3>
+                    <button onclick="closeSatkerModal()" class="text-white hover:text-purple-200 transition text-2xl">&times;</button>
+                </div>
+                <div class="p-6 overflow-y-auto">
+                    <!-- Summary bar -->
+                    <div id="satker-summary" class="grid grid-cols-4 gap-3 mb-5">
+                        <div class="bg-purple-50 rounded-xl p-3 text-center border-2 border-purple-200">
+                            <span class="text-[10px] font-bold text-purple-400 uppercase">🏛️ Total Satker</span>
+                            <p id="satker-total" class="text-2xl font-black text-purple-700">-</p>
+                        </div>
+                        <div class="bg-indigo-50 rounded-xl p-3 text-center border-2 border-indigo-200">
+                            <span class="text-[10px] font-bold text-indigo-400 uppercase">📦 Total Paket</span>
+                            <p id="satker-total-paket" class="text-2xl font-black text-indigo-700">-</p>
+                        </div>
+                        <div class="bg-emerald-50 rounded-xl p-3 text-center border-2 border-emerald-200">
+                            <span class="text-[10px] font-bold text-emerald-400 uppercase">💰 Total Pagu</span>
+                            <p id="satker-total-pagu" class="text-2xl font-black text-emerald-700">-</p>
+                        </div>
+                        <div class="bg-teal-50 rounded-xl p-3 text-center border-2 border-teal-200">
+                            <span class="text-[10px] font-bold text-teal-400 uppercase">✅ Realisasi</span>
+                            <p id="satker-total-real" class="text-2xl font-black text-teal-700">-</p>
+                            <div id="satker-orphan-note"></div>
+                        </div>
+                    </div>
+                    <!-- Chart: Top 10 Realisasi vs Pagu + Donut distribusi metode -->
+                    <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-4">
+                        <div>
+                            <p class="text-xs font-bold text-slate-500 uppercase mb-2">🔝 Top 10 % Realisasi per Satker</p>
+                            <div class="flex items-center justify-center h-72" id="satkerChartContainer"></div>
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-slate-500 uppercase mb-2">💰 Distribusi Anggaran per Satker (Top 10)</p>
+                            <div class="flex items-center justify-center h-72" id="satkerDonutContainer"></div>
+                        </div>
+                    </div>
+                    <!-- Search -->
+                    <div class="relative max-w-md mb-4">
+                        <div class="search-wrapper">
+                            <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                            <input type="text" id="satker-search" placeholder="Cari Satuan Kerja..." oninput="filterSatkerTable()"
+                                class="w-full pl-9 pr-8 py-2 border border-slate-200 rounded-xl text-xs font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-400 transition bg-white">
+                            <button id="satker-clear-btn" onclick="clearSatkerSearch()" class="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 hidden">&times;</button>
+                        </div>
+                    </div>
+                    <!-- Table -->
+                    <div class="overflow-x-auto rounded-xl border border-slate-200">
+                        <table class="w-full text-left text-xs">
+                            <thead>
+                                <tr class="bg-slate-100 text-slate-600">
+                                    <th class="p-3 font-bold w-10">#</th>
+                                    <th class="p-3 font-bold">Satuan Kerja</th>
+                                    <th class="p-3 font-bold text-center">📦 Paket</th>
+                                    <th class="p-3 font-bold text-right">💰 Pagu</th>
+                                    <th class="p-3 font-bold text-center">✅ Terealisasi</th>
+                                    <th class="p-3 font-bold text-right">Realisasi (Rp)</th>
+                                    <th class="p-3 font-bold text-center">% Realisasi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100" id="satker-tbody">
+                                <tr><td colspan="7" class="p-8 text-center text-slate-400 italic">Memuat data...</td></tr>
+                            </tbody>
+                        </table>
+                        <div id="satker-pagination" class="flex items-center justify-center gap-2 py-3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Satker Detail Modal -->
+        <div id="satkerDetailModal" class="fixed inset-0 z-[95] hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] flex flex-col overflow-hidden transform transition-all">
+                <div class="bg-gradient-to-r from-violet-700 to-indigo-600 px-6 py-4 flex justify-between items-center text-white shrink-0">
+                    <div>
+                        <h3 class="text-lg font-bold flex items-center gap-2">🏛️ Detail Satuan Kerja</h3>
+                        <p id="satker-detail-name" class="text-xs text-violet-200 mt-0.5 font-medium truncate max-w-xl"></p>
+                    </div>
+                    <button onclick="closeSatkerDetailModal()" class="text-white hover:text-violet-200 transition text-2xl">&times;</button>
+                </div>
+                <div class="p-6 overflow-y-auto">
+                    <!-- Summary bar -->
+                    <div class="grid grid-cols-4 gap-3 mb-5">
+                        <div class="bg-indigo-50 rounded-xl p-3 text-center border border-indigo-200">
+                            <span class="text-[10px] font-bold text-indigo-400 uppercase">📦 Paket</span>
+                            <p id="sdetail-total-paket" class="text-xl font-black text-indigo-700">-</p>
+                        </div>
+                        <div class="bg-emerald-50 rounded-xl p-3 text-center border border-emerald-200">
+                            <span class="text-[10px] font-bold text-emerald-400 uppercase">💰 Pagu</span>
+                            <p id="sdetail-total-pagu" class="text-xl font-black text-emerald-700">-</p>
+                        </div>
+                        <div class="bg-teal-50 rounded-xl p-3 text-center border border-teal-200">
+                            <span class="text-[10px] font-bold text-teal-400 uppercase">✅ Realisasi</span>
+                            <p id="sdetail-total-real" class="text-xl font-black text-teal-700">-</p>
+                        </div>
+                        <div class="bg-purple-50 rounded-xl p-3 text-center border border-purple-200">
+                            <span class="text-[10px] font-bold text-purple-400 uppercase">📊 % Realisasi</span>
+                            <p id="sdetail-persen-real" class="text-xl font-black text-purple-700">-</p>
+                        </div>
+                    </div>
+                    <!-- Detail per Metode -->
+                    <div class="overflow-x-auto rounded-xl border border-slate-200">
+                        <table class="w-full text-left text-xs">
+                            <thead>
+                                <tr class="bg-slate-100 text-slate-600">
+                                    <th class="p-3 font-bold">Metode Pengadaan</th>
+                                    <th class="p-3 font-bold text-center">📦 Paket</th>
+                                    <th class="p-3 font-bold text-right">💰 Pagu</th>
+                                    <th class="p-3 font-bold text-center">✅ Terealisasi</th>
+                                    <th class="p-3 font-bold text-right">💵 Nilai Realisasi</th>
+                                    <th class="p-3 font-bold text-center">% Realisasi</th>
+                                    <th class="p-3 font-bold text-center">📊 Bar</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100" id="sdetail-tbody">
+                                <tr><td colspan="7" class="p-8 text-center text-slate-400 italic">Memuat data...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4 BOLA STATS + badge Satker di header -->
         <div class="flex flex-wrap justify-center gap-5 lg:gap-8 mb-8">
             <!-- 1. Total Paket -->
             <div class="ball-card ball-float bg-gradient-to-br from-indigo-500 to-indigo-700 shadow-xl shadow-indigo-200" onclick="openChartModal('packages')">
@@ -2109,6 +2239,380 @@
             budget: { labels: ['E-Purchasing', 'Pengadaan Langsung', 'Dikecualikan', 'Seleksi', 'Lainnya'], values: [{{ budget_epurchasing }}, {{ budget_pl }}, {{ budget_dikecualikan }}, {{ budget_seleksi }}, {{ budget_lainnya }}], total: {{ total_budget }} },
             realisasi: { labels: ['E-Purchasing', 'Pengadaan Langsung', 'Dikecualikan', 'Seleksi', 'Lainnya'], values: [{{ real_epurchasing }}, {{ real_pl }}, {{ real_dikecualikan }}, {{ real_seleksi }}, {{ real_lainnya }}], total: {{ real_total }}, pagu: [{{ budget_epurchasing }}, {{ budget_pl }}, {{ budget_dikecualikan }}, {{ budget_seleksi }}, {{ budget_lainnya }}] }
         };
+        // ===== SATKER MODAL =====
+        let _satkerData = [];
+        let _satkerChart = null;
+        let _satkerPerPage = 15;
+        let _satkerPage = 1;
+
+        let _satkerDonutChart = null;
+        function destroySatkerChart() { if (_satkerChart) { _satkerChart.destroy(); _satkerChart = null; } if (_satkerDonutChart) { _satkerDonutChart.destroy(); _satkerDonutChart = null; } }
+
+        function openSatkerModal() {
+            document.getElementById('satkerModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            _satkerPage = 1;
+            loadSatkerData();
+        }
+
+        function closeSatkerModal() {
+            document.getElementById('satkerModal').classList.add('hidden');
+            document.body.style.overflow = '';
+            destroySatkerChart();
+        }
+
+        async function loadSatkerData() {
+            const tbody = document.getElementById('satker-tbody');
+            tbody.innerHTML = '<tr><td colspan="7" class="p-8 text-center text-slate-400 italic">Memuat data...</td></tr>';
+            try {
+                const res = await fetch('/api/satker_stats?tahun=' + currentTahun);
+                const result = await res.json();
+                if (!result.success) throw new Error(result.message || 'Gagal memuat data');
+                _satkerData = result.data;
+
+                // Summary cards
+                document.getElementById('satker-total').textContent = Number(result.total_satker).toLocaleString('id-ID');
+                const totalPaket = result.data.reduce((s, d) => s + d.total_paket, 0);
+                const totalPagu = result.data.reduce((s, d) => s + d.total_pagu, 0);
+                document.getElementById('satker-total-paket').textContent = Number(totalPaket).toLocaleString('id-ID');
+                document.getElementById('satker-total-pagu').textContent = fmtRpShort(totalPagu);
+                const grandReal = result.grand_total_realisasi || 0;
+                const orphanReal = result.orphan_realisasi || 0;
+                document.getElementById('satker-total-real').textContent = fmtRpShort(grandReal);
+                // Add orphan note if any
+                document.getElementById('satker-orphan-note').innerHTML = orphanReal > 0
+                    ? '<span class="text-[10px] text-amber-500 font-medium">⚠️ ' + fmtRpShort(orphanReal) + ' realisasi orphan (tak terinduk RUP)</span>'
+                    : '';
+
+                renderSatkerChart();
+                renderSatkerDonut();
+                renderSatkerTable();
+            } catch(e) {
+                tbody.innerHTML = '<tr><td colspan="7" class="p-8 text-center text-red-500 font-bold">❌ ' + e.message + '</td></tr>';
+            }
+        }
+
+        function renderSatkerChart() {
+            destroySatkerChart();
+            const container = document.getElementById('satkerChartContainer');
+            container.innerHTML = '<canvas id="satkerCanvas"></canvas>';
+
+            // Sort by persen_realisasi DESC, take top 10
+            const sorted = [..._satkerData].filter(d => d.total_pagu > 0).sort((a, b) => b.persen_realisasi - a.persen_realisasi);
+            const top10 = sorted.slice(0, 10);
+
+            const labels = top10.map(d => d.short);
+            const values = top10.map(d => d.persen_realisasi);
+            const paketCounts = top10.map(d => '(' + d.total_terealisasi + '/' + d.total_paket + ' terealisasi)');
+
+            const SATKER_COLORS = [
+                '#059669', '#10b981', '#34d399', '#6ee7b7', '#a7f3d0',
+                '#f59e0b', '#f97316', '#ef4444', '#7c3aed', '#6366f1'
+            ];
+
+            const canvas = document.getElementById('satkerCanvas');
+            _satkerChart = new Chart(canvas.getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '% Realisasi',
+                        data: values,
+                        backgroundColor: values.map(v =>
+                            v >= 75 ? SATKER_COLORS[0] :
+                            v >= 50 ? SATKER_COLORS[5] :
+                            v >= 25 ? SATKER_COLORS[6] :
+                            v > 0 ? SATKER_COLORS[7] :
+                            '#cbd5e1'
+                        ),
+                        borderRadius: 4,
+                        borderSkipped: false,
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                afterLabel: function(ctx) {
+                                    return paketCounts[ctx.dataIndex];
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                callback: function(v) { return v + '%'; },
+                                font: { size: 10 }
+                            },
+                            grid: { color: '#f1f5f9' }
+                        },
+                        y: {
+                            ticks: {
+                                font: { size: 9 },
+                                maxTicksLimit: 10
+                            },
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderSatkerDonut() {
+            const container = document.getElementById('satkerDonutContainer');
+            container.innerHTML = '<canvas id="satkerDonutCanvas"></canvas>';
+
+            if (!_satkerData || _satkerData.length === 0) {
+                container.innerHTML = '<div class="text-center text-slate-400 text-xs italic">Tidak ada data</div>';
+                return;
+            }
+
+            // Sort by total_pagu DESC, take top 10, rest as Lainnya
+            const sorted = [..._satkerData].filter(d => d.total_pagu > 0).sort((a, b) => b.total_pagu - a.total_pagu);
+            const top10 = sorted.slice(0, 10);
+            const others = sorted.slice(10);
+            const othersTotal = others.reduce((s, d) => s + d.total_pagu, 0);
+
+            const labels = top10.map(d => d.short);
+            const values = top10.map(d => d.total_pagu);
+            if (othersTotal > 0) {
+                labels.push('Lainnya (' + others.length + ' satker)');
+                values.push(othersTotal);
+            }
+
+            const totalPagu = values.reduce((a, b) => a + b, 0);
+            const DONUT_COLORS = [
+                '#7c3aed', '#4f46e5', '#6366f1', '#818cf8', '#a78bfa',
+                '#c084fc', '#8b5cf6', '#6d28d9', '#5b21b6', '#4c1d95',
+                '#94a3b8'
+            ];
+
+            const canvas = document.getElementById('satkerDonutCanvas');
+            _satkerDonutChart = new Chart(canvas.getContext('2d'), {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: values,
+                        backgroundColor: DONUT_COLORS.slice(0, labels.length),
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '55%',
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 12,
+                                boxWidth: 12,
+                                font: { size: 9 },
+                                generateLabels: function(chart) {
+                                    const data = chart.data;
+                                    return data.labels.map((label, i) => ({
+                                        text: label + ': ' + fmtRpShort(data.datasets[0].data[i]),
+                                        fillStyle: data.datasets[0].backgroundColor[i],
+                                        strokeStyle: data.datasets[0].backgroundColor[i],
+                                        index: i
+                                    }));
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(ctx) {
+                                    const pct = ((ctx.parsed / totalPagu) * 100).toFixed(1);
+                                    return ctx.label + ': ' + fmtRp(ctx.parsed) + ' (' + pct + '%)';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderSatkerTable() {
+            const tbody = document.getElementById('satker-tbody');
+            const term = (document.getElementById('satker-search')?.value || '').toLowerCase().trim();
+            let filtered = _satkerData;
+            if (term) {
+                filtered = _satkerData.filter(d =>
+                    d.satker.toLowerCase().includes(term) || d.short.toLowerCase().includes(term)
+                );
+            }
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="p-8 text-center text-slate-400 italic">Tidak ada data</td></tr>';
+                document.getElementById('satker-pagination').innerHTML = '';
+                return;
+            }
+
+            // Paginate
+            const totalPages = Math.ceil(filtered.length / _satkerPerPage);
+            const start = (_satkerPage - 1) * _satkerPerPage;
+            const pageData = filtered.slice(start, start + _satkerPerPage);
+
+            let html = '';
+            pageData.forEach((d, i) => {
+                const idx = start + i + 1;
+                const pct = d.persen_realisasi;
+                let pctColor = 'text-red-600';
+                let pctBg = 'bg-red-50';
+                if (pct >= 75) { pctColor = 'text-emerald-600'; pctBg = 'bg-emerald-50'; }
+                else if (pct >= 50) { pctColor = 'text-amber-600'; pctBg = 'bg-amber-50'; }
+                else if (pct > 0) { pctColor = 'text-orange-600'; pctBg = 'bg-orange-50'; }
+
+                html += '<tr class="hover:bg-purple-100/60 transition cursor-pointer" data-satker="' + escHtml(d.satker).replace(/"/g, '&quot;') + '" data-short="' + escHtml(d.short || d.satker).replace(/"/g, '&quot;') + '" onclick="openSatkerDetail(this)">' +
+                    '<td class="p-3 text-slate-400 font-mono">' + idx + '</td>' +
+                    '<td class="p-3 font-semibold text-slate-700 max-w-[280px] truncate" title="' + escHtml(d.satker) + '">' + escHtml(d.short || d.satker) + '</td>' +
+                    '<td class="p-3 text-center font-bold text-indigo-600">' + Number(d.total_paket).toLocaleString('id-ID') + '</td>' +
+                    '<td class="p-3 text-right font-mono text-slate-600">' + fmtRp(d.total_pagu) + '</td>' +
+                    '<td class="p-3 text-center">' +
+                        '<span class="inline-flex items-center justify-center w-7 h-7 rounded-full text-[10px] font-bold ' +
+                            (d.total_terealisasi > 0 ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-400') + '">' +
+                            d.total_terealisasi +
+                        '</span>' +
+                    '</td>' +
+                    '<td class="p-3 text-right font-mono text-emerald-600 font-bold">' + fmtRp(d.total_realisasi) + '</td>' +
+                    '<td class="p-3 text-center"><span class="px-2 py-1 rounded-full text-[10px] font-bold ' + pctBg + ' ' + pctColor + '">' + pct.toFixed(1) + '%</span></td>' +
+                    '</tr>';
+            });
+            tbody.innerHTML = html;
+
+            // Pagination
+            renderSatkerPagination(totalPages, filtered.length);
+        }
+
+        function renderSatkerPagination(totalPages, totalRows) {
+            const container = document.getElementById('satker-pagination');
+            if (totalPages <= 1) {
+                container.innerHTML = '';
+                return;
+            }
+            let html = '<span class="text-xs text-slate-400 mr-2">' + Number(totalRows).toLocaleString('id-ID') + ' satker</span>';
+            if (_satkerPage > 1) {
+                html += '<button onclick="_satkerPage=' + (_satkerPage - 1) + ';renderSatkerTable()" class="px-3 py-1 text-xs font-bold rounded border border-slate-300 hover:bg-slate-100 transition">‹ Prev</button>';
+            }
+            for (let p = 1; p <= totalPages; p++) {
+                if (p === _satkerPage || p === 1 || p === totalPages || Math.abs(p - _satkerPage) <= 2) {
+                    html += '<button onclick="_satkerPage=' + p + ';renderSatkerTable()" class="px-3 py-1 text-xs font-bold rounded border transition ' +
+                        (p === _satkerPage ? 'bg-purple-600 text-white border-purple-600' : 'border-slate-300 hover:bg-slate-100') + '">' + p + '</button>';
+                } else if (p === _satkerPage - 3 || p === _satkerPage + 3) {
+                    html += '<span class="px-1 text-slate-400 text-xs">…</span>';
+                }
+            }
+            if (_satkerPage < totalPages) {
+                html += '<button onclick="_satkerPage=' + (_satkerPage + 1) + ';renderSatkerTable()" class="px-3 py-1 text-xs font-bold rounded border border-slate-300 hover:bg-slate-100 transition">Next ›</button>';
+            }
+            container.innerHTML = html;
+        }
+
+        function filterSatkerTable() {
+            const term = document.getElementById('satker-search').value;
+            document.getElementById('satker-clear-btn').style.display = term ? 'block' : 'none';
+            _satkerPage = 1;
+            renderSatkerTable();
+        }
+
+        function clearSatkerSearch() {
+            document.getElementById('satker-search').value = '';
+            document.getElementById('satker-clear-btn').style.display = 'none';
+            _satkerPage = 1;
+            renderSatkerTable();
+            document.getElementById('satker-search').focus();
+        }
+
+        // ===== SATKER DETAIL MODAL =====
+        function closeSatkerDetailModal() {
+            document.getElementById('satkerDetailModal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+        async function openSatkerDetail(el) {
+            var satker = el.dataset.satker;
+            var short = el.dataset.short;
+            document.getElementById('satkerDetailModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            document.getElementById('satker-detail-name').textContent = short || satker;
+            const tbody = document.getElementById('sdetail-tbody');
+            tbody.innerHTML = '<tr><td colspan="7" class="p-8 text-center text-slate-400 italic">Memuat data...</td></tr>';
+
+            // Reset summary
+            ['sdetail-total-paket','sdetail-total-pagu','sdetail-total-real','sdetail-persen-real'].forEach(id => {
+                document.getElementById(id).textContent = '-';
+            });
+
+            try {
+                const res = await fetch('/api/satker_detail?tahun=' + currentTahun + '&satker=' + encodeURIComponent(satker));
+                const d = await res.json();
+                if (!d.success) throw new Error(d.message || 'Gagal');
+
+                // Summary
+                document.getElementById('sdetail-total-paket').textContent = Number(d.total_paket).toLocaleString('id-ID');
+                document.getElementById('sdetail-total-pagu').textContent = fmtRpShort(d.total_pagu);
+                document.getElementById('sdetail-total-real').textContent = fmtRpShort(d.total_realisasi);
+                document.getElementById('sdetail-persen-real').textContent = d.persen_realisasi.toFixed(1) + '%';
+
+                // Rows per metode
+                if (d.metode.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="7" class="p-8 text-center text-slate-400 italic">Belum ada data</td></tr>';
+                    return;
+                }
+
+                const maxPagu = Math.max(...d.metode.map(m => m.total_pagu), 1);
+                tbody.innerHTML = d.metode.map(m => {
+                    const pct = m.persen_realisasi;
+                    let pctColor = 'bg-red-100 text-red-700';
+                    let barColor = 'bg-red-500';
+                    if (pct >= 75) { pctColor = 'bg-emerald-100 text-emerald-700'; barColor = 'bg-emerald-500'; }
+                    else if (pct >= 50) { pctColor = 'bg-amber-100 text-amber-700'; barColor = 'bg-amber-500'; }
+                    else if (pct >= 25) { pctColor = 'bg-orange-100 text-orange-700'; barColor = 'bg-orange-500'; }
+                    else if (pct > 0) { barColor = 'bg-red-400'; }
+
+                    const barW = Math.min((m.total_pagu / maxPagu) * 100, 100);
+                    const realBarW = Math.min((pct / 100) * barW, barW);
+
+                    return '<tr class="hover:bg-violet-50/50 transition">' +
+                        '<td class="p-3 font-semibold text-slate-700">' + escHtml(m.metode) + '</td>' +
+                        '<td class="p-3 text-center font-bold text-indigo-600">' + Number(m.total_paket).toLocaleString('id-ID') + '</td>' +
+                        '<td class="p-3 text-right font-mono text-slate-600">' + fmtRp(m.total_pagu) + '</td>' +
+                        '<td class="p-3 text-center">' +
+                            '<span class="inline-flex items-center justify-center w-7 h-7 rounded-full text-[10px] font-bold ' +
+                                (m.total_terealisasi > 0 ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-400') + '">' +
+                                m.total_terealisasi +
+                            '</span>' +
+                        '</td>' +
+                        '<td class="p-3 text-right font-mono text-emerald-600 font-bold">' + fmtRp(m.total_realisasi) + '</td>' +
+                        '<td class="p-3 text-center"><span class="px-2 py-1 rounded-full text-[10px] font-bold ' + pctColor + '">' + pct.toFixed(1) + '%</span></td>' +
+                        '<td class="p-3"><div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden min-w-[60px]">' +
+                            '<div class="h-full rounded-full ' + barColor + ' transition-all" style="width:' + barW + '%"></div>' +
+                        '</div></td>' +
+                        '</tr>';
+                }).join('');
+            } catch (e) {
+                tbody.innerHTML = '<tr><td colspan="7" class="p-8 text-center text-red-500 font-bold">❌ ' + e.message + '</td></tr>';
+            }
+        }
+
+        function fmtRpShort(val) {
+            if (val >= 1000000000) {
+                return 'Rp' + (val / 1000000000).toFixed(1).replace('.', ',') + 'M';
+            } else if (val >= 1000000) {
+                return 'Rp' + (val / 1000000).toFixed(1).replace('.', ',') + 'Jt';
+            } else {
+                return 'Rp' + Number(val).toLocaleString('id-ID');
+            }
+        }
+
         let chartInstances = {};
         function destroyCharts() { Object.values(chartInstances).forEach(c => { if (c) c.destroy(); }); chartInstances = {}; }
         function closeChartModal() { document.getElementById('chartModal').classList.add('hidden'); document.body.style.overflow = ''; destroyCharts(); }
