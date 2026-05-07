@@ -539,3 +539,4 @@ total size is 98,339,321  speedup is 14.13
 error: src refspec main does not match any
 error: failed to push some refs to 'github.com:callunk76-max/openclaw-backup.git'
 2026-05-07 13:11:55 Backup OK - pushed to master
+sending incremental file list
