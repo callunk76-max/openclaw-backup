@@ -501,3 +501,40 @@ total size is 98,010,537  speedup is 14.17
 error: src refspec main does not match any
 error: failed to push some refs to 'github.com:callunk76-max/openclaw-backup.git'
 sending incremental file list
+backup_log.txt
+App/sirup_bulukumba/
+App/sirup_bulukumba/bulukumba.db
+App/sirup_bulukumba/restart_log.txt
+App/sirup_bulukumba/visitor_count.json
+Trading/
+Trading/CCS_Dashboard.mq4
+Trading/CCS_EA.mq4
+Trading/CCS_Indicator.mq4
+Trading/previous_signal.json
+Trading/signal_history.json
+Trading/signal_log.txt
+Trading/trading_signal.py
+Trading/strategies/
+Trading/strategies/callunk_confluence_system.md
+Trading/strategies/ccs_dashboard_reference.md
+Trading/strategies/ccs_scoring_table.md
+memory/
+memory/2026-05-06-auto-trade-confirm.md
+memory/2026-05-06-usdjpy-track.md
+memory/2026-05-06.md
+
+sent 6,959,748 bytes  received 443 bytes  13,920,382.00 bytes/sec
+total size is 98,339,321  speedup is 14.13
+[master 1c524e6] Daily Backup from Cuy - 2026-05-07 03:00
+ 17 files changed, 6901 insertions(+), 117 deletions(-)
+ create mode 100644 Trading/CCS_Dashboard.mq4
+ create mode 100644 Trading/CCS_EA.mq4
+ create mode 100644 Trading/CCS_Indicator.mq4
+ create mode 100644 Trading/strategies/callunk_confluence_system.md
+ create mode 100644 Trading/strategies/ccs_dashboard_reference.md
+ create mode 100644 Trading/strategies/ccs_scoring_table.md
+ create mode 100644 memory/2026-05-06-auto-trade-confirm.md
+ create mode 100644 memory/2026-05-06-usdjpy-track.md
+ create mode 100644 memory/2026-05-06.md
+error: src refspec main does not match any
+error: failed to push some refs to 'github.com:callunk76-max/openclaw-backup.git'

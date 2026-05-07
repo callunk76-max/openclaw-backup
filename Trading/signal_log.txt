@@ -16635,3 +16635,687 @@ Signal Result: [TRACK] USD/JPY REAPPEARED → stars=4, consecutive=1
 [session-write-lock] releasing lock held for 61161ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
 ✅ Sent via Telegram. Message ID: 4282
 Message sent status: 0
+--- Running Signal at Thu May  7 08:00:01 AM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 08:00 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 4.93 (-1.7)
+🥈 CHF : 4.89 (+0.8)
+🥉 EUR : 4.54 (-0.2)
+🔹 AUD : 4.50 (-1.1)
+🔹 USD : 4.48 (+1.8)
+🔹 JPY : 4.44 (-1.2)
+🔹 GBP : 4.33 (+0.1)
+💀 CAD : 3.88 (+1.5)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **NO SIGNALS** | Min gap 2.0, none qualified ✅
+   └ Wait for wider spread between currencies
+[session-write-lock] releasing lock held for 71684ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4297
+Message sent status: 0
+--- Running Signal at Thu May  7 08:15:01 AM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 08:15 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 4.93
+🥈 CHF : 4.86
+🥉 JPY : 4.59 (+0.2)
+🔹 EUR : 4.54
+🔹 AUD : 4.52
+🔹 USD : 4.40 (-0.1)
+🔹 GBP : 4.36
+💀 CAD : 3.80 (-0.1)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **NO SIGNALS** | Min gap 2.0, none qualified ✅
+   └ Wait for wider spread between currencies
+[session-write-lock] releasing lock held for 73480ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4309
+Message sent status: 0
+--- Running Signal at Thu May  7 08:30:02 AM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 08:30 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 4.90
+🥈 CHF : 4.80 (-0.1)
+🥉 EUR : 4.57
+🔹 AUD : 4.55
+🔹 JPY : 4.51 (-0.1)
+🔹 USD : 4.49 (+0.1)
+🔹 GBP : 4.36
+💀 CAD : 3.83
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **NO SIGNALS** | Min gap 2.0, none qualified ✅
+   └ Wait for wider spread between currencies
+[session-write-lock] releasing lock held for 65118ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4312
+Message sent status: 0
+--- Running Signal at Thu May  7 08:45:01 AM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 08:45 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 4.92
+🥈 CHF : 4.78
+🥉 EUR : 4.59
+🔹 USD : 4.50
+🔹 AUD : 4.50
+🔹 JPY : 4.49
+🔹 GBP : 4.37
+💀 CAD : 3.83
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **NO SIGNALS** | Min gap 2.0, none qualified ✅
+   └ Wait for wider spread between currencies
+[session-write-lock] releasing lock held for 64393ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4332
+Message sent status: 0
+--- Running Signal at Thu May  7 09:00:01 AM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 09:00 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 4.94
+🥈 CHF : 4.79
+🥉 JPY : 4.56 (+0.1)
+🔹 EUR : 4.55
+🔹 AUD : 4.49
+🔹 USD : 4.47
+🔹 GBP : 4.35
+💀 CAD : 3.85
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **NO SIGNALS** | Min gap 2.0, none qualified ✅
+   └ Wait for wider spread between currencies
+[session-write-lock] releasing lock held for 60013ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4339
+Message sent status: 0
+--- Running Signal at Thu May  7 09:15:02 AM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 09:15 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 NZD : 4.91
+🥈 CHF : 4.83
+🥉 JPY : 4.66 (+0.1)
+🔹 EUR : 4.54
+🔹 AUD : 4.49
+🔹 GBP : 4.38
+🔹 USD : 4.37 (-0.1)
+💀 CAD : 3.82
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **NO SIGNALS** | Min gap 2.0, none qualified ✅
+   └ Wait for wider spread between currencies
+[session-write-lock] releasing lock held for 65612ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4342
+Message sent status: 0
+--- Running Signal at Thu May  7 09:30:01 AM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 09:30 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 JPY : 7.00
+🥈 AUD : 5.86 (+0.6)
+🥉 GBP : 5.57 (-0.1)
+🔹 EUR : 5.43 (-0.3)
+🔹 CHF : 4.43 (+0.4)
+🔹 NZD : 3.29 (+0.1)
+🔹 CAD : 2.43 (-0.4)
+💀 USD : 2.00 (-0.3)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 5 SIGNALS**
+1️⃣ **USD/JPY 👑3**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   SELL 🚧 MENTOK!
+
+2️⃣ **CAD/JPY 👑3**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   SELL 🚧 MENTOK!
+
+3️⃣ **AUD/USD 👑1**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+
+4️⃣ **NZD/JPY 👑3**
+   🟡 EMA: 2/4 (E20❌ E50✅ E100✅ E200❌)
+   NUNGGU SINYAL ⏳
+
+5️⃣ **GBP/USD 👑2**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU PULLBACK
+[session-write-lock] releasing lock held for 61507ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4354
+Message sent status: 0
+--- Running Signal at Thu May  7 09:45:01 AM CST 2026 ---
+Signal Result: [TRACK] EUR/USD REAPPEARED → stars=1, consecutive=1
+🤖 **CALLUNK AI TRADING AGENT**
+🕒 09:45 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 JPY : 7.43 (+0.4)
+🥈 AUD : 6.29 (+0.4)
+🥉 EUR : 5.57 (+0.1)
+🔹 CHF : 5.14 (+0.7)
+🔹 NZD : 4.57 (+1.3)
+🔹 GBP : 4.14 (-1.4)
+🔹 CAD : 2.14 (-0.3)
+💀 USD : 0.71 (-1.3)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 5 SIGNALS**
+1️⃣ **USD/JPY 👑4**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   SELL 🚧 MENTOK!
+
+2️⃣ **AUD/USD 👑2**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   BUY 🚧 MENTOK!
+
+3️⃣ **CAD/JPY 👑4**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   SELL 🚧 MENTOK!
+
+4️⃣ **EUR/USD ⭐1**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   BUY ✅🛣️ PANJANG
+
+5️⃣ **USD/CHF 👑1**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   SELL 🚧 MENTOK!
+[session-write-lock] releasing lock held for 65519ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4357
+Message sent status: 0
+--- Running Signal at Thu May  7 10:00:01 AM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 10:00 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 6.71 (+0.4)
+🥈 NZD : 5.57 (+1.0)
+🥉 EUR : 5.14 (-0.4)
+🔹 GBP : 4.71 (+0.6)
+🔹 CHF : 4.57 (-0.6)
+🔹 JPY : 4.14 (-3.3)
+🔹 CAD : 2.86 (+0.7)
+💀 USD : 2.29 (+1.6)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 5 SIGNALS**
+1️⃣ **AUD/USD 👑3**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   BUY 🚧 MENTOK!
+
+2️⃣ **AUD/CAD 👑1**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU PULLBACK
+
+3️⃣ **NZD/USD 👑1**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU PULLBACK
+
+4️⃣ **EUR/USD ⭐2**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU PULLBACK
+
+5️⃣ **NZD/CAD 👑1**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU PULLBACK
+[session-write-lock] releasing lock held for 61882ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4358
+Message sent status: 0
+--- Running Signal at Thu May  7 10:15:01 AM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 10:15 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 6.00 (-0.7)
+🥈 NZD : 5.71 (+0.1)
+🥉 EUR : 5.57 (+0.4)
+🔹 GBP : 4.86 (+0.1)
+🔹 JPY : 4.71 (+0.6)
+🔹 USD : 3.71 (+1.4)
+🔹 CHF : 3.14 (-1.4)
+💀 CAD : 2.29 (-0.6)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 5 SIGNALS**
+1️⃣ **AUD/CAD 👑2**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+
+2️⃣ **NZD/CAD 👑2**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+
+3️⃣ **EUR/CAD 👑1**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+
+4️⃣ **AUD/CHF 👑1**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+
+5️⃣ **NZD/CHF 👑1**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+[session-write-lock] releasing lock held for 65921ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4359
+Message sent status: 0
+--- Running Signal at Thu May  7 10:30:01 AM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 10:30 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 EUR : 6.14 (+0.6)
+🥈 GBP : 5.86 (+1.0)
+🥉 AUD : 5.29 (-0.7)
+🔹 JPY : 4.86 (+0.1)
+🔹 NZD : 4.86 (-0.9)
+🔹 USD : 4.00 (+0.3)
+🔹 CHF : 2.86 (-0.3)
+💀 CAD : 2.14 (-0.1)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 5 SIGNALS**
+1️⃣ **EUR/CAD 👑2**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   BUY 🚧 MENTOK!
+
+2️⃣ **GBP/CAD 👑1**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+
+3️⃣ **EUR/CHF 👑1**
+   🟢 EMA: 3/4 (E20❌ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+
+4️⃣ **AUD/CAD 👑3**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+
+5️⃣ **GBP/CHF 👑1**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+[session-write-lock] releasing lock held for 60607ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4360
+Message sent status: 0
+--- Running Signal at Thu May  7 10:45:01 AM CST 2026 ---
+Signal Result: [TRACK] NZD/CAD REAPPEARED → stars=1, consecutive=1
+[TRACK] CAD/JPY REAPPEARED → stars=1, consecutive=1
+🤖 **CALLUNK AI TRADING AGENT**
+🕒 10:45 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 6.86 (+1.6)
+🥈 GBP : 5.43 (-0.4)
+🥉 EUR : 5.14 (-1.0)
+🔹 NZD : 5.00 (+0.1)
+🔹 JPY : 4.71 (-0.1)
+🔹 USD : 4.29 (+0.3)
+🔹 CHF : 3.43 (+0.6)
+💀 CAD : 1.14 (-1.0)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 5 SIGNALS**
+1️⃣ **AUD/CAD 👑4**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   BUY 🚧 MENTOK!
+
+2️⃣ **GBP/CAD 👑2**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   BUY 🚧 MENTOK!
+
+3️⃣ **EUR/CAD 👑3**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   BUY 🚧 MENTOK!
+
+4️⃣ **NZD/CAD ⭐1**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+
+5️⃣ **CAD/JPY ⭐1**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+[session-write-lock] releasing lock held for 66087ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4361
+Message sent status: 0
+--- Running Signal at Thu May  7 11:00:01 AM CST 2026 ---
+Signal Result: [TRACK] NZD/JPY REAPPEARED → stars=1, consecutive=1
+🤖 **CALLUNK AI TRADING AGENT**
+🕒 11:00 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 6.43 (-0.4)
+🥈 NZD : 5.71 (+0.7)
+🥉 EUR : 5.43 (+0.3)
+🔹 GBP : 5.43
+🔹 USD : 4.14 (-0.1)
+🔹 CHF : 3.71 (+0.3)
+🔹 JPY : 2.57 (-2.1)
+💀 CAD : 2.57 (+1.4)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 5 SIGNALS**
+1️⃣ **AUD/JPY 👑1**
+   🟢 EMA: 3/4 (E20✅ E50✅ E100✅ E200❌)
+   NUNGGU SINYAL ⏳
+
+2️⃣ **AUD/CAD 👑5**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+
+3️⃣ **NZD/JPY ⭐1**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+
+4️⃣ **NZD/CAD ⭐2**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+
+5️⃣ **EUR/JPY 👑1**
+   🟢 EMA: 3/4 (E20❌ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+[session-write-lock] releasing lock held for 45576ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4362
+Message sent status: 0
+--- Running Signal at Thu May  7 11:15:01 AM CST 2026 ---
+Signal Result: [TRACK] AUD/CHF REAPPEARED → stars=1, consecutive=1
+[TRACK] NZD/CHF REAPPEARED → stars=1, consecutive=1
+🤖 **CALLUNK AI TRADING AGENT**
+🕒 11:15 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 5.86 (-0.6)
+🥈 NZD : 5.71
+🥉 USD : 5.00 (+0.9)
+🔹 EUR : 5.00 (-0.4)
+🔹 GBP : 5.00 (-0.4)
+🔹 JPY : 3.29 (+0.7)
+🔹 CAD : 3.29 (+0.7)
+💀 CHF : 2.86 (-0.9)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 5 SIGNALS**
+1️⃣ **AUD/CHF ⭐1**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+
+2️⃣ **NZD/CHF ⭐1**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+
+3️⃣ **AUD/JPY 👑2**
+   🟢 EMA: 3/4 (E20✅ E50❌ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+
+4️⃣ **AUD/CAD 👑6**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+
+5️⃣ **NZD/JPY ⭐2**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+[session-write-lock] releasing lock held for 64939ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4363
+Message sent status: 0
+--- Running Signal at Thu May  7 11:30:01 AM CST 2026 ---
+Signal Result: 🤖 **CALLUNK AI TRADING AGENT**
+🕒 11:30 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 6.43 (+0.6)
+🥈 GBP : 5.29 (+0.3)
+🥉 NZD : 5.14 (-0.6)
+🔹 USD : 4.86 (-0.1)
+🔹 EUR : 4.57 (-0.4)
+🔹 CHF : 3.43 (+0.6)
+🔹 CAD : 3.29
+💀 JPY : 3.00 (-0.3)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 5 SIGNALS**
+1️⃣ **AUD/JPY 👑3**
+   🟢 EMA: 3/4 (E20✅ E50✅ E100✅ E200❌)
+   NUNGGU SINYAL ⏳
+
+2️⃣ **AUD/CAD 👑7**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+
+3️⃣ **AUD/CHF ⭐2**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+
+4️⃣ **GBP/JPY 👑1**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+
+5️⃣ **NZD/JPY ⭐3**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+[session-write-lock] releasing lock held for 60581ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4364
+Message sent status: 0
+--- Running Signal at Thu May  7 11:45:01 AM CST 2026 ---
+Signal Result: [TRACK] NZD/CHF REAPPEARED → stars=2, consecutive=1
+🤖 **CALLUNK AI TRADING AGENT**
+🕒 11:45 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 7.00 (+0.6)
+🥈 NZD : 5.43 (+0.3)
+🥉 USD : 5.29 (+0.4)
+🔹 GBP : 4.57 (-0.7)
+🔹 EUR : 4.29 (-0.3)
+🔹 CAD : 3.43 (+0.1)
+🔹 JPY : 3.29 (+0.3)
+💀 CHF : 2.71 (-0.7)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 5 SIGNALS**
+1️⃣ **AUD/CHF ⭐3**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   BUY 🚧 MENTOK!
+
+2️⃣ **AUD/JPY 👑4**
+   🟢 EMA: 3/4 (E20✅ E50✅ E100✅ E200❌)
+   NUNGGU SINYAL ⏳
+
+3️⃣ **AUD/CAD 👑8**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+
+4️⃣ **EUR/AUD 👑1**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+
+5️⃣ **NZD/CHF ⭐⭐1**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+[session-write-lock] releasing lock held for 64278ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4365
+Message sent status: 0
+--- Running Signal at Thu May  7 12:00:01 PM CST 2026 ---
+Signal Result: [TRACK] USD/JPY REAPPEARED → stars=1, consecutive=1
+🤖 **CALLUNK AI TRADING AGENT**
+🕒 12:00 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 7.86 (+0.9)
+🥈 USD : 6.00 (+0.7)
+🥉 NZD : 5.57 (+0.1)
+🔹 EUR : 4.57 (+0.3)
+🔹 CAD : 3.71 (+0.3)
+🔹 GBP : 3.43 (-1.1)
+🔹 JPY : 2.43 (-0.9)
+💀 CHF : 2.43 (-0.3)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 5 SIGNALS**
+1️⃣ **AUD/JPY 👑5**
+   🟢 EMA: 3/4 (E20✅ E50✅ E100✅ E200❌)
+   BUY 🚧 MENTOK!
+
+2️⃣ **AUD/CHF ⭐4**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   BUY 🚧 MENTOK!
+
+3️⃣ **GBP/AUD 👑1**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   SELL 🚧 MENTOK!
+
+4️⃣ **AUD/CAD 👑9**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   BUY 🚧 MENTOK!
+
+5️⃣ **USD/JPY ⭐1**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+[session-write-lock] releasing lock held for 60942ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4366
+Message sent status: 0
+--- Running Signal at Thu May  7 12:15:01 PM CST 2026 ---
+Signal Result: [TRACK] NZD/CHF REAPPEARED → stars=3, consecutive=1
+[TRACK] NZD/JPY REAPPEARED → stars=2, consecutive=1
+🤖 **CALLUNK AI TRADING AGENT**
+🕒 12:15 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 7.00 (-0.9)
+🥈 NZD : 6.00 (+0.4)
+🥉 USD : 5.14 (-0.9)
+🔹 EUR : 4.43 (-0.1)
+🔹 CAD : 4.43 (+0.7)
+🔹 GBP : 3.86 (+0.4)
+🔹 JPY : 2.71 (+0.3)
+💀 CHF : 2.43
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 5 SIGNALS**
+1️⃣ **AUD/CHF ⭐5**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   BUY 🚧 MENTOK!
+
+2️⃣ **AUD/JPY 👑6**
+   🟢 EMA: 3/4 (E20✅ E50✅ E100✅ E200❌)
+   BUY 🚧 MENTOK!
+
+3️⃣ **NZD/CHF ⭐⭐⭐1**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+
+4️⃣ **NZD/JPY ⭐⭐1**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+
+5️⃣ **GBP/AUD 👑2**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+[session-write-lock] releasing lock held for 65089ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4367
+Message sent status: 0
+--- Running Signal at Thu May  7 12:30:01 PM CST 2026 ---
+Signal Result: [TRACK] EUR/AUD REAPPEARED → stars=1, consecutive=1
+[TRACK] AUD/CAD REAPPEARED → stars=1, consecutive=1
+🤖 **CALLUNK AI TRADING AGENT**
+🕒 12:30 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 8.00 (+1.0)
+🥈 NZD : 6.43 (+0.4)
+🥉 GBP : 4.29 (+0.4)
+🔹 USD : 4.14 (-1.0)
+🔹 EUR : 4.00 (-0.4)
+🔹 CAD : 4.00 (-0.4)
+🔹 JPY : 2.57 (-0.1)
+💀 CHF : 2.57 (+0.1)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 5 SIGNALS**
+1️⃣ **AUD/JPY 👑7**
+   🟢 EMA: 3/4 (E20✅ E50✅ E100✅ E200❌)
+   BUY 🚧 MENTOK!
+
+2️⃣ **AUD/CHF ⭐6**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   BUY 🚧 MENTOK!
+
+3️⃣ **EUR/AUD ⭐1**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   SELL 🚧 MENTOK!
+
+4️⃣ **AUD/CAD ⭐1**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   BUY 🚧 MENTOK!
+
+5️⃣ **NZD/JPY ⭐⭐2**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+[session-write-lock] releasing lock held for 60782ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4368
+Message sent status: 0
+--- Running Signal at Thu May  7 12:45:02 PM CST 2026 ---
+Signal Result: [TRACK] AUD/USD REAPPEARED → stars=1, consecutive=1
+🤖 **CALLUNK AI TRADING AGENT**
+🕒 12:45 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 8.57 (+0.6)
+🥈 NZD : 6.57 (+0.1)
+🥉 CAD : 4.57 (+0.6)
+🔹 GBP : 4.29
+🔹 USD : 4.00 (-0.1)
+🔹 EUR : 3.14 (-0.9)
+🔹 CHF : 2.71 (+0.1)
+💀 JPY : 2.14 (-0.4)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 5 SIGNALS**
+1️⃣ **AUD/JPY 👑8**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   BUY 🚧 MENTOK!
+
+2️⃣ **AUD/CHF ⭐7**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   BUY 🚧 MENTOK!
+
+3️⃣ **EUR/AUD ⭐2**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   SELL 🚧 MENTOK!
+
+4️⃣ **AUD/USD ⭐1**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   BUY 🚧 MENTOK!
+
+5️⃣ **NZD/JPY ⭐⭐3**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   BUY 🚧 MENTOK!
+[session-write-lock] releasing lock held for 69252ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4370
+Message sent status: 0
+--- Running Signal at Thu May  7 01:00:02 PM CST 2026 ---
+Signal Result: [TRACK] NZD/CHF REAPPEARED → stars=4, consecutive=1
+[TRACK] AUD/CAD REAPPEARED → stars=2, consecutive=1
+🤖 **CALLUNK AI TRADING AGENT**
+🕒 13:00 (GMT+8) | Data: D1 (Real-time)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+📊 **CURRENCY STRENGTH BOARD**
+🥇 AUD : 7.71 (-0.9)
+🥈 NZD : 6.29 (-0.3)
+🥉 USD : 4.71 (+0.7)
+🔹 GBP : 4.43 (+0.1)
+🔹 CAD : 4.00 (-0.6)
+🔹 EUR : 3.86 (+0.7)
+🔹 JPY : 2.71 (+0.6)
+💀 CHF : 2.29 (-0.4)
+〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️〰️
+🎯 **TOP 5 SIGNALS**
+1️⃣ **AUD/CHF ⭐8**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   BUY 🚧 MENTOK!
+
+2️⃣ **AUD/JPY 👑9**
+   🟢 EMA: 3/4 (E20✅ E50✅ E100✅ E200❌)
+   BUY 🚧 MENTOK!
+
+3️⃣ **NZD/CHF ⭐⭐⭐⭐1**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   BUY 🚧 MENTOK!
+
+4️⃣ **EUR/AUD ⭐3**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+
+5️⃣ **AUD/CAD ⭐⭐1**
+   🟢 EMA: 4/4 (E20✅ E50✅ E100✅ E200✅)
+   NUNGGU SINYAL ⏳
+[session-write-lock] releasing lock held for 65174ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4385
+Message sent status: 0

@@ -84,7 +84,7 @@ Sender (untrusted metadata):
 }
 ```
 
-jadikan deepseek default, perbaiki gemma-4 kenapa error, ini keynya: [REDACTED]
+jadikan deepseek default, perbaiki gemma-4 kenapa error, ini keynya:
 [REDACTED]
 yang lain sisanya hapus semua
 assistant: Now verify GEMINI_API_KEY is in systemd service:

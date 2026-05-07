@@ -3,7 +3,6 @@ from datetime import datetime
 import time
 import json
 import os
-import math
 from position_manager import load_positions
 
 # Signal history tracking for consecutive numbering
@@ -121,11 +120,13 @@ PAIRS = [
 def get_all_strengths():
     try:
         # Format for TradingView Scanner API (OANDA broker)
+        # Columns: close=current price, high=current daily high, low=current daily low
+        # (matching MQ4 MarketInfo MODE_HIGH/MODE_LOW/MODE_BID)
         tickers = [f"OANDA:{p.replace('/', '')}" for p in PAIRS]
         
         payload = {
             "symbols": {"tickers": tickers},
-            "columns": ["close", "high[1]", "low[1]"] # Current close, yesterday's high, yesterday's low
+            "columns": ["close", "high", "low"]
         }
         
         url = "https://scanner.tradingview.com/forex/scan"
@@ -137,22 +138,29 @@ def get_all_strengths():
             symbol = row["s"].replace("OANDA:", "")
             pair = f"{symbol[:3]}/{symbol[3:]}"
             
-            c = float(row["d"][0])
-            h = float(row["d"][1])
-            l = float(row["d"][2])
+            c = float(row["d"][0])  # current close/bid
+            h = float(row["d"][1])  # current day high
+            l = float(row["d"][2])  # current day low
             
             if h == l:
-                strengths[pair] = 4.5
+                strengths[pair] = 0
                 continue
 
-            # Distance dari midpoint (satuan half-range)
-            mid = (h + l) / 2
-            half_range = (h - l) / 2
-            distance = (c - mid) / half_range
+            # Original "Giraia" logic dari callunk.mq4 CalculateCurrencyStrength()
+            bid_ratio = (c - l) / (h - l)  # (curr_bid - day_low) / (day_high - day_low)
 
-            # Sigmoid mapping: distance -> 0-9
-            # Jarak 0 -> 4.5, breakout jauh tetep smooth ke 0/9 (gak clamping mentah)
-            score = round(9 / (1 + math.exp(-distance * 0.4)), 2)
+            # Discrete bucket mapping 0-9
+            if   bid_ratio >= 0.97: score = 9
+            elif bid_ratio >= 0.90: score = 8
+            elif bid_ratio >= 0.75: score = 7
+            elif bid_ratio >= 0.60: score = 6
+            elif bid_ratio >= 0.50: score = 5
+            elif bid_ratio >= 0.40: score = 4
+            elif bid_ratio >= 0.25: score = 3
+            elif bid_ratio >= 0.10: score = 2
+            elif bid_ratio >= 0.03: score = 1
+            else:                   score = 0
+
             strengths[pair] = score
             
         return strengths
