@@ -11,6 +11,6 @@ rsync -av --exclude='github_backup' --exclude='.git' --exclude='__pycache__' "$W
 cd "$BACKUP_DIR"
 GIT_SSH_COMMAND="ssh -i $SSH_KEY" git add .
 GIT_SSH_COMMAND="ssh -i $SSH_KEY" git commit -m "Daily Backup from Cuy - $(date '+%Y-%m-%d %H:%M')"
-if GIT_SSH_COMMAND="ssh -i $SSH_KEY" git push origin main; then
+if GIT_SSH_COMMAND="ssh -i $SSH_KEY" git push origin master; then
     /root/.nvm/versions/node/v22.22.1/bin/openclaw message send --channel telegram --target "891202720" --message "sep, backup done! 👑🚀"
 fi

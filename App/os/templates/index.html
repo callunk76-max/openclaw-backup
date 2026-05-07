@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Polygon NIB — OSS RBA</title>
-<link rel="icon" type="image/x-icon" href="/os/static/assets/favicon.ico" />
-<link rel="icon" type="image/png" sizes="32x32" href="/os/static/assets/favicon-32x32.png" />
-<link rel="icon" type="image/png" sizes="192x192" href="/os/static/assets/favicon-192x192.png" />
+<link rel="icon" type="image/x-icon" href="/static/assets/favicon.ico" />
+<link rel="icon" type="image/png" sizes="32x32" href="/static/assets/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/static/assets/favicon-192x192.png" />
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <link rel="stylesheet" href="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css" />
 <style>
@@ -396,12 +396,20 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:
     <!-- Export -->
     <div class="section">
       <div class="section-title">💾 Export</div>
-      <div class="export-buttons">
+      <div class="export-buttons" style="margin-bottom:6px">
         <button class="btn btn-success" id="exportGeoJSONBtn" disabled>
           📥 GeoJSON
         </button>
         <button class="btn btn-success" id="exportKMLBtn" disabled>
           📥 KML
+        </button>
+      </div>
+      <div class="export-buttons">
+        <button class="btn btn-purple" id="exportSHPBtn" disabled>
+          🗺️ SHP (ZIP)
+        </button>
+        <button class="btn btn-warning" id="exportZipBtn" disabled>
+          📦 All (ZIP)
         </button>
       </div>
     </div>
@@ -466,6 +474,8 @@ const deletePolyBtn = $('deletePolyBtn');
 const fitPolyBtn = $('fitPolyBtn');
 const exportGeoJSONBtn = $('exportGeoJSONBtn');
 const exportKMLBtn = $('exportKMLBtn');
+const exportSHPBtn = $('exportSHPBtn');
+const exportZipBtn = $('exportZipBtn');
 const coordDisplay = $('coordDisplay');
 const toast = $('toast');
 const fileInput = $('fileInput');
@@ -586,6 +596,8 @@ function updatePolyUI(layer, opts) {
     fitPolyBtn.disabled = true;
     exportGeoJSONBtn.disabled = true;
     exportKMLBtn.disabled = true;
+    exportSHPBtn.disabled = true;
+    exportZipBtn.disabled = true;
     return;
   }
 
@@ -604,6 +616,8 @@ function updatePolyUI(layer, opts) {
   fitPolyBtn.disabled = false;
   exportGeoJSONBtn.disabled = false;
   exportKMLBtn.disabled = false;
+  exportSHPBtn.disabled = false;
+  exportZipBtn.disabled = false;
 
   state.drawnLayer = layer;
 
@@ -923,87 +937,32 @@ fitFileBtn.addEventListener('click', function() {
 // Export GeoJSON
 // ===========================
 exportGeoJSONBtn.addEventListener('click', function() {
-  if (!state.drawnLayer) {
-    showToast('Gambar polygon dulu', 'error');
-    return;
-  }
-
-  const namaUsaha = usahaInput.value.trim() || 'Lokasi Usaha';
-  const keterangan = lokasiInput.value.trim() || 'Lokasi usaha';
-  const luas = Math.round(calculateArea(state.drawnLayer));
-
-  // Extract coordinates
-  const geoLayer = state.drawnLayer.toGeoJSON();
-  let coordinates = geoLayer.geometry.coordinates;
-
-  // Ensure ring closure
-  const ring = coordinates[0];
-  if (ring.length > 0) {
-    const first = ring[0];
-    const last = ring[ring.length - 1];
-    if (first[0] !== last[0] || first[1] !== last[1]) {
-      ring.push(first);
-    }
-  }
-
-  const feature = {
-    type: 'Feature',
-    geometry: {
-      type: 'Polygon',
-      coordinates: coordinates
-    },
-    properties: {
-      nama_usaha: namaUsaha,
-      keterangan_lokasi: keterangan,
-      luas_m2: luas,
-      sumber: 'OSS Polygon Editor'
-    }
-  };
-
-  const collection = {
-    type: 'FeatureCollection',
-    features: [feature]
-  };
-
-  // Send to server for validation & download
-  fetch('/os/api/export', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(collection)
-  })
-  .then(function(resp) {
-    if (!resp.ok) return resp.json().then(function(e) { throw new Error(e.error); });
-    return resp.blob();
-  })
-  .then(function(blob) {
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = blob.name || 'polygon_nib_export.geojson';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-    showToast('✅ GeoJSON diunduh — siap upload ke OSS-RBA', 'success');
-  })
-  .catch(function(err) {
-    showToast('Gagal export: ' + err.message, 'error');
-  });
+  if (!state.drawnLayer) { showToast('Gambar polygon dulu', 'error'); return; }
+  const fc = buildFeatureCollection();
+  if (!fc) return;
+  downloadPost('/os/api/export', fc, 'polygon_nib_export.geojson');
+  showToast('✅ GeoJSON diunduh — siap upload ke OSS-RBA', 'success');
 });
 
 // ===========================
 // Export KML
 // ===========================
 exportKMLBtn.addEventListener('click', function() {
-  if (!state.drawnLayer) {
-    showToast('Gambar polygon dulu', 'error');
-    return;
-  }
+  if (!state.drawnLayer) { showToast('Gambar polygon dulu', 'error'); return; }
+  const fc = buildFeatureCollection();
+  if (!fc) return;
+  downloadPost('/os/api/export-kml', fc, 'polygon_nib_export.kml');
+  showToast('✅ KML diunduh', 'success');
+});
 
+// ===========================
+// Helper: build FeatureCollection from drawn layer
+// ===========================
+function buildFeatureCollection() {
+  if (!state.drawnLayer) return null;
   const namaUsaha = usahaInput.value.trim() || 'Lokasi Usaha';
   const keterangan = lokasiInput.value.trim() || 'Lokasi usaha';
   const luas = Math.round(calculateArea(state.drawnLayer));
-
   const geoLayer = state.drawnLayer.toGeoJSON();
   let coordinates = geoLayer.geometry.coordinates;
   const ring = coordinates[0];
@@ -1014,26 +973,25 @@ exportKMLBtn.addEventListener('click', function() {
       ring.push(first);
     }
   }
-
-  const feature = {
-    type: 'Feature',
-    geometry: { type: 'Polygon', coordinates: coordinates },
-    properties: {
-      nama_usaha: namaUsaha,
-      keterangan_lokasi: keterangan,
-      luas_m2: luas
-    }
-  };
-
-  const collection = {
+  return {
     type: 'FeatureCollection',
-    features: [feature]
+    features: [{
+      type: 'Feature',
+      geometry: { type: 'Polygon', coordinates: coordinates },
+      properties: {
+        nama_usaha: namaUsaha,
+        keterangan_lokasi: keterangan,
+        luas_m2: luas
+      }
+    }]
   };
+}
 
-  fetch('/os/api/export-kml', {
+function downloadPost(url, data, filename) {
+  fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(collection)
+    body: JSON.stringify(data)
   })
   .then(function(resp) {
     if (!resp.ok) return resp.json().then(function(e) { throw new Error(e.error); });
@@ -1043,17 +1001,53 @@ exportKMLBtn.addEventListener('click', function() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'polygon_nib_export.kml';
+    a.download = filename || 'export';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-    showToast('✅ KML diunduh', 'success');
   })
   .catch(function(err) {
-    showToast('Gagal export KML: ' + err.message, 'error');
+    showToast('Gagal export: ' + err.message, 'error');
   });
+}
+
+// ===========================
+// Export SHP (Shapefile dalam ZIP)
+// ===========================
+exportSHPBtn.addEventListener('click', function() {
+  if (!state.drawnLayer) { showToast('Gambar polygon dulu', 'error'); return; }
+  const fc = buildFeatureCollection();
+  if (!fc) return;
+  showToast('⏳ Generate Shapefile...', '');
+  downloadPost('/os/api/export-shp', fc, 'polygon_nib_shapefile.zip');
+  setTimeout(function() {
+    showToast('✅ SHP diunduh — siap upload ke OSS-RBA', 'success');
+  }, 1500);
 });
+
+// ===========================
+// Export ZIP (Semua format)
+// ===========================
+exportZipBtn.addEventListener('click', function() {
+  if (!state.drawnLayer) { showToast('Gambar polygon dulu', 'error'); return; }
+  const fc = buildFeatureCollection();
+  if (!fc) return;
+  showToast('⏳ Generate semua format...', '');
+  downloadPost('/os/api/export-zip', fc, 'polygon_nib_complete.zip');
+  setTimeout(function() {
+    showToast('✅ ZIP (GeoJSON + KML + SHP) diunduh', 'success');
+  }, 2000);
+});
+
+// ===========================
+// Refactor existing exports to use buildFeatureCollection
+// ===========================
+// Override the old handlers to use the shared helper
+(function() {
+  const oldGeo = exportGeoJSONBtn._listeners ? exportGeoJSONBtn._listeners.click : null;
+  const oldKML = exportKMLBtn._listeners ? exportKMLBtn._listeners.click : null;
+})();
 
 // ===========================
 // Toast

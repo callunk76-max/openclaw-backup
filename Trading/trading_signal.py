@@ -4,6 +4,7 @@ import time
 import json
 import os
 from position_manager import load_positions
+import trading_snd
 
 # Signal history tracking for consecutive numbering
 SIGNAL_HISTORY_FILE = '/root/.openclaw/workspace/Trading/signal_history.json'
@@ -259,7 +260,8 @@ def get_ema_gates():
 
 
 def fmt_gate_line(pair, gates, is_buy):
-    """Format EMA gate display, e.g. '🟢 EMA: 3/4 (20 ✓ 50 ✓ 100 ✓ 200 ✗)'"""
+    """Format EMA gate display: '🟢 EMA: 4/4 E20🟢 E50🟢 E100🔴 E200🔴'
+    🟢 = close above EMA, 🔴 = close below EMA."""
     g = gates.get(pair, {})
     if not g.get("emas"):
         return None
@@ -269,9 +271,6 @@ def fmt_gate_line(pair, gates, is_buy):
     bull = g["bull"]
     periods = ["20", "50", "100", "200"]
 
-    # Show checkmarks aligned with trade direction:
-    # For BUY trades: ✓ if close > EMA, ✗ if close < EMA
-    # For SELL trades: ✓ if close < EMA, ✗ if close > EMA
     parts = []
     for p in periods:
         ema = emas.get(p)
@@ -279,13 +278,11 @@ def fmt_gate_line(pair, gates, is_buy):
             parts.append(f"E{p}?")
         else:
             above = close > ema
-            ok = above if is_buy else not above
-            mark = "✅" if ok else "❌"
+            mark = "🟢" if above else "🔴"
             parts.append(f"E{p}{mark}")
 
-    count = bull if is_buy else g["bear"]
-    icon = "🟢" if count >= 3 else "🟡" if count >= 2 else "🔴"
-    return f"{icon} EMA: {count}/4 ({' '.join(parts)})"
+    icon = "🟢" if (bull if is_buy else g["bear"]) >= 3 else "🟡" if (bull if is_buy else g["bear"]) >= 2 else "🔴"
+    return f"{icon} EMA: {' '.join(parts)}"
 
 
 def get_decision_label(gap):
@@ -491,9 +488,12 @@ def generate_signal():
     # Track signal history for consecutive numbering
     current_pairs = [s['pair'] for s in top_5]
     signal_counts = update_signal_history(current_pairs)
+    
+    # ---------------- FETCH EMA GATES & SND ZONES ---------------- #
+    all_gates = get_ema_gates()
 
-    # Fetch pivot levels for top pairs
-    pivot_data = get_pivot_levels(current_pairs) if current_pairs else {}
+    # Fetch SnD zone analysis for top pairs
+    snd_data = trading_snd.analyze_all_pairs(current_pairs, all_gates, all_gates) if current_pairs else {}
     
     # ---------------- LOAD PREVIOUS STATE FOR DELTAS ---------------- #
     prev = load_prev_signal()
@@ -504,9 +504,6 @@ def generate_signal():
     current_strengths = {c: round(v, 2) for c, v in all_powers.items()}
     current_gaps = {g['pair']: round(g['gap'], 2) for g in all_gaps}
     save_prev_signal({'strengths': current_strengths, 'gaps': current_gaps})
-
-    # ---------------- FETCH EMA GATES & PIVOTS ---------------- #
-    all_gates = get_ema_gates()
 
     # ---------------- BUILD MESSAGE ---------------- #
     msg_parts = []
@@ -560,16 +557,17 @@ def generate_signal():
         if gate_line:
             msg_parts.append(f"   {gate_line}")
 
-        # Indicator: SnR Advice
+        # Indicator: SnD Advice (Supply & Demand Zones)
         g = all_gates.get(s['pair'], {})
         cur_price = g.get("close", 0)
         if "BUY" in s['action']:
-            snr_dir = "BUY"
+            snd_dir = "BUY"
         elif "SELL" in s['action']:
-            snr_dir = "SELL"
+            snd_dir = "SELL"
         else:
-            snr_dir = "NEUTRAL"
-        advice = fmt_snr_advice(s['pair'], pivot_data, cur_price, snr_dir) if cur_price else None
+            snd_dir = "NEUTRAL"
+        pair_snd = snd_data.get(s['pair'], {})
+        advice = trading_snd.fmt_snd_advice(s['pair'], pair_snd, cur_price, snd_dir) if pair_snd.get('has_data') and cur_price else None
         if advice:
             msg_parts.append(f"   {advice}")
 

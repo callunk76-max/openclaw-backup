@@ -11,7 +11,11 @@ import os
 import io
 import time
 import hashlib
+import struct
+import zipfile
+import tempfile
 from datetime import datetime
+import shapefile
 
 app = Flask(__name__)
 
@@ -166,6 +170,227 @@ def export_kml():
         as_attachment=True,
         download_name=filename
     )
+
+@app.route('/api/export-shp', methods=['POST'])
+def export_shapefile():
+    """Export polygon as Shapefile (.shp + .shx + .dbf + .prj)."""
+    data = request.get_json()
+    if not data or data.get('type') != 'FeatureCollection':
+        return jsonify({'error': 'Need valid FeatureCollection'}), 400
+
+    features = data.get('features', [])
+    if not features:
+        return jsonify({'error': 'No features'}), 400
+
+    geom = features[0].get('geometry', {})
+    props = features[0].get('properties', {})
+    if geom.get('type') not in ('Polygon', 'MultiPolygon'):
+        return jsonify({'error': 'Must be Polygon or MultiPolygon'}), 400
+
+    keterangan = props.get('keterangan_lokasi', 'Lokasi Usaha')
+    luas = props.get('luas_m2', 0)
+    nama_usaha = props.get('nama_usaha', '')
+
+    coords = geom['coordinates']
+    if geom['type'] == 'Polygon':
+        parts = [coords]
+    else:
+        parts = coords
+
+    # Build shapefile in memory
+    with tempfile.NamedTemporaryFile(suffix='.shp', delete=False) as tmp_shp:
+        shp_path = tmp_shp.name.replace('.shp', '')
+
+    try:
+        w = shapefile.Writer(shp_path, shapeType=shapefile.POLYGON)
+        w.field('NAMA_USAHA', 'C', size=100)
+        w.field('KETERANGAN', 'C', size=250)
+        w.field('LUAS_M2', 'N', size=15, decimal=2)
+
+        for ring_list in parts:
+            # ring_list[0] = outer ring (list of [lng, lat])
+            pts = [(c[0], c[1]) for c in ring_list[0]]
+            w.poly([pts])
+            w.record(nama_usaha or '-', keterangan or '-', float(luas))
+
+        w.close()
+
+        # Create .prj file (WGS84)
+        prj_content = 'GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563]],PRIMEM["Greenwich",0],UNIT["degree",0.0174532925199433]]'
+
+        # Package all into zip
+        base = f"polygon_nib_{''.join(c if c.isalnum() or c in '-_' else '_' for c in keterangan)[:40]}"
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+
+        buf = io.BytesIO()
+        with zipfile.ZipFile(buf, 'w', zipfile.ZIP_DEFLATED) as zf:
+            for ext in ['shp', 'shx', 'dbf']:
+                fpath = f'{shp_path}.{ext}'
+                if os.path.exists(fpath):
+                    zf.write(fpath, f'{base}_{timestamp}.{ext}')
+            zf.writestr(f'{base}_{timestamp}.prj', prj_content)
+
+        buf.seek(0)
+
+        return send_file(
+            buf,
+            mimetype='application/zip',
+            as_attachment=True,
+            download_name=f'{base}_{timestamp}.zip'
+        )
+
+    finally:
+        # Cleanup temp files
+        for ext in ['shp', 'shx', 'dbf', 'shp.xml']:
+            fpath = f'{shp_path}.{ext}'
+            if os.path.exists(fpath):
+                try:
+                    os.unlink(fpath)
+                except:
+                    pass
+
+
+@app.route('/api/export-zip', methods=['POST'])
+def export_zip():
+    """Export all formats (GeoJSON + KML + Shapefile) in one ZIP."""
+    data = request.get_json()
+    if not data or data.get('type') != 'FeatureCollection':
+        return jsonify({'error': 'Need valid FeatureCollection'}), 400
+
+    features = data.get('features', [])
+    if not features:
+        return jsonify({'error': 'No features'}), 400
+
+    geom = features[0].get('geometry', {})
+    props = features[0].get('properties', {})
+    if geom.get('type') not in ('Polygon', 'MultiPolygon'):
+        return jsonify({'error': 'Must be Polygon or MultiPolygon'}), 400
+
+    keterangan = props.get('keterangan_lokasi', 'Lokasi Usaha')
+    safe_name = ''.join(c if c.isalnum() or c in '-_' else '_' for c in keterangan)[:40]
+    timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+    base = f'nib_{safe_name}_{timestamp}'
+
+    buf = io.BytesIO()
+
+    with zipfile.ZipFile(buf, 'w', zipfile.ZIP_DEFLATED) as zf:
+        # 1. GeoJSON
+        geojson_output = {
+            'type': 'FeatureCollection',
+            'metadata': {
+                'generated_by': 'oss-polygon-editor',
+                'generated_at': datetime.utcnow().isoformat() + 'Z',
+                'purpose': 'NIB OSS-RBA',
+                'crs': 'EPSG:4326'
+            },
+            'features': features
+        }
+        zf.writestr(f'{base}.geojson', json.dumps(geojson_output, indent=2, ensure_ascii=False))
+
+        # 2. KML
+        kml_parts = [
+            '<?xml version="1.0" encoding="UTF-8"?>',
+            '<kml xmlns="http://www.opengis.net/kml/2.2">',
+            '  <Document>',
+            f'    <name>NIB Polygon - {keterangan}</name>',
+            f'    <description>Generated {datetime.utcnow().isoformat()}Z</description>'
+        ]
+        for feat in features:
+            g = feat['geometry']
+            p = feat.get('properties', {})
+            name = p.get('keterangan_lokasi', 'Lokasi Usaha')
+            luas_val = p.get('luas_m2', '')
+            kml_parts.append('    <Placemark>')
+            kml_parts.append(f'      <name>{name}</name>')
+            if luas_val:
+                kml_parts.append(f'      <description>Luas: {luas_val} m²</description>')
+            kml_parts.append('      <Polygon>')
+            kml_parts.append('        <outerBoundaryIs>')
+            kml_parts.append('          <LinearRing>')
+            kml_parts.append('            <coordinates>')
+            for coord in g['coordinates'][0]:
+                kml_parts.append(f'              {coord[0]},{coord[1]},0')
+            kml_parts.append('            </coordinates>')
+            kml_parts.append('          </LinearRing>')
+            kml_parts.append('        </outerBoundaryIs>')
+            kml_parts.append('      </Polygon>')
+            kml_parts.append('    </Placemark>')
+        kml_parts.append('  </Document>')
+        kml_parts.append('</kml>')
+        zf.writestr(f'{base}.kml', '\n'.join(kml_parts))
+
+        # 3. Shapefile
+        coords = geom['coordinates']
+        if geom['type'] == 'Polygon':
+            parts = [coords]
+        else:
+            parts = coords
+
+        with tempfile.NamedTemporaryFile(suffix='.shp', delete=False) as tmp_shp:
+            shp_path = tmp_shp.name.replace('.shp', '')
+
+        try:
+            w = shapefile.Writer(shp_path, shapeType=shapefile.POLYGON)
+            w.field('NAMA_USAHA', 'C', size=100)
+            w.field('KETERANGAN', 'C', size=250)
+            w.field('LUAS_M2', 'N', size=15, decimal=2)
+
+            for ring_list in parts:
+                pts = [(c[0], c[1]) for c in ring_list[0]]
+                w.poly([pts])
+                w.record(props.get('nama_usaha', '-'), keterangan or '-', float(props.get('luas_m2', 0)))
+            w.close()
+
+            prj_content = 'GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563]],PRIMEM["Greenwich",0],UNIT["degree",0.0174532925199433]]'
+            for ext in ['shp', 'shx', 'dbf']:
+                fpath = f'{shp_path}.{ext}'
+                if os.path.exists(fpath):
+                    zf.write(fpath, f'{base}.{ext}')
+            zf.writestr(f'{base}.prj', prj_content)
+        finally:
+            for ext in ['shp', 'shx', 'dbf', 'shp.xml']:
+                fpath = f'{shp_path}.{ext}'
+                if os.path.exists(fpath):
+                    try:
+                        os.unlink(fpath)
+                    except:
+                        pass
+
+        # 4. README
+        readme = f"""File Polygon NIB - OSS RBA
+{'='*40}
+
+Nama Usaha      : {props.get('nama_usaha', '-')}
+Keterangan      : {keterangan}
+Luas            : {props.get('luas_m2', 0)} m²
+Tanggal Export  : {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+Sumber          : oss-polygon-editor (callunk.my.id/os)
+
+Format dalam ZIP:
+- {base}.geojson  → GeoJSON (untuk OSS-RBA)
+- {base}.kml      → KML (Google Earth)
+- {base}.shp      → Shapefile (ArcGIS/QGIS)
+- {base}.shx      → Shape index
+- {base}.dbf      → Shape attributes
+- {base}.prj      → Proyeksi WGS84
+
+Cara upload ke OSS-RBA:
+1. Buka https://oss.go.id
+2. Pilih menu Permohonan NIB
+3. Upload file ZIP atau GeoJSON di bagian lokasi usaha
+4. Pastikan polygon tidak tumpang tindih dengan kawasan hutan
+"""
+        zf.writestr('README.txt', readme)
+
+    buf.seek(0)
+
+    return send_file(
+        buf,
+        mimetype='application/zip',
+        as_attachment=True,
+        download_name=f'nib_{safe_name}_{timestamp}.zip'
+    )
+
 
 @app.route('/api/search', methods=['GET'])
 def search_location():
