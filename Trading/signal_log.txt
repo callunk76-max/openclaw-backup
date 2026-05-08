@@ -467,3 +467,546 @@ Deleted: 4534
 --- Thu May  7 11:05:01 PM CST 2026 ---
 Sent: 4536
 Deleted: 4535
+--- Fri May  8 08:00:02 AM CST 2026 ---
+Sent: 4594
+Deleted: 4536
+--- Fri May  8 08:05:01 AM CST 2026 ---
+Sent: 4595
+Deleted: 4594
+--- Fri May  8 08:10:01 AM CST 2026 ---
+Sent: 4596
+Deleted: 4595
+--- Fri May  8 08:15:01 AM CST 2026 ---
+Sent: 4597
+Deleted: 4596
+--- Fri May  8 08:20:01 AM CST 2026 ---
+Sent: 4598
+Deleted: 4597
+--- Fri May  8 08:25:01 AM CST 2026 ---
+Sent: 4599
+Deleted: 4598
+--- Fri May  8 08:30:02 AM CST 2026 ---
+Sent: 4600
+Deleted: 4599
+--- Fri May  8 08:35:01 AM CST 2026 ---
+Sent: 4601
+Deleted: 4600
+--- Fri May  8 08:40:01 AM CST 2026 ---
+Sent: 4602
+Deleted: 4601
+--- Fri May  8 08:45:01 AM CST 2026 ---
+Sent: 4603
+Deleted: 4602
+--- Fri May  8 08:50:01 AM CST 2026 ---
+Sent: 4604
+Deleted: 4603
+--- Fri May  8 08:55:01 AM CST 2026 ---
+Sent: 4605
+Deleted: 4604
+--- Fri May  8 09:00:01 AM CST 2026 ---
+Sent: 4606
+Deleted: 4605
+--- Fri May  8 09:05:01 AM CST 2026 ---
+Sent: 4607
+Deleted: 4606
+--- Fri May  8 09:10:02 AM CST 2026 ---
+Sent: 4608
+Deleted: 4607
+--- Fri May  8 09:15:01 AM CST 2026 ---
+Sent: 4609
+Deleted: 4608
+--- Fri May  8 09:20:01 AM CST 2026 ---
+Sent: 4610
+Deleted: 4609
+--- Fri May  8 09:25:02 AM CST 2026 ---
+Sent: 4611
+Deleted: 4610
+--- Fri May  8 09:30:01 AM CST 2026 ---
+Sent: 4612
+Deleted: 4611
+--- Fri May  8 09:35:01 AM CST 2026 ---
+Sent: 4613
+Deleted: 4612
+--- Fri May  8 09:40:01 AM CST 2026 ---
+Sent: 4614
+Deleted: 4613
+--- Fri May  8 09:45:01 AM CST 2026 ---
+Sent: 4615
+Deleted: 4614
+--- Fri May  8 09:50:01 AM CST 2026 ---
+Sent: 4616
+Deleted: 4615
+--- Fri May  8 09:55:01 AM CST 2026 ---
+Sent: 4617
+Deleted: 4616
+--- Fri May  8 10:00:02 AM CST 2026 ---
+Sent: 4618
+Deleted: 4617
+--- Fri May  8 10:05:01 AM CST 2026 ---
+Sent: 4619
+Deleted: 4618
+--- Fri May  8 10:10:01 AM CST 2026 ---
+Sent: 4620
+Deleted: 4619
+--- Fri May  8 10:15:01 AM CST 2026 ---
+Sent: 4621
+Deleted: 4620
+--- Fri May  8 10:20:01 AM CST 2026 ---
+Sent: 4622
+Deleted: 4621
+--- Fri May  8 10:25:01 AM CST 2026 ---
+Sent: 4623
+Deleted: 4622
+--- Fri May  8 10:30:01 AM CST 2026 ---
+Sent: 4624
+Deleted: 4623
+--- Fri May  8 10:35:01 AM CST 2026 ---
+Sent: 4625
+Deleted: 4624
+--- Fri May  8 10:40:01 AM CST 2026 ---
+Sent: 4626
+Deleted: 4625
+--- Fri May  8 10:45:01 AM CST 2026 ---
+Sent: 4627
+Deleted: 4626
+--- Fri May  8 10:50:02 AM CST 2026 ---
+Sent: 4628
+Deleted: 4627
+--- Fri May  8 10:55:02 AM CST 2026 ---
+Sent: 4629
+Deleted: 4628
+--- Fri May  8 11:00:02 AM CST 2026 ---
+Sent: 4630
+Deleted: 4629
+--- Fri May  8 11:05:01 AM CST 2026 ---
+Sent: 4631
+Deleted: 4630
+--- Fri May  8 11:10:01 AM CST 2026 ---
+Sent: 4632
+Deleted: 4631
+--- Fri May  8 11:15:01 AM CST 2026 ---
+Sent: 4633
+Deleted: 4632
+--- Fri May  8 11:20:01 AM CST 2026 ---
+Sent: 4634
+Deleted: 4633
+--- Fri May  8 11:25:01 AM CST 2026 ---
+Sent: 4635
+Deleted: 4634
+--- Fri May  8 11:30:01 AM CST 2026 ---
+Sent: 4636
+Deleted: 4635
+--- Fri May  8 11:35:02 AM CST 2026 ---
+Sent: 4637
+Deleted: 4636
+--- Fri May  8 11:40:01 AM CST 2026 ---
+Sent: 4638
+Deleted: 4637
+--- Fri May  8 11:45:02 AM CST 2026 ---
+Sent: 4639
+Deleted: 4638
+--- Fri May  8 11:50:01 AM CST 2026 ---
+Sent: 4640
+Deleted: 4639
+--- Fri May  8 11:55:01 AM CST 2026 ---
+Sent: 4641
+Deleted: 4640
+--- Fri May  8 12:00:02 PM CST 2026 ---
+Sent: 4642
+Deleted: 4641
+--- Fri May  8 12:05:01 PM CST 2026 ---
+Sent: 4643
+Deleted: 4642
+--- Fri May  8 12:10:01 PM CST 2026 ---
+Sent: 4644
+Deleted: 4643
+--- Fri May  8 12:15:01 PM CST 2026 ---
+Sent: 4645
+Deleted: 4644
+--- Fri May  8 12:20:02 PM CST 2026 ---
+Sent: 4646
+Deleted: 4645
+--- Fri May  8 12:25:01 PM CST 2026 ---
+Sent: 4647
+Deleted: 4646
+--- Fri May  8 12:30:01 PM CST 2026 ---
+Sent: 4648
+Deleted: 4647
+--- Fri May  8 12:35:01 PM CST 2026 ---
+Sent: 4649
+Deleted: 4648
+--- Fri May  8 12:40:02 PM CST 2026 ---
+Sent: 4650
+Deleted: 4649
+--- Fri May  8 12:45:02 PM CST 2026 ---
+Sent: 4651
+Deleted: 4650
+--- Fri May  8 12:50:02 PM CST 2026 ---
+Sent: 4652
+Deleted: 4651
+--- Fri May  8 12:55:01 PM CST 2026 ---
+Sent: 4653
+Deleted: 4652
+--- Fri May  8 01:00:02 PM CST 2026 ---
+Sent: 4654
+Deleted: 4653
+--- Fri May  8 01:05:01 PM CST 2026 ---
+Sent: 4655
+Deleted: 4654
+--- Fri May  8 01:10:01 PM CST 2026 ---
+Sent: 4656
+Deleted: 4655
+--- Fri May  8 01:15:02 PM CST 2026 ---
+Sent: 4657
+Deleted: 4656
+--- Fri May  8 01:20:01 PM CST 2026 ---
+Sent: 4658
+Deleted: 4657
+--- Fri May  8 01:25:01 PM CST 2026 ---
+Sent: 4659
+Deleted: 4658
+--- Fri May  8 01:30:02 PM CST 2026 ---
+Sent: 4660
+Deleted: 4659
+--- Fri May  8 01:35:01 PM CST 2026 ---
+Sent: 4661
+Deleted: 4660
+--- Fri May  8 01:40:01 PM CST 2026 ---
+Sent: 4662
+Deleted: 4661
+--- Fri May  8 01:45:01 PM CST 2026 ---
+Sent: 4663
+Deleted: 4662
+--- Fri May  8 01:50:01 PM CST 2026 ---
+Sent: 4664
+Deleted: 4663
+--- Fri May  8 01:55:01 PM CST 2026 ---
+Sent: 4665
+Deleted: 4664
+--- Fri May  8 02:00:01 PM CST 2026 ---
+Sent: 4666
+Deleted: 4665
+--- Fri May  8 02:05:01 PM CST 2026 ---
+Sent: 4667
+Deleted: 4666
+--- Fri May  8 02:10:02 PM CST 2026 ---
+Sent: 4668
+Deleted: 4667
+--- Fri May  8 02:15:02 PM CST 2026 ---
+Sent: 4669
+Deleted: 4668
+--- Fri May  8 02:20:01 PM CST 2026 ---
+Sent: 4670
+Deleted: 4669
+--- Fri May  8 02:25:01 PM CST 2026 ---
+Sent: 4671
+Deleted: 4670
+--- Fri May  8 02:30:02 PM CST 2026 ---
+Sent: 4672
+Deleted: 4671
+--- Fri May  8 02:35:01 PM CST 2026 ---
+Sent: 4673
+Deleted: 4672
+--- Fri May  8 02:40:02 PM CST 2026 ---
+Sent: 4674
+Deleted: 4673
+--- Fri May  8 02:45:01 PM CST 2026 ---
+Sent: 4675
+Deleted: 4674
+--- Fri May  8 02:50:01 PM CST 2026 ---
+Sent: 4676
+Deleted: 4675
+--- Fri May  8 02:55:01 PM CST 2026 ---
+Sent: 4677
+Deleted: 4676
+--- Fri May  8 03:00:01 PM CST 2026 ---
+Sent: 4678
+Deleted: 4677
+--- Fri May  8 03:05:01 PM CST 2026 ---
+Sent: 4679
+Deleted: 4678
+--- Fri May  8 03:10:01 PM CST 2026 ---
+Sent: 4680
+Deleted: 4679
+--- Fri May  8 03:15:02 PM CST 2026 ---
+Sent: 4681
+Deleted: 4680
+--- Fri May  8 03:20:02 PM CST 2026 ---
+Sent: 4682
+Deleted: 4681
+--- Fri May  8 03:25:01 PM CST 2026 ---
+Sent: 4683
+Deleted: 4682
+--- Fri May  8 03:30:01 PM CST 2026 ---
+Sent: 4684
+Deleted: 4683
+--- Fri May  8 03:35:01 PM CST 2026 ---
+Sent: 4685
+Deleted: 4684
+--- Fri May  8 03:40:02 PM CST 2026 ---
+Sent: 4686
+Deleted: 4685
+--- Fri May  8 03:45:01 PM CST 2026 ---
+Sent: 4687
+Deleted: 4686
+--- Fri May  8 03:50:01 PM CST 2026 ---
+Sent: 4688
+Deleted: 4687
+--- Fri May  8 03:55:01 PM CST 2026 ---
+Sent: 4689
+Deleted: 4688
+--- Fri May  8 04:00:02 PM CST 2026 ---
+Sent: 4690
+Deleted: 4689
+--- Fri May  8 04:05:02 PM CST 2026 ---
+Sent: 4691
+Deleted: 4690
+--- Fri May  8 04:10:01 PM CST 2026 ---
+Sent: 4692
+Deleted: 4691
+--- Fri May  8 04:15:02 PM CST 2026 ---
+Sent: 4693
+Deleted: 4692
+--- Fri May  8 04:20:02 PM CST 2026 ---
+Sent: 4694
+Deleted: 4693
+--- Fri May  8 04:25:02 PM CST 2026 ---
+Sent: 4695
+Deleted: 4694
+--- Fri May  8 04:30:01 PM CST 2026 ---
+Sent: 4696
+Deleted: 4695
+--- Fri May  8 04:35:01 PM CST 2026 ---
+Sent: 4697
+Deleted: 4696
+--- Fri May  8 04:40:01 PM CST 2026 ---
+Sent: 4698
+Deleted: 4697
+--- Fri May  8 04:45:01 PM CST 2026 ---
+Sent: 4699
+Deleted: 4698
+--- Fri May  8 04:50:02 PM CST 2026 ---
+Sent: 4700
+Deleted: 4699
+--- Fri May  8 04:55:01 PM CST 2026 ---
+Sent: 4701
+Deleted: 4700
+--- Fri May  8 05:00:01 PM CST 2026 ---
+Sent: 4702
+Deleted: 4701
+--- Fri May  8 05:05:02 PM CST 2026 ---
+Sent: 4703
+Deleted: 4702
+--- Fri May  8 05:10:01 PM CST 2026 ---
+Sent: 4704
+Deleted: 4703
+--- Fri May  8 05:15:01 PM CST 2026 ---
+Sent: 4705
+Deleted: 4704
+--- Fri May  8 05:20:02 PM CST 2026 ---
+Sent: 4706
+Deleted: 4705
+--- Fri May  8 05:25:01 PM CST 2026 ---
+Sent: 4707
+Deleted: 4706
+--- Fri May  8 05:30:01 PM CST 2026 ---
+Sent: 4708
+Deleted: 4707
+--- Fri May  8 05:35:01 PM CST 2026 ---
+Sent: 4709
+Deleted: 4708
+--- Fri May  8 05:40:02 PM CST 2026 ---
+Sent: 4710
+Deleted: 4709
+--- Fri May  8 05:45:01 PM CST 2026 ---
+Sent: 4711
+Deleted: 4710
+--- Fri May  8 05:50:01 PM CST 2026 ---
+Sent: 4712
+Deleted: 4711
+--- Fri May  8 05:55:01 PM CST 2026 ---
+Sent: 4713
+Deleted: 4712
+--- Fri May  8 06:00:02 PM CST 2026 ---
+Sent: 4714
+Deleted: 4713
+--- Fri May  8 06:05:01 PM CST 2026 ---
+Sent: 4715
+Deleted: 4714
+--- Fri May  8 06:10:01 PM CST 2026 ---
+Sent: 4716
+Deleted: 4715
+--- Fri May  8 06:15:01 PM CST 2026 ---
+Sent: 4717
+Deleted: 4716
+--- Fri May  8 06:20:01 PM CST 2026 ---
+Sent: 4718
+Deleted: 4717
+--- Fri May  8 06:25:01 PM CST 2026 ---
+Sent: 4719
+Deleted: 4718
+--- Fri May  8 06:30:02 PM CST 2026 ---
+Sent: 4720
+Deleted: 4719
+--- Fri May  8 06:35:01 PM CST 2026 ---
+Sent: 4721
+Deleted: 4720
+--- Fri May  8 06:40:02 PM CST 2026 ---
+Sent: 4722
+Deleted: 4721
+--- Fri May  8 06:45:01 PM CST 2026 ---
+Sent: 4723
+Deleted: 4722
+--- Fri May  8 06:50:02 PM CST 2026 ---
+Sent: 4724
+Deleted: 4723
+--- Fri May  8 06:55:01 PM CST 2026 ---
+Sent: 4725
+Deleted: 4724
+--- Fri May  8 07:00:01 PM CST 2026 ---
+Sent: 4726
+Deleted: 4725
+--- Fri May  8 07:05:01 PM CST 2026 ---
+Sent: 4727
+Deleted: 4726
+--- Fri May  8 07:10:01 PM CST 2026 ---
+Sent: 4728
+Deleted: 4727
+--- Fri May  8 07:15:01 PM CST 2026 ---
+Sent: 4729
+Deleted: 4728
+--- Fri May  8 07:20:02 PM CST 2026 ---
+Sent: 4730
+Deleted: 4729
+--- Fri May  8 07:25:02 PM CST 2026 ---
+Sent: 4731
+Deleted: 4730
+--- Fri May  8 07:30:01 PM CST 2026 ---
+Sent: 4732
+Deleted: 4731
+--- Fri May  8 07:35:01 PM CST 2026 ---
+Sent: 4733
+Deleted: 4732
+--- Fri May  8 07:40:01 PM CST 2026 ---
+Sent: 4734
+Deleted: 4733
+--- Fri May  8 07:45:01 PM CST 2026 ---
+Sent: 4735
+Deleted: 4734
+--- Fri May  8 07:50:01 PM CST 2026 ---
+Sent: 4736
+Deleted: 4735
+--- Fri May  8 07:55:02 PM CST 2026 ---
+Sent: 4737
+Deleted: 4736
+--- Fri May  8 08:00:02 PM CST 2026 ---
+Sent: 4738
+Deleted: 4737
+--- Fri May  8 08:05:01 PM CST 2026 ---
+Sent: 4739
+Deleted: 4738
+--- Fri May  8 08:10:02 PM CST 2026 ---
+Sent: 4740
+Deleted: 4739
+--- Fri May  8 08:15:01 PM CST 2026 ---
+Sent: 4741
+Deleted: 4740
+--- Fri May  8 08:20:01 PM CST 2026 ---
+Sent: 4742
+Deleted: 4741
+--- Fri May  8 08:25:01 PM CST 2026 ---
+Sent: 4743
+Deleted: 4742
+--- Fri May  8 08:30:01 PM CST 2026 ---
+Sent: 4744
+Deleted: 4743
+--- Fri May  8 08:35:01 PM CST 2026 ---
+Sent: 4745
+Deleted: 4744
+--- Fri May  8 08:40:02 PM CST 2026 ---
+Sent: 4746
+Deleted: 4745
+--- Fri May  8 08:45:01 PM CST 2026 ---
+Sent: 4747
+Deleted: 4746
+--- Fri May  8 08:50:02 PM CST 2026 ---
+Sent: 4748
+Deleted: 4747
+--- Fri May  8 08:55:02 PM CST 2026 ---
+Sent: 4749
+Deleted: 4748
+--- Fri May  8 09:00:02 PM CST 2026 ---
+Sent: 4750
+Deleted: 4749
+--- Fri May  8 09:05:01 PM CST 2026 ---
+Sent: 4751
+Deleted: 4750
+--- Fri May  8 09:10:01 PM CST 2026 ---
+Sent: 4752
+Deleted: 4751
+--- Fri May  8 09:15:01 PM CST 2026 ---
+Sent: 4753
+Deleted: 4752
+--- Fri May  8 09:20:01 PM CST 2026 ---
+Sent: 4754
+Deleted: 4753
+--- Fri May  8 09:25:02 PM CST 2026 ---
+Sent: 4755
+Deleted: 4754
+--- Fri May  8 09:30:02 PM CST 2026 ---
+Sent: 4756
+Deleted: 4755
+--- Fri May  8 09:35:01 PM CST 2026 ---
+Sent: 4757
+Deleted: 4756
+--- Fri May  8 09:40:01 PM CST 2026 ---
+Sent: 4762
+Deleted: 4757
+--- Fri May  8 09:45:01 PM CST 2026 ---
+Sent: 4768
+Deleted: 4762
+--- Fri May  8 09:50:01 PM CST 2026 ---
+Sent: 4771
+Deleted: 4768
+--- Fri May  8 09:55:01 PM CST 2026 ---
+Sent: 4774
+Deleted: 4771
+--- Fri May  8 10:00:01 PM CST 2026 ---
+Sent: 4780
+Deleted: 4774
+--- Fri May  8 10:05:01 PM CST 2026 ---
+Sent: 4782
+Deleted: 4780
+--- Fri May  8 10:10:01 PM CST 2026 ---
+Sent: 4786
+Deleted: 4782
+--- Fri May  8 10:15:01 PM CST 2026 ---
+Sent: 4787
+Deleted: 4786
+--- Fri May  8 10:20:02 PM CST 2026 ---
+Sent: 4788
+Deleted: 4787
+--- Fri May  8 10:25:01 PM CST 2026 ---
+Sent: 4789
+Deleted: 4788
+--- Fri May  8 10:30:01 PM CST 2026 ---
+Sent: 4794
+Deleted: 4789
+--- Fri May  8 10:35:01 PM CST 2026 ---
+Sent: 4796
+Deleted: 4794
+--- Fri May  8 10:40:01 PM CST 2026 ---
+Sent: 4799
+Deleted: 4796
+--- Fri May  8 10:45:01 PM CST 2026 ---
+Sent: 4804
+Deleted: 4799
+--- Fri May  8 10:50:01 PM CST 2026 ---
+Sent: 4807
+Deleted: 4804
+--- Fri May  8 10:55:01 PM CST 2026 ---
+Sent: 4812
+Deleted: 4807
+--- Fri May  8 11:00:01 PM CST 2026 ---
+Sent: 4817
+Deleted: 4812

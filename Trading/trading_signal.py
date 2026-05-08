@@ -6,107 +6,6 @@ import os
 from position_manager import load_positions
 import trading_snd
 
-# Signal history tracking for consecutive numbering
-SIGNAL_HISTORY_FILE = '/root/.openclaw/workspace/Trading/signal_history.json'
-
-def load_signal_history():
-    if os.path.exists(SIGNAL_HISTORY_FILE):
-        with open(SIGNAL_HISTORY_FILE, 'r') as f:
-            data = json.load(f)
-        today = datetime.now().strftime('%Y-%m-%d')
-        # Migrate old format (int values) to new format (dict)
-        if "history" in data:
-            for pair, val in list(data["history"].items()):
-                if isinstance(val, int):
-                    data["history"][pair] = {
-                        "consecutive": val, "stars": 0, "crown_date": today
-                    }
-        return data
-    return {"history": {}, "last_pairs": []}
-
-def update_signal_history(current_pairs):
-    """Track consecutive appearances, stars, and crown for pairs.
-    
-    Same-day logic:
-      👑  = first continuous run (no gaps). Crown stays while present.
-      ⭐  = reappearance after disappearing. Accumulates per gap.
-      num = consecutive appearances within current run.
-    
-    Next day: EVERYTHING resets. All pairs start fresh with 👑.
-    """
-    today = datetime.now().strftime('%Y-%m-%d')
-    history = load_signal_history()
-    last_pairs = set(history.get("last_pairs", []))
-    hist = history.get("history", {})
-    current_set = set(current_pairs)
-
-    updated = {}
-
-    for pair in current_pairs:
-        was_in_last = pair in last_pairs
-        entry = hist.get(pair)
-
-        if entry is None:
-            # Brand new pair — first time ever
-            entry = {"consecutive": 1, "stars": 0, "crown_date": today}
-
-        elif was_in_last:
-            # Ensure crown_date exists (safety for old/migrated entries)
-            entry.setdefault("crown_date", today)
-            # Consecutive appearance — increment
-            entry["consecutive"] = entry.get("consecutive", 0) + 1
-            # Crossing into a new day → full reset
-            if entry.get("crown_date", "") != today:
-                entry["crown_date"] = today
-                entry["stars"] = 0
-                entry["consecutive"] = 1
-
-        else:
-            # Reappearance (was missing last run)
-            crown_date = entry.get("crown_date", "")
-            entry["consecutive"] = 1
-            if crown_date != today:
-                # New day — fresh start
-                entry["stars"] = 0
-                entry["crown_date"] = today
-            else:
-                # Same day — add a star, crown cycle over
-                entry["stars"] = entry.get("stars", 0) + 1
-                print(f'[TRACK] {pair} REAPPEARED → stars={entry["stars"]}, consecutive=1')
-
-        updated[pair] = entry
-
-    # Keep disappeared pairs in history so star/crown state persists
-    for pair, entry in hist.items():
-        if pair not in current_set:
-            updated[pair] = entry
-
-    history["history"] = updated
-    history["last_pairs"] = current_pairs
-
-    with open(SIGNAL_HISTORY_FILE, 'w') as f:
-        json.dump(history, f, indent=4)
-
-    return updated
-
-def get_pair_display(pair, counts):
-    """Return pair with 👑/⭐/number markings."""
-    data = counts.get(pair, {})
-    consecutive = data.get("consecutive", 0)
-    stars = data.get("stars", 0)
-    crown_date = data.get("crown_date", "")
-    today = datetime.now().strftime('%Y-%m-%d')
-
-    # 👑 mode: no stars, active crown cycle
-    if stars == 0 and crown_date == today:
-        return f"{pair} 👑{consecutive}"
-
-    # ⭐ mode: reappeared after disappearing
-    if stars > 0:
-        return f"{pair} {'⭐' * stars}{consecutive}"
-
-    return pair
-
 # Configuration
 CURRENCIES = ['USD', 'EUR', 'GBP', 'JPY', 'AUD', 'NZD', 'CAD', 'CHF']
 PAIRS = [
@@ -285,6 +184,45 @@ def fmt_gate_line(pair, gates, is_buy):
     return f"{icon} EMA: {' '.join(parts)}"
 
 
+def get_market_context(pairs_list):
+    """Fetch ATR, ADX, RSI (H1 & H4) for multi-TF context.
+    Returns dict: pair -> {atr_60, atr_240, adx_60, rsi_60, rsi_240, close_60}
+    """
+    try:
+        tickers = [f"OANDA:{p.replace('/', '')}" for p in pairs_list]
+        payload = {
+            "symbols": {"tickers": tickers},
+            "columns": ["ATR|60", "ATR|240", "ADX|60", "RSI|60", "RSI|240", "close|60"]
+        }
+        url = "https://scanner.tradingview.com/forex/scan"
+        headers = {"User-Agent": "Mozilla/5.0"}
+        response = requests.post(url, json=payload, headers=headers).json()
+
+        ctx = {}
+        for row in response.get("data", []):
+            symbol = row["s"].replace("OANDA:", "")
+            pair = f"{symbol[:3]}/{symbol[3:]}"
+
+            if row["d"] is None or None in row["d"]:
+                ctx[pair] = None
+                continue
+
+            ctx[pair] = {
+                "atr_60": row["d"][0],
+                "atr_240": row["d"][1],
+                "adx_60": row["d"][2],
+                "rsi_60": row["d"][3],
+                "rsi_240": row["d"][4],
+                "close_60": row["d"][5],
+            }
+
+        return ctx
+    except Exception as e:
+        print(f"Error fetching market context: {e}")
+        return {}
+
+
+
 def get_decision_label(gap):
     # Threshold disesuaikan untuk sigmoid scaling (range efektif ~2-7)
     if gap >= 4.0: return "ENTER NOW 🔥", "✅"
@@ -293,7 +231,7 @@ def get_decision_label(gap):
     else: return "AVOID / CHOPPY ❌", "🛑"
 
 def get_pivot_levels(pairs_list):
-    """Fetch H[1], L[1], C[1] (H1) and calculate floor pivot points for listed pairs.
+    """Fetch high[1], low[1], close[1] (D1) and calculate floor pivot points.
     Returns dict: pair -> {pivot, r1, r2, r3, s1, s2, s3}
     """
     try:
@@ -407,6 +345,72 @@ def fmt_snr_advice(pair, pivots, current_price, direction):
         return "NUNGGU SINYAL ⏳"
 
 
+def calculate_entry_levels(pair, direction, pivots, current_price, atr=None):
+    """Calculate entry range, TP, and SL.
+    
+    Entry zone: Use pivot points (S1-cur for BUY, cur-R1 for SELL).
+    TP/SL: ATR-based (dynamic) with pivot fallback.
+    
+    ATR-based TP = price ± (ATR × 1.5)
+    ATR-based SL = price ± (ATR × 0.8)
+    """
+    pv = pivots.get(pair)
+    if not pv or current_price <= 0:
+        return None
+
+    # Dynamic precision based on pair type
+    if "JPY" in pair:
+        precision = 3
+    elif current_price < 10:
+        precision = 5
+    else:
+        precision = 4
+
+    if direction == "BUY":
+        entry_bottom = pv["s1"]
+        entry_top = current_price
+
+        # ATR-based TP/SL with pivot fallback
+        if atr and atr > 0:
+            tp = current_price + (atr * 1.5)
+            sl = current_price - (atr * 0.8)
+        else:
+            tp = pv["r1"]
+            sl = pv["s2"]
+
+        # Safety: guarantee tp > price, sl < price
+        if tp <= current_price:
+            tp = current_price + (current_price * 0.003)
+        if sl >= current_price:
+            sl = current_price - (current_price * 0.002)
+
+    elif direction == "SELL":
+        entry_bottom = current_price
+        entry_top = pv["r1"]
+
+        if atr and atr > 0:
+            tp = current_price - (atr * 1.5)
+            sl = current_price + (atr * 0.8)
+        else:
+            tp = pv["s1"]
+            sl = pv["r2"]
+
+        if tp >= current_price:
+            tp = current_price - (current_price * 0.003)
+        if sl <= current_price:
+            sl = current_price + (current_price * 0.002)
+    else:
+        return None
+
+    return {
+        "direction": direction,
+        "entry_bottom": round(entry_bottom, precision),
+        "entry_top": round(entry_top, precision),
+        "tp": round(tp, precision),
+        "sl": round(sl, precision),
+    }
+
+
 def generate_signal():
     sorted_powers, all_powers = calculate_powers()
     
@@ -485,9 +489,7 @@ def generate_signal():
     top_5 = sorted([g for g in all_gaps if g['gap'] >= MIN_GAP],
                    key=lambda x: x['gap'], reverse=True)[:5]
     
-    # Track signal history for consecutive numbering
     current_pairs = [s['pair'] for s in top_5]
-    signal_counts = update_signal_history(current_pairs)
     
     # ---------------- FETCH EMA GATES & SND ZONES ---------------- #
     all_gates = get_ema_gates()
@@ -542,7 +544,7 @@ def generate_signal():
         msg_parts.append(f"🎯 **NO SIGNALS** | Min gap 2.0, none qualified ✅")
         msg_parts.append(f"   └ Wait for wider spread between currencies")
     for idx, s in enumerate(top_5, 1):
-        display_pair = get_pair_display(s['pair'], signal_counts)
+        display_pair = s['pair']
         msg_parts.append(f"{idx}️⃣ **{display_pair}**")
         
         # Indicator: EMA Gates
@@ -557,7 +559,90 @@ def generate_signal():
         if gate_line:
             msg_parts.append(f"   {gate_line}")
 
-        # Indicator: SnD Advice (Supply & Demand Zones)
+        if idx < count: msg_parts.append("")
+
+    # ---------------- MARKET CONTEXT (ADX/RSI/ATR) ---------------- #
+    market_context = get_market_context(current_pairs) if current_pairs else {}
+    
+    if not top_5:
+        msg_parts.append("")
+
+    # Remove the last elements (old signal loop from above left stale gate_line in msg_parts)
+    # Keep only header + board + open positions. Remove everything from signal header onwards.
+    # The signal header was appended above at "Top 5 signals" block.
+    # We'll re-add it properly here.
+    while len(msg_parts) > 0 and "🎯" in msg_parts[-1] and "NO SIGNALS" in msg_parts[-1]:
+        msg_parts.pop()
+    while len(msg_parts) > 0 and "Wait for wider" in msg_parts[-1]:
+        msg_parts.pop()
+    # Remove the old signal header and any stale gate lines
+    # Find where the signal section starts and truncate to there
+    last_safe_idx = 0
+    for i, line in enumerate(msg_parts):
+        if "🎯 **TOP" in line or ("🎯" in line and "NO SIGNALS" in line):
+            break
+        last_safe_idx = i + 1
+    # Also check for stale gate lines from the old loop
+    while len(msg_parts) > last_safe_idx:
+        msg_parts.pop()
+
+    # ---------------- SIGNALS (with context + confluence) ---------------- #
+    if top_5:
+        count = len(top_5)
+        if count == 1:
+            msg_parts.append(f"🎯 **TOP OPPORTUNITY**")
+        else:
+            msg_parts.append(f"🎯 **TOP {count} SIGNALS**")
+    else:
+        msg_parts.append(f"🎯 **NO SIGNALS** | Min gap 2.0, none qualified ✅")
+        msg_parts.append(f"   └ Wait for wider spread between currencies")
+        msg_parts.append("")
+
+    for idx, s in enumerate(top_5, 1):
+        display_pair = s['pair']
+        msg_parts.append(f"{idx}️⃣ **{display_pair}**")
+
+        # EMA Gates
+        if "BUY" in s['action']:
+            gate_is_buy = True
+        elif "SELL" in s['action']:
+            gate_is_buy = False
+        else:
+            g = all_gates.get(s['pair'], {})
+            gate_is_buy = g.get("bull", 0) >= g.get("bear", 0)
+        gate_line = fmt_gate_line(s['pair'], all_gates, gate_is_buy)
+        if gate_line:
+            msg_parts.append(f"   {gate_line}")
+
+        # REGIME: ADX + RSI + ATR
+        ctx = market_context.get(s['pair'])
+        if ctx:
+            adx = ctx.get("adx_60", 0) or 0
+            rsi = ctx.get("rsi_60", 50) or 50
+            atr = ctx.get("atr_60", 0) or 0
+
+            trend_icon = "🔥" if adx >= 25 else ("⚡" if adx >= 20 else "🌊")
+            regime = "TRENDING" if adx >= 25 else ("WEAK TREND" if adx >= 20 else "RANGING")
+
+            if rsi >= 60: rsi_mark = "🟢"
+            elif rsi >= 50: rsi_mark = "🟡"
+            elif rsi >= 40: rsi_mark = "🟠"
+            else: rsi_mark = "🔴"
+
+            # Convert ATR to pips for readability
+            if "JPY" in s['pair']:
+                atr_pips = atr * 100
+                atr_display = f"{atr_pips:.1f}"
+            elif s['pair'] in ["XAU/USD", "XAG/USD"]:
+                atr_pips = atr
+                atr_display = f"{atr_pips:.2f}"
+            else:
+                atr_pips = atr * 10000
+                atr_display = f"{atr_pips:.1f}"
+
+            msg_parts.append(f"   📊 ADX: {adx:.0f} ({regime})")
+
+        # SnD Advice
         g = all_gates.get(s['pair'], {})
         cur_price = g.get("close", 0)
         if "BUY" in s['action']:
@@ -571,7 +656,21 @@ def generate_signal():
         if advice:
             msg_parts.append(f"   {advice}")
 
-        if idx < count: msg_parts.append("")
+        # Entry Suggestion (inline)
+        if "BUY" in s['action'] or "SELL" in s['action']:
+            pv = get_pivot_levels([s['pair']])
+            g = all_gates.get(s['pair'], {})
+            cur_price = g.get("close", 0)
+            ctx = market_context.get(s['pair'])
+            atr_val = ctx.get("atr_60") if ctx else None
+            direction = "BUY" if "BUY" in s['action'] else "SELL"
+            levels = calculate_entry_levels(s['pair'], direction, pv, cur_price, atr_val)
+            if levels:
+                msg_parts.append(f"   **{levels['direction']}** : {levels['entry_bottom']} - {levels['entry_top']}")
+                msg_parts.append(f"   TP : **{levels['tp']}** | SL : **{levels['sl']}**")
+
+        if idx < count:
+            msg_parts.append("")
 
     return "\n".join(msg_parts)
 

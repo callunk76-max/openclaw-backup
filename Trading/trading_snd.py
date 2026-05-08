@@ -158,7 +158,7 @@ def find_snd_zones(candles):
             if (curr["close"] < curr["open"] and  # red candle
                 next_c["close"] > next_c["open"] and  # then green candle
                 next_body >= curr_range * 0.8 and  # significant move
-                next_c["close"] > curr["mid"]):  # closed above midpoint
+                next_c["close"] > (curr["high"] + curr["low"]) / 2):  # closed above midpoint
                 
                 zone_top = max(next_c["open"], next_c["close"])
                 zone_bot = min(next_c["open"], next_c["close"])
@@ -178,7 +178,7 @@ def find_snd_zones(candles):
             if (curr["close"] > curr["open"] and  # green candle
                 next_c["close"] < next_c["open"] and  # then red candle
                 next_body >= curr_range * 0.8 and
-                next_c["close"] < curr["mid"]):
+                next_c["close"] < (curr["high"] + curr["low"]) / 2):
                 
                 zone_top = max(next_c["open"], next_c["close"])
                 zone_bot = min(next_c["open"], next_c["close"])
@@ -323,8 +323,17 @@ def get_price_vs_zones(current_price, zones, direction):
 
     advice = {}
     if direction == "BUY":
-        # BUY: key concern = nearest resistance/supply above price
-        if nearest_above:
+        # BUY: DEMAND below = support (good), SUPPLY above = resistance (bad)
+        zone_type_above = nearest_above["type"] if nearest_above else None
+        zone_type_below = nearest_below["type"] if nearest_below else None
+
+        # Check if price is AT or INSIDE a DEMAND zone below → BOUNCE zone!
+        if nearest_below and zone_type_below == "DEMAND" and nearest_below["distance"] <= 0.3:
+            advice["status"] = "BOUNCE ✅"
+            advice["zone"] = nearest_below
+            advice["room"] = nearest_below["distance"]
+        elif nearest_above and zone_type_above == "SUPPLY":
+            # Supply ahead = real resistance
             dist = nearest_above["distance"]
             if dist >= 1.5:
                 advice["status"] = "PANJANG ✅🛣️"
@@ -336,14 +345,34 @@ def get_price_vs_zones(current_price, zones, direction):
                 advice["status"] = "MENTOK 🚧"
             advice["zone"] = nearest_above
             advice["room"] = dist
+        elif nearest_below and zone_type_below == "DEMAND":
+            # Near but not in demand = room to demand
+            dist = nearest_below["distance"]
+            if dist >= 1.5:
+                advice["status"] = f"NUNGGU ⬇️ {dist:.1f}%"
+            elif dist >= 0.8:
+                advice["status"] = f"NUNGGU ⬇️ {dist:.1f}%"
+            else:
+                advice["status"] = "BOUNCE ✅"
+            advice["zone"] = nearest_below
+            advice["room"] = dist
         else:
             advice["status"] = "PANJANG ✅🛣️"
             advice["zone"] = None
             advice["room"] = 99
 
     elif direction == "SELL":
-        # SELL: key concern = nearest support/demand below price
-        if nearest_below:
+        # SELL: SUPPLY above = resistance (good), DEMAND below = support (bad)
+        zone_type_above = nearest_above["type"] if nearest_above else None
+        zone_type_below = nearest_below["type"] if nearest_below else None
+
+        # Check if price is AT or INSIDE a SUPPLY zone above → REJECT zone!
+        if nearest_above and zone_type_above == "SUPPLY" and nearest_above["distance"] <= 0.3:
+            advice["status"] = "REJECT ✅"
+            advice["zone"] = nearest_above
+            advice["room"] = nearest_above["distance"]
+        elif nearest_below and zone_type_below == "DEMAND":
+            # Demand below = support, bad for SELL
             dist = nearest_below["distance"]
             if dist >= 1.5:
                 advice["status"] = "PANJANG ✅🛣️"
@@ -354,6 +383,16 @@ def get_price_vs_zones(current_price, zones, direction):
             else:
                 advice["status"] = "MENTOK 🚧"
             advice["zone"] = nearest_below
+            advice["room"] = dist
+        elif nearest_above and zone_type_above == "SUPPLY":
+            dist = nearest_above["distance"]
+            if dist >= 1.5:
+                advice["status"] = f"NUNGGU ⬆️ {dist:.1f}%"
+            elif dist >= 0.8:
+                advice["status"] = f"NUNGGU ⬆️ {dist:.1f}%"
+            else:
+                advice["status"] = "REJECT ✅"
+            advice["zone"] = nearest_above
             advice["room"] = dist
         else:
             advice["status"] = "PANJANG ✅🛣️"

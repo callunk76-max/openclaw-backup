@@ -1,19 +1,74 @@
 {
     "history": {
-        "CHF/JPY": {
-            "consecutive": 1,
-            "stars": 4,
-            "crown_date": "2026-05-07"
+        "EUR/CHF": {
+            "consecutive": 4,
+            "stars": 0,
+            "crown_date": "2026-05-08"
         },
-        "CAD/CHF": {
+        "AUD/CHF": {
             "consecutive": 3,
-            "stars": 3,
-            "crown_date": "2026-05-07"
+            "stars": 0,
+            "crown_date": "2026-05-08"
         },
         "USD/CHF": {
+            "consecutive": 9,
+            "stars": 0,
+            "crown_date": "2026-05-08"
+        },
+        "EUR/GBP": {
             "consecutive": 2,
-            "stars": 7,
-            "crown_date": "2026-05-07"
+            "stars": 0,
+            "crown_date": "2026-05-08"
+        },
+        "CHF/JPY": {
+            "consecutive": 3,
+            "stars": 1,
+            "crown_date": "2026-05-08"
+        },
+        "CAD/CHF": {
+            "consecutive": 2,
+            "stars": 0,
+            "crown_date": "2026-05-08"
+        },
+        "NZD/USD": {
+            "consecutive": 1,
+            "stars": 1,
+            "crown_date": "2026-05-08"
+        },
+        "GBP/USD": {
+            "consecutive": 1,
+            "stars": 0,
+            "crown_date": "2026-05-08"
+        },
+        "AUD/JPY": {
+            "consecutive": 4,
+            "stars": 0,
+            "crown_date": "2026-05-08"
+        },
+        "NZD/JPY": {
+            "consecutive": 3,
+            "stars": 0,
+            "crown_date": "2026-05-08"
+        },
+        "CAD/JPY": {
+            "consecutive": 1,
+            "stars": 0,
+            "crown_date": "2026-05-08"
+        },
+        "AUD/USD": {
+            "consecutive": 3,
+            "stars": 0,
+            "crown_date": "2026-05-08"
+        },
+        "USD/CAD": {
+            "consecutive": 2,
+            "stars": 0,
+            "crown_date": "2026-05-08"
+        },
+        "EUR/USD": {
+            "consecutive": 1,
+            "stars": 0,
+            "crown_date": "2026-05-08"
         },
         "GBP/JPY": {
             "consecutive": 1,
@@ -30,21 +85,6 @@
             "stars": 8,
             "crown_date": "2026-05-07"
         },
-        "GBP/USD": {
-            "consecutive": 1,
-            "stars": 7,
-            "crown_date": "2026-05-07"
-        },
-        "NZD/JPY": {
-            "consecutive": 9,
-            "stars": 8,
-            "crown_date": "2026-05-07"
-        },
-        "NZD/USD": {
-            "consecutive": 7,
-            "stars": 6,
-            "crown_date": "2026-05-07"
-        },
         "EUR/JPY": {
             "consecutive": 4,
             "stars": 5,
@@ -53,11 +93,6 @@
         "EUR/CAD": {
             "consecutive": 1,
             "stars": 3,
-            "crown_date": "2026-05-07"
-        },
-        "AUD/CHF": {
-            "consecutive": 3,
-            "stars": 2,
             "crown_date": "2026-05-07"
         },
         "AUD/NZD": {
@@ -75,11 +110,6 @@
             "stars": 4,
             "crown_date": "2026-05-07"
         },
-        "AUD/JPY": {
-            "consecutive": 7,
-            "stars": 5,
-            "crown_date": "2026-05-07"
-        },
         "NZD/CHF": {
             "consecutive": 12,
             "stars": 6,
@@ -95,16 +125,6 @@
             "stars": 3,
             "crown_date": "2026-05-07"
         },
-        "AUD/USD": {
-            "consecutive": 4,
-            "stars": 5,
-            "crown_date": "2026-05-07"
-        },
-        "EUR/USD": {
-            "consecutive": 1,
-            "stars": 2,
-            "crown_date": "2026-05-07"
-        },
         "AUD/CAD": {
             "consecutive": 1,
             "stars": 4,
@@ -115,26 +135,6 @@
             "stars": 3,
             "crown_date": "2026-05-07"
         },
-        "EUR/CHF": {
-            "consecutive": 1,
-            "stars": 1,
-            "crown_date": "2026-05-07"
-        },
-        "EUR/GBP": {
-            "consecutive": 1,
-            "stars": 0,
-            "crown_date": "2026-05-07"
-        },
-        "USD/CAD": {
-            "consecutive": 1,
-            "stars": 0,
-            "crown_date": "2026-05-07"
-        },
-        "CAD/JPY": {
-            "consecutive": 1,
-            "stars": 1,
-            "crown_date": "2026-05-07"
-        },
         "GBP/CHF": {
             "consecutive": 1,
             "stars": 0,
@@ -142,10 +142,10 @@
         }
     },
     "last_pairs": [
-        "CHF/JPY",
-        "CAD/CHF",
+        "EUR/CHF",
+        "AUD/CHF",
         "USD/CHF",
-        "GBP/JPY",
-        "GBP/CAD"
+        "EUR/GBP",
+        "CHF/JPY"
     ]
 }
