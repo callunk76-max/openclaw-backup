@@ -347,8 +347,11 @@ nav button i{margin-right:4px}
       <tr><td style="color:var(--dim);padding:2px">📌 Akses</td><td id="mapSpotAccess" style="text-align:right">—</td></tr>
     </table>
     <div style="display:flex;gap:6px;margin-top:8px">
-      <button class="btn" style="flex:1;font-size:.7rem;padding:6px" onclick="navigateToSpot()
-  </div>
+      <button class="btn" style="flex:1;font-size:.7rem;padding:6px" onclick="navigateToSpot()">📍 Google Maps</button>
+      <button class="btn btn-outline" style="flex:1;font-size:.7rem;padding:6px" onclick="navigateGeo()">📌 Buka Koordinat</button>
+      <button class="btn btn-outline" style="flex:.6;font-size:.7rem;padding:6px" onclick="copyCoords()">📋 Salin</button>
+    </div>
+    <div style="font-size:.6rem;color:var(--dim);margin-top:4px;text-align:center">Google Maps ➜ pin lokasi • Buka Koordinat ➜ pakai app map bawaan HP (no routing)</div>
   <!-- BUAT SPOT BARU -->
   <div class="card">
     <h3>📌 Buat Spot Baru</h3>
@@ -1082,6 +1085,12 @@ function showMapSpotInfo(spot) {
 function navigateToSpot() {
   if (window.selectedSpot) {
     window.open(`https://www.google.com/maps?q=${window.selectedSpot.lat},${window.selectedSpot.lng}`, '_blank');
+  }
+}
+
+function navigateGeo() {
+  if (window.selectedSpot) {
+    window.open(`geo:${window.selectedSpot.lat},${window.selectedSpot.lng}?q=${window.selectedSpot.lat},${window.selectedSpot.lng}`, '_blank');
   }
 }
 
