@@ -1,4 +1,4 @@
-const CACHE = 'mancing-blk-v1';
+const CACHE = 'mancing-blk-v2';
 const URLS = ['/fish/index.html', '/fish/manifest.json', '/fish/icon-192.png', '/fish/icon-512.png, favicon.ico, favicon-96.png'];
 
 self.addEventListener('install', e => {

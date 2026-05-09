@@ -556,3 +556,315 @@ To github.com:callunk76-max/openclaw-backup.git
 ✅ Sent via Telegram. Message ID: 4539
 sending incremental file list
 ./
+backup_log.txt
+App/sirup_bulukumba/
+App/sirup_bulukumba/bulukumba.db
+App/sirup_bulukumba/visitor_count.json
+Kronos/
+Kronos/.gitignore
+Kronos/LICENSE
+Kronos/README.md
+Kronos/requirements.txt
+Kronos/test_kronos.py
+Kronos/examples/
+Kronos/examples/get_akshare_date_2024-2025_x.py
+Kronos/examples/get_date_new.py
+Kronos/examples/prediction_akshare_2024-2025.py
+Kronos/examples/prediction_batch_example.py
+Kronos/examples/prediction_cn_markets_day.py
+Kronos/examples/prediction_example.py
+Kronos/examples/prediction_new.py
+Kronos/examples/prediction_new_GUI.py
+Kronos/examples/prediction_wo_vol_example.py
+Kronos/examples/run_backtest_kronos.py
+Kronos/examples/yuce/
+Kronos/examples/yuce/000021_comprehensive_analysis_report.json
+Kronos/examples/yuce/000021_optimized_prediction.png
+Kronos/examples/yuce/002354_comprehensive_analysis_report.json
+Kronos/examples/yuce/002354_optimized_prediction.png
+Kronos/examples/yuce/300207_comprehensive_analysis_report.json
+Kronos/examples/yuce/300207_optimized_prediction.png
+Kronos/examples/yuce/600580_comprehensive_analysis_report.json
+Kronos/examples/yuce/600580_optimized_prediction.png
+Kronos/examples/yuce/historical_backtest.py
+Kronos/examples/yuce/market_analysis_report.json
+Kronos/figures/
+Kronos/figures/backtest_result_example.png
+Kronos/figures/logo.png
+Kronos/figures/overview.png
+Kronos/figures/prediction_example.png
+Kronos/finetune/
+Kronos/finetune/config.py
+Kronos/finetune/dataset.py
+Kronos/finetune/qlib_data_preprocess.py
+Kronos/finetune/qlib_test.py
+Kronos/finetune/train_predictor.py
+Kronos/finetune/train_tokenizer.py
+Kronos/finetune/utils/
+Kronos/finetune/utils/__init__.py
+Kronos/finetune/utils/training_utils.py
+Kronos/finetune_csv/
+Kronos/finetune_csv/README.md
+Kronos/finetune_csv/README_CN.md
+Kronos/finetune_csv/config_loader.py
+Kronos/finetune_csv/finetune_base_model.py
+Kronos/finetune_csv/finetune_tokenizer.py
+Kronos/finetune_csv/train_sequential.py
+Kronos/finetune_csv/configs/
+Kronos/finetune_csv/configs/config_ali09988_candle-5min.yaml
+Kronos/finetune_csv/data/
+Kronos/finetune_csv/data/HK_ali_09988_kline_5min_all.csv
+Kronos/finetune_csv/examples/
+Kronos/finetune_csv/examples/HK_ali_09988_kline_5min_all_historical_20250919_073929.png
+Kronos/finetune_csv/examples/HK_ali_09988_kline_5min_all_historical_20250919_073944.png
+Kronos/finetune_csv/examples/HK_ali_09988_kline_5min_all_historical_20250919_074012.png
+Kronos/finetune_csv/examples/HK_ali_09988_kline_5min_all_historical_20250919_074042.png
+Kronos/finetune_csv/examples/HK_ali_09988_kline_5min_all_historical_20250919_074251.png
+Kronos/model/
+Kronos/model/__init__.py
+Kronos/model/kronos.py
+Kronos/model/module.py
+Kronos/tests/
+Kronos/tests/test_kronos_regression.py
+Kronos/tests/data/
+Kronos/tests/data/generate_regression_output.py
+Kronos/tests/data/regression_input.csv
+Kronos/tests/data/regression_output_256.csv
+Kronos/tests/data/regression_output_512.csv
+Kronos/webui/
+Kronos/webui/README.md
+Kronos/webui/app.py
+Kronos/webui/requirements.txt
+Kronos/webui/run.py
+Kronos/webui/start.sh
+Kronos/webui/prediction_results/
+Kronos/webui/prediction_results/prediction_20250826_163800.json
+Kronos/webui/prediction_results/prediction_20250826_164030.json
+Kronos/webui/prediction_results/prediction_20250826_164422.json
+Kronos/webui/prediction_results/prediction_20250826_170831.json
+Kronos/webui/prediction_results/prediction_20250826_171720.json
+Kronos/webui/prediction_results/prediction_20250826_171913.json
+Kronos/webui/prediction_results/prediction_20250826_172031.json
+Kronos/webui/prediction_results/prediction_20250826_172153.json
+Kronos/webui/prediction_results/prediction_20250826_172740.json
+Kronos/webui/prediction_results/prediction_20250826_173322.json
+Kronos/webui/prediction_results/prediction_20250826_173455.json
+Kronos/webui/prediction_results/prediction_20250826_174410.json
+Kronos/webui/prediction_results/prediction_20250826_174809.json
+Kronos/webui/prediction_results/prediction_20250826_175057.json
+Kronos/webui/prediction_results/prediction_20250826_175135.json
+Kronos/webui/prediction_results/prediction_20250826_175909.json
+Kronos/webui/prediction_results/prediction_20250826_180308.json
+Kronos/webui/prediction_results/prediction_20250826_180632.json
+Kronos/webui/prediction_results/prediction_20250826_180745.json
+Kronos/webui/prediction_results/prediction_20250826_180806.json
+Kronos/webui/prediction_results/prediction_20250826_181012.json
+Kronos/webui/prediction_results/prediction_20250826_181139.json
+Kronos/webui/prediction_results/prediction_20250826_181240.json
+Kronos/webui/prediction_results/prediction_20250826_181434.json
+Kronos/webui/prediction_results/prediction_20250826_181513.json
+Kronos/webui/prediction_results/prediction_20250826_181612.json
+Kronos/webui/prediction_results/prediction_20250826_181648.json
+Kronos/webui/prediction_results/prediction_20250826_181800.json
+Kronos/webui/prediction_results/prediction_20250826_181932.json
+Kronos/webui/templates/
+Kronos/webui/templates/index.html
+Trading/
+Trading/last_signal_message.txt
+Trading/previous_signal.json
+Trading/signal_history.json
+Trading/signal_log.txt
+Trading/trading_signal.py
+Trading/trading_snd.py
+Trading/kronos/
+Trading/kronos/batch_predict.py
+Trading/kronos/config.py
+Trading/kronos/fetch_data.py
+Trading/kronos/kronos_cron.log
+Trading/kronos/last_kronos_msg.txt
+Trading/kronos/pipeline.py
+Trading/kronos/run_kronos.py
+Trading/kronos/send_kronos.sh
+Trading/kronos/signal_gen.py
+Trading/kronos/data/
+Trading/kronos/data/.data_meta.json
+Trading/kronos/data/.status.json
+Trading/kronos/data/AUDCAD.csv
+Trading/kronos/data/AUDCHF.csv
+Trading/kronos/data/AUDJPY.csv
+Trading/kronos/data/AUDNZD.csv
+Trading/kronos/data/AUDUSD.csv
+Trading/kronos/data/CADCHF.csv
+Trading/kronos/data/CADJPY.csv
+Trading/kronos/data/CHFJPY.csv
+Trading/kronos/data/EURAUD.csv
+Trading/kronos/data/EURCAD.csv
+Trading/kronos/data/EURCHF.csv
+Trading/kronos/data/EURGBP.csv
+Trading/kronos/data/EURJPY.csv
+Trading/kronos/data/EURNZD.csv
+Trading/kronos/data/EURUSD.csv
+Trading/kronos/data/GBPAUD.csv
+Trading/kronos/data/GBPCAD.csv
+Trading/kronos/data/GBPCHF.csv
+Trading/kronos/data/GBPJPY.csv
+Trading/kronos/data/GBPNZD.csv
+Trading/kronos/data/GBPUSD.csv
+Trading/kronos/data/NZDCAD.csv
+Trading/kronos/data/NZDCHF.csv
+Trading/kronos/data/NZDJPY.csv
+Trading/kronos/data/NZDUSD.csv
+Trading/kronos/data/USDCAD.csv
+Trading/kronos/data/USDCHF.csv
+Trading/kronos/data/USDJPY.csv
+Trading/kronos/data/XAUUSD.csv
+Trading/kronos/data/predictions.csv
+Trading/kronos/data/signals.csv
+memory/
+memory/2026-05-08-signal-format-explanation.md
+
+sent 31,974,037 bytes  received 3,009 bytes  21,318,030.67 bytes/sec
+total size is 125,307,532  speedup is 3.92
+[master ce5b21a] Daily Backup from Cuy - 2026-05-09 03:00
+ 144 files changed, 322057 insertions(+), 216 deletions(-)
+ create mode 100644 Kronos/.gitignore
+ create mode 100644 Kronos/LICENSE
+ create mode 100644 Kronos/README.md
+ create mode 100644 Kronos/examples/get_akshare_date_2024-2025_x.py
+ create mode 100644 Kronos/examples/get_date_new.py
+ create mode 100644 Kronos/examples/prediction_akshare_2024-2025.py
+ create mode 100644 Kronos/examples/prediction_batch_example.py
+ create mode 100644 Kronos/examples/prediction_cn_markets_day.py
+ create mode 100644 Kronos/examples/prediction_example.py
+ create mode 100644 Kronos/examples/prediction_new.py
+ create mode 100644 Kronos/examples/prediction_new_GUI.py
+ create mode 100644 Kronos/examples/prediction_wo_vol_example.py
+ create mode 100644 Kronos/examples/run_backtest_kronos.py
+ create mode 100644 Kronos/examples/yuce/000021_comprehensive_analysis_report.json
+ create mode 100644 Kronos/examples/yuce/000021_optimized_prediction.png
+ create mode 100644 Kronos/examples/yuce/002354_comprehensive_analysis_report.json
+ create mode 100644 Kronos/examples/yuce/002354_optimized_prediction.png
+ create mode 100644 Kronos/examples/yuce/300207_comprehensive_analysis_report.json
+ create mode 100644 Kronos/examples/yuce/300207_optimized_prediction.png
+ create mode 100644 Kronos/examples/yuce/600580_comprehensive_analysis_report.json
+ create mode 100644 Kronos/examples/yuce/600580_optimized_prediction.png
+ create mode 100644 Kronos/examples/yuce/historical_backtest.py
+ create mode 100644 Kronos/examples/yuce/market_analysis_report.json
+ create mode 100644 Kronos/figures/backtest_result_example.png
+ create mode 100644 Kronos/figures/logo.png
+ create mode 100644 Kronos/figures/overview.png
+ create mode 100644 Kronos/figures/prediction_example.png
+ create mode 100644 Kronos/finetune/config.py
+ create mode 100644 Kronos/finetune/dataset.py
+ create mode 100644 Kronos/finetune/qlib_data_preprocess.py
+ create mode 100644 Kronos/finetune/qlib_test.py
+ create mode 100644 Kronos/finetune/train_predictor.py
+ create mode 100644 Kronos/finetune/train_tokenizer.py
+ create mode 100644 Kronos/finetune/utils/__init__.py
+ create mode 100644 Kronos/finetune/utils/training_utils.py
+ create mode 100644 Kronos/finetune_csv/README.md
+ create mode 100644 Kronos/finetune_csv/README_CN.md
+ create mode 100644 Kronos/finetune_csv/config_loader.py
+ create mode 100644 Kronos/finetune_csv/configs/config_ali09988_candle-5min.yaml
+ create mode 100644 Kronos/finetune_csv/data/HK_ali_09988_kline_5min_all.csv
+ create mode 100644 Kronos/finetune_csv/examples/HK_ali_09988_kline_5min_all_historical_20250919_073929.png
+ create mode 100644 Kronos/finetune_csv/examples/HK_ali_09988_kline_5min_all_historical_20250919_073944.png
+ create mode 100644 Kronos/finetune_csv/examples/HK_ali_09988_kline_5min_all_historical_20250919_074012.png
+ create mode 100644 Kronos/finetune_csv/examples/HK_ali_09988_kline_5min_all_historical_20250919_074042.png
+ create mode 100644 Kronos/finetune_csv/examples/HK_ali_09988_kline_5min_all_historical_20250919_074251.png
+ create mode 100644 Kronos/finetune_csv/finetune_base_model.py
+ create mode 100644 Kronos/finetune_csv/finetune_tokenizer.py
+ create mode 100644 Kronos/finetune_csv/train_sequential.py
+ create mode 100644 Kronos/model/__init__.py
+ create mode 100644 Kronos/model/kronos.py
+ create mode 100644 Kronos/model/module.py
+ create mode 100644 Kronos/requirements.txt
+ create mode 100644 Kronos/test_kronos.py
+ create mode 100644 Kronos/tests/data/generate_regression_output.py
+ create mode 100644 Kronos/tests/data/regression_input.csv
+ create mode 100644 Kronos/tests/data/regression_output_256.csv
+ create mode 100644 Kronos/tests/data/regression_output_512.csv
+ create mode 100644 Kronos/tests/test_kronos_regression.py
+ create mode 100644 Kronos/webui/README.md
+ create mode 100644 Kronos/webui/app.py
+ create mode 100644 Kronos/webui/prediction_results/prediction_20250826_163800.json
+ create mode 100644 Kronos/webui/prediction_results/prediction_20250826_164030.json
+ create mode 100644 Kronos/webui/prediction_results/prediction_20250826_164422.json
+ create mode 100644 Kronos/webui/prediction_results/prediction_20250826_170831.json
+ create mode 100644 Kronos/webui/prediction_results/prediction_20250826_171720.json
+ create mode 100644 Kronos/webui/prediction_results/prediction_20250826_171913.json
+ create mode 100644 Kronos/webui/prediction_results/prediction_20250826_172031.json
+ create mode 100644 Kronos/webui/prediction_results/prediction_20250826_172153.json
+ create mode 100644 Kronos/webui/prediction_results/prediction_20250826_172740.json
+ create mode 100644 Kronos/webui/prediction_results/prediction_20250826_173322.json
+ create mode 100644 Kronos/webui/prediction_results/prediction_20250826_173455.json
+ create mode 100644 Kronos/webui/prediction_results/prediction_20250826_174410.json
+ create mode 100644 Kronos/webui/prediction_results/prediction_20250826_174809.json
+ create mode 100644 Kronos/webui/prediction_results/prediction_20250826_175057.json
+ create mode 100644 Kronos/webui/prediction_results/prediction_20250826_175135.json
+ create mode 100644 Kronos/webui/prediction_results/prediction_20250826_175909.json
+ create mode 100644 Kronos/webui/prediction_results/prediction_20250826_180308.json
+ create mode 100644 Kronos/webui/prediction_results/prediction_20250826_180632.json
+ create mode 100644 Kronos/webui/prediction_results/prediction_20250826_180745.json
+ create mode 100644 Kronos/webui/prediction_results/prediction_20250826_180806.json
+ create mode 100644 Kronos/webui/prediction_results/prediction_20250826_181012.json
+ create mode 100644 Kronos/webui/prediction_results/prediction_20250826_181139.json
+ create mode 100644 Kronos/webui/prediction_results/prediction_20250826_181240.json
+ create mode 100644 Kronos/webui/prediction_results/prediction_20250826_181434.json
+ create mode 100644 Kronos/webui/prediction_results/prediction_20250826_181513.json
+ create mode 100644 Kronos/webui/prediction_results/prediction_20250826_181612.json
+ create mode 100644 Kronos/webui/prediction_results/prediction_20250826_181648.json
+ create mode 100644 Kronos/webui/prediction_results/prediction_20250826_181800.json
+ create mode 100644 Kronos/webui/prediction_results/prediction_20250826_181932.json
+ create mode 100644 Kronos/webui/requirements.txt
+ create mode 100644 Kronos/webui/run.py
+ create mode 100755 Kronos/webui/start.sh
+ create mode 100644 Kronos/webui/templates/index.html
+ create mode 100644 Trading/kronos/batch_predict.py
+ create mode 100644 Trading/kronos/config.py
+ create mode 100644 Trading/kronos/data/.data_meta.json
+ create mode 100644 Trading/kronos/data/.status.json
+ create mode 100644 Trading/kronos/data/AUDCAD.csv
+ create mode 100644 Trading/kronos/data/AUDCHF.csv
+ create mode 100644 Trading/kronos/data/AUDJPY.csv
+ create mode 100644 Trading/kronos/data/AUDNZD.csv
+ create mode 100644 Trading/kronos/data/AUDUSD.csv
+ create mode 100644 Trading/kronos/data/CADCHF.csv
+ create mode 100644 Trading/kronos/data/CADJPY.csv
+ create mode 100644 Trading/kronos/data/CHFJPY.csv
+ create mode 100644 Trading/kronos/data/EURAUD.csv
+ create mode 100644 Trading/kronos/data/EURCAD.csv
+ create mode 100644 Trading/kronos/data/EURCHF.csv
+ create mode 100644 Trading/kronos/data/EURGBP.csv
+ create mode 100644 Trading/kronos/data/EURJPY.csv
+ create mode 100644 Trading/kronos/data/EURNZD.csv
+ create mode 100644 Trading/kronos/data/EURUSD.csv
+ create mode 100644 Trading/kronos/data/GBPAUD.csv
+ create mode 100644 Trading/kronos/data/GBPCAD.csv
+ create mode 100644 Trading/kronos/data/GBPCHF.csv
+ create mode 100644 Trading/kronos/data/GBPJPY.csv
+ create mode 100644 Trading/kronos/data/GBPNZD.csv
+ create mode 100644 Trading/kronos/data/GBPUSD.csv
+ create mode 100644 Trading/kronos/data/NZDCAD.csv
+ create mode 100644 Trading/kronos/data/NZDCHF.csv
+ create mode 100644 Trading/kronos/data/NZDJPY.csv
+ create mode 100644 Trading/kronos/data/NZDUSD.csv
+ create mode 100644 Trading/kronos/data/USDCAD.csv
+ create mode 100644 Trading/kronos/data/USDCHF.csv
+ create mode 100644 Trading/kronos/data/USDJPY.csv
+ create mode 100644 Trading/kronos/data/XAUUSD.csv
+ create mode 100644 Trading/kronos/data/predictions.csv
+ create mode 100644 Trading/kronos/data/signals.csv
+ create mode 100644 Trading/kronos/fetch_data.py
+ create mode 100644 Trading/kronos/last_kronos_msg.txt
+ create mode 100644 Trading/kronos/pipeline.py
+ create mode 100644 Trading/kronos/run_kronos.py
+ create mode 100755 Trading/kronos/send_kronos.sh
+ create mode 100644 Trading/kronos/signal_gen.py
+ create mode 100644 memory/2026-05-08-signal-format-explanation.md
+To github.com:callunk76-max/openclaw-backup.git
+   a9f26b7..ce5b21a  master -> master
+[session-write-lock] releasing lock held for 64169ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 4828
+sending incremental file list
+.gitignore
