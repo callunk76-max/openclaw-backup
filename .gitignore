@@ -1,24 +1,22 @@
-# Python
-__pycache__/
-*.pyc
-*.pyo
-*.db
-*.sqlite3
 
-# Logs
-*.log
-signal_log.txt
 backup_log.txt
-restart_log.txt
-
-# OS
+*.db
 .DS_Store
+.env
+*.key
+# Keys & Secrets
+Kronos
+*.log
+# Logs
+# OS
+*.pem
+*.pyc
+__pycache__/
+*.pyo
+# Python
+restart_log.txt
+signal_log.txt
+*.sqlite3
 Thumbs.db
-
 # Trading temp
 Trading/tv_snapshot.jpg
-
-# Keys & Secrets
-*.pem
-*.key
-.env

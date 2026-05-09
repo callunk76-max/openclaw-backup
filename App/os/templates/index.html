@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Polygon NIB — OSS RBA</title>
+<link rel="icon" type="image/x-icon" href="/static/assets/favicon.ico" />
+<link rel="icon" type="image/png" sizes="32x32" href="/static/assets/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/static/assets/favicon-192x192.png" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css" />
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f7fa; display: flex; flex-direction: column; min-height: 100vh; }
+
+/* Header */
+.header {
+  background: linear-gradient(135deg, #1a5276, #2e86c1);
+  color: white;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.header h1 { font-size: 18px; font-weight: 600; }
+.header .subtitle { font-size: 12px; opacity: 0.85; }
+.header-badges { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.badge {
+  background: rgba(255,255,255,0.2);
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+/* Layout */
+.container { display: flex; flex: 1; }
+.sidebar {
+  width: 355px;
+  background: white;
+  border-right: 1px solid #dcdde1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+#map { flex: 1; min-height: 400px; }
+
+/* Sidebar sections */
+.section { padding: 14px 16px; border-bottom: 1px solid #eee; }
+.section-title {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #7f8c8d;
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
+}
+
+/* Search */
+.search-group { display: flex; gap: 6px; }
+.search-group input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #dcdde1;
+  border-radius: 6px;
+  font-size: 13px;
+  outline: none;
+  transition: border 0.2s;
+}
+.search-group input:focus { border-color: #2e86c1; }
+.btn {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.btn-primary { background: #2e86c1; color: white; }
+.btn-primary:hover { background: #1a5276; }
+.btn-success { background: #27ae60; color: white; }
+.btn-success:hover { background: #1e8449; }
+.btn-danger { background: #e74c3c; color: white; }
+.btn-danger:hover { background: #c0392b; }
+.btn-warning { background: #f39c12; color: white; }
+.btn-warning:hover { background: #d68910; }
+.btn-purple { background: #8e44ad; color: white; }
+.btn-purple:hover { background: #6c3483; }
+.btn-outline {
+  background: transparent;
+  border: 1px solid #bdc3c7;
+  color: #2c3e50;
+}
+.btn-outline:hover { background: #ecf0f1; }
+.btn-sm { padding: 5px 10px; font-size: 11px; }
+.btn-xs { padding: 3px 8px; font-size: 10px; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Search results */
+.search-results {
+  margin-top: 8px;
+  max-height: 180px;
+  overflow-y: auto;
+}
+.search-result-item {
+  padding: 7px 10px;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  margin-bottom: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background 0.15s;
+}
+.search-result-item:hover { background: #eaf2f8; border-color: #2e86c1; }
+.search-result-item .sr-type {
+  display: inline-block;
+  background: #ecf0f1;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 10px;
+  margin-right: 4px;
+}
+
+/* Coordinate input */
+.coord-row { display: flex; gap: 6px; margin-bottom: 6px; }
+.coord-row label { font-size: 12px; color: #7f8c8d; min-width: 30px; padding-top: 8px; }
+.coord-row input {
+  flex: 1;
+  padding: 6px 8px;
+  border: 1px solid #dcdde1;
+  border-radius: 4px;
+  font-size: 12px;
+  outline: none;
+}
+.coord-row input:focus { border-color: #2e86c1; }
+
+/* Polygon info */
+.polygon-info { font-size: 13px; }
+.polygon-info .stat {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+.polygon-info .stat-label { color: #7f8c8d; }
+.polygon-info .stat-value { font-weight: 600; color: #2c3e50; }
+
+/* Details form */
+.form-group { margin-bottom: 10px; }
+.form-group label {
+  display: block;
+  font-size: 12px;
+  color: #7f8c8d;
+  margin-bottom: 3px;
+  font-weight: 500;
+}
+.form-group input, .form-group textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #dcdde1;
+  border-radius: 4px;
+  font-size: 13px;
+  outline: none;
+}
+.form-group textarea { resize: vertical; min-height: 50px; }
+.form-group input:focus, .form-group textarea:focus { border-color: #2e86c1; }
+
+/* Export buttons */
+.export-buttons { display: flex; gap: 6px; flex-wrap: wrap; }
+.export-buttons .btn { flex: 1; min-width: 80px; text-align: center; }
+
+/* File upload */
+.file-upload-area {
+  border: 2px dashed #bdc3c7;
+  border-radius: 8px;
+  padding: 14px;
+  text-align: center;
+  transition: border-color 0.2s, background 0.2s;
+  cursor: pointer;
+}
+.file-upload-area:hover { border-color: #2e86c1; background: #f0f8ff; }
+.file-upload-area.dragover { border-color: #27ae60; background: #e8f8f0; }
+.file-upload-area .upload-icon { font-size: 24px; color: #95a5a6; }
+.file-upload-area .upload-text { font-size: 12px; color: #7f8c8d; margin-top: 4px; }
+.file-upload-area .upload-hint { font-size: 10px; color: #95a5a6; margin-top: 2px; }
+.file-upload-area input[type="file"] { display: none; }
+.file-info {
+  display: none;
+  background: #eaf2f8;
+  border: 1px solid #2e86c1;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 12px;
+  margin-top: 6px;
+}
+.file-info .fi-name { font-weight: 600; color: #2c3e50; }
+.file-info .fi-actions { margin-top: 4px; display: flex; gap: 4px; }
+
+/* Tips */
+.tips {
+  background: #fef9e7;
+  border-left: 3px solid #f39c12;
+  padding: 8px 12px;
+  font-size: 11px;
+  color: #7f6000;
+  line-height: 1.5;
+}
+
+/* Toast notification */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #2c3e50;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  z-index: 10000;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+.toast.show { opacity: 1; }
+.toast.error { background: #e74c3c; }
+.toast.success { background: #27ae60; }
+
+/* Draw toolbar adjustments */
+.leaflet-draw-toolbar a { background-color: white !important; }
+
+/* Map loading */
+#leaflet-loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255,255,255,0.95);
+  padding: 16px 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  z-index: 999;
+  font-size: 14px;
+  text-align: center;
+}
+#leaflet-loading .spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ddd;
+  border-top-color: #2e86c1;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container { flex-direction: column; }
+  .sidebar { width: 100%; max-height: 50vh; }
+  .header h1 { font-size: 15px; }
+}
+
+/* Coordinate badge on map */
+.coord-badge {
+  background: rgba(0,0,0,0.7);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-family: monospace;
+}
+
+/* Auto-fill spinner */
+.auto-fill-spinner {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 2px solid #ddd;
+  border-top-color: #2e86c1;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  vertical-align: middle;
+  margin-right: 4px;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>🗺️ Polygon NIB — OSS RBA</h1>
+    <div class="subtitle">Gambar lokasi usaha untuk pengajuan NIB</div>
+  </div>
+  <div class="header-badges">
+    <span class="badge">EPSG:4326</span>
+    <span class="badge">GeoJSON</span>
+    <span class="badge" id="coordDisplay">-</span>
+  </div>
+</div>
+
+<div class="container">
+  <!-- Left Sidebar -->
+  <div class="sidebar">
+    <!-- Open File -->
+    <div class="section">
+      <div class="section-title">📂 Buka File Polygon</div>
+      <div class="file-upload-area" id="fileUploadArea">
+        <div class="upload-icon">📁</div>
+        <div class="upload-text">Klik atau taruh file <strong>GeoJSON</strong> / <strong>KML</strong></div>
+        <div class="upload-hint">File polygon yang sudah ada (.geojson, .json, .kml)</div>
+        <input type="file" id="fileInput" accept=".geojson,.json,.kml" />
+      </div>
+      <div class="file-info" id="fileInfo">
+        <div class="fi-name" id="fileName"></div>
+        <div class="fi-actions">
+          <button class="btn btn-danger btn-xs" id="removeFileBtn">Hapus</button>
+          <button class="btn btn-primary btn-xs" id="fitFileBtn">Sesuaikan Map</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search Address -->
+    <div class="section">
+      <div class="section-title">📍 Cari Alamat</div>
+      <div class="search-group">
+        <input type="text" id="searchInput" placeholder="Cari alamat, desa, kecamatan..." />
+        <button class="btn btn-primary" id="searchBtn">Cari</button>
+      </div>
+      <div class="search-results" id="searchResults"></div>
+    </div>
+
+    <!-- Manual Coordinate -->
+    <div class="section">
+      <div class="section-title">🎯 Koordinat Manual</div>
+      <div class="coord-row">
+        <label>Lat:</label>
+        <input type="number" step="any" id="latInput" placeholder="-5.123456" />
+        <label style="min-width:20px">Lng:</label>
+        <input type="number" step="any" id="lngInput" placeholder="120.123456" />
+      </div>
+      <button class="btn btn-primary btn-sm" id="goCoordBtn" style="width:100%">Pusatkan &amp; Zoom</button>
+    </div>
+
+    <!-- Polygon Info -->
+    <div class="section">
+      <div class="section-title">📐 Polygon</div>
+      <div class="polygon-info">
+        <div class="stat">
+          <span class="stat-label">Status</span>
+          <span class="stat-value" id="polyStatus">Belum ada polygon</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Jumlah Titik</span>
+          <span class="stat-value" id="pointCount">0</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Luas (m²)</span>
+          <span class="stat-value" id="areaDisplay">0</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Luas (Ha)</span>
+          <span class="stat-value" id="areaHaDisplay">0</span>
+        </div>
+      </div>
+      <div style="display:flex;gap:4px;margin-top:8px;flex-wrap:wrap">
+        <button class="btn btn-danger btn-sm" id="deletePolyBtn" disabled>🗑️ Hapus</button>
+        <button class="btn btn-warning btn-sm" id="fitPolyBtn" disabled>👁️ Sesuaikan Map</button>
+      </div>
+    </div>
+
+    <!-- Detail Lokasi -->
+    <div class="section">
+      <div class="section-title">📋 Detail Lokasi</div>
+      <div class="form-group">
+        <label>Keterangan Lokasi *</label>
+        <input type="text" id="lokasiInput" placeholder="Jl. Raya No. 123, Desa..." />
+      </div>
+      <div class="form-group">
+        <label>Nama Usaha</label>
+        <input type="text" id="usahaInput" placeholder="CV/Toko/PT..." />
+      </div>
+      <div class="form-group">
+        <label>Luas (m²) — isi otomatis dari polygon</label>
+        <input type="number" id="luasInput" readonly />
+      </div>
+    </div>
+
+    <!-- Export -->
+    <div class="section">
+      <div class="section-title">💾 Export</div>
+      <div class="export-buttons" style="margin-bottom:6px">
+        <button class="btn btn-success" id="exportGeoJSONBtn" disabled>
+          📥 GeoJSON
+        </button>
+        <button class="btn btn-success" id="exportKMLBtn" disabled>
+          📥 KML
+        </button>
+      </div>
+      <div class="export-buttons">
+        <button class="btn btn-purple" id="exportSHPBtn" disabled>
+          🗺️ SHP (ZIP)
+        </button>
+        <button class="btn btn-warning" id="exportZipBtn" disabled>
+          📦 All (ZIP)
+        </button>
+      </div>
+    </div>
+
+    <!-- Tips -->
+    <div class="section" style="border-bottom:none">
+      <div class="tips">
+        <strong>💡 Tips:</strong><br>
+        • Gunakan tool <strong>🔶 Draw Polygon</strong> di peta untuk menggambar<br>
+        • Klik <strong>✏️ Edit</strong> untuk mengubah titik polygon<br>
+        • Minimal 3 titik untuk membentuk area<br>
+        • File <strong>GeoJSON</strong> sesuai spek OSS-RBA untuk upload NIB<br>
+        • Pastikan polygon <strong>tidak tumpang tindih</strong> dengan kawasan hutan lindung
+      </div>
+    </div>
+  </div>
+
+  <!-- Map -->
+  <div id="map">
+    <div id="leaflet-loading">
+      <span class="spinner"></span> Memuat peta...
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Scripts -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
+<script>
+(function() {
+'use strict';
+
+// ===========================
+// State
+// ===========================
+const state = {
+  drawnLayer: null,
+  polygonCount: 0
+};
+
+// ===========================
+// DOM refs
+// ===========================
+const $ = id => document.getElementById(id);
+const searchInput = $('searchInput');
+const searchBtn = $('searchBtn');
+const searchResults = $('searchResults');
+const latInput = $('latInput');
+const lngInput = $('lngInput');
+const goCoordBtn = $('goCoordBtn');
+const lokasiInput = $('lokasiInput');
+const usahaInput = $('usahaInput');
+const luasInput = $('luasInput');
+const polyStatus = $('polyStatus');
+const pointCount = $('pointCount');
+const areaDisplay = $('areaDisplay');
+const areaHaDisplay = $('areaHaDisplay');
+const deletePolyBtn = $('deletePolyBtn');
+const fitPolyBtn = $('fitPolyBtn');
+const exportGeoJSONBtn = $('exportGeoJSONBtn');
+const exportKMLBtn = $('exportKMLBtn');
+const exportSHPBtn = $('exportSHPBtn');
+const exportZipBtn = $('exportZipBtn');
+const coordDisplay = $('coordDisplay');
+const toast = $('toast');
+const fileInput = $('fileInput');
+const fileUploadArea = $('fileUploadArea');
+const fileInfo = $('fileInfo');
+const fileName = $('fileName');
+const removeFileBtn = $('removeFileBtn');
+const fitFileBtn = $('fitFileBtn');
+
+// ===========================
+// Map init
+// ===========================
+const map = L.map('map', {
+  center: [-5.13, 120.13],  // Default: Bulukumba, Sulawesi Selatan
+  zoom: 13,
+  zoomControl: true,
+  attributionControl: true
+});
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 19,
+  attribution: '&copy; <a href="https://openstreetmap.org">OSM</a> | OSS Polygon Editor'
+}).addTo(map);
+
+// Hide loading overlay once map loads
+map.whenReady(() => {
+  document.getElementById('leaflet-loading').style.display = 'none';
+});
+
+// ===========================
+// Mouse coordinate tracking
+// ===========================
+map.on('mousemove', function(e) {
+  coordDisplay.textContent =
+    e.latlng.lat.toFixed(6) + ', ' + e.latlng.lng.toFixed(6);
+});
+
+// ===========================
+// Draw Controls
+// ===========================
+const drawnItems = new L.FeatureGroup();
+map.addLayer(drawnItems);
+
+const drawControl = new L.Control.Draw({
+  position: 'topleft',
+  draw: {
+    polygon: {
+      allowIntersection: false,
+      showArea: true,
+      shapeOptions: {
+        color: '#2e86c1',
+        weight: 2,
+        fillOpacity: 0.25
+      }
+    },
+    rectangle: {
+      shapeOptions: {
+        color: '#2e86c1',
+        weight: 2,
+        fillOpacity: 0.25
+      }
+    },
+    circle: false,
+    circlemarker: false,
+    marker: false,
+    polyline: false
+  },
+  edit: {
+    featureGroup: drawnItems,
+    remove: true
+  }
+});
+map.addControl(drawControl);
+
+// ===========================
+// Polygon helpers
+// ===========================
+function calculateArea(layer) {
+  const latlngs = layer.getLatLngs();
+  if (!latlngs || !latlngs[0] || latlngs[0].length < 3) return 0;
+  return L.GeometryUtil.geodesicArea(latlngs[0]);
+}
+
+function getPolygonCenter(layer) {
+  const bounds = layer.getBounds();
+  return bounds.getCenter();
+}
+
+async function autoFillAddress(layer) {
+  const center = getPolygonCenter(layer);
+  try {
+    const resp = await fetch('/os/api/reverse?lat=' + center.lat.toFixed(6) + '&lon=' + center.lng.toFixed(6));
+    if (!resp.ok) return;
+    const data = await resp.json();
+    if (data.display_name && !lokasiInput.value) {
+      // Build concise address: road, village, city
+      let concise = data.road || '';
+      if (data.village) concise += (concise ? ', ' : '') + data.village;
+      if (data.city) concise += (concise ? ', ' : '') + data.city;
+      if (data.state) concise += (concise ? ', ' : '') + data.state;
+      lokasiInput.value = concise || data.display_name.split(',')[0];
+    }
+  } catch (e) {
+    // Silent fail - reverse geocode is optional
+  }
+}
+
+function updatePolyUI(layer, opts) {
+  opts = opts || {};
+  if (!layer) {
+    polyStatus.textContent = 'Belum ada polygon';
+    polyStatus.style.color = '#7f8c8d';
+    pointCount.textContent = '0';
+    areaDisplay.textContent = '0';
+    areaHaDisplay.textContent = '0';
+    luasInput.value = '';
+    deletePolyBtn.disabled = true;
+    fitPolyBtn.disabled = true;
+    exportGeoJSONBtn.disabled = true;
+    exportKMLBtn.disabled = true;
+    exportSHPBtn.disabled = true;
+    exportZipBtn.disabled = true;
+    return;
+  }
+
+  const latlngs = layer.getLatLngs();
+  const points = latlngs[0] ? latlngs[0].length : 0;
+  const areaM2 = calculateArea(layer);
+  const areaHa = areaM2 / 10000;
+
+  polyStatus.textContent = '✅ Polygon aktif';
+  polyStatus.style.color = '#27ae60';
+  pointCount.textContent = points;
+  areaDisplay.textContent = Math.round(areaM2).toLocaleString('id-ID');
+  areaHaDisplay.textContent = areaHa.toFixed(4);
+  luasInput.value = Math.round(areaM2);
+  deletePolyBtn.disabled = false;
+  fitPolyBtn.disabled = false;
+  exportGeoJSONBtn.disabled = false;
+  exportKMLBtn.disabled = false;
+  exportSHPBtn.disabled = false;
+  exportZipBtn.disabled = false;
+
+  state.drawnLayer = layer;
+
+  // Auto-fill address if newly drawn (not from file open)
+  if (opts.autoFillAddress) {
+    autoFillAddress(layer);
+  }
+}
+
+function deletePolygon() {
+  drawnItems.clearLayers();
+  state.drawnLayer = null;
+  updatePolyUI(null);
+  showToast('Polygon dihapus', '');
+}
+
+// ===========================
+// Draw events
+// ===========================
+map.on(L.Draw.Event.CREATED, function(event) {
+  const layer = event.layer;
+  drawnItems.clearLayers();
+  drawnItems.addLayer(layer);
+  state.drawnLayer = layer;
+  updatePolyUI(layer, { autoFillAddress: true });
+  showToast('Polygon berhasil digambar', 'success');
+});
+
+map.on(L.Draw.Event.EDITED, function() {
+  drawnItems.eachLayer(function(layer) {
+    state.drawnLayer = layer;
+    updatePolyUI(layer);
+  });
+  showToast('Polygon diperbarui', 'success');
+});
+
+map.on(L.Draw.Event.DELETED, function() {
+  state.drawnLayer = null;
+  updatePolyUI(null);
+  showToast('Polygon dihapus', '');
+});
+
+// ===========================
+// Fit polygon button
+// ===========================
+fitPolyBtn.addEventListener('click', function() {
+  if (state.drawnLayer) {
+    map.fitBounds(state.drawnLayer.getBounds(), { padding: [50, 50] });
+  }
+});
+
+// ===========================
+// Delete polygon button
+// ===========================
+deletePolyBtn.addEventListener('click', deletePolygon);
+
+// ===========================
+// Search address via API proxy
+// ===========================
+searchBtn.addEventListener('click', function() {
+  const q = searchInput.value.trim();
+  if (q.length < 3) {
+    showToast('Minimal 3 karakter untuk pencarian', 'error');
+    return;
+  }
+  searchAddress(q);
+});
+
+searchInput.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') searchBtn.click();
+});
+
+async function searchAddress(q) {
+  try {
+    const resp = await fetch('/os/api/search-id?q=' + encodeURIComponent(q));
+    if (!resp.ok) {
+      const err = await resp.json();
+      showToast(err.error || 'Gagal mencari', 'error');
+      return;
+    }
+    const data = await resp.json();
+    renderSearchResults(data);
+  } catch (err) {
+    showToast('Gagal koneksi ke server', 'error');
+  }
+}
+
+function renderSearchResults(results) {
+  searchResults.innerHTML = '';
+  if (!results.length) {
+    searchResults.innerHTML = '<div style="color:#95a5a6;font-size:12px;padding:8px">Tidak ditemukan</div>';
+    return;
+  }
+  results.forEach(function(r) {
+    const div = document.createElement('div');
+    div.className = 'search-result-item';
+    const label = r.class || r.type || 'lokasi';
+    div.innerHTML = `<span class="sr-type">${label}</span> ${r.display_name}`;
+    div.addEventListener('click', function() {
+      map.setView([r.lat, r.lon], 17);
+      searchResults.innerHTML = '';
+      latInput.value = r.lat.toFixed(6);
+      lngInput.value = r.lon.toFixed(6);
+      // Auto-fill address if fields empty
+      if (!lokasiInput.value) {
+        lokasiInput.value = r.display_name.split(',')[0] || r.display_name;
+      }
+      showToast('Peta dipusatkan ke lokasi', 'success');
+    });
+    searchResults.appendChild(div);
+  });
+}
+
+// ===========================
+// Go to coordinate
+// ===========================
+goCoordBtn.addEventListener('click', function() {
+  const lat = parseFloat(latInput.value);
+  const lng = parseFloat(lngInput.value);
+  if (isNaN(lat) || isNaN(lng)) {
+    showToast('Masukkan lat dan lng yang valid', 'error');
+    return;
+  }
+  if (lat < -11 || lat > 6 || lng < 95 || lng > 141) {
+    showToast('Koordinat di luar wilayah Indonesia', 'error');
+    return;
+  }
+  map.setView([lat, lng], 17);
+  showToast('Peta dipusatkan ke koordinat', 'success');
+});
+
+// ===========================
+// Helper: layer from LatLng array
+// ===========================
+function latLngsToPolygon(latLngs) {
+  if (!latLngs || latLngs.length < 3) return null;
+  return L.polygon(latLngs, {
+    color: '#2e86c1',
+    weight: 2,
+    fillOpacity: 0.25
+  });
+}
+
+// ===========================
+// OPEN FILE: GeoJSON / KML
+// ===========================
+
+// File upload click
+fileUploadArea.addEventListener('click', function() {
+  fileInput.click();
+});
+
+// Drag & drop
+fileUploadArea.addEventListener('dragover', function(e) {
+  e.preventDefault();
+  this.classList.add('dragover');
+});
+fileUploadArea.addEventListener('dragleave', function(e) {
+  this.classList.remove('dragover');
+});
+fileUploadArea.addEventListener('drop', function(e) {
+  e.preventDefault();
+  this.classList.remove('dragover');
+  if (e.dataTransfer.files.length) {
+    fileInput.files = e.dataTransfer.files;
+    handleFile(e.dataTransfer.files[0]);
+  }
+});
+
+fileInput.addEventListener('change', function() {
+  if (this.files.length) {
+    handleFile(this.files[0]);
+  }
+});
+
+function handleFile(file) {
+  const name = file.name.toLowerCase();
+  if (!name.endsWith('.geojson') && !name.endsWith('.json') && !name.endsWith('.kml')) {
+    showToast('Hanya file .geojson, .json, atau .kml', 'error');
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const content = e.target.result;
+      if (name.endsWith('.kml')) {
+        parseKML(content);
+      } else {
+        parseGeoJSON(content);
+      }
+      // Show file info
+      fileName.textContent = file.name;
+      fileUploadArea.style.display = 'none';
+      fileInfo.style.display = 'block';
+      showToast('✅ ' + file.name + ' berhasil dibuka', 'success');
+    } catch (err) {
+      showToast('Gagal baca file: ' + err.message, 'error');
+    }
+  };
+  reader.readAsText(file);
+}
+
+function parseGeoJSON(content) {
+  const data = JSON.parse(content);
+  let features = [];
+
+  if (data.type === 'FeatureCollection') {
+    features = data.features;
+  } else if (data.type === 'Feature') {
+    features = [data];
+  } else if (data.type === 'Polygon' || data.type === 'MultiPolygon') {
+    features = [{ type: 'Feature', geometry: { type: data.type, coordinates: data.coordinates }, properties: {} }];
+  } else {
+    throw new Error('Format GeoJSON tidak dikenal. Harus FeatureCollection, Feature, atau Polygon.');
+  }
+
+  // Filter hanya polygon/multipolygon
+  const polygonFeatures = features.filter(function(f) {
+    return f.geometry && (f.geometry.type === 'Polygon' || f.geometry.type === 'MultiPolygon');
+  });
+
+  if (!polygonFeatures.length) {
+    throw new Error('Tidak ditemukan polygon dalam file.');
+  }
+
+  // Take first polygon feature
+  const feat = polygonFeatures[0];
+  const geom = feat.geometry;
+
+  // Extract properties
+  const props = feat.properties || {};
+  if (props.keterangan_lokasi && !lokasiInput.value) {
+    lokasiInput.value = props.keterangan_lokasi;
+  }
+  if (props.nama_usaha && !usahaInput.value) {
+    usahaInput.value = props.nama_usaha;
+  }
+
+  // Convert to Leaflet layer
+  let layer;
+  if (geom.type === 'Polygon') {
+    // GeoJSON coords are [lng, lat]
+    const latLngs = geom.coordinates[0].map(function(c) {
+      return [c[1], c[0]]; // swap to lat, lng
+    });
+    layer = latLngsToPolygon(latLngs);
+  } else if (geom.type === 'MultiPolygon') {
+    // Take first polygon from multipolygon
+    const latLngs = geom.coordinates[0][0].map(function(c) {
+      return [c[1], c[0]];
+    });
+    layer = latLngsToPolygon(latLngs);
+  }
+
+  if (!layer) {
+    throw new Error('Gagal membuat polygon dari data.');
+  }
+
+  // Clear existing and add
+  drawnItems.clearLayers();
+  drawnItems.addLayer(layer);
+  state.drawnLayer = layer;
+  updatePolyUI(layer);
+  map.fitBounds(layer.getBounds(), { padding: [50, 50] });
+}
+
+function parseKML(content) {
+  // Simple KML parser: extract coordinates from <coordinates> tags
+  const coordRegex = /<coordinates>([\s\S]*?)<\/coordinates>/gi;
+  let match = coordRegex.exec(content);
+  if (!match) throw new Error('Tidak ditemukan koordinat dalam file KML.');
+
+  // Take first polygon's coordinates
+  const coordText = match[1].trim();
+  const points = coordText.split(/[\s]+/).filter(Boolean);
+
+  const latLngs = points.map(function(pt) {
+    const parts = pt.split(',');
+    // KML: lng,lat[,alt]
+    return [parseFloat(parts[1]), parseFloat(parts[0])];
+  }).filter(function(ll) {
+    return !isNaN(ll[0]) && !isNaN(ll[1]);
+  });
+
+  if (latLngs.length < 3) throw new Error('Minimal 3 titik koordinat diperlukan.');
+
+  const layer = latLngsToPolygon(latLngs);
+  drawnItems.clearLayers();
+  drawnItems.addLayer(layer);
+  state.drawnLayer = layer;
+  updatePolyUI(layer);
+  map.fitBounds(layer.getBounds(), { padding: [50, 50] });
+
+  // Try to extract name from KML
+  const nameMatch = content.match(/<name>([^<]+)<\/name>/i);
+  if (nameMatch && !lokasiInput.value) {
+    lokasiInput.value = nameMatch[1];
+  }
+}
+
+// Remove file
+removeFileBtn.addEventListener('click', function() {
+  fileInput.value = '';
+  fileInfo.style.display = 'none';
+  fileUploadArea.style.display = 'block';
+  // Don't delete polygon automatically — user can delete via Hapus button
+});
+
+fitFileBtn.addEventListener('click', function() {
+  if (state.drawnLayer) {
+    map.fitBounds(state.drawnLayer.getBounds(), { padding: [50, 50] });
+  }
+});
+
+// ===========================
+// Export GeoJSON
+// ===========================
+exportGeoJSONBtn.addEventListener('click', function() {
+  if (!state.drawnLayer) { showToast('Gambar polygon dulu', 'error'); return; }
+  const fc = buildFeatureCollection();
+  if (!fc) return;
+  downloadPost('/os/api/export', fc, 'polygon_nib_export.geojson');
+  showToast('✅ GeoJSON diunduh — siap upload ke OSS-RBA', 'success');
+});
+
+// ===========================
+// Export KML
+// ===========================
+exportKMLBtn.addEventListener('click', function() {
+  if (!state.drawnLayer) { showToast('Gambar polygon dulu', 'error'); return; }
+  const fc = buildFeatureCollection();
+  if (!fc) return;
+  downloadPost('/os/api/export-kml', fc, 'polygon_nib_export.kml');
+  showToast('✅ KML diunduh', 'success');
+});
+
+// ===========================
+// Helper: build FeatureCollection from drawn layer
+// ===========================
+function buildFeatureCollection() {
+  if (!state.drawnLayer) return null;
+  const namaUsaha = usahaInput.value.trim() || 'Lokasi Usaha';
+  const keterangan = lokasiInput.value.trim() || 'Lokasi usaha';
+  const luas = Math.round(calculateArea(state.drawnLayer));
+  const geoLayer = state.drawnLayer.toGeoJSON();
+  let coordinates = geoLayer.geometry.coordinates;
+  const ring = coordinates[0];
+  if (ring.length > 0) {
+    const first = ring[0];
+    const last = ring[ring.length - 1];
+    if (first[0] !== last[0] || first[1] !== last[1]) {
+      ring.push(first);
+    }
+  }
+  return {
+    type: 'FeatureCollection',
+    features: [{
+      type: 'Feature',
+      geometry: { type: 'Polygon', coordinates: coordinates },
+      properties: {
+        nama_usaha: namaUsaha,
+        keterangan_lokasi: keterangan,
+        luas_m2: luas
+      }
+    }]
+  };
+}
+
+function downloadPost(url, data, filename) {
+  fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  })
+  .then(function(resp) {
+    if (!resp.ok) return resp.json().then(function(e) { throw new Error(e.error); });
+    return resp.blob();
+  })
+  .then(function(blob) {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename || 'export';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  })
+  .catch(function(err) {
+    showToast('Gagal export: ' + err.message, 'error');
+  });
+}
+
+// ===========================
+// Export SHP (Shapefile dalam ZIP)
+// ===========================
+exportSHPBtn.addEventListener('click', function() {
+  if (!state.drawnLayer) { showToast('Gambar polygon dulu', 'error'); return; }
+  const fc = buildFeatureCollection();
+  if (!fc) return;
+  showToast('⏳ Generate Shapefile...', '');
+  downloadPost('/os/api/export-shp', fc, 'polygon_nib_shapefile.zip');
+  setTimeout(function() {
+    showToast('✅ SHP diunduh — siap upload ke OSS-RBA', 'success');
+  }, 1500);
+});
+
+// ===========================
+// Export ZIP (Semua format)
+// ===========================
+exportZipBtn.addEventListener('click', function() {
+  if (!state.drawnLayer) { showToast('Gambar polygon dulu', 'error'); return; }
+  const fc = buildFeatureCollection();
+  if (!fc) return;
+  showToast('⏳ Generate semua format...', '');
+  downloadPost('/os/api/export-zip', fc, 'polygon_nib_complete.zip');
+  setTimeout(function() {
+    showToast('✅ ZIP (GeoJSON + KML + SHP) diunduh', 'success');
+  }, 2000);
+});
+
+// ===========================
+// Refactor existing exports to use buildFeatureCollection
+// ===========================
+// Override the old handlers to use the shared helper
+(function() {
+  const oldGeo = exportGeoJSONBtn._listeners ? exportGeoJSONBtn._listeners.click : null;
+  const oldKML = exportKMLBtn._listeners ? exportKMLBtn._listeners.click : null;
+})();
+
+// ===========================
+// Toast
+// ===========================
+let toastTimeout;
+
+function showToast(msg, type) {
+  toast.textContent = msg;
+  toast.className = 'toast';
+  if (type) toast.classList.add(type);
+  toast.classList.add('show');
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(function() {
+    toast.classList.remove('show');
+  }, 3500);
+}
+
+// ===========================
+// Keyboard shortcuts
+// ===========================
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Delete' && state.drawnLayer && !e.target.closest('input,textarea')) {
+    deletePolygon();
+    e.preventDefault();
+  }
+});
+
+// ===========================
+// Auto-detect user location (optional, browser asks permission)
+// ===========================
+if ('geolocation' in navigator) {
+  navigator.permissions.query({ name: 'geolocation' }).then(function(result) {
+    if (result.state !== 'denied') {
+      navigator.geolocation.getCurrentPosition(function(pos) {
+        // Only move if still at default position (not already navigated)
+        if (map.getCenter().lat.toFixed(2) === '-5.13') {
+          map.setView([pos.coords.latitude, pos.coords.longitude], 15);
+          latInput.value = pos.coords.latitude.toFixed(6);
+          lngInput.value = pos.coords.longitude.toFixed(6);
+        }
+      }, function() {
+        // Permission denied or error — silent fallback
+      }, { timeout: 5000, enableHighAccuracy: false });
+    }
+  });
+}
+
+})();
+</script>
+</body>
+</html>
