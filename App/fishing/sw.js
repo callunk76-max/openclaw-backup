@@ -1,5 +1,13 @@
-const CACHE = 'mancing-blk-v2';
-const URLS = ['/fish/index.html', '/fish/manifest.json', '/fish/icon-192.png', '/fish/icon-512.png, favicon.ico, favicon-96.png'];
+const CACHE = 'callunks-anglers-v1';
+const URLS = [
+  '/fish/index.html',
+  '/fish/manifest.json',
+  '/fish/icon-192.png',
+  '/fish/icon-512.png',
+  '/fish/favicon.ico',
+  '/fish/favicon-96.png',
+  '/fish/logo-default.png'
+];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(URLS)));
