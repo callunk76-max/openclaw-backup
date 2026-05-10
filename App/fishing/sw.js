@@ -1,4 +1,4 @@
-const CACHE = 'mancing-blk-v4';
+const CACHE = 'callunks-anglers-v1';
 const URLS = [
   '/fish/index.html',
   '/fish/manifest.json',
