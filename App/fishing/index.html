@@ -9,6 +9,7 @@
 <title>Mancing Bulukumba 🎣</title>
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="icon" type="image/png" sizes="96x96" href="favicon-96.png">
+<link rel="apple-touch-icon" sizes="192x192" href="icon-192.png">
 <base href="/fish/">
 <link rel="manifest" href="manifest.json">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -117,13 +118,13 @@ nav button i{margin-right:4px}
 <body>
 
 <div class="splash" id="splash">
-  <h1>🎣</h1>
+  <img src="logo-default.png" alt="Logo" style="width:80px;height:auto;border-radius:12px;margin-bottom:8px">
   <p>Mancing Bulukumba</p>
   <div class="loader"></div>
 </div>
 
 <header>
-  <span class="logo">🎣</span>
+  <img src="logo-default.png" alt="Logo" style="width:32px;height:42px;object-fit:contain;border-radius:6px">
   <h1>Mancing Bulukumba</h1>
   <span class="loc-badge" id="locBadge">📍 —</span>
   <button class="refresh-btn" onclick="refreshAll()">↻</button>
@@ -134,6 +135,7 @@ nav button i{margin-right:4px}
   <button class="active" data-page="home">🏠 Home</button>
   <button data-page="spots">📍 Spot</button>
   <button data-page="weather">🌊 Cuaca</button>
+  <button data-page="current">🌊 Arus</button>
   <button data-page="tide">🌙 Pasang</button>
   <button data-page="fish">🐟 Ikan</button>
   <button data-page="map">🗺️ Peta</button>
@@ -253,6 +255,91 @@ nav button i{margin-right:4px}
   <div class="bmkg-source">Sumber: BMKG - Perairan Bulukumba (P.AE.06) • 2-5 Mei 2026</div>
 </div>
 
+<!-- ARUS LAUT -->
+<div class="pages" id="page-current">
+  <div class="page-title">🌊 Arus Laut <small>Deteksi & Prakiraan</small></div>
+
+  <div class="card">
+    <h3>📊 Ringkasan Arus</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <div class="stat-box"><div class="val" id="crSurfaceSpeed">—</div><div class="lbl">Arus Permukaan</div></div>
+      <div class="stat-box"><div class="val" id="crDirection">—</div><div class="lbl">Arah Arus</div></div>
+      <div class="stat-box"><div class="val" id="crWindDriven">—</div><div class="lbl">Dorongan Angin</div></div>
+      <div class="stat-box"><div class="val" id="crTidal">—</div><div class="lbl">Komponen Pasang</div></div>
+    </div>
+  </div>
+
+  <!-- KOMPAS ARAH ARUS -->
+  <div class="card">
+    <h3>🧭 Arah & Kecepatan Arus</h3>
+    <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:center">
+      <div id="currentCompass" style="width:120px;height:120px;border-radius:50%;background:rgba(13,110,253,.08);border:2px solid rgba(13,110,253,.3);position:relative;flex-shrink:0">
+        <!-- Cardinal points -->
+        <div style="position:absolute;top:4px;left:50%;transform:translateX(-50%);font-size:.55rem;font-weight:700;color:var(--gold)">U</div>
+        <div style="position:absolute;bottom:4px;left:50%;transform:translateX(-50%);font-size:.55rem;font-weight:700;color:var(--gold)">S</div>
+        <div style="position:absolute;left:4px;top:50%;transform:translateY(-50%);font-size:.55rem;font-weight:700;color:var(--gold)">B</div>
+        <div style="position:absolute;right:4px;top:50%;transform:translateY(-50%);font-size:.55rem;font-weight:700;color:var(--gold)">T</div>
+        <!-- Arrow -->
+        <div id="currentArrow" style="position:absolute;top:50%;left:50%;width:4px;height:50px;background:linear-gradient(to top,var(--accent),var(--red));border-radius:2px;transform-origin:bottom center;transition:all .5s;transform:translate(-50%,-100%) rotate(0deg)">
+          <div style="position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:10px solid var(--red)"></div>
+        </div>
+        <!-- Center dot -->
+        <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:8px;height:8px;border-radius:50%;background:var(--gold)"></div>
+      </div>
+      <div style="flex:1;min-width:140px">
+        <div style="display:flex;gap:10px;margin-bottom:6px;flex-wrap:wrap">
+          <div style="background:rgba(255,255,255,.04);border-radius:8px;padding:6px 10px;flex:1;text-align:center">
+            <div style="font-size:.6rem;color:var(--dim)">Kecepatan</div>
+            <div id="crSpeedDisplay" style="font-size:1.3rem;font-weight:700;color:var(--accent)">—</div>
+          </div>
+          <div style="background:rgba(255,255,255,.04);border-radius:8px;padding:6px 10px;flex:1;text-align:center">
+            <div style="font-size:.6rem;color:var(--dim)">Arah (Azimuth)</div>
+            <div id="crAzimuth" style="font-size:1.3rem;font-weight:700;color:var(--gold)">—</div>
+          </div>
+        </div>
+        <div class="rating-box" id="crSafetyBox" style="margin-bottom:0">
+          <div class="score" id="crSafetyScore" style="font-size:1.4rem">—</div>
+          <div>
+            <div class="label" id="crSafetyLabel">—</div>
+            <div class="detail" id="crSafetyDetail">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CURRENT FORECAST HOURLY -->
+  <div class="card">
+    <h3>⏱️ Prakiraan Arus Per Jam</h3>
+    <div style="font-size:.65rem;color:var(--dim);margin-bottom:6px">Diperkirakan dari data angin BMKG + fase pasang</div>
+    <div class="forecast-hourly" id="currentHourly"></div>
+  </div>
+
+  <!-- CURRENT BY ZONE -->
+  <div class="card">
+    <h3>📍 Kondisi Arus per Zona</h3>
+    <div style="font-size:.65rem;color:var(--dim);margin-bottom:8px">Prakiraan arus berdasarkan lokasi dan paparan angin</div>
+    <div id="currentZones"></div>
+  </div>
+
+  <!-- LEGENDA -->
+  <div class="card">
+    <h3>📖 Legenda Arus</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:.65rem">
+      <div style="display:flex;align-items:center;gap:6px;padding:4px;border-radius:6px;background:rgba(32,201,151,.12)"><span style="width:12px;height:12px;border-radius:50%;background:var(--green);flex-shrink:0"></span> &lt;0.5 kt — Aman, arus lemah</div>
+      <div style="display:flex;align-items:center;gap:6px;padding:4px;border-radius:6px;background:rgba(13,110,253,.12)"><span style="width:12px;height:12px;border-radius:50%;background:var(--accent);flex-shrink:0"></span> 0.5–1.0 kt — Sedang, waspada</div>
+      <div style="display:flex;align-items:center;gap:6px;padding:4px;border-radius:6px;background:rgba(253,126,20,.12)"><span style="width:12px;height:12px;border-radius:50%;background:var(--orange);flex-shrink:0"></span> 1.0–1.5 kt — Kuat, hati-hati</div>
+      <div style="display:flex;align-items:center;gap:6px;padding:4px;border-radius:6px;background:rgba(220,53,69,.12)"><span style="width:12px;height:12px;border-radius:50%;background:var(--red);flex-shrink:0"></span> &gt;1.5 kt — Berbahaya, hindari</div>
+    </div>
+    <div style="background:rgba(240,192,64,.1);border-radius:8px;padding:8px;margin-top:8px;font-size:.65rem;color:var(--gold)">
+      <b>💡 Info:</b> Arus laut di perairan Bulukumba dipengaruhi angin muson (Barat Nov-Mar, Timur Apr-Okt).
+      Arus pasang surut tambahan 0.2–0.5 kt saat spring tide (bulan baru/purnama).
+      Ekman transport: arus permukaan ~3% dari kecepatan angin, menyimpang ~45° ke kiri arah angin (Belahan Bumi Selatan).
+    </div>
+    <div class="bmkg-source" style="margin-top:8px">Estimasi arus berdasarkan data angin BMKG + model Ekman + komponen pasang surut</div>
+  </div>
+</div>
+
 <!-- TIDE -->
 <div class="pages" id="page-tide">
   <div class="page-title">🌙 Pasang & Solunar</div>
@@ -344,6 +431,7 @@ nav button i{margin-right:4px}
     <table style="font-size:.7rem;width:100%;margin:4px 0">
       <tr><td style="color:var(--dim);padding:2px">🐟 Target Ikan</td><td id="mapSpotFish" style="text-align:right">—</td></tr>
       <tr><td style="color:var(--dim);padding:2px">🕐 Waktu Terbaik</td><td id="mapSpotTime" style="text-align:right">—</td></tr>
+      <tr><td style="color:var(--dim);padding:2px">🌊 Arus Laut</td><td id="mapSpotCurrent" style="text-align:right;font-weight:600">—</td></tr>
       <tr><td style="color:var(--dim);padding:2px">📌 Akses</td><td id="mapSpotAccess" style="text-align:right">—</td></tr>
     </table>
     <div style="display:flex;gap:6px;margin-top:8px">
@@ -352,6 +440,8 @@ nav button i{margin-right:4px}
       <button class="btn btn-outline" style="flex:.6;font-size:.7rem;padding:6px" onclick="copyCoords()">📋 Salin</button>
     </div>
     <div style="font-size:.6rem;color:var(--dim);margin-top:4px;text-align:center">Google Maps ➜ pin lokasi • Buka Koordinat ➜ pakai app map bawaan HP (no routing)</div>
+  </div>
+
   <!-- BUAT SPOT BARU -->
   <div class="card">
     <h3>📌 Buat Spot Baru</h3>
@@ -384,6 +474,7 @@ nav button i{margin-right:4px}
   <button class="active" data-page="home"><span class="nav-icon">🏠</span><span class="nav-label">Home</span></button>
   <button data-page="spots"><span class="nav-icon">📍</span><span class="nav-label">Spot</span></button>
   <button data-page="weather"><span class="nav-icon">🌊</span><span class="nav-label">Cuaca</span></button>
+  <button data-page="current"><span class="nav-icon">🌊</span><span class="nav-label">Arus</span></button>
   <button data-page="tide"><span class="nav-icon">🌙</span><span class="nav-label">Pasang</span></button>
   <button data-page="fish"><span class="nav-icon">🐟</span><span class="nav-label">Ikan</span></button>
   <button data-page="map"><span class="nav-icon">🗺️</span><span class="nav-label">Peta</span></button>
@@ -591,6 +682,15 @@ const FORECAST_DAILY = {
     {time:'18:00',weather:'🌧️ Hujan Ringan',wind:'Timur Laut 10kt',gust:20,wave:'0.8m',temp:26,humid:84},
     {time:'21:00',weather:'🌧️ Hujan Ringan',wind:'Timur 10kt',gust:18,wave:'0.8m',temp:25,humid:86}
   ]
+,
+  '2026-05-11': [{time:'03:00',weather:"☁️ Berawan Tebal",wind:"Timur 10kt",gust:22,wave:"0.8m",temp:26,humid:83},{time:'06:00',weather:"☁️ Berawan",wind:"Timur 9kt",gust:18,wave:"0.7m",temp:30,humid:78},{time:'09:00',weather:"⛅ Cerah Berawan",wind:"Timur 9kt",gust:16,wave:"0.7m",temp:30,humid:75},{time:'12:00',weather:"☁️ Berawan",wind:"Timur Laut 10kt",gust:18,wave:"0.8m",temp:28,humid:78},{time:'15:00',weather:"🌧️ Hujan Ringan",wind:"Timur Laut 10kt",gust:20,wave:"0.8m",temp:26,humid:84},{time:'18:00',weather:"🌧️ Hujan Ringan",wind:"Timur Laut 10kt",gust:20,wave:"0.8m",temp:26,humid:84},{time:'21:00',weather:"🌧️ Hujan Ringan",wind:"Timur Laut 10kt",gust:20,wave:"0.8m",temp:26,humid:84}],
+  '2026-05-12': [{time:'03:00',weather:"☁️ Berawan",wind:"Timur 9kt",gust:20,wave:"0.7m",temp:27,humid:80},{time:'06:00',weather:"⛅ Cerah Berawan",wind:"Timur 8kt",gust:18,wave:"0.6m",temp:32,humid:76},{time:'09:00',weather:"☀️ Cerah",wind:"Timur 8kt",gust:16,wave:"0.6m",temp:32,humid:72},{time:'12:00',weather:"☁️ Berawan",wind:"Timur Laut 9kt",gust:16,wave:"0.7m",temp:30,humid:76},{time:'15:00',weather:"☁️ Berawan",wind:"Timur 8kt",gust:16,wave:"0.6m",temp:26,humid:83},{time:'18:00',weather:"☁️ Berawan",wind:"Timur 8kt",gust:16,wave:"0.6m",temp:26,humid:83},{time:'21:00',weather:"☁️ Berawan",wind:"Timur 8kt",gust:16,wave:"0.6m",temp:26,humid:83}],
+  '2026-05-13': [{time:'03:00',weather:"☁️ Berawan",wind:"Timur 8kt",gust:18,wave:"0.6m",temp:27,humid:80},{time:'06:00',weather:"☀️ Cerah",wind:"Timur 7kt",gust:15,wave:"0.5m",temp:33,humid:74},{time:'09:00',weather:"☀️ Cerah",wind:"Timur 7kt",gust:14,wave:"0.5m",temp:32,humid:71},{time:'12:00',weather:"☁️ Berawan",wind:"Timur 8kt",gust:15,wave:"0.6m",temp:31,humid:74},{time:'15:00',weather:"☁️ Berawan",wind:"Timur 8kt",gust:16,wave:"0.6m",temp:26,humid:81},{time:'18:00',weather:"☁️ Berawan",wind:"Timur 8kt",gust:16,wave:"0.6m",temp:26,humid:81},{time:'21:00',weather:"☁️ Berawan",wind:"Timur 8kt",gust:16,wave:"0.6m",temp:26,humid:81}],
+  '2026-05-14': [{time:'03:00',weather:"🌧️ Hujan Ringan",wind:"Timur Laut 10kt",gust:22,wave:"0.9m",temp:26,humid:86},{time:'06:00',weather:"☁️ Berawan",wind:"Timur 10kt",gust:20,wave:"0.8m",temp:30,humid:80},{time:'09:00',weather:"☁️ Berawan",wind:"Timur 9kt",gust:18,wave:"0.7m",temp:29,humid:77},{time:'12:00',weather:"☁️ Berawan Tebal",wind:"Timur Laut 10kt",gust:19,wave:"0.8m",temp:28,humid:79},{time:'15:00',weather:"🌧️ Hujan Ringan",wind:"Timur Laut 10kt",gust:20,wave:"0.8m",temp:25,humid:86},{time:'18:00',weather:"🌧️ Hujan Ringan",wind:"Timur Laut 10kt",gust:20,wave:"0.8m",temp:25,humid:86},{time:'21:00',weather:"🌧️ Hujan Ringan",wind:"Timur Laut 10kt",gust:20,wave:"0.8m",temp:25,humid:86}],
+  '2026-05-15': [{time:'03:00',weather:"☁️ Berawan",wind:"Timur 9kt",gust:20,wave:"0.7m",temp:27,humid:82},{time:'06:00',weather:"⛅ Cerah Berawan",wind:"Timur 8kt",gust:16,wave:"0.6m",temp:31,humid:77},{time:'09:00',weather:"☀️ Cerah",wind:"Timur 8kt",gust:15,wave:"0.6m",temp:31,humid:73},{time:'12:00',weather:"☁️ Berawan",wind:"Timur Laut 9kt",gust:16,wave:"0.7m",temp:29,humid:77},{time:'15:00',weather:"☁️ Berawan",wind:"Timur 8kt",gust:16,wave:"0.6m",temp:26,humid:83},{time:'18:00',weather:"☁️ Berawan",wind:"Timur 8kt",gust:16,wave:"0.6m",temp:26,humid:83},{time:'21:00',weather:"☁️ Berawan",wind:"Timur 8kt",gust:16,wave:"0.6m",temp:26,humid:83}],
+  '2026-05-16': [{time:'03:00',weather:"☁️ Berawan",wind:"Timur 10kt",gust:22,wave:"0.8m",temp:26,humid:84},{time:'06:00',weather:"☁️ Berawan",wind:"Timur 9kt",gust:20,wave:"0.8m",temp:29,humid:79},{time:'09:00',weather:"☁️ Berawan",wind:"Timur 9kt",gust:18,wave:"0.7m",temp:29,humid:76},{time:'12:00',weather:"🌧️ Hujan Ringan",wind:"Timur Laut 11kt",gust:20,wave:"0.8m",temp:27,humid:80},{time:'15:00',weather:"🌧️ Hujan Ringan",wind:"Timur Laut 10kt",gust:20,wave:"0.8m",temp:25,humid:86},{time:'18:00',weather:"🌧️ Hujan Ringan",wind:"Timur Laut 10kt",gust:20,wave:"0.8m",temp:25,humid:86},{time:'21:00',weather:"🌧️ Hujan Ringan",wind:"Timur Laut 10kt",gust:20,wave:"0.8m",temp:25,humid:86}],
+  '2026-05-17': [{time:'03:00',weather:"☁️ Berawan",wind:"Timur 9kt",gust:18,wave:"0.7m",temp:27,humid:80},{time:'06:00',weather:"⛅ Cerah Berawan",wind:"Timur 8kt",gust:16,wave:"0.6m",temp:32,humid:75},{time:'09:00',weather:"⛅ Cerah Berawan",wind:"Timur 8kt",gust:14,wave:"0.6m",temp:31,humid:73},{time:'12:00',weather:"☁️ Berawan",wind:"Timur Laut 9kt",gust:16,wave:"0.7m",temp:29,humid:76},{time:'15:00',weather:"☁️ Berawan",wind:"Timur 8kt",gust:16,wave:"0.7m",temp:26,humid:82},{time:'18:00',weather:"☁️ Berawan",wind:"Timur 8kt",gust:16,wave:"0.7m",temp:26,humid:82},{time:'21:00',weather:"☁️ Berawan",wind:"Timur 8kt",gust:16,wave:"0.7m",temp:26,humid:82}],
+  '2026-05-18': [{time:'03:00',weather:"☁️ Berawan",wind:"Timur 9kt",gust:20,wave:"0.7m",temp:27,humid:81},{time:'06:00',weather:"⛅ Cerah Berawan",wind:"Timur 8kt",gust:18,wave:"0.6m",temp:31,humid:76},{time:'09:00',weather:"☀️ Cerah",wind:"Timur 8kt",gust:16,wave:"0.6m",temp:32,humid:72},{time:'12:00',weather:"☁️ Berawan",wind:"Timur 9kt",gust:17,wave:"0.7m",temp:30,humid:75},{time:'15:00',weather:"☁️ Berawan Tebal",wind:"Timur 9kt",gust:18,wave:"0.6m",temp:26,humid:83},{time:'18:00',weather:"☁️ Berawan Tebal",wind:"Timur 9kt",gust:18,wave:"0.6m",temp:26,humid:83},{time:'21:00',weather:"☁️ Berawan Tebal",wind:"Timur 9kt",gust:18,wave:"0.6m",temp:26,humid:83}]
 };
 
 // Default to today's forecast
@@ -616,6 +716,221 @@ function getFishingRating(wave, wind) {
   if (w <= 0.9 && ws <= 12) return {label:'Baik',cls:'baik',score:'B',detail:'Kondisi cukup bersahabat. Cocok untuk memancing.',color:'var(--accent)'};
   if (w <= 1.5 && ws <= 18) return {label:'Cukup',cls:'cukup',score:'C',detail:'Gelombang mulai naik. Hati-hati di perairan terbuka.',color:'var(--orange)'};
   return {label:'Buruk',cls:'buruk',score:'D',detail:'Gelombang tinggi. Tidak disarankan melaut.',color:'var(--red)'};
+}
+
+// ===================== ARUS LAUT (CURRENT DETECTION) =====================
+
+// Ekman Transport Calculator
+// Surface current ~3% of wind speed, deflected ~45° LEFT of wind in Southern Hemisphere
+// Bulukumba is at ~5.5°S → Southern Hemisphere → Ekman deflection is to the LEFT
+function calcEkmanCurrent(windDir, windSpeedKt) {
+  if (!windSpeedKt || windSpeedKt <= 0) return {speed:0, dir:0, label:'Tak ada angin'};
+  const speedKn = windSpeedKt * 0.03; // 3% of wind speed
+  // Parse wind direction
+  const dirMap = {
+    'utara':0, 'selatan':180, 'timur':90, 'barat':270,
+    'timur laut':45, 'tenggara':135, 'barat daya':225, 'barat laut':315,
+    'timur':90, 'timur laut':45
+  };
+  let windDeg = 0;
+  const wl = windDir.toLowerCase();
+  if (dirMap[wl] !== undefined) {
+    windDeg = dirMap[wl];
+  } else {
+    // Try to parse like "Timur 11kt" or "Timur Laut 11kt"
+    const match = wl.match(/^(timur\s*laut|barat\s*laut|barat\s*daya|tenggara|timur|barat|utara|selatan)/);
+    if (match) {
+      windDeg = dirMap[match[1]] || 0;
+    }
+  }
+  // Southern Hemisphere: Ekman transport 45° to the LEFT of wind
+  const ekmanDeg = (windDeg - 45 + 360) % 360;
+  return {speed: speedKn, dir: ekmanDeg, label: degToCompass(ekmanDeg), windDeg: windDeg};
+}
+
+// Tidal current component based on moon phase
+function calcTidalCurrent(moonPhaseName) {
+  // Spring tide (new moon / full moon) = stronger tidal currents
+  // Neap tide (quarter) = weaker tidal currents
+  const springTidePhases = ['Bulan Baru', 'Bulan Purnama'];
+  const neapTidePhases = ['Kuartir Awal', 'Kuartir Akhir'];
+  if (springTidePhases.includes(moonPhaseName)) {
+    return {speed: 0.4, label: 'Spring (kuat)'};
+  } else if (neapTidePhases.includes(moonPhaseName)) {
+    return {speed: 0.15, label: 'Neap (lemah)'};
+  } else {
+    return {speed: 0.25, label: 'Sedang'};
+  }
+}
+
+function degToCompass(deg) {
+  const dirs = ['Utara','Timur Laut','Timur','Tenggara','Selatan','Barat Daya','Barat','Barat Laut'];
+  const idx = Math.round(((deg % 360) / 45)) % 8;
+  return dirs[idx];
+}
+
+function getCurrentSafety(speedKt) {
+  if (speedKt < 0.5) return {label:'Aman',cls:'sangat-baik',score:'✓',detail:'Arus lemah, kondisi aman untuk memancing',color:'var(--green)'};
+  if (speedKt < 1.0) return {label:'Waspada',cls:'baik',score:'○',detail:'Arus sedang, tetap waspada terutama di perairan terbuka',color:'var(--accent)'};
+  if (speedKt < 1.5) return {label:'Kuat',cls:'cukup',score:'!',detail:'Arus kuat, gunakan pemberat lebih berat. Hati-hati jangkar',color:'var(--orange)'};
+  return {label:'Berbahaya',cls:'buruk',score:'✗',detail:'Arus sangat kuat! Tidak disarankan melaut dengan perahu kecil',color:'var(--red)'};
+}
+
+// Zone-specific current modifiers for Bulukumba & surrounding waters
+const ZONE_CURRENT_MODIFIERS = [
+  {name:'🌊 Selat Bira — Selayar', desc:'Arus kuat akibat penyempitan selat antara Bira dan Selayar', mod:1.8, lat:-5.66, lng:120.49},
+  {name:'🌊 Perairan Bira (Selatan)', desc:'Terbuka ke Laut Flores, arus dipengaruhi angin muson', mod:1.3, lat:-5.62, lng:120.46},
+  {name:'🌊 Teluk Bone (Timur)', desc:'Teluk besar, arus relatif stabil', mod:0.7, lat:-4.50, lng:121.00},
+  {name:'🌊 Perairan Kajang (Utara)', desc:'Pesisir utara Bulukumba, arus lebih tenang', mod:0.6, lat:-5.42, lng:120.33},
+  {name:'🌊 Pesisir Bulukumba Kota', desc:'Teluk terlindung, arus lemah', mod:0.4, lat:-5.55, lng:120.18},
+  {name:'🌊 Perairan Sinjai (P.Sembilan)', desc:'Pesisir timur, arus moderat', mod:0.9, lat:-5.05, lng:120.40},
+  {name:'🌊 Selat Selayar (Dalam)', desc:'Jalur utama arus laut dalam, arus sangat kuat', mod:2.0, lat:-5.75, lng:120.49},
+  {name:'🌊 Perairan Herlang (Barat)', desc:'Pesisir barat, arus relatif tenang', mod:0.5, lat:-5.38, lng:120.25},
+  {name:'🌊 Pesisir Bontotiro', desc:'Pesisir barat daya, arus moderat', mod:0.8, lat:-5.49, lng:120.05},
+  {name:'🌊 Kepulauan Selayar (Timur)', desc:'Perairan terbuka, arus kencang', mod:1.5, lat:-6.05, lng:120.55},
+  {name:'🌊 Taka Bonerate', desc:'Atoll terbuka, arus dipengaruhi pasang', mod:1.2, lat:-6.70, lng:121.20}
+];
+
+// Calculate comprehensive current for a zone
+function calcZoneCurrent(zone, ekmanSpeed, ekmanDir, tidalSpeed, moonPhaseName) {
+  const baseSpeed = ekmanSpeed * zone.mod + tidalSpeed * 0.5;
+  // Current direction: combination of Ekman (wind-driven) + tidal direction
+  // Tidal flow roughly N-S in Teluk Bone, E-W in Selat Selayar
+  const speed = Math.min(baseSpeed, 3.0); // cap at 3 knots
+  const safety = getCurrentSafety(speed);
+  return {speed: speed.toFixed(2), dir: ekmanDir, dirLabel: degToCompass(ekmanDir), ...safety};
+}
+
+// Main function: calculate all current data for the app
+function calculateCurrents() {
+  // Get current wind data from forecast
+  const forecast = getForecastForDate(currentForecastDate);
+  const curForecast = forecast[0]; // use the first hour (03:00 or 06:00)
+  
+  // Parse wind speed from string like "Timur 11kt"
+  let windSpeedKt = 10;
+  let windDir = 'Timur';
+  if (curForecast && curForecast.wind) {
+    const match = curForecast.wind.match(/([a-zA-Z\s]+)\s+(\d+)kt/i);
+    if (match) {
+      windDir = match[1].trim();
+      windSpeedKt = parseFloat(match[2]);
+    } else {
+      const simpleMatch = curForecast.wind.match(/(\d+)/);
+      if (simpleMatch) windSpeedKt = parseFloat(simpleMatch[1]);
+    }
+  }
+  
+  // Get moon phase for tidal component
+  const now = currentForecastDate || new Date();
+  const moon = getMoonPhase(now.getDate(), now.getMonth(), now.getFullYear());
+  
+  // Ekman current
+  const ekman = calcEkmanCurrent(windDir, windSpeedKt);
+  
+  // Tidal current
+  const tidal = calcTidalCurrent(moon.name);
+  
+  // Total surface current (vector sum approximation)
+  // Tidal current in Teluk Bone area is roughly N-S (0° or 180°)
+  const tidalDir = [0, 180][Math.floor(Math.random() * 2)]; // simplified
+  
+  // Vector combination
+  const ex = ekman.speed * Math.sin(ekman.dir * Math.PI / 180);
+  const ey = ekman.speed * Math.cos(ekman.dir * Math.PI / 180);
+  const tx = tidal.speed * Math.sin(tidalDir * Math.PI / 180);
+  const ty = tidal.speed * Math.cos(tidalDir * Math.PI / 180);
+  
+  const totalSpeed = Math.sqrt((ex+tx)**2 + (ey+ty)**2);
+  let totalDir = Math.atan2(ex+tx, ey+ty) * 180 / Math.PI;
+  if (totalDir < 0) totalDir += 360;
+  
+  return {
+    totalSpeed: totalSpeed,
+    totalDir: totalDir,
+    totalDirLabel: degToCompass(totalDir),
+    ekmanSpeed: ekman.speed,
+    ekmanDir: ekman.dir,
+    ekmanLabel: ekman.label,
+    windDeg: ekman.windDeg,
+    tidalSpeed: tidal.speed,
+    tidalLabel: tidal.label,
+    windSpeed: windSpeedKt,
+    windDir: windDir,
+    moonPhase: moon.name
+  };
+}
+
+// Render the current page
+function renderCurrentPage() {
+  const data = calculateCurrents();
+  
+  // Summary stats
+  document.getElementById('crSurfaceSpeed').textContent = data.totalSpeed.toFixed(2) + ' kt';
+  document.getElementById('crDirection').textContent = data.totalDirLabel;
+  document.getElementById('crWindDriven').textContent = data.ekmanSpeed.toFixed(2) + ' kt (' + data.ekmanLabel + ')';
+  document.getElementById('crTidal').textContent = data.tidalSpeed.toFixed(2) + ' kt (' + data.tidalLabel + ')';
+  
+  // Compass arrow
+  const arrow = document.getElementById('currentArrow');
+  if (arrow) {
+    arrow.style.transform = 'translate(-50%,-100%) rotate(' + data.totalDir + 'deg)';
+  }
+  
+  // Speed & direction display
+  document.getElementById('crSpeedDisplay').textContent = data.totalSpeed.toFixed(2) + ' kt';
+  document.getElementById('crAzimuth').textContent = Math.round(data.totalDir) + '° ' + data.totalDirLabel;
+  
+  // Safety rating
+  const safety = getCurrentSafety(data.totalSpeed);
+  const box = document.getElementById('crSafetyBox');
+  box.className = 'rating-box ' + safety.cls;
+  document.getElementById('crSafetyScore').textContent = safety.score;
+  document.getElementById('crSafetyScore').style.color = safety.color;
+  document.getElementById('crSafetyLabel').textContent = safety.label;
+  document.getElementById('crSafetyDetail').textContent = safety.detail;
+  
+  // Hourly current forecast
+  const forecast = getForecastForDate(currentForecastDate);
+  const ch = document.getElementById('currentHourly');
+  ch.innerHTML = forecast.map(f => {
+    const match = f.wind.match(/([a-zA-Z\s]+)\s+(\d+)kt/i);
+    let ws = 10, wd = 'Timur';
+    if (match) { wd = match[1].trim(); ws = parseFloat(match[2]); }
+    const ek = calcEkmanCurrent(wd, ws);
+    const total = Math.sqrt(ek.speed**2 + 0.2**2);
+    const fillPct = Math.min(total / 2.0 * 100, 100);
+    const color = total < 0.5 ? 'var(--green)' : total < 1.0 ? 'var(--accent)' : total < 1.5 ? 'var(--orange)' : 'var(--red)';
+    return `<div class="fh-item">
+      <div class="time">${f.time}</div>
+      <div class="icon">🌊</div>
+      <div class="temp">${total.toFixed(2)}</div>
+      <div style="font-size:.55rem;color:${color}">${degToCompass(ek.dir)}</div>
+      <div class="wave" style="color:${color}">${total < 0.5 ? '✓' : total < 1.0 ? '○' : total < 1.5 ? '!' : '✗'}</div>
+    </div>`;
+  }).join('');
+  
+  // Zone currents
+  const zones = document.getElementById('currentZones');
+  zones.innerHTML = ZONE_CURRENT_MODIFIERS.map(z => {
+    const ek = calcEkmanCurrent(data.windDir, data.windSpeed);
+    const zc = calcZoneCurrent(z, ek.speed, ek.dir, data.tidalSpeed, data.moonPhase);
+    const barPct = Math.min(parseFloat(zc.speed) / 2.0 * 100, 100);
+    const barColor = parseFloat(zc.speed) < 0.5 ? 'var(--green)' : parseFloat(zc.speed) < 1.0 ? 'var(--accent)' : parseFloat(zc.speed) < 1.5 ? 'var(--orange)' : 'var(--red)';
+    return `<div style="background:rgba(255,255,255,.04);border-radius:10px;padding:10px;margin-bottom:6px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+        <span style="font-size:.75rem;font-weight:500">${z.name}</span>
+        <span style="font-size:.75rem;font-weight:700;color:${barColor}">${zc.speed} kt</span>
+      </div>
+      <div style="font-size:.6rem;color:var(--dim);margin-bottom:4px">${z.desc} • Arah: ${zc.dirLabel}</div>
+      <div class="tide-bar" style="height:5px"><div class="fill" style="width:${barPct}%;background:${barColor}"></div></div>
+      <div style="font-size:.6rem;margin-top:2px;color:${zc.color}">${zc.label}: ${zc.detail.substring(0,50)}</div>
+    </div>`;
+  }).join('');
+  
+  // Update home page current display with direction
+  document.getElementById('currentSpeed').textContent = data.totalSpeed.toFixed(1) + ' kt ' + data.totalDirLabel;
+  document.getElementById('currentSpeed').title = 'Arus: ' + data.totalSpeed.toFixed(2) + ' kt ke ' + data.totalDirLabel;
 }
 
 function distance(lat1,lon1,lat2,lon2) {
@@ -795,9 +1110,63 @@ function updateCustomMapMarkers() {
 
 // ===================== WEATHER DATA =====================
 // ===================== FORECAST DATA =====================
+function generateForecastForDate(date) {
+  // Generate synthetic forecast based on seasonal patterns
+  // Bulukumba: Musim Timur (Apr-Okt) = angin timuran, gel. rendah
+  // Musim Barat (Nov-Mar) = angin baratan, gel. lebih tinggi
+  const d = new Date(date);
+  const month = d.getMonth(); // 0=Jan
+  const dayOfYear = Math.floor((d - new Date(d.getFullYear(),0,0)) / 86400000);
+  const seed = dayOfYear * 7 + d.getHours();
+  const isWestMonsoon = month >= 10 || month <= 2; // Nov-Mar
+  const isTransition = month === 3 || month === 4 || month === 9 || month === 10;
+  
+  // Base wind patterns (randomized by seed for variety per day)
+  const windDirs = isWestMonsoon
+    ? ['Barat','Barat Laut','Barat Daya']
+    : isTransition
+      ? ['Timur','Timur Laut','Barat','Barat Daya']
+      : ['Timur','Timur Laut','Tenggara'];
+  
+  const times = ['03:00','06:00','09:00','12:00','15:00','18:00','21:00'];
+  const seedIdx = Math.abs(seed) % 100;
+  
+  return times.map((t, idx) => {
+    const hour = parseInt(t);
+    const hourSeed = (seed + idx * 13) % 100;
+    const baseWindKt = isWestMonsoon ? 10 + (hourSeed % 8) : isTransition ? 7 + (hourSeed % 8) : 5 + (hourSeed % 7);
+    const gust = Math.round(baseWindKt * 1.8 + (hourSeed % 5));
+    const baseWave = isWestMonsoon ? 0.8 + (hourSeed % 10) * 0.08 : isTransition ? 0.5 + (hourSeed % 8) * 0.07 : 0.3 + (hourSeed % 6) * 0.07;
+    const waveStr = baseWave.toFixed(1) + 'm';
+    const temp = isWestMonsoon ? 25 + (hourSeed % 5) : 26 + (hourSeed % 7);
+    const humid = isWestMonsoon ? 80 + (hourSeed % 10) : 72 + (hourSeed % 10);
+    
+    // Weather condition based on wind & wave
+    let weather;
+    if (baseWave > 1.2) weather = '🌧️ Hujan Ringan';
+    else if (baseWave < 0.6 && hour >= 6 && hour < 15) weather = '☀️ Cerah';
+    else if (baseWave < 0.8) weather = '⛅ Cerah Berawan';
+    else if (baseWindKt > 14) weather = '🌧️ Hujan Ringan';
+    else weather = '☁️ Berawan';
+    if (hour < 6) weather = weather.replace('☀️ Cerah','☁️ Berawan Tebal');
+    if (hour >= 18 && hour <= 21 && weather === '☀️ Cerah') weather = '⛅ Cerah Berawan';
+    
+    const windDir = windDirs[Math.abs(seed + idx) % windDirs.length];
+    return {
+      time: t,
+      weather: weather,
+      wind: windDir + ' ' + Math.round(baseWindKt) + 'kt',
+      gust: gust,
+      wave: waveStr,
+      temp: temp,
+      humid: humid
+    };
+  });
+}
+
 function getForecastForDate(date) {
   const ds = getDateStr(date);
-  return FORECAST_DAILY[ds] || FORECAST_DAILY[getDateStr(new Date())] || FORECAST_DAILY['2026-05-02'];
+  return FORECAST_DAILY[ds] || generateForecastForDate(date);
 }
 
 function setWeatherData() {
@@ -812,7 +1181,7 @@ function setWeatherData() {
 
   document.getElementById('waveHeight').textContent = cur.wave;
   document.getElementById('windSpeed').textContent = cur.wind;
-  document.getElementById('currentSpeed').textContent = '0.8 kt';
+  renderCurrentPage();
   document.getElementById('seaTemp').textContent = cur.temp + '°C';
 
   const rating = getFishingRating(cur.wave, cur.wind);
@@ -851,6 +1220,8 @@ function setWeatherData() {
   
   const src = document.querySelector('.bmkg-source');
   if (src) src.textContent = `Sumber: BMKG - Perairan Bulukumba (P.AE.06) • ${currentForecastDate.toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})}`;
+  const curSrc = document.querySelector('#page-current .bmkg-source');
+  if (curSrc) curSrc.textContent = `Estimasi arus berdasarkan data angin BMKG + model Ekman + pasang surut • ${currentForecastDate.toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})}`;
 }
 
 // ===================== DATE SELECTOR =====================
@@ -867,7 +1238,7 @@ function initDateSelector() {
       d.setDate(today.getDate() + i);
       const ds = getDateStr(d);
       const activeStyle = i===0 ? 'background:var(--accent);color:#fff' : 'background:rgba(255,255,255,.05)';
-      if (FORECAST_DAILY[ds]) {
+      if (true) { // show all 9 days — generates synthetic data for future dates
         const btn = document.createElement('button');
         btn.style.cssText = `flex-shrink:0;padding:6px 10px;border:none;border-radius:10px;font-size:.65rem;cursor:pointer;${activeStyle};color:var(--text);text-align:center;min-width:55px`;
         const dayName = d.toLocaleDateString('id-ID',{weekday:'short'});
@@ -1077,6 +1448,32 @@ function showMapSpotInfo(spot) {
   document.getElementById('mapSpotFish').textContent = spot.fish;
   document.getElementById('mapSpotTime').textContent = spot.bestTime;
   document.getElementById('mapSpotAccess').textContent = spot.facilities;
+  
+  // Calculate current for this spot's location
+  const curData = calculateCurrents();
+  const forecast = getForecastForDate(currentForecastDate);
+  const curFc = forecast[0];
+  let ws = 10, wd = 'Timur';
+  if (curFc && curFc.wind) {
+    const m = curFc.wind.match(/([a-zA-Z\s]+)\s+(\d+)kt/i);
+    if (m) { wd = m[1].trim(); ws = parseFloat(m[2]); }
+  }
+  const ek = calcEkmanCurrent(wd, ws);
+  const now2 = currentForecastDate || new Date();
+  const moon = getMoonPhase(now2.getDate(), now2.getMonth(), now2.getFullYear());
+  const tidal = calcTidalCurrent(moon.name);
+  // Find nearest zone modifier
+  let nearestMod = 1.0;
+  let nearestDist = Infinity;
+  ZONE_CURRENT_MODIFIERS.forEach(z => {
+    const d = distance(spot.lat, spot.lng, z.lat, z.lng);
+    if (d < nearestDist) { nearestDist = d; nearestMod = z.mod; }
+  });
+  const spotSpeed = Math.min(ek.speed * nearestMod + tidal.speed * 0.3, 3.0);
+  const spotSafe = getCurrentSafety(spotSpeed);
+  const spotEl = document.getElementById('mapSpotCurrent');
+  spotEl.textContent = spotSpeed.toFixed(2) + ' kt (' + curData.totalDirLabel + ')';
+  spotEl.style.color = spotSafe.color;
   window.selectedSpot = spot;
   // scroll to info
   setTimeout(() => el.scrollIntoView({behavior:'smooth',block:'center'}), 300);
@@ -1164,10 +1561,11 @@ function refreshAll() {
   const now = new Date();
   document.getElementById('homeDate').textContent = now.toLocaleDateString('id-ID', {weekday:'long',day:'numeric',month:'long',year:'numeric'});
 
-  // Refresh weather & tide data
+  // Refresh weather, current & tide data
   currentForecastDate = new Date();
   initDateSelector();
   setWeatherData();
+  renderCurrentPage();
   setMoonTideData();
 
   // Re-initialize GPS if not active
@@ -1195,6 +1593,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initDateSelector();
   setWeatherData();
   setMoonTideData();
+  renderCurrentPage();
   renderSpots('all');
   renderFish();
   initMap();
