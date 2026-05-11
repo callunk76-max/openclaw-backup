@@ -62,14 +62,20 @@ def logout():
 
 @app.route('/upload', methods=['POST'])
 def upload():
+    import sys
     if not session.get('filebox_logged_in'):
+        print(f"[UPLOAD] Not logged in!", flush=True)
         return redirect(url_for('login'))
     file = request.files.get('file')
+    print(f"[UPLOAD] File: {file}, Filename: {file.filename if file else 'None'}", flush=True)
     if file and file.filename:
         # Sanitize filename (remove path separators)
         filename = file.filename.replace('/', '_').replace('\\', '_')
         filepath = os.path.join(UPLOAD_FOLDER, filename)
         file.save(filepath)
+        print(f"[UPLOAD] Saved to: {filepath} ({os.path.getsize(filepath)} bytes)", flush=True)
+    else:
+        print(f"[UPLOAD] No file received! files keys: {list(request.files.keys())}", flush=True)
     return redirect(url_for('index'))
 
 @app.route('/download/<path:filename>')
