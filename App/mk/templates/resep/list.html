@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Resep{% endblock %}
+{% block content %}
+<div class="flex items-center justify-between mb-4">
+    <h1 class="text-2xl font-bold text-gray-800">Resep Obat</h1>
+    <a href="{{BASE}}/resep/baru" class="btn-primary flex items-center gap-2"><i class="fas fa-plus"></i> Resep Baru</a>
+</div>
+
+<div class="card p-4 mb-4">
+    <form method="GET" class="flex gap-2">
+        <input type="text" name="q" value="{{ q }}" placeholder="Cari no resep / nama pasien..." class="flex-1">
+        <button class="bg-gray-100 px-4 py-2 rounded-lg text-sm">Cari</button>
+    </form>
+</div>
+
+<div class="card overflow-hidden">
+    <table>
+        <thead><tr>
+            <th>No Resep</th><th>Tanggal</th><th>Pasien</th><th>Jenis</th><th>Jaminan</th><th>Status</th><th>Aksi</th>
+        </tr></thead>
+        <tbody>
+            {% for r in resep %}
+            <tr>
+                <td class="font-mono text-xs">{{ r.no_resep }}</td>
+                <td>{{ r.tanggal.isoformat() }}</td>
+                <td><a href="{{BASE}}/resep/{{ r.id }}" class="text-blue-600 hover:underline">{{ r.pasien.nama }}</a></td>
+                <td><span class="badge {% if r.jenis_pelayanan == 'RAWAT_INAP' %}bg-purple-100 text-purple-700{% else %}bg-green-100 text-green-700{% endif %}">{{ r.jenis_pelayanan|replace('_',' ') }}</span></td>
+                <td>{{ r.jaminan }}</td>
+                <td>
+                    <span class="badge 
+                        {% if r.status == 'baru' %}bg-yellow-100 text-yellow-700
+                        {% elif r.status == 'siap' %}bg-blue-100 text-blue-700
+                        {% elif r.status == 'diambil' %}bg-green-100 text-green-700
+                        {% elif r.status == 'diberikan' %}bg-purple-100 text-purple-700
+                        {% else %}bg-gray-100 text-gray-700{% endif %}">
+                        {{ r.status }}
+                    </span>
+                </td>
+                <td>
+                    <a href="{{BASE}}/resep/{{ r.id }}" class="text-blue-600 text-sm"><i class="fas fa-eye"></i></a>
+                </td>
+            </tr>
+            {% else %}
+            <tr><td colspan="7" class="text-center text-gray-400 py-8">Belum ada resep</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% if pagination.pages > 1 %}
+<div class="flex justify-center gap-2 mt-4">
+    {% for p in pagination.iter_pages() %}
+        {% if p %}
+        <a href="?page={{ p }}&q={{ q }}" class="px-3 py-1 rounded {% if p == pagination.page %}bg-green-700 text-white{% else %}bg-white border{% endif %}">{{ p }}</a>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}

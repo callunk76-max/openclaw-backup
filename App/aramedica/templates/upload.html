@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Data - AR Dashboard</title>
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a73e8;
+            --success: #0f9d58;
+            --bg-light: #f0f4f9;
+        }
+        * { font-family: 'Inter', sans-serif; }
+        body { background: var(--bg-light); }
+        .navbar { background: white !important; box-shadow: 0 1px 3px rgba(0,0,0,0.08); padding: 12px 0; }
+        .navbar-brand { font-weight: 800; font-size: 1.4rem; }
+        .upload-card {
+            background: white;
+            border-radius: 16px;
+            border: 2px dashed #dadce0;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .upload-card:hover, .upload-card.dragover {
+            border-color: var(--primary);
+            background: #f8faff;
+        }
+        .upload-card i { font-size: 3.5rem; color: #dadce0; }
+        .upload-card:hover i { color: var(--primary); }
+        .info-card {
+            background: white;
+            border-radius: 16px;
+            border: 1px solid rgba(0,0,0,0.04);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            padding: 24px;
+        }
+        .file-info-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f1f3f4; font-size: 0.9rem; }
+        .file-info-item:last-child { border-bottom: none; }
+        .file-info-label { color: var(--gray); }
+        .file-info-value { font-weight: 600; }
+        .alert-dismissible .btn-close { position: absolute; top: 50%; right: 12px; transform: translateY(-50%); }
+        .progress-bar-custom { height: 4px; border-radius: 2px; background: #e0e0e0; overflow: hidden; margin-top: 16px; }
+        .progress-bar-custom .bar { height: 100%; width: 0%; background: var(--primary); transition: width 0.3s; border-radius: 2px; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <i class="bi bi-clipboard-data text-primary me-2"></i>Verif Dashboard <span class="badge bg-primary rounded-pill">AR</span>
+        </a>
+        <a href="/" class="btn btn-outline-secondary btn-sm rounded-pill">
+            <i class="bi bi-arrow-left me-1"></i>Kembali
+        </a>
+    </div>
+</nav>
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+
+            <!-- Flash messages -->
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for msg in messages %}
+            <div class="alert alert-dismissible fade show rounded-4 border-0 shadow-sm mb-4 
+                {% if '✅' in msg %}alert-success{% else %}alert-warning{% endif %}">
+                {{ msg }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            <!-- Upload Card -->
+            <div class="upload-card mb-4" id="dropZone">
+                <i class="bi bi-cloud-arrow-up-fill mb-3"></i>
+                <h5 class="fw-bold">Upload File Excel Baru</h5>
+                <p class="text-muted mb-3">Klik atau seret file .xlsx ke sini</p>
+                <form method="POST" enctype="multipart/form-data" id="uploadForm">
+                    <input type="file" name="file" id="fileInput" accept=".xlsx" hidden>
+                    <button type="button" class="btn btn-primary rounded-pill px-4" onclick="document.getElementById('fileInput').click()">
+                        <i class="bi bi-folder2-open me-1"></i> Pilih File
+                    </button>
+                    <button type="submit" class="btn btn-primary rounded-pill px-4 d-none" id="submitBtn">
+                        <i class="bi bi-upload me-1"></i> Upload
+                    </button>
+                </form>
+                <div class="progress-bar-custom mt-3 d-none" id="progressBar">
+                    <div class="bar" id="progressFill"></div>
+                </div>
+                <div id="fileName" class="mt-3 text-muted small"></div>
+            </div>
+
+            <!-- Current File Info -->
+            {% if info %}
+            <div class="info-card">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <i class="bi bi-file-earmark-excel-fill text-success fs-4"></i>
+                    <h6 class="fw-bold mb-0">Data Saat Ini</h6>
+                </div>
+                <div class="file-info-item">
+                    <span class="file-info-label">Nama File</span>
+                    <span class="file-info-value">{{ info.filename }}</span>
+                </div>
+                <div class="file-info-item">
+                    <span class="file-info-label">Jumlah Baris</span>
+                    <span class="file-info-value">{{ info.rows }}</span>
+                </div>
+                <div class="file-info-item">
+                    <span class="file-info-label">Jumlah Kolom</span>
+                    <span class="file-info-value">{{ info.cols }}</span>
+                </div>
+                <div class="file-info-item">
+                    <span class="file-info-label">Kolom</span>
+                    <span class="file-info-value small">{{ info.columns | join(', ') }}</span>
+                </div>
+                <div class="file-info-item">
+                    <span class="file-info-label">Terakhir Update</span>
+                    <span class="file-info-value">{{ info.last_updated }}</span>
+                </div>
+                <div class="mt-3">
+                    <a href="/reset-data" class="btn btn-outline-danger btn-sm rounded-pill" onclick="return confirm('Reset data ke versi default?')">
+                        <i class="bi bi-arrow-counterclockwise me-1"></i> Reset ke Default
+                    </a>
+                </div>
+            </div>
+            {% else %}
+            <div class="info-card text-center py-4">
+                <i class="bi bi-inbox text-muted" style="font-size: 2.5rem;"></i>
+                <p class="text-muted mt-2 mb-0">Belum ada data. Upload file .xlsx untuk memulai.</p>
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('fileInput');
+    const submitBtn = document.getElementById('submitBtn');
+    const fileName = document.getElementById('fileName');
+    const progressBar = document.getElementById('progressBar');
+    const progressFill = document.getElementById('progressFill');
+    const uploadForm = document.getElementById('uploadForm');
+
+    // Drag & drop
+    ['dragenter', 'dragover'].forEach(evt => {
+        dropZone.addEventListener(evt, e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+    });
+    ['dragleave', 'drop'].forEach(evt => {
+        dropZone.addEventListener(evt, e => { e.preventDefault(); dropZone.classList.remove('dragover'); });
+    });
+    dropZone.addEventListener('drop', e => {
+        const files = e.dataTransfer.files;
+        if (files.length) handleFile(files[0]);
+    });
+
+    // Click
+    fileInput.addEventListener('change', () => {
+        if (fileInput.files.length) handleFile(fileInput.files[0]);
+    });
+
+    function handleFile(file) {
+        if (!file.name.endsWith('.xlsx')) {
+            alert('Hanya file .xlsx yang diperbolehkan!');
+            return;
+        }
+        fileName.innerHTML = `<i class="bi bi-file-earmark-excel me-1"></i> ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`;
+        submitBtn.classList.remove('d-none');
+        // Auto-submit on file selection
+        submitBtn.click();
+    }
+
+    uploadForm.addEventListener('submit', function() {
+        progressBar.classList.remove('d-none');
+        progressFill.style.width = '60%';
+        setTimeout(() => { progressFill.style.width = '90%'; }, 500);
+    });
+</script>
+</body>
+</html>

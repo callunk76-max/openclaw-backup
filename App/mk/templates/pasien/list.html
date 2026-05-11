@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Pasien{% endblock %}
+{% block content %}
+<div class="flex items-center justify-between mb-4">
+    <h1 class="text-2xl font-bold text-gray-800">Data Pasien</h1>
+    <a href="{{BASE}}/pasien/tambah" class="btn-primary flex items-center gap-2"><i class="fas fa-plus"></i> Pasien Baru</a>
+</div>
+
+<div class="card p-4 mb-4">
+    <form method="GET" class="flex gap-2">
+        <input type="text" name="q" value="{{ q }}" placeholder="Cari nama / NIK / No. BPJS..." class="flex-1">
+        <button class="bg-gray-100 px-4 py-2 rounded-lg text-sm">Cari</button>
+    </form>
+</div>
+
+<div class="card overflow-hidden">
+    <table>
+        <thead><tr>
+            <th>NIK</th><th>Nama</th><th>JK</th><th>BPJS</th><th>Desa</th><th>Aksi</th>
+        </tr></thead>
+        <tbody>
+            {% for p in pasien %}
+            <tr>
+                <td class="font-mono text-xs">{{ p.nik }}</td>
+                <td><a href="{{BASE}}/resep?q={{ p.nama }}" class="text-blue-600 hover:underline">{{ p.nama }}</a></td>
+                <td>{{ p.jenis_kelamin }}</td>
+                <td class="text-xs">{{ p.no_bpjs or '-' }}</td>
+                <td>{{ p.desa.nama if p.desa else '-' }}</td>
+                <td><a href="{{BASE}}/pasien/{{ p.id }}/edit" class="text-gray-500 hover:text-blue-600"><i class="fas fa-edit"></i></a></td>
+            </tr>
+            {% else %}
+            <tr><td colspan="6" class="text-center text-gray-400 py-8">Belum ada data pasien</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% if pagination.pages > 1 %}
+<div class="flex justify-center gap-2 mt-4">
+    {% for p in pagination.iter_pages() %}
+        {% if p %}
+        <a href="?page={{ p }}&q={{ q }}" class="px-3 py-1 rounded {% if p == pagination.page %}bg-green-700 text-white{% else %}bg-white border{% endif %}">{{ p }}</a>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}

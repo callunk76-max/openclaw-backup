@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Obat & BHP{% endblock %}
+{% block content %}
+<div class="flex items-center justify-between mb-4">
+    <h1 class="text-xl font-bold text-gray-800"><i class="fas fa-tablets text-green-600"></i> Master Obat & BHP</h1>
+    <div class="flex gap-1 bg-gray-100 rounded-lg p-1">
+        <a href="?tipe=obat" class="px-3 py-1.5 rounded-md text-sm {% if tipe=='obat' %}bg-white shadow font-medium{% endif %}">Obat</a>
+        <a href="?tipe=bhp" class="px-3 py-1.5 rounded-md text-sm {% if tipe=='bhp' %}bg-white shadow font-medium{% endif %}">BHP</a>
+    </div>
+</div>
+
+<div class="card p-4 mb-4">
+    <form method="GET" class="flex gap-2">
+        <input type="hidden" name="tipe" value="{{ tipe }}">
+        <select name="kategori" class="w-48" onchange="this.form.submit()">
+            <option value="">Semua Kategori</option>
+            {% for k in kategori %}
+            <option value="{{ k.id }}" {% if kat_id == k.id %}selected{% endif %}>{{ k.nama }}</option>
+            {% endfor %}
+        </select>
+        <input type="text" name="q" value="{{ q }}" placeholder="Cari {{ tipe }}..." class="flex-1">
+        <button class="bg-gray-100 px-4 py-2 rounded-lg text-sm">Cari</button>
+    </form>
+</div>
+
+<div class="card overflow-hidden">
+    <table>
+        <thead><tr><th>Nama</th><th>Bentuk</th><th>Kekuatan</th><th>Satuan</th><th>Golongan</th><th>Kategori</th></tr></thead>
+        <tbody>
+            {% for i in items %}
+            <tr>
+                <td class="font-medium">{{ i.nama_generik }}{% if i.nama_dagang %} <span class="text-gray-400 text-xs">({{ i.nama_dagang }})</span>{% endif %}</td>
+                <td>{{ i.bentuk or '-' }}</td>
+                <td>{{ i.kekuatan or '-' }}</td>
+                <td>{{ i.satuan }}</td>
+                <td><span class="badge 
+                    {% if i.golongan == 'narkotik' %}bg-red-100 text-red-700
+                    {% elif i.golongan == 'psikotropik' %}bg-orange-100 text-orange-700
+                    {% elif i.golongan == 'terbatas' %}bg-yellow-100 text-yellow-700
+                    {% else %}bg-green-100 text-green-700{% endif %}">{{ i.golongan }}</span>
+                </td>
+                <td class="text-xs">{{ i.kategori.nama if i.kategori else '-' }}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="6" class="text-center text-gray-400 py-8">Data {{ tipe }} kosong</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% if pagination.pages > 1 %}
+<div class="flex justify-center gap-2 mt-4">
+    {% for p in pagination.iter_pages() %}
+        {% if p %}
+        <a href="?tipe={{ tipe }}&page={{ p }}&q={{ q }}&kategori={{ kat_id or '' }}" class="px-3 py-1 rounded {% if p == pagination.page %}bg-green-700 text-white{% else %}bg-white border{% endif %}">{{ p }}</a>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}

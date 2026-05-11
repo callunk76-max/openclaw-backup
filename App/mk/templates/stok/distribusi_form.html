@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Distribusi Baru{% endblock %}
+{% block content %}
+<div class="max-w-3xl mx-auto">
+    <div class="flex items-center gap-2 mb-4">
+        <a href="{{BASE}}/distribusi" class="text-gray-500"><i class="fas fa-arrow-left"></i></a>
+        <h1 class="text-xl font-bold">Distribusi Obat ke Unit</h1>
+    </div>
+    <form method="POST" class="card p-6">
+        <div class="mb-4">
+            <label>Unit Tujuan</label>
+            <select name="ke_unit_id" required>
+                <option value="">-- Pilih --</option>
+                {% for u in units %}
+                <option value="{{ u.id }}">{{ u.nama }} ({{ u.tipe }})</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div><label>Keterangan</label><input type="text" name="keterangan" placeholder="Distribusi rutin / insidental"></div>
+
+        <h3 class="font-semibold text-sm text-gray-600 mt-4 mb-2">Item Obat / BHP</h3>
+        <div id="itemContainer">
+            <div class="flex gap-2 mb-2">
+                <select name="item_id[]" class="flex-1">
+                    <option value="">-- Pilih --</option>
+                    {% for i in items %}
+                    <option value="{{ i.id }}">{{ i.nama_generik }} {{ i.kekuatan or '' }} ({{ i.satuan }})</option>
+                    {% endfor %}
+                </select>
+                <input type="number" name="qty[]" placeholder="Jumlah" class="w-24 text-center" min="1">
+                <button type="button" onclick="$(this).parent().remove()" class="text-red-500"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+        <button type="button" onclick="tambahItem()" class="text-blue-600 text-sm mt-1">+ Tambah item</button>
+        <div class="mt-4 flex gap-2">
+            <button type="submit" class="btn-primary">Simpan Distribusi</button>
+            <a href="{{BASE}}/distribusi" class="bg-gray-100 px-4 py-2 rounded-lg text-sm">Batal</a>
+        </div>
+    </form>
+</div>
+<script>
+function tambahItem() {
+    const html = `<div class="flex gap-2 mb-2">
+        <select name="item_id[]" class="flex-1">
+            <option value="">-- Pilih --</option>
+            {% for i in items %}
+            <option value="{{ i.id }}">{{ i.nama_generik }} {{ i.kekuatan or '' }} ({{ i.satuan }})</option>
+            {% endfor %}
+        </select>
+        <input type="number" name="qty[]" placeholder="Jumlah" class="w-24 text-center" min="1">
+        <button type="button" onclick="$(this).parent().remove()" class="text-red-500"><i class="fas fa-times"></i></button>
+    </div>`;
+    $('#itemContainer').append(html);
+}
+</script>
+{% endblock %}

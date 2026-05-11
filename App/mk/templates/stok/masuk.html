@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Stok Masuk{% endblock %}
+{% block content %}
+<div class="max-w-2xl mx-auto">
+    <div class="flex items-center gap-2 mb-4">
+        <a href="{{BASE}}/stok" class="text-gray-500"><i class="fas fa-arrow-left"></i></a>
+        <h1 class="text-xl font-bold">Stok Masuk (Penerimaan)</h1>
+    </div>
+    <div class="card p-6">
+        <form method="POST" id="stokForm">
+            <div class="space-y-3">
+                <div><label>Item</label>
+                    <select name="item_id" id="itemSelect" required>
+                        <option value="">-- Pilih --</option>
+                        {% for i in items %}
+                        <option value="{{ i.id }}">{{ i.nama_generik }} {{ i.kekuatan or '' }} — {{ i.tipe }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div><label>Jumlah</label>
+                    <input type="number" name="qty" step="1" min="1" required>
+                </div>
+                <div><label>No. Batch</label>
+                    <input type="text" name="batch" placeholder="Opsional">
+                </div>
+                <div><label>Tanggal ED</label>
+                    <input type="date" name="ed">
+                </div>
+                <div><label>Harga Beli (satuan)</label>
+                    <input type="number" name="harga_beli" step="100" placeholder="0">
+                </div>
+                <div><label>Keterangan</label>
+                    <input type="text" name="keterangan" placeholder="Dari gudang farmasi / supplier">
+                </div>
+            </div>
+            <div class="mt-4 flex gap-2">
+                <button type="submit" class="btn-primary">Simpan</button>
+                <a href="{{BASE}}/stok" class="bg-gray-100 px-4 py-2 rounded-lg text-sm">Batal</a>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+$('#itemSelect').select2 ? '' : ''; // simple enough
+</script>
+{% endblock %}

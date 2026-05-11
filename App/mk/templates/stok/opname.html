@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Stok Opname{% endblock %}
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <div class="flex items-center gap-2 mb-4">
+        <a href="{{BASE}}/stok" class="text-gray-500"><i class="fas fa-arrow-left"></i></a>
+        <h1 class="text-xl font-bold">Stok Opname</h1>
+    </div>
+    <div class="card p-6">
+        <form method="POST">
+            <p class="text-sm text-gray-500 mb-3">Sesuaikan stok fisik dengan yang ada di sistem.</p>
+            <div class="overflow-auto max-h-96">
+                <table>
+                    <thead><tr><th>Item</th><th>Stok Sistem</th><th>Stok Fisik</th></tr></thead>
+                    <tbody>
+                        {% for s in stok_list %}
+                        <tr>
+                            <td>{{ s.item.nama_generik if s.item else '-' }} {{ s.item.kekuatan or '' }}</td>
+                            <td class="font-mono">{{ s.qty }}</td>
+                            <td><input type="number" name="qty_{{ s.id }}" value="{{ s.qty }}" class="w-20 text-center" step="1"></td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="3" class="text-center text-gray-400 py-8">Belum ada stok</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <button type="submit" class="btn-primary mt-4">Simpan Opname</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

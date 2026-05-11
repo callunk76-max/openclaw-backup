@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Resep Harian{% endblock %}
+{% block content %}
+<div class="flex items-center justify-between mb-4">
+    <h1 class="text-xl font-bold">Resep Harian</h1>
+    <a href="{{BASE}}/laporan" class="text-gray-500"><i class="fas fa-arrow-left"></i></a>
+</div>
+<div class="card p-4 mb-4">
+    <form method="GET" class="flex gap-2">
+        <input type="date" name="tgl" value="{{ tgl }}">
+        <button class="bg-gray-100 px-4 py-2 rounded-lg text-sm">Tampilkan</button>
+    </form>
+</div>
+<div class="card overflow-hidden">
+    <table>
+        <thead><tr><th>No Resep</th><th>Pasien</th><th>Jenis</th><th>Jaminan</th><th>Status</th><th>Item</th></tr></thead>
+        <tbody>
+            {% for r in resep %}
+            <tr>
+                <td class="font-mono text-xs"><a href="{{BASE}}/resep/{{ r.id }}" class="text-blue-600">{{ r.no_resep }}</a></td>
+                <td>{{ r.pasien.nama }}</td>
+                <td>{{ r.jenis_pelayanan|replace('_',' ') }}</td>
+                <td>{{ r.jaminan }}</td>
+                <td>{{ r.status }}</td>
+                <td>{{ r.items|length }}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="6" class="text-center text-gray-400 py-4">Tidak ada resep di tanggal {{ tgl }}</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

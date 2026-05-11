@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - MK Farmasi{% endblock %}
+{% block content %}
+<div class="flex items-center justify-between mb-6">
+    <div>
+        <h1 class="text-2xl font-bold text-gray-800">Dashboard</h1>
+        <p class="text-gray-500 text-sm">Puskesmas Ujung Loe — {{ now.strftime('%d %B %Y') }}</p>
+    </div>
+    <div class="flex gap-2">
+        <a href="{{BASE}}/resep/baru" class="btn-primary flex items-center gap-2"><i class="fas fa-plus"></i> Resep Baru</a>
+        <a href="{{BASE}}/stok/masuk" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700"><i class="fas fa-arrow-down"></i> Stok Masuk</a>
+    </div>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-6">
+    <div class="stat-card bg-green-50 text-green-800">
+        <div class="text-2xl font-bold">{{ stats.resep_hari_ini }}</div>
+        <div class="text-xs opacity-75">Resep Hari Ini</div>
+    </div>
+    <div class="stat-card bg-blue-50 text-blue-800">
+        <div class="text-2xl font-bold">{{ stats.pasien_total }}</div>
+        <div class="text-xs opacity-75">Total Pasien</div>
+    </div>
+    <div class="stat-card bg-purple-50 text-purple-800">
+        <div class="text-2xl font-bold">{{ stats.obat_total }}</div>
+        <div class="text-xs opacity-75">Jenis Obat</div>
+    </div>
+    <div class="stat-card bg-indigo-50 text-indigo-800">
+        <div class="text-2xl font-bold">{{ stats.bhp_total }}</div>
+        <div class="text-xs opacity-75">Jenis BHP</div>
+    </div>
+    <div class="stat-card bg-orange-50 text-orange-800">
+        <div class="text-2xl font-bold">{{ stats.stok_kritis }}</div>
+        <div class="text-xs opacity-75">Stok Kritis</div>
+    </div>
+    <div class="stat-card bg-yellow-50 text-yellow-800">
+        <div class="text-2xl font-bold">{{ stats.resep_menunggu }}</div>
+        <div class="text-xs opacity-75">Resep Menunggu</div>
+    </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div class="card p-4">
+        <h2 class="font-semibold text-gray-700 mb-3"><i class="fas fa-bolt text-green-600"></i> Aksi Cepat</h2>
+        <div class="grid grid-cols-2 gap-3">
+            <a href="{{BASE}}/resep/baru" class="bg-white border rounded-lg p-4 text-center hover:border-green-500"><i class="fas fa-prescription text-2xl text-green-600 mb-1"></i><div class="text-sm font-medium">Resep Baru</div></a>
+            <a href="{{BASE}}/pasien/tambah" class="bg-white border rounded-lg p-4 text-center hover:border-blue-500"><i class="fas fa-user-plus text-2xl text-blue-600 mb-1"></i><div class="text-sm font-medium">Pasien Baru</div></a>
+            <a href="{{BASE}}/stok/masuk" class="bg-white border rounded-lg p-4 text-center hover:border-orange-500"><i class="fas fa-boxes text-2xl text-orange-600 mb-1"></i><div class="text-sm font-medium">Stok Masuk</div></a>
+            <a href="{{BASE}}/distribusi/baru" class="bg-white border rounded-lg p-4 text-center hover:border-purple-500"><i class="fas fa-truck text-2xl text-purple-600 mb-1"></i><div class="text-sm font-medium">Distribusi</div></a>
+        </div>
+    </div>
+    <div class="card p-4">
+        <h2 class="font-semibold text-gray-700 mb-3"><i class="fas fa-info-circle text-blue-600"></i> Informasi</h2>
+        <div class="space-y-2 text-sm text-gray-600">
+            <p><strong>Database:</strong> SQLite</p>
+            <p><strong>Total Obat:</strong> {{ stats.obat_total }} item</p>
+            <p><strong>Total BHP:</strong> {{ stats.bhp_total }} item</p>
+            <p><strong>Pasien Terdaftar:</strong> {{ stats.pasien_total }} orang</p>
+            <p><strong>Puskesmas:</strong> Ujung Loe (dengan Rawat Inap)</p>
+            <p class="mt-2"><span class="badge bg-green-100 text-green-800">FORNAS</span> Obat sesuai Formularium Nasional TK 1</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

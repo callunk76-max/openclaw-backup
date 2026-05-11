@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Stok & Gudang{% endblock %}
+{% block content %}
+<div class="flex items-center justify-between mb-4">
+    <h1 class="text-xl font-bold"><i class="fas fa-warehouse text-orange-600"></i> Stok & Gudang</h1>
+    <div class="flex gap-2">
+        <a href="{{BASE}}/stok/masuk" class="btn-primary flex items-center gap-2"><i class="fas fa-arrow-down"></i> Stok Masuk</a>
+        <a href="{{BASE}}/stok/opname" class="bg-gray-100 px-4 py-2 rounded-lg text-sm"><i class="fas fa-clipboard-list"></i> Opname</a>
+    </div>
+</div>
+
+<div class="card p-4 mb-4">
+    <form method="GET" class="flex gap-2">
+        <select name="unit_id" class="w-48" onchange="this.form.submit()">
+            {% for u in units %}
+            <option value="{{ u.id }}" {% if u.id == unit_id %}selected{% endif %}>{{ u.nama }}</option>
+            {% endfor %}
+        </select>
+        <input type="text" name="q" value="{{ q }}" placeholder="Cari item..." class="flex-1">
+        <button class="bg-gray-100 px-4 py-2 rounded-lg text-sm">Cari</button>
+    </form>
+</div>
+
+<div class="card overflow-hidden">
+    <table>
+        <thead><tr><th>Item</th><th>Tipe</th><th>Batch</th><th>ED</th><th>Stok</th><th>Min</th></tr></thead>
+        <tbody>
+            {% for s in stok %}
+            <tr class="{% if s.qty < s.item.batas_min_stok %}bg-red-50{% endif %}">
+                <td class="font-medium">{{ s.item.nama_generik if s.item else '-' }}</td>
+                <td><span class="badge {% if s.item.tipe == 'obat' %}bg-green-100{% else %}bg-blue-100{% endif %}">{{ s.item.tipe }}</span></td>
+                <td class="text-xs">{{ s.batch or '-' }}</td>
+                <td class="text-xs">{% if s.ed %}{{ s.ed.isoformat() }}{% else %}-{% endif %}</td>
+                <td class="font-bold {% if s.qty < s.item.batas_min_stok %}text-red-600{% else %}text-green-700{% endif %}">{{ s.qty }}</td>
+                <td class="text-xs">{{ s.item.batas_min_stok }}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="6" class="text-center text-gray-400 py-8">Belum ada data stok. <a href="{{BASE}}/stok/masuk" class="text-blue-600">Input stok masuk</a></td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% if pagination.pages > 1 %}
+<div class="flex justify-center gap-2 mt-4">
+    {% for p in pagination.iter_pages() %}
+        {% if p %}
+        <a href="?page={{ p }}&unit_id={{ unit_id }}&q={{ q }}" class="px-3 py-1 rounded {% if p == pagination.page %}bg-green-700 text-white{% else %}bg-white border{% endif %}">{{ p }}</a>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}{% if pasien %}Edit{% else %}Tambah{% endif %} Pasien{% endblock %}
+{% block content %}
+<div class="max-w-2xl mx-auto">
+    <div class="flex items-center gap-2 mb-4">
+        <a href="{{BASE}}/pasien" class="text-gray-500"><i class="fas fa-arrow-left"></i></a>
+        <h1 class="text-xl font-bold">{% if pasien %}Edit{% else %}Tambah{% endif %} Pasien</h1>
+    </div>
+    <div class="card p-6">
+        <form method="POST">
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label>NIK</label>
+                    <input type="text" name="nik" value="{{ pasien.nik if pasien else '' }}" maxlength="16">
+                </div>
+                <div>
+                    <label>No. BPJS</label>
+                    <input type="text" name="no_bpjs" value="{{ pasien.no_bpjs if pasien else '' }}">
+                </div>
+                <div class="col-span-2">
+                    <label>Nama Lengkap</label>
+                    <input type="text" name="nama" value="{{ pasien.nama if pasien else '' }}" required>
+                </div>
+                <div>
+                    <label>Jenis Kelamin</label>
+                    <select name="jenis_kelamin">
+                        <option value="L" {% if pasien and pasien.jenis_kelamin == 'L' %}selected{% endif %}>Laki-laki</option>
+                        <option value="P" {% if pasien and pasien.jenis_kelamin == 'P' %}selected{% endif %}>Perempuan</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Tempat Lahir</label>
+                    <input type="text" name="tempat_lahir" value="{{ pasien.tempat_lahir if pasien else '' }}">
+                </div>
+                <div>
+                    <label>Tanggal Lahir</label>
+                    <input type="date" name="tanggal_lahir" value="{{ pasien.tanggal_lahir.isoformat() if pasien and pasien.tanggal_lahir else '' }}" required>
+                </div>
+                <div>
+                    <label>Desa/Kel</label>
+                    <select name="desa_id">
+                        <option value="">-- Pilih --</option>
+                        {% for d in desa %}
+                        <option value="{{ d.id }}" {% if pasien and pasien.desa_id == d.id %}selected{% endif %}>{{ d.nama }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-span-2">
+                    <label>Alamat</label>
+                    <textarea name="alamat" rows="2">{{ pasien.alamat if pasien else '' }}</textarea>
+                </div>
+                <div>
+                    <label>Telepon</label>
+                    <input type="text" name="telepon" value="{{ pasien.telepon if pasien else '' }}">
+                </div>
+                <div>
+                    <label>Pekerjaan</label>
+                    <input type="text" name="pekerjaan" value="{{ pasien.pekerjaan if pasien else '' }}">
+                </div>
+            </div>
+            <div class="mt-4 flex gap-2">
+                <button type="submit" class="btn-primary">Simpan</button>
+                <a href="{{BASE}}/pasien" class="bg-gray-100 px-4 py-2 rounded-lg text-sm">Batal</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

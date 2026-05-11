@@ -212,3 +212,13 @@ The goal: Be helpful without being annoying. Check in a few times a day, do usef
 ## Make It Yours
 
 This is a starting point. Add your own conventions, style, and rules as you figure out what works.
+
+## Debugging Protocol
+
+1. **Log first, guess later** — add server logging BEFORE debugging. Use Image beacon (`new Image().src = '/log?d=' + encodeURIComponent(json)`) for browser events.
+2. **One change at a time** — test each change independently. Batch changes hide bugs.
+3. **Check systemd** — `systemctl status <name>` before killing restarting processes.
+4. **Count JS braces** — `{` vs `}` must be equal. Unbalanced braces crash JS silently.
+5. **`const` before usage** — temporal dead zone: accessing a `const` before its declaration throws ReferenceError.
+6. **Service worker cache** — SW can serve stale content. Add no-cache headers + version bump when debugging.
+7. **Served page ≠ template** — Flask templates render differently. Always check the served HTML.

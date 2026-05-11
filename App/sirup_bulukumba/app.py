@@ -1552,3 +1552,36 @@ def api_konsultan_check():
     except Exception as e:
         conn.close()
         return jsonify({'success': False, 'message': str(e)})
+
+
+@app.route('/api/gps-log', methods=['GET', 'POST'])
+def gps_log():
+    import json, datetime
+    if request.method == 'POST':
+        data = request.get_json(silent=True) or {}
+    else:
+        # GET with query string (image beacon)
+        # Accept either ?d={json} or direct params like ?start=1&t=5&lat=-5.6
+        raw = request.args.get('d', None)
+        if raw:
+            try:
+                data = json.loads(raw)
+            except:
+                data = {'raw': raw}
+        else:
+            # Direct query params
+            data = {}
+            for key in request.args:
+                data[key] = request.args.get(key)
+    log_entry = {
+        'time': datetime.datetime.now().isoformat(),
+        'ip': request.remote_addr,
+        'data': data
+    }
+    with open('/tmp/gps_debug.log', 'a') as f:
+        f.write(json.dumps(log_entry) + '\n')
+    # Return 1x1 transparent GIF for image beacon
+    return app.response_class(
+        b'GIF89a\x01\x00\x01\x00\x80\x00\x00\xff\xff\xff\x00\x00\x00!\xf9\x04\x00\x00\x00\x00\x00,\x00\x00\x00\x00\x01\x00\x01\x00\x00\x02\x02D\x01\x00;',
+        mimetype='image/gif'
+    )

@@ -888,3 +888,72 @@ To github.com:callunk76-max/openclaw-backup.git
 ✅ Sent via Telegram. Message ID: 4910
 sending incremental file list
 ./
+backup_log.txt
+App/filebox/uploads/
+App/filebox/uploads/Callunks-Anglers.aab
+App/filebox/uploads/Callunks-Anglers.apk
+App/fishing/
+App/fishing/Callunks-Anglers.aab
+App/fishing/Callunks-Anglers.apk
+App/fishing/favicon-96.png
+App/fishing/favicon.ico
+App/fishing/icon-192.png
+App/fishing/icon-512.png
+App/fishing/index.html
+App/fishing/logo-default.png
+App/fishing/manifest.json
+App/fishing/sw.js
+App/sirup_bulukumba/visitor_count.json
+Trading/kronos/kronos_cron.log
+Trading/kronos/last_kronos_msg.txt
+Trading/kronos/data/.data_meta.json
+Trading/kronos/data/.status.json
+Trading/kronos/data/AUDCAD.csv
+Trading/kronos/data/AUDCHF.csv
+Trading/kronos/data/AUDJPY.csv
+Trading/kronos/data/AUDNZD.csv
+Trading/kronos/data/AUDUSD.csv
+Trading/kronos/data/CADCHF.csv
+Trading/kronos/data/CADJPY.csv
+Trading/kronos/data/CHFJPY.csv
+Trading/kronos/data/EURAUD.csv
+Trading/kronos/data/EURCAD.csv
+Trading/kronos/data/EURCHF.csv
+Trading/kronos/data/EURGBP.csv
+Trading/kronos/data/EURJPY.csv
+Trading/kronos/data/EURNZD.csv
+Trading/kronos/data/EURUSD.csv
+Trading/kronos/data/GBPAUD.csv
+Trading/kronos/data/GBPCAD.csv
+Trading/kronos/data/GBPCHF.csv
+Trading/kronos/data/GBPJPY.csv
+Trading/kronos/data/GBPNZD.csv
+Trading/kronos/data/GBPUSD.csv
+Trading/kronos/data/NZDCAD.csv
+Trading/kronos/data/NZDCHF.csv
+Trading/kronos/data/NZDJPY.csv
+Trading/kronos/data/NZDUSD.csv
+Trading/kronos/data/USDCAD.csv
+Trading/kronos/data/USDCHF.csv
+Trading/kronos/data/USDJPY.csv
+Trading/kronos/data/XAUUSD.csv
+Trading/kronos/data/predictions.csv
+Trading/kronos/data/signals.csv
+
+sent 27,493,774 bytes  received 1,070 bytes  10,997,937.60 bytes/sec
+total size is 134,735,660  speedup is 4.90
+[master 91127e6] Daily Backup from Cuy - 2026-05-11 03:56
+ 48 files changed, 2017 insertions(+), 1593 deletions(-)
+ create mode 100755 App/filebox/uploads/Callunks-Anglers.aab
+ create mode 100755 App/filebox/uploads/Callunks-Anglers.apk
+ create mode 100755 App/fishing/Callunks-Anglers.aab
+ create mode 100755 App/fishing/Callunks-Anglers.apk
+ create mode 100644 App/fishing/logo-default.png
+To github.com:callunk76-max/openclaw-backup.git
+   5c637e6..91127e6  master -> master
+[session-write-lock] releasing lock held for 903991ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+sending incremental file list
+./
+AGENTS.md
+TODO-complex-project.md
+TOOLS.md

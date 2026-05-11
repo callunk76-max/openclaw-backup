@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block title %}Detail Resep{% endblock %}
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center gap-2">
+            <a href="{{BASE}}/resep" class="text-gray-500"><i class="fas fa-arrow-left"></i></a>
+            <h1 class="text-xl font-bold">Resep {{ resep.no_resep }}</h1>
+        </div>
+        <div class="flex gap-2">
+            {% if resep.status == 'baru' %}
+            <button onclick="updateStatus('siap')" class="bg-blue-600 text-white px-3 py-1.5 rounded-lg text-sm"><i class="fas fa-check"></i> Siap</button>
+            {% endif %}
+            {% if resep.status == 'siap' %}
+            <button onclick="updateStatus('{{ 'diberikan' if resep.jenis_pelayanan == 'RAWAT_INAP' else 'diambil' }}')" class="bg-green-600 text-white px-3 py-1.5 rounded-lg text-sm">
+                <i class="fas fa-check-double"></i> {{ 'Diberikan' if resep.jenis_pelayanan == 'RAWAT_INAP' else 'Diambil' }}
+            </button>
+            {% endif %}
+            <a href="{{BASE}}/resep/baru" class="bg-gray-100 px-3 py-1.5 rounded-lg text-sm"><i class="fas fa-plus"></i> Baru</a>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4 mb-4">
+        <div class="card p-4">
+            <h3 class="font-semibold text-sm text-gray-500 mb-2">Data Pasien</h3>
+            <p class="font-medium text-lg">{{ resep.pasien.nama }}</p>
+            <p class="text-sm text-gray-500">NIK: {{ resep.pasien.nik }} | BPJS: {{ resep.pasien.no_bpjs or '-' }}</p>
+            <p class="text-sm text-gray-500">{{ resep.pasien.alamat or '' }}</p>
+        </div>
+        <div class="card p-4">
+            <h3 class="font-semibold text-sm text-gray-500 mb-2">Info Resep</h3>
+            <div class="grid grid-cols-2 gap-1 text-sm">
+                <span class="text-gray-500">Tanggal:</span><span>{{ resep.tanggal.isoformat() }}</span>
+                <span class="text-gray-500">Jenis:</span><span>{{ resep.jenis_pelayanan|replace('_',' ') }}</span>
+                <span class="text-gray-500">Dokter:</span><span>{{ resep.dokter.nama if resep.dokter else '-' }}</span>
+                <span class="text-gray-500">Jaminan:</span><span>{{ resep.jaminan }} {% if resep.no_sep %}({{ resep.no_sep }}){% endif %}</span>
+                <span class="text-gray-500">Status:</span>
+                <span>
+                    <span class="badge 
+                        {% if resep.status == 'baru' %}bg-yellow-100 text-yellow-700
+                        {% elif resep.status == 'siap' %}bg-blue-100 text-blue-700
+                        {% elif resep.status == 'diambil' or resep.status == 'diberikan' %}bg-green-100 text-green-700
+                        {% else %}bg-gray-100 text-gray-700{% endif %}">
+                        {{ resep.status }}
+                    </span>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="card p-4 mb-4">
+        <h3 class="font-semibold text-sm text-gray-500 mb-3">Obat Diberikan ({{ resep.items|length }})</h3>
+        <table>
+            <thead><tr><th>Obat</th><th>Jumlah</th><th>Aturan</th></tr></thead>
+            <tbody>
+                {% for ri in resep.items %}
+                <tr>
+                    <td>
+                        {% if ri.racikan_id %}
+                        <i class="fas fa-flask text-purple-500 mr-1"></i>
+                        Racikan: {{ ri.racikan.nama_racikan if ri.racikan else '' }}
+                        {% else %}
+                        {{ ri.item.nama_generik if ri.item else '-' }}
+                        {% endif %}
+                    </td>
+                    <td>{{ ri.qty }} {{ ri.item.satuan if ri.item else '' }}</td>
+                    <td>{{ ri.aturan if ri.aturan else '-' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% if resep.racikan %}
+    <div class="card p-4">
+        <h3 class="font-semibold text-sm text-gray-500 mb-3">Detail Racikan</h3>
+        {% for rc in resep.racikan %}
+        <div class="border rounded-lg p-3 mb-2">
+            <p class="font-medium">{{ rc.nama_racikan }} — {{ rc.qty_hasil }} {{ rc.bentuk }}</p>
+            <p class="text-sm text-gray-500">Aturan: {{ rc.aturan_pakai or rc.signa or '-' }}</p>
+            <ul class="text-sm mt-1">
+            {% for k in rc.komponen %}
+                <li>• {{ k.item.nama_generik if k.item else '-' }}: {{ k.qty_dibutuhkan }} {{ k.satuan }}</li>
+            {% endfor %}
+            </ul>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+{% block extra_js %}
+<script>
+function updateStatus(status) {
+    if (!confirm('Ubah status ke "' + status + '"?')) return;
+    $.post(`${BASE}/api/resep/{{ resep.id }}/status`, JSON.stringify({status: status}), function(res) {
+        if (res.success) location.reload();
+    });
+}
+</script>
+{% endblock %}

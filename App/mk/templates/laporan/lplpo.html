@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}LPLPO{% endblock %}
+{% block content %}
+<div class="flex items-center justify-between mb-4">
+    <h1 class="text-xl font-bold">LPLPO — Laporan Pemakaian & Permintaan Obat</h1>
+    <a href="{{BASE}}/laporan" class="text-gray-500"><i class="fas fa-arrow-left"></i></a>
+</div>
+<div class="card p-4 mb-4">
+    <form method="GET" class="flex gap-2 items-end">
+        <div><label>Unit</label><select name="unit_id" class="w-40">{% for u in units %}<option value="{{ u.id }}" {% if u.id == unit_id %}selected{% endif %}>{{ u.nama }}</option>{% endfor %}</select></div>
+        <div><label>Bulan</label><select name="bulan" class="w-32">{% for b in range(1,13) %}<option value="{{ b }}" {% if b == bulan %}selected{% endif %}>{{ b }}</option>{% endfor %}</select></div>
+        <div><label>Tahun</label><select name="tahun" class="w-24">{% for t in [2024,2025,2026] %}<option value="{{ t }}" {% if t == tahun %}selected{% endif %}>{{ t }}</option>{% endfor %}</select></div>
+        <button class="bg-gray-100 px-4 py-2 rounded-lg text-sm">Tampilkan</button>
+        <button type="button" onclick="exportExcel()" class="bg-green-700 text-white px-4 py-2 rounded-lg text-sm"><i class="fas fa-file-excel"></i> Export</button>
+    </form>
+</div>
+<div class="card overflow-hidden">
+    <table id="lplpoTable">
+        <thead><tr><th>Obat</th><th>Bentuk</th><th>Stok Akhir</th></tr></thead>
+        <tbody>
+            {% for i in items %}
+            <tr>
+                <td>{{ i.item.nama_generik }}</td>
+                <td>{{ i.item.bentuk or '-' }}</td>
+                <td class="font-mono">{{ i.stok }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script>
+function exportExcel() {
+    let csv = "Obat,Bentuk,Stok Akhir\n";
+    $('#lplpoTable tbody tr').each(function() {
+        const cols = $(this).find('td');
+        csv += $(cols[0]).text() + ',' + $(cols[1]).text() + ',' + $(cols[2]).text() + '\n';
+    });
+    const blob = new Blob(['\ufeff'+csv], {type:'text/csv;charset=utf-8;'});
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+    a.download = 'lplpo_{{bulan}}_{{tahun}}.csv'; a.click();
+}
+</script>
+{% endblock %}

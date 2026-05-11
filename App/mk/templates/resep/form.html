@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% block title %}Resep Baru{% endblock %}
+{% block extra_head %}
+<style>
+    .obat-row { background: #f9fafb; padding: 12px; border-radius: 8px; margin-bottom: 8px; }
+    .obat-search-results { position: absolute; background: white; border: 1px solid #e5e7eb; border-radius: 8px; max-height: 200px; overflow-y: auto; z-index: 50; width: 100%; }
+    .obat-search-results div { padding: 8px 12px; cursor: pointer; font-size: 13px; }
+    .obat-search-results div:hover { background: #f0fdf4; }
+</style>
+{% endblock %}
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <div class="flex items-center gap-2 mb-4">
+        <a href="{{BASE}}/resep" class="text-gray-500"><i class="fas fa-arrow-left"></i></a>
+        <h1 class="text-xl font-bold">Resep Baru</h1>
+    </div>
+
+    <form method="POST" id="resepForm">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
+            <div class="card p-4">
+                <h3 class="font-semibold text-sm text-gray-600 mb-3">Pasien</h3>
+                <div class="relative">
+                    <label>Cari Pasien</label>
+                    <input type="text" id="cariPasien" placeholder="Nama / NIK / BPJS..." autocomplete="off">
+                    <div id="hasilCariPasien" class="obat-search-results hidden"></div>
+                    <input type="hidden" name="pasien_id" id="pasien_id" required>
+                </div>
+                <div id="infoPasien" class="hidden mt-2 p-2 bg-blue-50 rounded text-sm">
+                    <div id="infoPasienNama" class="font-medium"></div>
+                    <div id="infoPasienNik" class="text-gray-500 text-xs"></div>
+                    <div id="infoPasienBpjs" class="text-gray-500 text-xs"></div>
+                </div>
+            </div>
+            <div class="card p-4">
+                <h3 class="font-semibold text-sm text-gray-600 mb-3">Pelayanan</h3>
+                <div class="space-y-2">
+                    <div><label>Jenis</label>
+                        <select name="jenis_pelayanan">
+                            <option value="RAWAT_JALAN">Rawat Jalan</option>
+                            <option value="RAWAT_INAP">Rawat Inap</option>
+                        </select>
+                    </div>
+                    <div><label>No. RM</label><input type="text" name="no_rm"></div>
+                    <div><label>Kamar</label><input type="text" name="no_kamar"></div>
+                    <div><label>Dokter</label>
+                        <select name="dokter_id" required>
+                            <option value="">-- Pilih --</option>
+                            {% for d in dokter %}
+                            <option value="{{ d.id }}">{{ d.nama }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="card p-4">
+                <h3 class="font-semibold text-sm text-gray-600 mb-3">Jaminan</h3>
+                <div class="space-y-2">
+                    <div><label>Jaminan</label>
+                        <select name="jaminan" id="jaminan">
+                            <option value="BPJS">BPJS</option>
+                            <option value="JAMKESDA">Jamkesda</option>
+                            <option value="UMUM">Umum</option>
+                            <option value="LAIN">Lainnya</option>
+                        </select>
+                    </div>
+                    <div><label>No. SEP</label><input type="text" name="no_sep" placeholder="Kosong kalo umum"></div>
+                    <div><label>Keluhan / Diagnosa</label><textarea name="keluhan" rows="2"></textarea></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Obat -->
+        <div class="card p-4 mb-4">
+            <h3 class="font-semibold text-sm text-gray-600 mb-3">Daftar Obat <button type="button" onclick="tambahObat()" class="text-blue-600 text-xs ml-2">+ Tambah</button></h3>
+            <div id="daftarObat"></div>
+        </div>
+
+        <div class="flex gap-2">
+            <button type="submit" class="btn-primary">Simpan Resep</button>
+            <a href="{{BASE}}/resep" class="bg-gray-100 px-4 py-2 rounded-lg text-sm">Batal</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script>
+let obatCounter = 0;
+const semuaObat = {{ items_json|tojson|safe }};
+
+// Pasien search
+$('#cariPasien').on('input', function() {
+    const q = $(this).val();
+    if (q.length < 2) { $('#hasilCariPasien').addClass('hidden'); return; }
+    $.get(`${BASE}/api/pasien/search?q=${q}`, function(res) {
+        if (!res.success || !res.data.length) { $('#hasilCariPasien').addClass('hidden'); return; }
+        const html = res.data.map(p => `<div onclick="pilihPasien(${p.id},'${p.nama}','${p.nik||''}','${p.no_bpjs||''}','${p.desa||''}')">${p.nama} <span class="text-gray-400 text-xs">${p.nik||''}</span></div>`).join('');
+        $('#hasilCariPasien').html(html).removeClass('hidden');
+    });
+});
+function pilihPasien(id, nama, nik, bpjs, desa) {
+    $('#pasien_id').val(id);
+    $('#cariPasien').val(nama);
+    $('#infoPasienNama').text(nama);
+    $('#infoPasienNik').text('NIK: ' + nik);
+    $('#infoPasienBpjs').text('BPJS: ' + bpjs + (desa ? ' | ' + desa : ''));
+    $('#infoPasien').removeClass('hidden');
+    $('#hasilCariPasien').addClass('hidden');
+}
+
+function tambahObat() {
+    const i = obatCounter++;
+    const html = `
+    <div class="obat-row" id="obatRow${i}">
+        <div class="flex gap-2 items-start">
+            <div class="flex-1 relative">
+                <input type="text" class="obat-search" data-idx="${i}" placeholder="Cari obat/BHP..." autocomplete="off">
+                <div class="obat-search-results hidden" id="hasilObat${i}"></div>
+                <input type="hidden" name="obat_id[]" id="obatId${i}">
+            </div>
+            <div style="width:80px">
+                <input type="number" name="qty[]" placeholder="Jml" class="text-center" value="1" min="0.5" step="0.5">
+            </div>
+            <div style="width:120px">
+                <input type="text" name="aturan[]" placeholder="3x1" class="text-center">
+            </div>
+            <button type="button" onclick="$('#obatRow${i}').remove()" class="text-red-500 mt-2"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="text-xs text-gray-400 mt-1 obat-info" id="obatInfo${i}"></div>
+    </div>`;
+    $('#daftarObat').append(html);
+}
+
+// Disable SEP jika bukan BPJS
+$('#jaminan').change(function() {
+    if ($(this).val() !== 'BPJS') $('input[name="no_sep"]').val('');
+});
+
+// Obat search (delegated)
+$(document).on('input', '.obat-search', function() {
+    const q = $(this).val();
+    const idx = $(this).data('idx');
+    const hasil = $(`#hasilObat${idx}`);
+    if (q.length < 1) { hasil.addClass('hidden'); return; }
+    const filtered = semuaObat.filter(o => o.nama.toLowerCase().includes(q.toLowerCase()) || (o.kategori && o.kategori.toLowerCase().includes(q.toLowerCase()))).slice(0,10);
+    if (!filtered.length) { hasil.addClass('hidden'); return; }
+    const html = filtered.map(o => `<div onclick="pilihObat(${idx},${o.id},'${o.nama.replace(/'/g,"\\'")}','${o.satuan||''}','${o.kategori||''}')">${o.nama} <span class="text-gray-400 text-xs">${o.satuan||''} ${o.kategori?'· '+o.kategori:''}</span></div>`).join('');
+    hasil.html(html).removeClass('hidden');
+});
+function pilihObat(idx, id, nama, satuan, kategori) {
+    $(`#obatId${idx}`).val(id);
+    $(`.obat-search[data-idx="${idx}"]`).val(nama);
+    $(`#hasilObat${idx}`).addClass('hidden');
+    $(`#obatInfo${idx}`).text(satuan + (kategori ? ' · ' + kategori : ''));
+}
+
+// Tambah 1 obat row otomatis
+document.addEventListener('DOMContentLoaded', () => tambahObat());
+</script>
+{% endblock %}

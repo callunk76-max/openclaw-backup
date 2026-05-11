@@ -45,3 +45,31 @@ Skills are shared. Your setup is yours. Keeping them apart means you can update 
 ---
 
 Add whatever helps you do your job. This is your cheat sheet.
+
+## Logging: Image Beacon (most reliable)
+
+For client-side logging that must work in ALL browsers (including WebViews):
+
+```javascript
+// Client-side (JS):
+new Image().src = '/api/log?' + encodeURIComponent(JSON.stringify({msg: 'hello'}));
+```
+
+```python
+# Server-side (Flask):
+@app.route('/api/log', methods=['GET'])
+def log():
+    data = json.loads(request.args.get('d', '{}'))
+    with open('/tmp/debug.log', 'a') as f:
+        f.write(json.dumps(data) + '\n')
+    # Return 1x1 transparent GIF
+    return app.response_class(b'GIF89a\x01\x00...', mimetype='image/gif')
+```
+
+**Why**: `fetch()`, `XMLHttpRequest`, `sendBeacon`, and `Blob` all fail in some WebViews. Image beacon works everywhere since it was added in 1996.
+
+## Flask Dev Server vs Gunicorn
+
+- **Flask dev server** (`python3 app.py`, `debug=True`): single-threaded, will hang on file uploads. Never use in production.
+- **Gunicorn** (`gunicorn -w 2 -b 127.0.0.1:5007 app:app`): multi-worker, handles concurrent requests.
+- Always check for systemd services before killing processes: `systemctl status <name>`

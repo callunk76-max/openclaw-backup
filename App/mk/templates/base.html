@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}MK Farmasi - Puskesmas Ujung Loe{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com">
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        body { background: #f0f2f5; }
+        .sidebar-active { background: #e8f5e9; border-right: 3px solid #2e7d32; }
+        .card { background: white; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+        .btn-primary { background: #2e7d32; color: white; padding: 8px 16px; border-radius: 8px; }
+        .btn-primary:hover { background: #1b5e20; }
+        .btn-sm { padding: 4px 10px; font-size: 13px; }
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+        input, select, textarea { border: 1px solid #d1d5db; border-radius: 8px; padding: 8px 12px; font-size: 14px; width: 100%; }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: #2e7d32; ring: 2px solid #2e7d32; }
+        label { font-size: 13px; font-weight: 500; color: #374151; margin-bottom: 2px; display: block; }
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; padding: 10px 12px; font-size: 12px; text-transform: uppercase; color: #6b7280; border-bottom: 2px solid #e5e7eb; }
+        td { padding: 10px 12px; border-bottom: 1px solid #f3f4f6; font-size: 14px; }
+        tr:hover { background: #f9fafb; }
+        .stat-card { padding: 20px; border-radius: 12px; }
+
+        /* Mobile responsive sidebar */
+        .sidebar-overlay { display: none; }
+        @media (max-width: 767px) {
+            .sidebar { position: fixed; z-index: 50; left: -280px; transition: left 0.25s ease; }
+            .sidebar.open { left: 0; }
+            .sidebar-overlay { display: block; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 40; opacity: 0; visibility: hidden; transition: 0.2s; }
+            .sidebar-overlay.open { opacity: 1; visibility: visible; }
+            main { padding: 12px !important; max-width: 100vw; overflow-x: hidden; }
+            table { font-size: 12px; }
+            td, th { padding: 6px 8px !important; white-space: nowrap; }
+            .stat-card { padding: 12px !important; }
+            .stat-card .text-2xl { font-size: 18px !important; }
+            input, select, textarea { font-size: 16px !important; /* prevent iOS zoom */ }
+        }
+    </style>
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <!-- Overlay buat HP -->
+    <div id="sidebarOverlay" class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar w-64 bg-white shadow-sm flex-shrink-0 overflow-y-auto" style="z-index: 50;">
+            <div class="p-4 border-b flex items-center justify-between">
+                <a href="{{BASE}}/" class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-green-700 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-prescription-bottle text-white text-sm"></i>
+                    </div>
+                    <div>
+                        <div class="font-bold text-gray-800 text-sm">MK Farmasi</div>
+                        <div class="text-xs text-gray-500">Puskesmas Ujung Loe</div>
+                    </div>
+                </a>
+                <!-- Tombol close di hp -->
+                <button onclick="toggleSidebar()" class="md:hidden text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times text-lg"></i>
+                </button>
+            </div>
+            <nav class="p-2 space-y-1">
+                <a href="{{BASE}}/" onclick="closeSidebarMobile()" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm {% if request.path == BASE+'/' %}sidebar-active text-green-800 font-medium{% else %}text-gray-600 hover:bg-gray-50{% endif %}">
+                    <i class="fas fa-home w-5"></i> Dashboard
+                </a>
+                <a href="{{BASE}}/resep" onclick="closeSidebarMobile()" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm {% if '/resep' in request.path %}sidebar-active text-green-800 font-medium{% else %}text-gray-600 hover:bg-gray-50{% endif %}">
+                    <i class="fas fa-prescription w-5"></i> Resep
+                </a>
+                <a href="{{BASE}}/pasien" onclick="closeSidebarMobile()" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm {% if '/pasien' in request.path %}sidebar-active text-green-800 font-medium{% else %}text-gray-600 hover:bg-gray-50{% endif %}">
+                    <i class="fas fa-users w-5"></i> Pasien
+                </a>
+                <a href="{{BASE}}/obat" onclick="closeSidebarMobile()" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm {% if '/obat' in request.path %}sidebar-active text-green-800 font-medium{% else %}text-gray-600 hover:bg-gray-50{% endif %}">
+                    <i class="fas fa-tablets w-5"></i> Obat & BHP
+                </a>
+                <a href="{{BASE}}/stok" onclick="closeSidebarMobile()" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm {% if '/stok' in request.path %}sidebar-active text-green-800 font-medium{% else %}text-gray-600 hover:bg-gray-50{% endif %}">
+                    <i class="fas fa-warehouse w-5"></i> Stok & Gudang
+                </a>
+                <a href="{{BASE}}/distribusi" onclick="closeSidebarMobile()" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm {% if '/distribusi' in request.path %}sidebar-active text-green-800 font-medium{% else %}text-gray-600 hover:bg-gray-50{% endif %}">
+                    <i class="fas fa-truck w-5"></i> Distribusi
+                </a>
+                <a href="{{BASE}}/laporan" onclick="closeSidebarMobile()" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm {% if '/laporan' in request.path %}sidebar-active text-green-800 font-medium{% else %}text-gray-600 hover:bg-gray-50{% endif %}">
+                    <i class="fas fa-chart-bar w-5"></i> Laporan
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main -->
+        <main class="flex-1 overflow-y-auto p-6">
+            <!-- Top bar mobile -->
+            <div class="flex items-center gap-3 mb-4 md:hidden">
+                <button onclick="toggleSidebar()" class="text-gray-600 p-1">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+                <span class="font-bold text-gray-800 text-sm">MK Farmasi</span>
+            </div>
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <script>
+        const BASE = '{{BASE}}';
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('sidebarOverlay').classList.toggle('open');
+        }
+        function closeSidebarMobile() {
+            if (window.innerWidth < 768) {
+                document.getElementById('sidebar').classList.remove('open');
+                document.getElementById('sidebarOverlay').classList.remove('open');
+            }
+        }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

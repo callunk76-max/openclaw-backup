@@ -223,21 +223,41 @@
     <div class="toast-msg" id="toast"></div>
 
     <script>
+        // DOM element refs
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const uploadForm = document.getElementById('uploadForm');
+
         // Auto-submit on file select
-        document.getElementById('fileInput').addEventListener('change', function() {
-            if (this.files.length > 0) {
-                document.getElementById('uploadForm').submit();
+        if (fileInput) {
+            fileInput.addEventListener('change', function() {
+                if (this.files.length > 0) {
+                    showToast('📤 Mengupload ' + this.files[0].name + '...');
+                    uploadForm.submit();
+                }
+            });
+        }
+
+        // Drag & drop: upload dropped files
+        if (dropZone) {
+        
+        ['dragenter', 'dragover'].forEach(evt => {
+            dropZone.addEventListener(evt, e => { e.preventDefault(); e.stopPropagation(); dropZone.classList.add('dragover'); });
+        });
+        ['dragleave'].forEach(evt => {
+            dropZone.addEventListener(evt, e => { e.preventDefault(); e.stopPropagation(); dropZone.classList.remove('dragover'); });
+        });
+        dropZone.addEventListener('drop', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            dropZone.classList.remove('dragover');
+            if (e.dataTransfer.files.length > 0) {
+                // Set the dropped file to the input and submit
+                fileInput.files = e.dataTransfer.files;
+                uploadForm.submit();
             }
         });
-
-        // Drag & drop visual feedback
-        const dropZone = document.getElementById('dropZone');
-        ['dragenter', 'dragover'].forEach(evt => {
-            dropZone.addEventListener(evt, e => { e.preventDefault(); dropZone.classList.add('dragover'); });
-        });
-        ['dragleave', 'drop'].forEach(evt => {
-            dropZone.addEventListener(evt, e => { e.preventDefault(); dropZone.classList.remove('dragover'); });
-        });
+        }
 
         // Toast helper
         function showToast(msg) {
@@ -247,12 +267,18 @@
             setTimeout(() => t.classList.remove('show'), 2500);
         }
 
-        // Show upload toast
+        // Show upload toast / handle errors
         {% with messages = get_flashed_messages() %}
         {% if messages %}
         showToast('{{ messages[0] }}');
         {% endif %}
         {% endwith %}
+        
+        // Check for upload errors from URL params
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('error') === 'size') showToast('⚠️ File terlalu besar. Maks 100MB.');
+        if (urlParams.get('error') === 'empty') showToast('⚠️ File tidak valid atau kosong.');
+        if (urlParams.get('error') === 'type') showToast('⚠️ Tipe file tidak diizinkan.');
     </script>
 </body>
 </html>
