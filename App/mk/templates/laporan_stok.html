@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}Laporan Stok{% endblock %}
+{% block content %}
+<div class="row g-2 g-md-3">
+<div class="col-md-6"><div class="card h-100"><div class="card-header text-danger"><i class="bi bi-exclamation-triangle me-1"></i>Stok Menipis</div>
+<div class="list-group list-group-flush">{% for o in menipis %}
+<div class="list-group-item d-flex justify-content-between py-2">
+    <span>{{ o.nama_generik }}</span><span class="fw-bold text-danger">{{ o.stok_total }} <small class="text-muted fw-normal">/ min {{ o.stok_minimum }}</small></span>
+</div>{% else %}<div class="text-center py-4 text-muted">Semua stok aman ✅</div>{% endfor %}
+</div></div></div>
+<div class="col-md-6"><div class="card h-100"><div class="card-header text-warning"><i class="bi bi-clock-history me-1"></i>Expired 3 Bulan</div>
+<div class="list-group list-group-flush">{% for o,s in expired %}
+<div class="list-group-item d-flex justify-content-between py-2">
+    <span>{{ o.nama_generik }} <code class="small">{{ s.batch_number }}</code></span>
+    <span class="text-danger fw-bold small">{{ s.expired_date|format_tgl }} · {{ s.jumlah }}</span>
+</div>{% else %}<div class="text-center py-4 text-muted">Tidak ada ✅</div>{% endfor %}
+</div></div></div>
+</div>
+{% endblock %}

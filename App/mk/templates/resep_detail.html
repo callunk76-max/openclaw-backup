@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Detail Resep{% endblock %}
+{% block content %}
+<h5 class="fw-bold mb-3"><i class="bi bi-file-text me-2"></i>Resep: {{ resep.no_resep }}</h5>
+<div class="row g-3">
+<div class="col-md-4">
+<div class="card"><div class="card-body">
+<table class="table table-sm mb-0">
+<tr><td class="text-muted">Pasien</td><td class="fw-medium">{{ resep.nama_pasien }}</td></tr>
+<tr><td class="text-muted">Dokter</td><td>{{ resep.nama_dokter or '-' }}</td></tr>
+<tr><td class="text-muted">Tanggal</td><td>{{ resep.tanggal|format_tgl }}</td></tr>
+<tr><td class="text-muted">Status</td><td><span class="badge bg-primary">{{ resep.status }}</span></td></tr>
+<tr><td class="text-muted">User</td><td>{{ resep.user.nama if resep.user else '-' }}</td></tr>
+</table>
+</div></div></div>
+<div class="col-md-8">
+<div class="card"><div class="card-header">Detail Obat</div>
+<div class="table-responsive"><table class="table table-sm mb-0">
+<thead><tr><th>Obat</th><th>Jumlah</th><th>Aturan Pakai</th><th>Signa</th></tr></thead>
+<tbody>{% for d in resep.details.all() %}
+<tr><td>{{ d.obat.nama_generik if d.obat else '?' }}</td>
+    <td class="fw-bold">{{ d.jumlah }}</td>
+    <td>{{ d.aturan_pakai }}</td><td><code>{{ d.signa }}</code></td>
+</tr>{% endfor %}</tbody>
+</table></div></div></div>
+</div>
+{% endblock %}

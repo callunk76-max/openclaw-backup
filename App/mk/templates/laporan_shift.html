@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Laporan Shift{% endblock %}
+{% block content %}
+<h5 class="fw-bold mb-3"><i class="bi bi-clock-history me-2"></i>Shift Kasir</h5>
+<div class="card"><div class="table-responsive">
+<table class="table table-sm mb-0">
+<thead><tr><th>Kasir</th><th>Buka</th><th>Tutup</th><th>Saldo Awal</th><th>Penjualan</th><th>Saldo Akhir</th><th>Selisih</th><th>Status</th></tr></thead>
+<tbody>{% for s in shifts %}
+<tr>
+    <td>{{ s.user.nama if s.user else '-' }}</td>
+    <td>{{ s.waktu_buka.strftime('%d/%m %H:%M') }}</td>
+    <td>{{ s.waktu_tutup.strftime('%d/%m %H:%M') if s.waktu_tutup else '-' }}</td>
+    <td>{{ s.saldo_awal|format_rp }}</td>
+    <td>{{ s.total_penjualan|format_rp }}</td>
+    <td>{{ s.saldo_akhir|format_rp if s.saldo_akhir else '-' }}</td>
+    <td class="fw-bold {% if s.selisih > 0 %}text-success{% elif s.selisih < 0 %}text-danger{% endif %}">{{ s.selisih|format_rp }}</td>
+    <td><span class="badge bg-{{ 'success' if s.status=='tutup' else 'warning' }}">{{ s.status }}</span></td>
+</tr>{% else %}<tr><td colspan="8" class="text-center py-3 text-muted">Belum ada shift</td></tr>{% endfor %}
+</tbody></table></div></div>
+{% endblock %}

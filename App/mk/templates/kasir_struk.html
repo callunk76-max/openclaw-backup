@@ -1,0 +1,32 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Struk {{ trx.no_transaksi }}</title>
+<style>
+@page{size:80mm auto;margin:0;}body{font-family:'Courier New',monospace;font-size:12px;width:72mm;margin:0 auto;padding:5px 3px;}
+.header{text-align:center;margin-bottom:5px;}.header h3{margin:0;font-size:14px;}.header p{margin:0;font-size:10px;}
+.line{border-top:1px dashed #000;margin:5px 0;}.item{display:flex;justify-content:space-between;font-size:11px;margin:2px 0;}
+.total{font-size:13px;font-weight:700;text-align:right;margin:3px 0;}.footer{text-align:center;font-size:9px;margin-top:8px;}</style></head>
+<body>
+<div class="header">
+<h3>Apotik Aramedica</h3>
+<p>Jl. Contoh No.123 | Telp: 0413-xxxxx</p>
+</div>
+<div class="line"></div>
+<p>{{ trx.tanggal.strftime('%d/%m/%Y %H:%M') }} | Kasir: {{ trx.user.nama if trx.user else '-' }}</p>
+<p>No: <strong>{{ trx.no_transaksi }}</strong></p>
+<div class="line"></div>
+{% for d in trx.details.all() %}
+<div class="item"><span>{{ d.obat.nama_generik if d.obat else '?' }} x{{ d.jumlah }}</span><span>{{ d.subtotal|format_rp }}</span></div>
+{% endfor %}
+<div class="line"></div>
+<div class="item"><span>Subtotal</span><span>{{ trx.subtotal|format_rp }}</span></div>
+{% if trx.diskon_global > 0 %}<div class="item"><span>Diskon</span><span>-{{ trx.diskon_global|format_rp }}</span></div>{% endif %}
+<div class="total">Total: {{ trx.total|format_rp }}</div>
+<div class="item"><span>Bayar</span><span>{{ trx.bayar|format_rp }}</span></div>
+<div class="item"><span>Kembali</span><span>{{ trx.kembalian|format_rp }}</span></div>
+<div class="line"></div>
+<div class="footer">
+<p>Terima kasih atas kunjungan Anda</p>
+<p>SIPA: 2026.001 | {{ trx.no_transaksi }}</p>
+</div>
+<script>window.print()</script>
+</body></html>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}{{ 'Edit' if supplier else 'Tambah' }} Supplier{% endblock %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+    <h5 class="fw-bold mb-0"><i class="bi bi-{{ 'pencil' if supplier else 'plus-lg' }} me-2"></i>{{ 'Edit' if supplier else 'Tambah' }} Supplier</h5>
+    <a href="/mk/master/supplier" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-left"></i> Kembali</a>
+</div>
+
+<div class="card"><div class="card-body">
+<form method="POST">
+<div class="row g-2 g-md-3">
+    <div class="col-12 col-md-6"><label class="form-label small fw-medium">Nama Supplier <span class="text-danger">*</span></label>
+        <input type="text" name="nama" class="form-control form-control-sm" required value="{{ supplier.nama if supplier else '' }}" autofocus></div>
+    <div class="col-6 col-md-3"><label class="form-label small fw-medium">Kota</label>
+        <input type="text" name="kota" class="form-control form-control-sm" value="{{ supplier.kota if supplier else '' }}"></div>
+    <div class="col-6 col-md-3"><label class="form-label small fw-medium">Telepon</label>
+        <input type="text" name="telepon" class="form-control form-control-sm" value="{{ supplier.telepon if supplier else '' }}"></div>
+    <div class="col-12 col-md-6"><label class="form-label small fw-medium">Alamat</label>
+        <textarea name="alamat" class="form-control form-control-sm" rows="2">{{ supplier.alamat if supplier else '' }}</textarea></div>
+    <div class="col-6 col-md-3"><label class="form-label small fw-medium">Email</label>
+        <input type="email" name="email" class="form-control form-control-sm" value="{{ supplier.email if supplier else '' }}"></div>
+    <div class="col-6 col-md-3"><label class="form-label small fw-medium">NPWP</label>
+        <input type="text" name="npwp" class="form-control form-control-sm" value="{{ supplier.npwp if supplier else '' }}"></div>
+    <div class="col-6 col-md-3"><label class="form-label small fw-medium">Syarat Bayar</label>
+        <select name="syarat_bayar" class="form-select form-select-sm select-search">
+            {% for sb in ['Tunai','Tempo 14 hari','Tempo 30 hari','Tempo 60 hari'] %}
+            <option value="{{ sb }}" {{ 'selected' if supplier and supplier.syarat_bayar==sb }}>{{ sb }}</option>{% endfor %}
+        </select></div>
+    <div class="col-6 col-md-3 d-flex align-items-end">
+        {% if supplier %}<div class="form-check"><input type="checkbox" name="is_active" class="form-check-input" id="is_active" {{ 'checked' if supplier.is_active }}>
+        <label class="form-check-label small" for="is_active">Aktif</label></div>{% endif %}
+    </div>
+</div>
+<div class="d-flex gap-2 mt-3">
+    <button class="btn btn-primary btn-sm px-4"><i class="bi bi-check-lg"></i> Simpan</button>
+    <a href="/mk/master/supplier" class="btn btn-outline-secondary btn-sm"><i class="bi bi-x-lg"></i> Batal</a>
+</div>
+</form>
+</div></div>
+{% endblock %}

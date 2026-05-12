@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %}Resep Baru{% endblock %}
+{% block content %}
+<h5 class="fw-bold mb-3"><i class="bi bi-file-text me-2"></i>Resep Baru</h5>
+<div class="card"><div class="card-body">
+<form method="POST" id="resepForm">
+<div class="row g-2 mb-3">
+    <div class="col-md-4"><label class="form-label">Nama Pasien <span class="text-danger">*</span></label>
+        <input type="text" name="nama_pasien" class="form-control form-control-sm" required></div>
+    <div class="col-md-3"><label class="form-label">Nama Dokter</label>
+        <input type="text" name="nama_dokter" class="form-control form-control-sm"></div>
+    <div class="col-md-3"><label class="form-label">Catatan</label>
+        <input type="text" name="catatan" class="form-control form-control-sm"></div>
+</div>
+<hr>
+<div class="d-flex justify-content-between align-items-center mb-2"><strong>Obat</strong>
+    <button type="button" class="btn btn-sm btn-outline-primary" onclick="tambahItem()"><i class="bi bi-plus"></i></button></div>
+<table class="table table-sm" id="itemTable">
+<thead><tr><th>Obat</th><th>Jumlah</th><th>Aturan Pakai</th><th>Signa</th><th></th></tr></thead>
+<tbody id="itemBody">
+    <tr id="row0">
+        <td><select name="id_obat[]" class="form-select form-select-sm select-search" required>
+            <option value="">- Pilih -</option>{% for o in obat_list %}
+            <option value="{{ o.id_obat }}">{{ o.nama_generik }} (stok: {{ o.stok_total }}/{{ o.harga_jual_resep|format_rp }})</option>{% endfor %}
+        </select></td>
+        <td><input type="number" name="jumlah[]" class="form-control form-control-sm" min="1" value="1" style="width:70px"></td>
+        <td><input type="text" name="aturan_pakai[]" class="form-control form-control-sm" placeholder="3x sehari 1 tablet" style="width:200px"></td>
+        <td><input type="text" name="signa[]" class="form-control form-control-sm" placeholder="3 dd 1" style="width:80px"></td>
+        <td><button type="button" class="btn btn-sm btn-outline-danger" onclick="hapusItem(this)"><i class="bi bi-x"></i></button></td>
+    </tr>
+</tbody>
+</table>
+<button class="btn btn-primary btn-sm"><i class="bi bi-save"></i> Simpan Resep</button>
+<a href="/mk/resep/" class="btn btn-secondary btn-sm">Batal</a>
+</form></div></div>
+{% endblock %}
+{% block extra_js %}
+<script>
+let rc = 1;
+function tambahItem() {
+    const row = document.getElementById('row0').cloneNode(true);
+    row.id = 'row' + rc++;
+    row.querySelectorAll('input').forEach(i => i.value = i.type === 'number' ? 1 : '');
+    row.querySelector('select').selectedIndex = 0;
+    document.getElementById('itemBody').appendChild(row);
+}
+function hapusItem(btn) {
+    if (document.querySelectorAll('#itemBody tr').length > 1) btn.closest('tr').remove();
+}
+</script>
+{% endblock %}

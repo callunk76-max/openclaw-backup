@@ -1,260 +1,327 @@
-"""Farmasi Puskesmas - Database Models"""
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, date
+from werkzeug.security import generate_password_hash, check_password_hash
 
 db = SQLAlchemy()
 
-# ─── Referensi ───────────────────────────────────────────
+# ─── MASTER ────────────────────────────────────────────
 
-class Desa(db.Model):
-    __tablename__ = 'desa'
-    id = db.Column(db.Integer, primary_key=True)
-    nama = db.Column(db.String(100), nullable=False)
-    kecamatan = db.Column(db.String(100), default='Ujung Loe')
-    kabupaten = db.Column(db.String(100), default='Bulukumba')
-    provinsi = db.Column(db.String(100), default='Sulawesi Selatan')
+class Obat(db.Model):
+    __tablename__ = 'tbl_obat'
+    id_obat = db.Column(db.Integer, primary_key=True)
+    kode_obat = db.Column(db.String(20), unique=True, nullable=False)
+    nama_generik = db.Column(db.String(200), nullable=False)
+    nama_dagang = db.Column(db.String(200), default='')
+    id_kategori = db.Column(db.Integer, db.ForeignKey('tbl_kategori.id_kategori'))
+    id_satuan = db.Column(db.Integer, db.ForeignKey('tbl_satuan.id_satuan'))
+    golongan = db.Column(db.String(20), default='Bebas')
+    # Bebas / Bebas Terbatas / Keras / Narkotika / Psikotropika
+    harga_beli = db.Column(db.Float, default=0)
+    harga_jual_eceran = db.Column(db.Float, default=0)
+    harga_jual_resep = db.Column(db.Float, default=0)
+    stok_minimum = db.Column(db.Integer, default=0)
+    is_active = db.Column(db.Boolean, default=True)
+    created_at = db.Column(db.DateTime, default=datetime.now)
+    updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
 
-    pasien = db.relationship('Pasien', backref='desa', lazy=True)
-    unit = db.relationship('UnitPelayanan', backref='desa', lazy=True)
+    kategori = db.relationship('Kategori', backref='obat_list', lazy=True)
+    satuan = db.relationship('Satuan', backref='obat_list', lazy=True)
 
-    def __repr__(self): return self.nama
+    @property
+    def stok_total(self):
+        total = db.session.query(db.func.coalesce(db.func.sum(Stok.jumlah), 0))\
+            .filter(Stok.id_obat == self.id_obat).scalar()
+        return total or 0
 
+    @property
+    def stok_available(self):
+        return self.stok_total
 
-class KategoriItem(db.Model):
-    __tablename__ = 'kategori_item'
-    id = db.Column(db.Integer, primary_key=True)
-    nama = db.Column(db.String(100), nullable=False)
-    tipe = db.Column(db.String(10), nullable=False)  # 'obat' / 'bhp'
-
-    items = db.relationship('ItemFarmasi', backref='kategori', lazy=True)
-    def __repr__(self): return self.nama
-
-
-# ─── Master Data ─────────────────────────────────────────
-
-class ItemFarmasi(db.Model):
-    __tablename__ = 'item_farmasi'
-    id = db.Column(db.Integer, primary_key=True)
-    kategori_id = db.Column(db.Integer, db.ForeignKey('kategori_item.id'))
-    kode = db.Column(db.String(50))                    # e-katalog / KFA
-    nama_generik = db.Column(db.String(200))
-    nama_dagang = db.Column(db.String(200))
-    bentuk = db.Column(db.String(50))                  # Tab, Kaps, Sir, Inj, Cream
-    kekuatan = db.Column(db.String(50))                # 500 mg, 250 mg/5 mL
-    satuan = db.Column(db.String(20))                  # tab, btl, box, pcs
-    tipe = db.Column(db.String(10), nullable=False)    # 'obat' / 'bhp'
-    golongan = db.Column(db.String(20), default='bebas')  # bebas, terbatas, narkotik, psikotropik
-    fornas = db.Column(db.Boolean, default=True)
-    racikan = db.Column(db.Boolean, default=False)
-    harga_acuan = db.Column(db.Float)
-    batas_min_stok = db.Column(db.Integer, default=10)
-    aktif = db.Column(db.Boolean, default=True)
-
-    stok = db.relationship('Stok', backref='item', lazy=True)
-    def __repr__(self): return f"{self.nama_generik} {self.kekuatan or ''}"
+    def to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 
-class Dokter(db.Model):
-    __tablename__ = 'dokter'
-    id = db.Column(db.Integer, primary_key=True)
+class Kategori(db.Model):
+    __tablename__ = 'tbl_kategori'
+    id_kategori = db.Column(db.Integer, primary_key=True)
+    nama_kategori = db.Column(db.String(100), nullable=False, unique=True)
+    deskripsi = db.Column(db.Text, default='')
+
+    def to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+
+class Satuan(db.Model):
+    __tablename__ = 'tbl_satuan'
+    id_satuan = db.Column(db.Integer, primary_key=True)
+    nama_satuan = db.Column(db.String(50), nullable=False, unique=True)
+    singkatan = db.Column(db.String(10), default='')
+
+    def to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+
+class Supplier(db.Model):
+    __tablename__ = 'tbl_supplier'
+    id_supplier = db.Column(db.Integer, primary_key=True)
     nama = db.Column(db.String(200), nullable=False)
-    sip = db.Column(db.String(50))
-    jenis = db.Column(db.String(30))                   # dokter, bidan, perawat, apoteker
-    unit_id = db.Column(db.Integer, db.ForeignKey('unit_pelayanan.id'))
-    aktif = db.Column(db.Boolean, default=True)
+    alamat = db.Column(db.Text, default='')
+    kota = db.Column(db.String(100), default='')
+    telepon = db.Column(db.String(30), default='')
+    email = db.Column(db.String(100), default='')
+    npwp = db.Column(db.String(30), default='')
+    syarat_bayar = db.Column(db.String(50), default='Tunai')
+    is_active = db.Column(db.Boolean, default=True)
 
-    def __repr__(self): return self.nama
-
-
-# ─── Wilayah & Unit ──────────────────────────────────────
-
-class UnitPelayanan(db.Model):
-    __tablename__ = 'unit_pelayanan'
-    id = db.Column(db.Integer, primary_key=True)
-    nama = db.Column(db.String(100), nullable=False)
-    tipe = db.Column(db.String(20), nullable=False)    # puskesmas, pustu, polindes, poskesdes
-    alamat = db.Column(db.Text)
-    desa_id = db.Column(db.Integer, db.ForeignKey('desa.id'))
-    induk_id = db.Column(db.Integer, db.ForeignKey('unit_pelayanan.id'))
-    rawat_inap = db.Column(db.Boolean, default=False)
-    aktif = db.Column(db.Boolean, default=True)
-
-    dokter = db.relationship('Dokter', backref='unit', lazy=True)
-    stok = db.relationship('Stok', backref='unit', lazy=True)
-    resep = db.relationship('Resep', backref='unit', lazy=True)
-
-    def __repr__(self): return self.nama
+    def to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 
-class Pasien(db.Model):
-    __tablename__ = 'pasien'
-    id = db.Column(db.Integer, primary_key=True)
-    nik = db.Column(db.String(16))
-    no_bpjs = db.Column(db.String(20))
+class Pelanggan(db.Model):
+    __tablename__ = 'tbl_pelanggan'
+    id_pelanggan = db.Column(db.Integer, primary_key=True)
+    kode_member = db.Column(db.String(20), unique=True)
     nama = db.Column(db.String(200), nullable=False)
-    jenis_kelamin = db.Column(db.String(1))
-    tempat_lahir = db.Column(db.String(100))
-    tanggal_lahir = db.Column(db.Date)
-    alamat = db.Column(db.Text)
-    desa_id = db.Column(db.Integer, db.ForeignKey('desa.id'))
-    telepon = db.Column(db.String(20))
-    pekerjaan = db.Column(db.String(100))
+    telepon = db.Column(db.String(30), default='')
+    alamat = db.Column(db.Text, default='')
+    tanggal_lahir = db.Column(db.Date, nullable=True)
+    total_poin = db.Column(db.Integer, default=0)
+    is_active = db.Column(db.Boolean, default=True)
     created_at = db.Column(db.DateTime, default=datetime.now)
 
-    resep = db.relationship('Resep', backref='pasien', lazy=True)
+    def to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 
-# ─── Resep & Racikan ─────────────────────────────────────
-
-class Resep(db.Model):
-    __tablename__ = 'resep'
-    id = db.Column(db.Integer, primary_key=True)
-    no_resep = db.Column(db.String(30), unique=True)
-    tanggal = db.Column(db.Date, default=date.today)
-    jenis_pelayanan = db.Column(db.String(10), default='RAWAT_JALAN')
-    no_rm = db.Column(db.String(20))
-    no_kamar = db.Column(db.String(20))
-    pasien_id = db.Column(db.Integer, db.ForeignKey('pasien.id'))
-    dokter_id = db.Column(db.Integer, db.ForeignKey('dokter.id'))
-    unit_id = db.Column(db.Integer, db.ForeignKey('unit_pelayanan.id'))
-    keluhan = db.Column(db.Text)
-    jaminan = db.Column(db.String(20), default='BPJS')
-    no_sep = db.Column(db.String(30))
-    status = db.Column(db.String(20), default='baru')
-    created_by = db.Column(db.String(100))
+class User(db.Model):
+    __tablename__ = 'tbl_user'
+    id_user = db.Column(db.Integer, primary_key=True)
+    nama = db.Column(db.String(100), nullable=False)
+    username = db.Column(db.String(50), unique=True, nullable=False)
+    password_hash = db.Column(db.String(200), nullable=False)
+    role = db.Column(db.String(30), default='kasir')
+    # super_admin, apoteker, ttk, kasir, gudang, manajer
+    no_sipa = db.Column(db.String(50), default='')
+    is_active = db.Column(db.Boolean, default=True)
     created_at = db.Column(db.DateTime, default=datetime.now)
-    updated_at = db.Column(db.DateTime, onupdate=datetime.now)
 
-    items = db.relationship('ResepItem', backref='resep', lazy=True, cascade='all,delete')
-    racikan = db.relationship('Racikan', backref='resep', lazy=True, cascade='all,delete')
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
 
-    def total_obat(self):
-        return sum(i.qty for i in self.items)
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
 
-
-class ResepItem(db.Model):
-    __tablename__ = 'resep_item'
-    id = db.Column(db.Integer, primary_key=True)
-    resep_id = db.Column(db.Integer, db.ForeignKey('resep.id'))
-    item_id = db.Column(db.Integer, db.ForeignKey('item_farmasi.id'))
-    racikan_id = db.Column(db.Integer, db.ForeignKey('racikan.id'), nullable=True)
-    qty = db.Column(db.Float, default=1)
-    aturan = db.Column(db.String(100))
-    signa = db.Column(db.String(50))
-    subtotal = db.Column(db.Float)
-
-    item = db.relationship('ItemFarmasi')
+    def to_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns if c.name != 'password_hash'}
 
 
-class Racikan(db.Model):
-    __tablename__ = 'racikan'
-    id = db.Column(db.Integer, primary_key=True)
-    resep_id = db.Column(db.Integer, db.ForeignKey('resep.id'))
-    nama_racikan = db.Column(db.String(100))
-    bentuk = db.Column(db.String(30))                   # puyer, kapsul, salep, cream
-    qty_hasil = db.Column(db.Integer)
-    aturan_pakai = db.Column(db.String(200))
-    signa = db.Column(db.String(50))
-    biaya_racik = db.Column(db.Float, default=0)
-
-    komponen = db.relationship('RacikanKomponen', backref='racikan', lazy=True, cascade='all,delete')
-    resep_items = db.relationship('ResepItem', backref='racikan', lazy=True)
-
-
-class RacikanKomponen(db.Model):
-    __tablename__ = 'racikan_komponen'
-    id = db.Column(db.Integer, primary_key=True)
-    racikan_id = db.Column(db.Integer, db.ForeignKey('racikan.id'))
-    item_id = db.Column(db.Integer, db.ForeignKey('item_farmasi.id'))
-    qty_dibutuhkan = db.Column(db.Float)
-    satuan = db.Column(db.String(20))
-
-    item = db.relationship('ItemFarmasi')
-
-
-# ─── Stok & Distribusi ───────────────────────────────────
+# ─── STOK ─────────────────────────────────────────────
 
 class Stok(db.Model):
-    __tablename__ = 'stok'
-    id = db.Column(db.Integer, primary_key=True)
-    unit_id = db.Column(db.Integer, db.ForeignKey('unit_pelayanan.id'))
-    item_id = db.Column(db.Integer, db.ForeignKey('item_farmasi.id'))
-    batch = db.Column(db.String(50))
-    ed = db.Column(db.Date)
-    qty = db.Column(db.Float, default=0)
-    harga_beli = db.Column(db.Float)
+    __tablename__ = 'tbl_stok'
+    id_stok = db.Column(db.Integer, primary_key=True)
+    id_obat = db.Column(db.Integer, db.ForeignKey('tbl_obat.id_obat'), nullable=False)
+    batch_number = db.Column(db.String(50), default='')
+    expired_date = db.Column(db.Date, nullable=True)
+    jumlah = db.Column(db.Integer, default=0)
+    id_pembelian = db.Column(db.Integer, db.ForeignKey('tbl_pembelian.id_pembelian'), nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.now)
 
-    mutasi = db.relationship('MutasiStok', backref='stok_ref', lazy=True)
+    obat = db.relationship('Obat', backref='stok_list', lazy=True)
+    pembelian = db.relationship('Pembelian', backref='stok_list', lazy=True)
 
 
-class MutasiStok(db.Model):
-    __tablename__ = 'mutasi_stok'
-    id = db.Column(db.Integer, primary_key=True)
-    stok_id = db.Column(db.Integer, db.ForeignKey('stok.id'))
-    tipe = db.Column(db.String(20))                     # masuk, keluar, distribusi, opname, expired
-    referensi_id = db.Column(db.Integer)
-    qty = db.Column(db.Float)                           # +masuk, -keluar
-    sisa_stok = db.Column(db.Float)
-    keterangan = db.Column(db.Text)
-    user = db.Column(db.String(100))
-    created_at = db.Column(db.DateTime, default=datetime.now)
+class Adjustment(db.Model):
+    __tablename__ = 'tbl_adjustment'
+    id_adj = db.Column(db.Integer, primary_key=True)
+    id_obat = db.Column(db.Integer, db.ForeignKey('tbl_obat.id_obat'), nullable=False)
+    id_stok = db.Column(db.Integer, db.ForeignKey('tbl_stok.id_stok'), nullable=True)
+    jumlah_sebelum = db.Column(db.Integer, default=0)
+    jumlah_sesudah = db.Column(db.Integer, default=0)
+    selisih = db.Column(db.Integer, default=0)
+    alasan = db.Column(db.Text, default='')
+    id_user = db.Column(db.Integer, db.ForeignKey('tbl_user.id_user'), nullable=True)
+    tanggal = db.Column(db.DateTime, default=datetime.now)
+
+    obat = db.relationship('Obat', backref='adjustments', lazy=True)
+    user = db.relationship('User', backref='adjustments', lazy=True)
 
 
-class Distribusi(db.Model):
-    __tablename__ = 'distribusi'
-    id = db.Column(db.Integer, primary_key=True)
-    dari_unit_id = db.Column(db.Integer, db.ForeignKey('unit_pelayanan.id'))
-    ke_unit_id = db.Column(db.Integer, db.ForeignKey('unit_pelayanan.id'))
-    tanggal = db.Column(db.Date, default=date.today)
-    no_distribusi = db.Column(db.String(30))
-    keterangan = db.Column(db.Text)
-    created_by = db.Column(db.String(100))
-    created_at = db.Column(db.DateTime, default=datetime.now)
+# ─── PEMBELIAN ─────────────────────────────────────────
 
-    items = db.relationship('DistribusiItem', backref='distribusi', lazy=True, cascade='all,delete')
-    dari_unit = db.relationship('UnitPelayanan', foreign_keys=[dari_unit_id])
-    ke_unit = db.relationship('UnitPelayanan', foreign_keys=[ke_unit_id])
-
-
-class DistribusiItem(db.Model):
-    __tablename__ = 'distribusi_item'
-    id = db.Column(db.Integer, primary_key=True)
-    distribusi_id = db.Column(db.Integer, db.ForeignKey('distribusi.id'))
-    item_id = db.Column(db.Integer, db.ForeignKey('item_farmasi.id'))
-    qty = db.Column(db.Float)
-    batch = db.Column(db.String(50))
-    ed = db.Column(db.Date)
-
-    item = db.relationship('ItemFarmasi')
-
-
-# ─── Laporan Pustu ──────────────────────────────────────
-
-class LaporanPustu(db.Model):
-    __tablename__ = 'laporan_pustu'
-    id = db.Column(db.Integer, primary_key=True)
-    unit_id = db.Column(db.Integer, db.ForeignKey('unit_pelayanan.id'))
-    tanggal_lapor = db.Column(db.Date, default=date.today)
-    periode_bulan = db.Column(db.Integer)
-    periode_tahun = db.Column(db.Integer)
+class Pembelian(db.Model):
+    __tablename__ = 'tbl_pembelian'
+    id_pembelian = db.Column(db.Integer, primary_key=True)
+    no_po = db.Column(db.String(30), unique=True, nullable=False)
+    id_supplier = db.Column(db.Integer, db.ForeignKey('tbl_supplier.id_supplier'), nullable=False)
+    tanggal_po = db.Column(db.Date, default=date.today)
+    tanggal_terima = db.Column(db.Date, nullable=True)
+    total = db.Column(db.Float, default=0)
+    diskon = db.Column(db.Float, default=0)
     status = db.Column(db.String(20), default='draft')
-    catatan = db.Column(db.Text)
+    # draft, dikirim, sebagian, selesai, batal
+    id_user = db.Column(db.Integer, db.ForeignKey('tbl_user.id_user'), nullable=True)
+    catatan = db.Column(db.Text, default='')
     created_at = db.Column(db.DateTime, default=datetime.now)
 
-    items = db.relationship('LaporanPustuItem', backref='laporan', lazy=True, cascade='all,delete')
-    unit = db.relationship('UnitPelayanan')
+    supplier = db.relationship('Supplier', backref='pembelian_list', lazy=True)
+    user = db.relationship('User', backref='pembelian_list', lazy=True)
+    details = db.relationship('DetailPembelian', backref='pembelian', lazy='dynamic',
+                              cascade='all, delete-orphan')
 
 
-class LaporanPustuItem(db.Model):
-    __tablename__ = 'laporan_pustu_item'
+class DetailPembelian(db.Model):
+    __tablename__ = 'tbl_detail_pembelian'
     id = db.Column(db.Integer, primary_key=True)
-    laporan_id = db.Column(db.Integer, db.ForeignKey('laporan_pustu.id'))
-    item_id = db.Column(db.Integer, db.ForeignKey('item_farmasi.id'))
-    stok_awal = db.Column(db.Float)
-    penerimaan = db.Column(db.Float)
-    pemakaian = db.Column(db.Float)
-    sisa = db.Column(db.Float)
-    permintaan = db.Column(db.Float)
+    id_pembelian = db.Column(db.Integer, db.ForeignKey('tbl_pembelian.id_pembelian'), nullable=False)
+    id_obat = db.Column(db.Integer, db.ForeignKey('tbl_obat.id_obat'), nullable=False)
+    jumlah_pesan = db.Column(db.Integer, default=0)
+    jumlah_terima = db.Column(db.Integer, nullable=True)
+    harga_beli = db.Column(db.Float, default=0)
+    diskon_persen = db.Column(db.Float, default=0)
+    batch_number = db.Column(db.String(50), default='')
+    expired_date = db.Column(db.Date, nullable=True)
+    subtotal = db.Column(db.Float, default=0)
 
-    item = db.relationship('ItemFarmasi')
+    obat = db.relationship('Obat', backref='detail_pembelian', lazy=True)
+
+
+class HutangSupplier(db.Model):
+    __tablename__ = 'tbl_hutang_supplier'
+    id_hutang = db.Column(db.Integer, primary_key=True)
+    id_pembelian = db.Column(db.Integer, db.ForeignKey('tbl_pembelian.id_pembelian'), nullable=False)
+    no_faktur = db.Column(db.String(50), default='')
+    tanggal_faktur = db.Column(db.Date, nullable=True)
+    jatuh_tempo = db.Column(db.Date, nullable=True)
+    total = db.Column(db.Float, default=0)
+    sisa = db.Column(db.Float, default=0)
+    status = db.Column(db.String(20), default='belum')
+    # belum, sebagian, lunas
+
+    pembelian = db.relationship('Pembelian', backref='hutang', lazy=True)
+    bayar_list = db.relationship('BayarHutang', backref='hutang', lazy='dynamic',
+                                 cascade='all, delete-orphan')
+
+
+class BayarHutang(db.Model):
+    __tablename__ = 'tbl_bayar_hutang'
+    id_bayar = db.Column(db.Integer, primary_key=True)
+    id_hutang = db.Column(db.Integer, db.ForeignKey('tbl_hutang_supplier.id_hutang'), nullable=False)
+    tanggal = db.Column(db.Date, default=date.today)
+    jumlah = db.Column(db.Float, default=0)
+    metode = db.Column(db.String(50), default='Tunai')
+    keterangan = db.Column(db.Text, default='')
+    id_user = db.Column(db.Integer, db.ForeignKey('tbl_user.id_user'), nullable=True)
+
+    user = db.relationship('User', backref='bayar_hutang', lazy=True)
+
+
+# ─── RESEP ─────────────────────────────────────────────
+
+class Resep(db.Model):
+    __tablename__ = 'tbl_resep'
+    id_resep = db.Column(db.Integer, primary_key=True)
+    no_resep = db.Column(db.String(30), unique=True, nullable=False)
+    nama_dokter = db.Column(db.String(100), default='')
+    nama_pasien = db.Column(db.String(100), nullable=False)
+    id_pelanggan = db.Column(db.Integer, db.ForeignKey('tbl_pelanggan.id_pelanggan'), nullable=True)
+    tanggal = db.Column(db.Date, default=date.today)
+    status = db.Column(db.String(20), default='masuk')
+    # masuk, diproses, siap, selesai
+    id_user = db.Column(db.Integer, db.ForeignKey('tbl_user.id_user'), nullable=True)
+    catatan = db.Column(db.Text, default='')
+
+    pelanggan = db.relationship('Pelanggan', backref='resep_list', lazy=True)
+    user = db.relationship('User', backref='resep_list', lazy=True)
+    details = db.relationship('DetailResep', backref='resep', lazy='dynamic',
+                              cascade='all, delete-orphan')
+
+
+class DetailResep(db.Model):
+    __tablename__ = 'tbl_detail_resep'
+    id = db.Column(db.Integer, primary_key=True)
+    id_resep = db.Column(db.Integer, db.ForeignKey('tbl_resep.id_resep'), nullable=False)
+    id_obat = db.Column(db.Integer, db.ForeignKey('tbl_obat.id_obat'), nullable=False)
+    jumlah = db.Column(db.Integer, default=0)
+    aturan_pakai = db.Column(db.Text, default='')
+    signa = db.Column(db.String(50), default='')
+    keterangan = db.Column(db.Text, default='')
+
+    obat = db.relationship('Obat', backref='detail_resep', lazy=True)
+
+
+# ─── TRANSAKSI / KASIR ─────────────────────────────────
+
+class Transaksi(db.Model):
+    __tablename__ = 'tbl_transaksi'
+    id_transaksi = db.Column(db.Integer, primary_key=True)
+    no_transaksi = db.Column(db.String(30), unique=True, nullable=False)
+    id_resep = db.Column(db.Integer, db.ForeignKey('tbl_resep.id_resep'), nullable=True)
+    id_pelanggan = db.Column(db.Integer, db.ForeignKey('tbl_pelanggan.id_pelanggan'), nullable=True)
+    tanggal = db.Column(db.DateTime, default=datetime.now)
+    subtotal = db.Column(db.Float, default=0)
+    diskon_item = db.Column(db.Float, default=0)
+    diskon_global = db.Column(db.Float, default=0)
+    total = db.Column(db.Float, default=0)
+    bayar = db.Column(db.Float, default=0)
+    kembalian = db.Column(db.Float, default=0)
+    metode_bayar = db.Column(db.String(50), default='Tunai')
+    poin_dipakai = db.Column(db.Integer, default=0)
+    poin_didapat = db.Column(db.Integer, default=0)
+    id_user = db.Column(db.Integer, db.ForeignKey('tbl_user.id_user'), nullable=True)
+    id_shift = db.Column(db.Integer, db.ForeignKey('tbl_shift.id_shift'), nullable=True)
+    status = db.Column(db.String(20), default='selesai')
+
+    resep = db.relationship('Resep', backref='transaksi', lazy=True)
+    pelanggan = db.relationship('Pelanggan', backref='transaksi_list', lazy=True)
+    user = db.relationship('User', backref='transaksi_list', lazy=True)
+    shift = db.relationship('Shift', backref='transaksi_list', lazy=True)
+    details = db.relationship('DetailTransaksi', backref='transaksi', lazy='dynamic',
+                              cascade='all, delete-orphan')
+
+
+class DetailTransaksi(db.Model):
+    __tablename__ = 'tbl_detail_transaksi'
+    id = db.Column(db.Integer, primary_key=True)
+    id_transaksi = db.Column(db.Integer, db.ForeignKey('tbl_transaksi.id_transaksi'), nullable=False)
+    id_obat = db.Column(db.Integer, db.ForeignKey('tbl_obat.id_obat'), nullable=False)
+    id_stok = db.Column(db.Integer, db.ForeignKey('tbl_stok.id_stok'), nullable=True)
+    jumlah = db.Column(db.Integer, default=0)
+    harga_jual = db.Column(db.Float, default=0)
+    diskon = db.Column(db.Float, default=0)
+    subtotal = db.Column(db.Float, default=0)
+
+    obat = db.relationship('Obat', backref='detail_transaksi', lazy=True)
+    stok_batch = db.relationship('Stok', backref='detail_transaksi', lazy=True)
+
+
+class Shift(db.Model):
+    __tablename__ = 'tbl_shift'
+    id_shift = db.Column(db.Integer, primary_key=True)
+    id_user = db.Column(db.Integer, db.ForeignKey('tbl_user.id_user'), nullable=False)
+    waktu_buka = db.Column(db.DateTime, default=datetime.now)
+    waktu_tutup = db.Column(db.DateTime, nullable=True)
+    saldo_awal = db.Column(db.Float, default=0)
+    total_penjualan = db.Column(db.Float, default=0)
+    saldo_akhir = db.Column(db.Float, nullable=True)
+    selisih = db.Column(db.Float, default=0)
+    status = db.Column(db.String(10), default='buka')
+
+    user = db.relationship('User', backref='shift_list', lazy=True)
+
+
+# ─── LOG ───────────────────────────────────────────────
+
+class AuditLog(db.Model):
+    __tablename__ = 'tbl_audit_log'
+    id_log = db.Column(db.Integer, primary_key=True)
+    id_user = db.Column(db.Integer, db.ForeignKey('tbl_user.id_user'), nullable=True)
+    aksi = db.Column(db.String(100), nullable=False)
+    tabel = db.Column(db.String(50), nullable=False)
+    id_record = db.Column(db.Integer, nullable=True)
+    data_lama = db.Column(db.Text, nullable=True)
+    data_baru = db.Column(db.Text, nullable=True)
+    ip_address = db.Column(db.String(50), default='')
+    created_at = db.Column(db.DateTime, default=datetime.now)
+
+    user = db.relationship('User', backref='audit_logs', lazy=True)

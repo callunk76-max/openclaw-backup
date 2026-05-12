@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Stok Masuk{% endblock %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+    <h5 class="fw-bold mb-0"><i class="bi bi-box-arrow-in-right me-2"></i>Stok Masuk</h5>
+    <a href="/mk/stok/" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-left"></i> Kembali</a>
+</div>
+
+<div class="card"><div class="card-body">
+<form method="POST">
+<div class="row g-2 g-md-3">
+    <div class="col-12 col-md-4"><label class="form-label small fw-medium">Obat <span class="text-danger">*</span></label>
+        <select name="id_obat" class="form-select form-select-sm select-search" required>
+            <option value="">- Cari Obat -</option>{% for o in obat_list %}
+            <option value="{{ o.id_obat }}">{{ o.kode_obat }} - {{ o.nama_generik }} (stok: {{ o.stok_total }})</option>{% endfor %}
+        </select></div>
+    <div class="col-6 col-md-2"><label class="form-label small fw-medium">Jumlah <span class="text-danger">*</span></label>
+        <input type="number" name="jumlah" class="form-control form-control-sm" required min="1" value="1"></div>
+    <div class="col-6 col-md-3"><label class="form-label small fw-medium">Batch Number</label>
+        <input type="text" name="batch_number" class="form-control form-control-sm" placeholder="ex: B2405-001"></div>
+    <div class="col-6 col-md-3"><label class="form-label small fw-medium">Expired Date</label>
+        <input type="date" name="expired_date" class="form-control form-control-sm"></div>
+</div>
+<div class="d-flex gap-2 mt-3">
+    <button class="btn btn-primary btn-sm px-4"><i class="bi bi-plus-circle"></i> Tambah Stok</button>
+    <a href="/mk/stok/" class="btn btn-outline-secondary btn-sm"><i class="bi bi-x-lg"></i> Batal</a>
+</div>
+</form></div></div>
+{% endblock %}

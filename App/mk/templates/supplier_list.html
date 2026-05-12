@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}Supplier{% endblock %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+    <h5 class="fw-bold mb-0"><i class="bi bi-truck me-2"></i>Supplier</h5>
+    <a href="/mk/master/supplier/tambah" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg"></i> Supplier Baru</a>
+</div>
+<div class="card"><div class="table-responsive">
+<table class="table table-hover mb-0 align-middle">
+<thead class="table-light"><tr><th>Nama</th><th>Kota</th><th>Telepon</th><th>Syarat Bayar</th><th class="text-center">Aksi</th></tr></thead>
+<tbody>{% for s in supplier_list %}
+<tr class="{{ 'text-muted' if not s.is_active }}">
+    <td class="fw-medium">{{ s.nama }}</td><td>{{ s.kota }}</td><td>{{ s.telepon }}</td>
+    <td><span class="badge bg-light text-dark fw-normal">{{ s.syarat_bayar }}</span></td>
+    <td class="text-center"><a href="/mk/master/supplier/{{ s.id_supplier }}/edit" class="btn btn-sm btn-outline-primary px-2 py-0" title="Edit"><i class="bi bi-pencil"></i></a></td>
+</tr>{% else %}<tr><td colspan="5" class="text-center py-4"><i class="bi bi-inbox text-muted" style="font-size:2rem;display:block;margin-bottom:8px;"></i>Belum ada supplier</td></tr>{% endfor %}</tbody>
+</table></div></div>
+{% endblock %}

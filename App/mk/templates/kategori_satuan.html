@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Kategori &amp; Satuan{% endblock %}
+{% block content %}
+<h5 class="fw-bold mb-3"><i class="bi bi-tags me-2"></i>Kategori &amp; Satuan</h5>
+<div class="row g-2 g-md-3">
+<div class="col-md-6"><div class="card h-100"><div class="card-header">Kategori Obat</div>
+<div class="card-body"><form method="POST" action="/mk/master/kategori/tambah" class="input-group input-group-sm mb-3">
+    <input type="text" name="nama" class="form-control" placeholder="Nama kategori baru" required>
+    <button class="btn btn-primary"><i class="bi bi-plus-lg"></i></button></form>
+<div class="list-group list-group-flush">{% for k in kategori_list %}
+<div class="list-group-item d-flex justify-content-between align-items-center py-2">{{ k.nama_kategori }}
+<form method="POST" action="/mk/master/kategori/{{ k.id_kategori }}/delete" class="d-inline" onsubmit="return confirm('Hapus {{ k.nama_kategori }}?')">
+    <button class="btn btn-sm btn-outline-danger px-2 py-0"><i class="bi bi-trash"></i></button></form></div>{% endfor %}</div>
+</div></div></div>
+<div class="col-md-6"><div class="card h-100"><div class="card-header">Satuan Obat</div>
+<div class="card-body"><form method="POST" action="/mk/master/satuan/tambah" class="input-group input-group-sm mb-3">
+    <input type="text" name="nama" class="form-control" placeholder="Nama satuan baru" required>
+    <input type="text" name="singkatan" class="form-control" placeholder="Singkatan" style="width:80px">
+    <button class="btn btn-primary"><i class="bi bi-plus-lg"></i></button></form>
+<div class="list-group list-group-flush">{% for s in satuan_list %}
+<div class="list-group-item d-flex justify-content-between align-items-center py-2">{{ s.nama_satuan }} <code>{{ s.singkatan }}</code>
+<form method="POST" action="/mk/master/satuan/{{ s.id_satuan }}/delete" class="d-inline" onsubmit="return confirm('Hapus {{ s.nama_satuan }}?')">
+    <button class="btn btn-sm btn-outline-danger px-2 py-0"><i class="bi bi-trash"></i></button></form></div>{% endfor %}</div>
+</div></div></div>
+</div>
+{% endblock %}

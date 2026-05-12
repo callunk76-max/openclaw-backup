@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block title %}Buat PO{% endblock %}
+{% block content %}
+<h5 class="fw-bold mb-3"><i class="bi bi-receipt me-2"></i>Buat Purchase Order</h5>
+<div class="card"><div class="card-body">
+<form method="POST" id="poForm">
+<div class="row g-2 mb-3">
+    <div class="col-md-4"><label class="form-label">Supplier <span class="text-danger">*</span></label>
+        <select name="id_supplier" class="form-select form-select-sm select-search" required>
+            <option value="">- Pilih -</option>{% for s in supplier_list %}
+            <option value="{{ s.id_supplier }}">{{ s.nama }}</option>{% endfor %}
+        </select></div>
+    <div class="col-md-2"><label class="form-label">Tanggal PO</label>
+        <input type="date" name="tanggal_po" class="form-control form-control-sm" value="{{ today }}"></div>
+    <div class="col-md-6"><label class="form-label">Catatan</label>
+        <input type="text" name="catatan" class="form-control form-control-sm"></div>
+</div>
+<hr>
+<div class="d-flex justify-content-between align-items-center mb-2"><strong>Item Obat</strong>
+    <button type="button" class="btn btn-sm btn-outline-primary" onclick="tambahItem()"><i class="bi bi-plus"></i> Item</button></div>
+<table class="table table-sm table-bordered" id="itemTable">
+<thead><tr><th>Obat</th><th>Jumlah</th><th>Harga Beli</th><th>Diskon %</th><th>Batch</th><th>Expired</th><th>Subtotal</th><th></th></tr></thead>
+<tbody id="itemBody">
+    <tr id="itemRow0">
+        <td><select name="id_obat[]" class="form-select form-select-sm obat-select select-search" required>
+            <option value="">- Pilih -</option>{% for o in obat_list %}
+            <option value="{{ o.id_obat }}" data-harga="{{ o.harga_beli }}">{{ o.kode_obat }} - {{ o.nama_generik }}</option>{% endfor %}
+        </select></td>
+        <td><input type="number" name="jumlah_pesan[]" class="form-control form-control-sm jml" min="1" value="1" style="width:70px"></td>
+        <td><input type="number" name="harga_beli[]" class="form-control form-control-sm harga" step="100" style="width:110px"></td>
+        <td><input type="number" name="diskon_persen[]" class="form-control form-control-sm diskon" value="0" style="width:60px"></td>
+        <td><input type="text" name="batch_number[]" class="form-control form-control-sm" style="width:90px"></td>
+        <td><input type="date" name="expired_date[]" class="form-control form-control-sm" style="width:130px"></td>
+        <td class="subtotal text-end fw-bold">0</td>
+        <td><button type="button" class="btn btn-sm btn-outline-danger" onclick="hapusItem(this)"><i class="bi bi-x"></i></button></td>
+    </tr>
+</tbody>
+</table>
+<button class="btn btn-primary btn-sm"><i class="bi bi-save"></i> Simpan PO</button>
+</form></div></div>
+{% endblock %}
+{% block extra_js %}
+<script>
+let rowCount = 1;
+function tambahItem() {
+    const row = document.getElementById('itemRow0').cloneNode(true);
+    row.id = 'itemRow' + rowCount;
+    row.querySelectorAll('input').forEach(i => i.value = i.type === 'number' && i.classList.contains('diskon') ? 0 : i.type === 'number' ? 1 : '');
+    row.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
+    row.querySelector('.subtotal').textContent = '0';
+    document.getElementById('itemBody').appendChild(row);
+    $(row).find('.select-search').select2({ theme: 'bootstrap-5', width: '100%', placeholder: 'Cari...' });
+    rowCount++;
+}
+function hapusItem(btn) {
+    if (document.querySelectorAll('#itemBody tr').length > 1) btn.closest('tr').remove();
+}
+document.addEventListener('change', function(e) {
+    if (e.target.closest('.obat-select')) {
+        const sel = e.target.closest('.obat-select');
+        const tr = sel.closest('tr');
+        const harga = sel.options[sel.selectedIndex]?.dataset?.harga || 0;
+        tr.querySelector('.harga').value = harga;
+        hitungSubtotal(tr);
+    }
+    if (e.target.closest('.jml') || e.target.closest('.harga') || e.target.closest('.diskon')) {
+        hitungSubtotal(e.target.closest('tr'));
+    }
+});
+function hitungSubtotal(tr) {
+    const jml = parseFloat(tr.querySelector('.jml').value) || 0;
+    const harga = parseFloat(tr.querySelector('.harga').value) || 0;
+    const diskon = parseFloat(tr.querySelector('.diskon').value) || 0;
+    const sub = (jml * harga) * (1 - diskon / 100);
+    tr.querySelector('.subtotal').textContent = sub.toLocaleString('id-ID');
+}
+</script>
+{% endblock %}

@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+{% block title %}Kasir / POS{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h5 class="fw-bold mb-0"><i class="bi bi-cart3 me-2"></i>Kasir / POS</h5>
+    <div>{% if shift_aktif %}
+        <span class="badge bg-success fs-6">Shift Aktif: {{ shift_aktif.user.nama if shift_aktif.user else '?' }}</span>
+        <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#tutupShiftModal">Tutup Shift</button>
+    {% else %}
+        <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#bukaShiftModal">Buka Shift</button>
+    {% endif %}</div>
+</div>
+
+{% if not shift_aktif %}
+<div class="alert alert-warning">Buka shift kasir terlebih dahulu untuk memulai transaksi!</div>
+{% else %}
+
+<div class="row g-3">
+<div class="col-md-7">
+<div class="card"><div class="card-header">Transaksi Baru</div>
+<div class="card-body">
+<form method="POST" action="/mk/kasir/transaksi-baru" id="trxForm">
+<div class="mb-2">
+    <label class="form-label">Pilih Obat</label>
+    <select class="form-select form-select-sm select-search" id="obatSelect">
+        <option value="">- Cari & Pilih Obat -</option>
+        {% for o in Obat.query.filter_by(is_active=True).order_by(Obat.nama_generik).all() %}
+        <option value="{{ o.id_obat }}" data-nama="{{ o.nama_generik }}" data-harga="{{ o.harga_jual_eceran }}" data-stok="{{ o.stok_total }}">
+            {{ o.kode_obat }} - {{ o.nama_generik }} (stok: {{ o.stok_total }})
+        </option>
+        {% endfor %}
+    </select>
+</div>
+<table class="table table-sm table-bordered" id="cartTable">
+<thead><tr><th>Obat</th><th>Harga</th><th>Qty</th><th>Subtotal</th><th></th></tr></thead>
+<tbody id="cartBody"></tbody>
+<tfoot><tr class="fw-bold"><td colspan="3" class="text-end">Total</td>
+    <td id="totalDisplay">Rp 0</td><td></td></tr></tfoot>
+</table>
+<div class="row g-2">
+    <div class="col-md-4"><label class="form-label">Diskon Global</label>
+        <input type="number" name="diskon_global" class="form-control form-control-sm" id="diskonGlobal" value="0" step="100"></div>
+    <div class="col-md-4"><label class="form-label">Bayar <span class="text-danger">*</span></label>
+        <input type="number" name="bayar" class="form-control form-control-sm" id="bayarInput" required step="100"></div>
+    <div class="col-md-4"><label class="form-label">Kembalian</label>
+        <div class="form-control form-control-sm bg-light" id="kembalianDisplay">Rp 0</div></div>
+</div>
+<button class="btn btn-success btn-sm mt-3 w-100"><i class="bi bi-check-circle"></i> Selesai & Cetak</button>
+<input type="hidden" name="id_obat[]" id="obatIds">
+<input type="hidden" name="jumlah[]" id="jmlObat">
+</form>
+</div></div></div>
+
+<div class="col-md-5">
+<div class="card"><div class="card-header">Transaksi Hari Ini</div>
+<div class="table-responsive" style="max-height:400px;overflow-y:auto;">
+<table class="table table-sm mb-0"><thead><tr><th>#</th><th>Total</th><th></th></tr></thead>
+<tbody>{% for t in transaksi_hari %}
+<tr><td><code>{{ t.no_transaksi[-6:] }}</code></td>
+    <td class="fw-bold">{{ t.total|format_rp }}</td>
+    <td><a href="/mk/kasir/transaksi/{{ t.id_transaksi }}" class="btn btn-sm btn-outline-info"><i class="bi bi-eye"></i></a></td>
+</tr>{% else %}<tr><td colspan="3" class="text-center text-muted py-3">Belum ada transaksi</td></tr>{% endfor %}
+</tbody></table></div></div></div>
+</div>
+{% endif %}
+
+<!-- Modal Buka Shift -->
+<div class="modal fade" id="bukaShiftModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content"><form method="POST" action="/mk/kasir/shift/buka">
+<div class="modal-header"><h6>Buka Shift</h6><button class="btn-close" data-bs-dismiss="modal"></button></div>
+<div class="modal-body"><label class="form-label">Saldo Awal</label>
+    <input type="number" name="saldo_awal" class="form-control" value="0" step="100"></div>
+<div class="modal-footer"><button class="btn btn-primary btn-sm">Buka Shift</button></div>
+</form></div></div></div>
+
+<!-- Modal Tutup Shift -->
+<div class="modal fade" id="tutupShiftModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content"><form method="POST" action="/mk/kasir/shift/tutup">
+<div class="modal-header"><h6>Tutup Shift</h6><button class="btn-close" data-bs-dismiss="modal"></button></div>
+<div class="modal-body">
+    <p>Total Penjualan: <strong>{{ shift_aktif.total_penjualan|format_rp if shift_aktif else 'Rp 0' }}</strong></p>
+    <label class="form-label">Saldo Akhir Fisik</label>
+    <input type="number" name="saldo_akhir" class="form-control" step="100" required></div>
+<div class="modal-footer"><button class="btn btn-warning btn-sm">Tutup Shift</button></div>
+</form></div></div></div>
+{% endblock %}
+{% block extra_js %}
+<script>
+const cart = {};
+let total = 0;
+
+document.getElementById('obatSelect').addEventListener('change', function() {
+    const opt = this.options[this.selectedIndex];
+    if (!opt.value) return;
+    const id = opt.value;
+    const nama = opt.dataset.nama;
+    const harga = parseFloat(opt.dataset.harga);
+    const stok = parseInt(opt.dataset.stok);
+
+    if (cart[id]) {
+        if (cart[id].qty >= stok) { alert('Stok tidak cukup!'); return; }
+        cart[id].qty++;
+    } else {
+        cart[id] = { nama, harga, qty: 1, stok };
+    }
+    renderCart();
+    this.selectedIndex = 0;
+});
+
+function renderCart() {
+    const tbody = document.getElementById('cartBody');
+    tbody.innerHTML = '';
+    total = 0;
+    const ids = [], jmls = [];
+    Object.keys(cart).forEach(function(id) {
+        const item = cart[id];
+        const sub = item.harga * item.qty;
+        total += sub;
+        ids.push(id); jmls.push(item.qty);
+        tbody.innerHTML += '<tr><td>' + item.nama + '</td><td>' + item.harga.toLocaleString('id-ID') + '</td>' +
+            '<td><input type="number" class="form-control form-control-sm qty-input" style="width:60px" data-id="' + id + '" value="' + item.qty + '" min="1" max="' + item.stok + '"></td>' +
+            '<td class="fw-bold">' + sub.toLocaleString('id-ID') + '</td>' +
+            '<td><button class="btn btn-sm btn-outline-danger" onclick="hapusItem(' + id + ')"><i class="bi bi-x"></i></button></td></tr>';
+    });
+    document.getElementById('obatIds').value = ids.join(',');
+    document.getElementById('jmlObat').value = jmls.join(',');
+    hitungTotal();
+}
+
+function hapusItem(id) {
+    delete cart[id];
+    renderCart();
+}
+
+document.addEventListener('change', function(e) {
+    if (e.target.classList.contains('qty-input')) {
+        const id = parseInt(e.target.dataset.id);
+        const val = parseInt(e.target.value) || 1;
+        if (cart[id]) {
+            cart[id].qty = Math.min(val, cart[id].stok);
+            renderCart();
+        }
+    }
+});
+
+function hitungTotal() {
+    const diskon = parseFloat(document.getElementById('diskonGlobal').value) || 0;
+    const bayar = parseFloat(document.getElementById('bayarInput').value) || 0;
+    const totalSetelahDiskon = Math.max(0, total - diskon);
+    document.getElementById('totalDisplay').textContent = 'Rp ' + totalSetelahDiskon.toLocaleString('id-ID');
+    document.getElementById('kembalianDisplay').textContent = 'Rp ' + Math.max(0, bayar - totalSetelahDiskon).toLocaleString('id-ID');
+}
+document.getElementById('diskonGlobal').addEventListener('input', hitungTotal);
+document.getElementById('bayarInput').addEventListener('input', hitungTotal);
+</script>
+{% endblock %}

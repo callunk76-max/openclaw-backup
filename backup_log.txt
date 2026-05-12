@@ -957,3 +957,181 @@ sending incremental file list
 AGENTS.md
 TODO-complex-project.md
 TOOLS.md
+backup_log.txt
+data-farmasi-puskesmas.md
+database-schema-farmasi.md
+kerangka-aplikasi-farmasi.md
+riset-aplikasi-apotek-puskesmas.md
+.learnings/ERRORS.md
+.learnings/LEARNINGS.md
+App/
+App/aramedica/
+App/aramedica/app.py
+App/aramedica/data/
+App/aramedica/data/Data_Verif.xlsx
+App/aramedica/static/
+App/aramedica/static/favicon.svg
+App/aramedica/static/logo.svg
+App/aramedica/templates/
+App/aramedica/templates/index.html
+App/aramedica/templates/upload.html
+App/filebox/
+App/filebox/app.py
+App/filebox/templates/index.html
+App/filebox/uploads/
+App/filebox/uploads/CCS_Dashboard.ex4
+App/filebox/uploads/CCS_Dashboard.mq4
+App/filebox/uploads/Data Verif.xlsx
+App/filebox/uploads/hostname
+App/mk/
+App/mk/app.py
+App/mk/models.py
+App/mk/seed_data.py
+App/mk/instance/
+App/mk/instance/farmasi.db
+App/mk/static/
+App/mk/static/css/
+App/mk/static/js/
+App/mk/templates/
+App/mk/templates/base.html
+App/mk/templates/dashboard.html
+App/mk/templates/laporan/
+App/mk/templates/laporan/index.html
+App/mk/templates/laporan/lplpo.html
+App/mk/templates/laporan/resep_harian.html
+App/mk/templates/master/
+App/mk/templates/master/obat.html
+App/mk/templates/partials/
+App/mk/templates/pasien/
+App/mk/templates/pasien/form.html
+App/mk/templates/pasien/list.html
+App/mk/templates/racikan/
+App/mk/templates/resep/
+App/mk/templates/resep/detail.html
+App/mk/templates/resep/form.html
+App/mk/templates/resep/list.html
+App/mk/templates/stok/
+App/mk/templates/stok/distribusi_form.html
+App/mk/templates/stok/distribusi_list.html
+App/mk/templates/stok/list.html
+App/mk/templates/stok/masuk.html
+App/mk/templates/stok/opname.html
+App/mokidonut.bak/
+App/mokidonut.bak/app.log
+App/mokidonut.bak/app.py
+App/mokidonut.bak/donuts.json
+App/mokidonut.bak/settings.json
+App/mokidonut.bak/static/
+App/mokidonut.bak/static/uploads/
+App/mokidonut.bak/static/uploads/IMG-20260418-WA0001.jpg
+App/mokidonut.bak/static/uploads/IMG-20260418-WA0002.jpg
+App/mokidonut.bak/static/uploads/Kue.jpeg
+App/mokidonut.bak/static/uploads/Savory.jpeg
+App/mokidonut.bak/templates/
+App/mokidonut.bak/templates/admin.html
+App/mokidonut.bak/templates/index.html
+App/mokidonut.bak/templates/login.html
+App/sirup_bulukumba/
+App/sirup_bulukumba/app.py
+App/sirup_bulukumba/bulukumba.db
+App/sirup_bulukumba/restart_log.txt
+App/sirup_bulukumba/visitor_count.json
+Trading/kronos/kronos_cron.log
+Trading/kronos/last_kronos_msg.txt
+Trading/kronos/data/.data_meta.json
+Trading/kronos/data/.status.json
+Trading/kronos/data/AUDCAD.csv
+Trading/kronos/data/AUDCHF.csv
+Trading/kronos/data/AUDJPY.csv
+Trading/kronos/data/AUDNZD.csv
+Trading/kronos/data/AUDUSD.csv
+Trading/kronos/data/CADCHF.csv
+Trading/kronos/data/CADJPY.csv
+Trading/kronos/data/CHFJPY.csv
+Trading/kronos/data/EURAUD.csv
+Trading/kronos/data/EURCAD.csv
+Trading/kronos/data/EURCHF.csv
+Trading/kronos/data/EURGBP.csv
+Trading/kronos/data/EURJPY.csv
+Trading/kronos/data/EURNZD.csv
+Trading/kronos/data/EURUSD.csv
+Trading/kronos/data/GBPAUD.csv
+Trading/kronos/data/GBPCAD.csv
+Trading/kronos/data/GBPCHF.csv
+Trading/kronos/data/GBPJPY.csv
+Trading/kronos/data/GBPNZD.csv
+Trading/kronos/data/GBPUSD.csv
+Trading/kronos/data/NZDCAD.csv
+Trading/kronos/data/NZDCHF.csv
+Trading/kronos/data/NZDJPY.csv
+Trading/kronos/data/NZDUSD.csv
+Trading/kronos/data/USDCAD.csv
+Trading/kronos/data/USDCHF.csv
+Trading/kronos/data/USDJPY.csv
+Trading/kronos/data/XAUUSD.csv
+Trading/kronos/data/predictions.csv
+Trading/kronos/data/signals.csv
+memory/
+memory/2026-05-10-app-update.md
+memory/2026-05-11-dedup-fix.md
+memory/2026-05-11-server-hardening.md
+memory/2026-05-11-sonar-app-fix.md
+memory/2026-05-11.md
+
+sent 16,992,640 bytes  received 2,108 bytes  33,989,496.00 bytes/sec
+total size is 135,316,089  speedup is 7.96
+[master 1edc6e8] Daily Backup from Cuy - 2026-05-12 03:00
+ 94 files changed, 6716 insertions(+), 1085 deletions(-)
+ create mode 100644 App/aramedica/data/Data_Verif.xlsx
+ create mode 100644 App/aramedica/static/favicon.svg
+ create mode 100644 App/aramedica/static/logo.svg
+ create mode 100644 App/aramedica/templates/upload.html
+ create mode 100644 App/filebox/uploads/CCS_Dashboard.ex4
+ create mode 100644 App/filebox/uploads/CCS_Dashboard.mq4
+ create mode 100644 App/filebox/uploads/Data Verif.xlsx
+ create mode 100644 App/filebox/uploads/hostname
+ create mode 100644 App/mk/app.py
+ create mode 100644 App/mk/models.py
+ create mode 100644 App/mk/seed_data.py
+ create mode 100644 App/mk/templates/base.html
+ create mode 100644 App/mk/templates/dashboard.html
+ create mode 100644 App/mk/templates/laporan/index.html
+ create mode 100644 App/mk/templates/laporan/lplpo.html
+ create mode 100644 App/mk/templates/laporan/resep_harian.html
+ create mode 100644 App/mk/templates/master/obat.html
+ create mode 100644 App/mk/templates/pasien/form.html
+ create mode 100644 App/mk/templates/pasien/list.html
+ create mode 100644 App/mk/templates/resep/detail.html
+ create mode 100644 App/mk/templates/resep/form.html
+ create mode 100644 App/mk/templates/resep/list.html
+ create mode 100644 App/mk/templates/stok/distribusi_form.html
+ create mode 100644 App/mk/templates/stok/distribusi_list.html
+ create mode 100644 App/mk/templates/stok/list.html
+ create mode 100644 App/mk/templates/stok/masuk.html
+ create mode 100644 App/mk/templates/stok/opname.html
+ create mode 100644 App/mokidonut.bak/app.py
+ create mode 100644 App/mokidonut.bak/donuts.json
+ create mode 100644 App/mokidonut.bak/settings.json
+ create mode 100644 App/mokidonut.bak/static/uploads/IMG-20260418-WA0001.jpg
+ create mode 100644 App/mokidonut.bak/static/uploads/IMG-20260418-WA0002.jpg
+ create mode 100644 App/mokidonut.bak/static/uploads/Kue.jpeg
+ create mode 100644 App/mokidonut.bak/static/uploads/Savory.jpeg
+ create mode 100644 App/mokidonut.bak/templates/admin.html
+ create mode 100644 App/mokidonut.bak/templates/index.html
+ create mode 100644 App/mokidonut.bak/templates/login.html
+ create mode 100644 TODO-complex-project.md
+ create mode 100644 data-farmasi-puskesmas.md
+ create mode 100644 database-schema-farmasi.md
+ create mode 100644 kerangka-aplikasi-farmasi.md
+ create mode 100644 memory/2026-05-10-app-update.md
+ create mode 100644 memory/2026-05-11-dedup-fix.md
+ create mode 100644 memory/2026-05-11-server-hardening.md
+ create mode 100644 memory/2026-05-11-sonar-app-fix.md
+ create mode 100644 memory/2026-05-11.md
+ create mode 100644 riset-aplikasi-apotek-puskesmas.md
+To github.com:callunk76-max/openclaw-backup.git
+   91127e6..1edc6e8  master -> master
+[session-write-lock] releasing lock held for 61850ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 5135
+sending incremental file list
+MEMORY.md

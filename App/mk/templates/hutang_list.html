@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Hutang Supplier{% endblock %}
+{% block content %}
+<h5 class="fw-bold mb-3"><i class="bi bi-credit-card-2-front me-2"></i>Hutang Supplier</h5>
+<div class="card"><div class="table-responsive">
+<table class="table table-hover mb-0">
+<thead><tr><th>Supplier</th><th>No. Faktur</th><th>Total</th><th>Sisa</th><th>Jatuh Tempo</th><th>Status</th><th>Aksi</th></tr></thead>
+<tbody>{% for h in hutang_list %}
+<tr>
+    <td>{{ h.pembelian.supplier.nama if h.pembelian and h.pembelian.supplier else '-' }}</td>
+    <td><code>{{ h.no_faktur or '-' }}</code></td>
+    <td>{{ h.total|format_rp }}</td>
+    <td class="fw-bold text-danger">{{ h.sisa|format_rp }}</td>
+    <td>{{ h.jatuh_tempo|format_tgl if h.jatuh_tempo else '-' }}</td>
+    <td><span class="badge bg-{{ 'success' if h.status=='lunas' else 'warning' }}">{{ h.status }}</span></td>
+    <td>{% if h.status != 'lunas' %}
+        <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#bayarModal{{ h.id_hutang }}">Bayar</button>
+        {% endif %}
+    </td>
+</tr>
+<div class="modal fade" id="bayarModal{{ h.id_hutang }}" tabindex="-1"><div class="modal-dialog"><div class="modal-content"><form method="POST" action="/mk/pembelian/hutang/bayar/{{ h.id_hutang }}">
+<div class="modal-header"><h6 class="modal-title">Bayar Hutang</h6><button class="btn-close" data-bs-dismiss="modal"></button></div>
+<div class="modal-body">
+<p>Sisa hutang: <strong>{{ h.sisa|format_rp }}</strong></p>
+<div class="mb-2"><label class="form-label">Jumlah Bayar</label>
+    <input type="number" name="jumlah" class="form-control" max="{{ h.sisa }}" step="100" required></div>
+<label class="form-label">Metode</label>
+<select name="metode" class="form-select"><option>Tunai</option><option>Transfer</option><option>QRIS</option></select>
+</div>
+<div class="modal-footer"><button class="btn btn-success btn-sm">Bayar</button></div>
+</form></div></div></div>
+{% endfor %}</tbody></table></div></div>
+{% endblock %}

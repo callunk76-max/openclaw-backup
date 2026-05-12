@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}Pembelian (PO){% endblock %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+    <h5 class="fw-bold mb-0"><i class="bi bi-receipt me-2"></i>Purchase Order</h5>
+    <div class="d-flex gap-2">
+        <a href="/mk/pembelian/hutang" class="btn btn-outline-danger btn-sm"><i class="bi bi-credit-card-2-front"></i> Hutang</a>
+        <a href="/mk/pembelian/tambah" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg"></i> PO Baru</a>
+    </div>
+</div>
+
+<div class="card"><div class="table-responsive">
+<table class="table table-hover mb-0 align-middle">
+<thead class="table-light"><tr><th>No. PO</th><th>Supplier</th><th>Tgl PO</th><th>Total</th><th>Status</th><th class="text-center">Aksi</th></tr></thead>
+<tbody>{% for p in list %}
+<tr>
+    <td><code>{{ p.no_po }}</code></td>
+    <td>{{ p.supplier.nama if p.supplier else '-' }}</td>
+    <td>{{ p.tanggal_po|format_tgl }}</td>
+    <td class="fw-medium">{{ p.total|format_rp }}</td>
+    <td><span class="badge rounded-pill bg-{{ 'secondary' if p.status=='draft' else 'info' if p.status=='dikirim' else 'warning' if p.status=='sebagian' else 'success' if p.status=='selesai' else 'danger' }}">{{ p.status }}</span></td>
+    <td class="text-center">
+        {% if p.status == 'draft' %}
+        <button class="btn btn-sm btn-success px-2 py-0" data-bs-toggle="modal" data-bs-target="#terimaModal{{ p.id_pembelian }}" title="Terima Barang"><i class="bi bi-check-lg"></i></button>
+        <form method="POST" action="/mk/pembelian/{{ p.id_pembelian }}/batal" class="d-inline" onsubmit="return confirm('Batalkan PO {{ p.no_po }}?')">
+            <button class="btn btn-sm btn-outline-danger px-2 py-0" title="Batalkan"><i class="bi bi-x-lg"></i></button></form>
+        {% endif %}
+    </td>
+</tr>
+<div class="modal fade" id="terimaModal{{ p.id_pembelian }}" tabindex="-1"><div class="modal-dialog modal-lg"><div class="modal-content"><form method="POST" action="/mk/pembelian/{{ p.id_pembelian }}/terima">
+<div class="modal-header"><h6 class="modal-title">Terima Barang — {{ p.no_po }}</h6><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+<div class="modal-body"><table class="table table-sm"><thead><tr><th>Obat</th><th>Dipesan</th><th>Diterima</th><th>Batch</th><th>Expired</th></tr></thead>
+<tbody>{% for dp in p.details.all() %}
+<tr><td>{{ dp.obat.nama_generik if dp.obat else '?' }}</td>
+    <td>{{ dp.jumlah_pesan }}</td>
+    <td><input type="number" name="jml_terima_{{ dp.id }}" class="form-control form-control-sm" value="{{ dp.jumlah_pesan }}" style="width:80px" min="0"></td>
+    <td><code class="small">{{ dp.batch_number or '-' }}</code></td>
+    <td>{{ dp.expired_date|format_tgl if dp.expired_date else '-' }}</td>
+</tr>{% endfor %}</tbody></table></div>
+<div class="modal-footer"><button class="btn btn-success btn-sm px-4">Konfirmasi Terima</button></div>
+</form></div></div></div>
+{% else %}<tr><td colspan="6" class="text-center py-4"><i class="bi bi-inbox text-muted" style="font-size:2rem;display:block;margin-bottom:8px;"></i>Belum ada PO<a href="/mk/pembelian/tambah" class="btn btn-sm btn-primary ms-2">+ Buat PO</a></td></tr>{% endfor %}</tbody>
+</table></div></div>
+{% endblock %}

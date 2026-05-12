@@ -158,11 +158,11 @@
         <!-- Header -->
         <div class="header">
             <h1>📁 File<span>Box</span></h1>
-            <a href="/logout" class="logout-btn">🚪 Keluar</a>
+            <a href="/file/logout" class="logout-btn">🚪 Keluar</a>
         </div>
 
         <!-- Upload area -->
-        <form method="POST" action="/upload" enctype="multipart/form-data" id="uploadForm">
+        <form method="POST" action="/file/upload" enctype="multipart/form-data" id="uploadForm">
             <div class="upload-area" id="dropZone">
                 <div class="icon">☁️</div>
                 <p>Klik atau tarik file ke sini untuk upload</p>
@@ -203,8 +203,8 @@
                     <div class="meta">{{ f.size_str }} • {{ f.mtime }}</div>
                 </div>
                 <div class="file-actions">
-                    <a href="/download/{{ f.name }}" class="btn-download" download>⬇ Download</a>
-                    <form method="POST" action="/delete/{{ f.name }}" style="display:inline" onsubmit="return confirm('Hapus file ini?')">
+                    <a href="/file/download/{{ f.name }}" class="btn-download" download>⬇ Download</a>
+                    <form method="POST" action="/file/delete/{{ f.name }}" style="display:inline" onsubmit="return confirm('Hapus file ini?')">
                         <button type="submit" class="btn-delete">🗑</button>
                     </form>
                 </div>

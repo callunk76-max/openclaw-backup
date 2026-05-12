@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}{{ 'Edit' if obat else 'Tambah' }} Obat{% endblock %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+    <h5 class="fw-bold mb-0"><i class="bi bi-{{ 'pencil' if obat else 'plus-lg' }} me-2"></i>{{ 'Edit' if obat else 'Tambah' }} Obat</h5>
+    <a href="/mk/master/obat" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-left"></i> Kembali</a>
+</div>
+
+<div class="card"><div class="card-body">
+<form method="POST">
+<div class="row g-2 g-md-3">
+    <div class="col-12 col-md-4"><label class="form-label small fw-medium">Nama Generik <span class="text-danger">*</span></label>
+        <input type="text" name="nama_generik" class="form-control form-control-sm" required value="{{ obat.nama_generik if obat else '' }}" autofocus></div>
+    <div class="col-12 col-md-4"><label class="form-label small fw-medium">Nama Dagang</label>
+        <input type="text" name="nama_dagang" class="form-control form-control-sm" value="{{ obat.nama_dagang if obat else '' }}"></div>
+    <div class="col-6 col-md-2"><label class="form-label small fw-medium">Kategori</label>
+        <select name="id_kategori" class="form-select form-select-sm select-search">
+            <option value="">-</option>{% for k in kategori_list %}
+            <option value="{{ k.id_kategori }}" {{ 'selected' if obat and obat.id_kategori==k.id_kategori }}>{{ k.nama_kategori }}</option>{% endfor %}
+        </select></div>
+    <div class="col-6 col-md-2"><label class="form-label small fw-medium">Satuan</label>
+        <select name="id_satuan" class="form-select form-select-sm select-search">
+            <option value="">-</option>{% for s in satuan_list %}
+            <option value="{{ s.id_satuan }}" {{ 'selected' if obat and obat.id_satuan==s.id_satuan }}>{{ s.nama_satuan }}</option>{% endfor %}
+        </select></div>
+    <div class="col-6 col-md-2"><label class="form-label small fw-medium">Golongan</label>
+        <select name="golongan" class="form-select form-select-sm">
+            {% for g in ['Bebas','Bebas Terbatas','Keras','Narkotika','Psikotropika'] %}
+            <option value="{{ g }}" {{ 'selected' if obat and obat.golongan==g }}>{{ g }}</option>{% endfor %}
+        </select></div>
+    <div class="col-6 col-md-2"><label class="form-label small fw-medium">Harga Beli</label>
+        <div class="input-group input-group-sm"><span class="input-group-text">Rp</span>
+        <input type="number" name="harga_beli" class="form-control form-control-sm" step="100" value="{{ obat.harga_beli|int if obat else 0 }}"></div></div>
+    <div class="col-6 col-md-2"><label class="form-label small fw-medium">Hrg Jual Eceran</label>
+        <div class="input-group input-group-sm"><span class="input-group-text">Rp</span>
+        <input type="number" name="harga_jual_eceran" class="form-control form-control-sm" step="100" value="{{ obat.harga_jual_eceran|int if obat else 0 }}"></div></div>
+    <div class="col-6 col-md-2"><label class="form-label small fw-medium">Hrg Jual Resep</label>
+        <div class="input-group input-group-sm"><span class="input-group-text">Rp</span>
+        <input type="number" name="harga_jual_resep" class="form-control form-control-sm" step="100" value="{{ obat.harga_jual_resep|int if obat else 0 }}"></div></div>
+    <div class="col-6 col-md-1"><label class="form-label small fw-medium">Stok Min</label>
+        <input type="number" name="stok_minimum" class="form-control form-control-sm" value="{{ obat.stok_minimum if obat else 0 }}"></div>
+    <div class="col-6 col-md-1 d-flex align-items-end">
+        {% if obat %}<div class="form-check"><input type="checkbox" name="is_active" class="form-check-input" id="is_active" {{ 'checked' if obat.is_active }}>
+        <label class="form-check-label small" for="is_active">Aktif</label></div>{% endif %}
+    </div>
+</div>
+<div class="d-flex gap-2 mt-3">
+    <button class="btn btn-primary btn-sm px-4"><i class="bi bi-check-lg"></i> Simpan</button>
+    <a href="/mk/master/obat" class="btn btn-outline-secondary btn-sm"><i class="bi bi-x-lg"></i> Batal</a>
+</div>
+</form>
+</div></div>
+{% endblock %}

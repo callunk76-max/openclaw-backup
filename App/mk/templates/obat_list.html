@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block title %}Data Obat{% endblock %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+    <h5 class="fw-bold mb-0"><i class="bi bi-capsule me-2"></i>Data Obat</h5>
+    <a href="/mk/master/obat/tambah" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg"></i> Obat Baru</a>
+</div>
+
+<div class="card mb-3"><div class="card-body py-2">
+<form method="GET" class="d-flex gap-2 align-items-center">
+    <div class="position-relative flex-grow-1" style="max-width:350px">
+        <i class="bi bi-search position-absolute" style="left:10px;top:50%;transform:translateY(-50%);color:#999;font-size:.85rem;"></i>
+        <input type="text" name="search" class="form-control form-control-sm ps-4" placeholder="Cari nama obat / kode..." value="{{ search }}" id="searchObat" autocomplete="off">
+        {% if search %}
+        <a href="/mk/master/obat" class="position-absolute text-decoration-none text-muted" style="right:8px;top:50%;transform:translateY(-50%);font-size:1.1rem;">&times;</a>
+        {% endif %}
+    </div>
+    <button class="btn btn-sm btn-outline-primary d-none" id="searchBtn"><i class="bi bi-search"></i></button>
+</form></div></div>
+
+<div class="card"><div class="table-responsive">
+<table class="table table-hover mb-0 align-middle">
+<thead class="table-light"><tr><th>Kode</th><th>Nama Generik</th><th>Dagang</th><th>Kategori</th><th>Golongan</th><th>Harga Beli</th><th>Harga Jual</th><th class="text-center">Stok</th><th>Min</th><th class="text-center">Aksi</th></tr></thead>
+<tbody>
+{% for o in obat_list %}
+<tr class="{{ 'text-muted' if not o.is_active }}">
+    <td><code class="small">{{ o.kode_obat }}</code></td>
+    <td class="fw-medium">{{ o.nama_generik }}</td>
+    <td><small class="text-muted">{{ o.nama_dagang }}</small></td>
+    <td><span class="badge bg-light text-dark fw-normal">{{ o.kategori.nama_kategori if o.kategori else '-' }}</span></td>
+    <td><span class="badge rounded-pill {% if o.golongan=='Narkotika' %}bg-danger{% elif o.golongan=='Psikotropika' %}bg-warning text-dark{% elif o.golongan=='Keras' %}bg-primary{% else %}bg-success{% endif %} fs-7">{{ o.golongan }}</span></td>
+    <td class="small">{{ o.harga_beli|format_rp }}</td>
+    <td class="small">{{ o.harga_jual_eceran|format_rp }}</td>
+    <td class="text-center fw-bold {% if o.stok_total <= o.stok_minimum %}text-danger{% endif %}">{{ o.stok_total }}</td>
+    <td class="text-center"><small>{{ o.stok_minimum }}</small></td>
+    <td class="text-center no-print">
+        <a href="/mk/master/obat/{{ o.id_obat }}/edit" class="btn btn-sm btn-outline-primary px-2 py-0" title="Edit"><i class="bi bi-pencil"></i></a>
+        {% if o.is_active %}
+        <form method="POST" action="/mk/master/obat/{{ o.id_obat }}/delete" class="d-inline" onsubmit="return confirm('Nonaktifkan {{ o.nama_generik }}?')">
+            <button class="btn btn-sm btn-outline-danger px-2 py-0" title="Nonaktifkan"><i class="bi bi-x-circle"></i></button>
+        </form>
+        {% endif %}
+    </td>
+</tr>
+{% else %}<tr><td colspan="10" class="text-center py-4"><i class="bi bi-inbox text-muted" style="font-size:2rem;display:block;margin-bottom:8px;"></i>Belum ada data obat<a href="/mk/master/obat/tambah" class="btn btn-sm btn-primary ms-2">+ Tambah</a></td></tr>{% endfor %}
+</tbody></table></div>
+{% if pagination.pages > 1 %}
+<nav class="p-2 border-top"><ul class="pagination pagination-sm mb-0 justify-content-center">
+{% for p in range(1, pagination.pages+1) %}
+<li class="page-item {{ 'active' if p==pagination.page }}"><a class="page-link" href="?page={{ p }}{% if search %}&search={{ search }}{% endif %}">{{ p }}</a></li>
+{% endfor %}</ul></nav>{% endif %}
+</div>
+{% endblock %}
+{% block extra_js %}
+<script>
+// Auto-submit search on typing with debounce
+let searchTimer;
+document.getElementById('searchObat')?.addEventListener('input', function() {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(() => this.form.submit(), 500);
+});
+</script>
+{% endblock %}

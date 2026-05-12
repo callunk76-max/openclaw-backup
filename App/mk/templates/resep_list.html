@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}Resep{% endblock %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+    <h5 class="fw-bold mb-0"><i class="bi bi-file-text me-2"></i>Resep</h5>
+    <a href="/mk/resep/tambah" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg"></i> Resep Baru</a>
+</div>
+
+<div class="card mb-3"><div class="card-body py-2">
+<form method="GET" class="row row-cols-auto g-2 align-items-center">
+    <div class="col">
+    <div class="position-relative">
+        <i class="bi bi-search position-absolute" style="left:10px;top:50%;transform:translateY(-50%);color:#999;font-size:.85rem;"></i>
+        <input type="text" name="search" class="form-control form-control-sm ps-4" placeholder="Cari pasien/dokter..." value="{{ search }}" style="width:220px;">
+        {% if search %}<a href="/mk/resep/" class="position-absolute text-decoration-none text-muted" style="right:8px;top:50%;transform:translateY(-50%);font-size:1.1rem;">&times;</a>{% endif %}
+    </div></div>
+    <div class="col"><select name="status" class="form-select form-select-sm" onchange="this.form.submit()">
+        <option value="">Semua Status</option>{% for s in status_list %}
+        <option value="{{ s }}" {{ 'selected' if cur_status==s }}>{{ s|capitalize }}</option>{% endfor %}
+    </select></div>
+</form></div></div>
+
+<div class="card"><div class="table-responsive">
+<table class="table table-hover mb-0 align-middle">
+<thead class="table-light"><tr><th>No. Resep</th><th>Pasien</th><th>Dokter</th><th>Tanggal</th><th>Status</th><th class="text-center">Aksi</th></tr></thead>
+<tbody>{% for r in list %}
+<tr>
+    <td><code>{{ r.no_resep }}</code></td>
+    <td class="fw-medium">{{ r.nama_pasien }}</td>
+    <td><small class="text-muted">{{ r.nama_dokter or '-' }}</small></td>
+    <td><small>{{ r.tanggal|format_tgl }}</small></td>
+    <td><span class="badge rounded-pill bg-{{ 'secondary' if r.status=='masuk' else 'info' if r.status=='diproses' else 'primary' if r.status=='siap' else 'success' if r.status=='selesai' }}">{{ r.status }}</span></td>
+    <td class="text-center">
+        <a href="/mk/resep/{{ r.id_resep }}/detail" class="btn btn-sm btn-outline-info px-2 py-0" title="Detail"><i class="bi bi-eye"></i></a>
+        <a href="/mk/resep/{{ r.id_resep }}/etiket" class="btn btn-sm btn-outline-secondary px-2 py-0" target="_blank" title="Cetak Etiket"><i class="bi bi-ticket"></i></a>
+        <div class="btn-group btn-group-sm ms-1">
+            <button class="btn btn-outline-secondary dropdown-toggle px-2 py-0" data-bs-toggle="dropdown" title="Ubah Status"><i class="bi bi-arrow-repeat"></i></button>
+            <ul class="dropdown-menu">{% for s in status_list %}
+                <li><form method="POST" action="/mk/resep/{{ r.id_resep }}/status">
+                    <input type="hidden" name="status" value="{{ s }}">
+                    <button class="dropdown-item small">{{ s }}</button>
+                </form></li>{% endfor %}
+            </ul>
+        </div>
+        {% if r.status == 'selesai' %}
+        <form method="POST" action="/mk/resep/{{ r.id_resep }}/to-transaksi" class="d-inline">
+            <button class="btn btn-sm btn-success px-2 py-0" title="Ke Kasir"><i class="bi bi-cart"></i></button>
+        </form>
+        {% endif %}
+    </td>
+</tr>{% else %}<tr><td colspan="6" class="text-center py-4"><i class="bi bi-inbox text-muted" style="font-size:2rem;display:block;margin-bottom:8px;"></i>Belum ada resep</td></tr>{% endfor %}
+</tbody></table></div></div>
+{% endblock %}

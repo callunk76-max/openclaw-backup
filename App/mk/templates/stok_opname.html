@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Stok Opname{% endblock %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+    <h5 class="fw-bold mb-0"><i class="bi bi-clipboard-check me-2"></i>Stok Opname</h5>
+    <a href="/mk/stok/" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-left"></i> Kembali</a>
+</div>
+
+<div class="card"><div class="card-body">
+<p class="text-muted small mb-2"><i class="bi bi-info-circle me-1"></i>Sesuaikan stok fisik dengan stok di sistem. Stok otomatis diupdate saat disimpan.</p>
+<form method="POST">
+<div class="table-responsive" style="max-height:500px;overflow-y:auto;">
+<table class="table table-sm table-bordered align-middle mb-0">
+<thead class="table-light sticky-top"><tr><th>Obat</th><th>Batch</th><th>Expired</th><th class="text-center">Stok Sistem</th><th class="text-center" style="min-width:120px">Stok Fisik</th></tr></thead>
+<tbody>{% for s in all_stok %}
+<tr>
+    <td><small>{{ s.obat.nama_generik if s.obat else '?' }}</small></td>
+    <td><code class="small">{{ s.batch_number or '-' }}</code></td>
+    <td><small>{{ s.expired_date|format_tgl if s.expired_date else '-' }}</small></td>
+    <td class="text-center fw-bold">{{ s.jumlah }}</td>
+    <td><input type="number" name="stok_fisik_{{ s.id_stok }}" class="form-control form-control-sm text-center" value="{{ s.jumlah }}" min="0"></td>
+</tr>{% else %}<tr><td colspan="5" class="text-center py-4 text-muted"><i class="bi bi-inbox" style="font-size:2rem;display:block;margin-bottom:8px;"></i>Tidak ada stok untuk diopname</td></tr>{% endfor %}
+</tbody></table></div>
+{% if all_stok %}<button class="btn btn-primary btn-sm mt-3"><i class="bi bi-check-circle"></i> Simpan Opname</button>{% endif %}
+</form></div></div>
+{% endblock %}

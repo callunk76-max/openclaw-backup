@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Manajemen User{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+    <h5 class="fw-bold mb-0"><i class="bi bi-shield-lock me-2"></i>User</h5>
+    <a href="/mk/master/user/tambah" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg"></i> User Baru</a>
+</div>
+<div class="card"><div class="table-responsive">
+<table class="table table-hover mb-0 align-middle">
+<thead class="table-light"><tr><th>Nama</th><th>Username</th><th>Role</th><th>No. SIPA</th><th class="text-center">Aktif</th><th class="text-center">Aksi</th></tr></thead>
+<tbody>{% for u in user_list %}
+<tr class="{{ 'text-muted' if not u.is_active }}">
+    <td class="fw-medium">{{ u.nama }}</td><td><code>{{ u.username }}</code></td>
+    <td><span class="badge rounded-pill bg-{{ 'danger' if u.role=='super_admin' else 'primary' if u.role=='apoteker' else 'secondary' }}">{{ u.role }}</span></td>
+    <td><small>{{ u.no_sipa or '-' }}</small></td>
+    <td class="text-center">{% if u.is_active %}<i class="bi bi-check-circle text-success"></i>{% else %}<i class="bi bi-x-circle text-danger"></i>{% endif %}</td>
+    <td class="text-center"><a href="/mk/master/user/{{ u.id_user }}/edit" class="btn btn-sm btn-outline-primary px-2 py-0"><i class="bi bi-pencil"></i></a></td>
+</tr>{% endfor %}</tbody>
+</table></div></div>
+{% endblock %}

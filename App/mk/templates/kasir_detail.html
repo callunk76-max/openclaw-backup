@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}Transaksi {{ trx.no_transaksi }}{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h5 class="fw-bold mb-0"><i class="bi bi-receipt me-2"></i>Transaksi #{{ trx.no_transaksi }}</h5>
+    <div>
+        <a href="/mk/kasir/transaksi/{{ trx.id_transaksi }}/struk" class="btn btn-sm btn-outline-primary" target="_blank"><i class="bi bi-printer"></i> Cetak Struk</a>
+        {% if trx.status == 'selesai' %}
+        <form method="POST" action="/mk/kasir/transaksi/{{ trx.id_transaksi }}/void" class="d-inline" onsubmit="return confirm('Void transaksi ini? Stok akan dikembalikan.')">
+            <button class="btn btn-sm btn-outline-danger"><i class="bi bi-x-circle"></i> Void</button>
+        </form>
+        {% endif %}
+    </div>
+</div>
+<div class="row g-3">
+<div class="col-md-6">
+<div class="card"><div class="card-body">
+<table class="table table-sm mb-0">
+<tr><td class="text-muted">No. Transaksi</td><td class="fw-bold"><code>{{ trx.no_transaksi }}</code></td></tr>
+<tr><td class="text-muted">Tanggal</td><td>{{ trx.tanggal.strftime('%d/%m/%Y %H:%M') }}</td></tr>
+<tr><td class="text-muted">Status</td><td><span class="badge bg-{{ 'success' if trx.status=='selesai' else 'danger' }}">{{ trx.status }}</span></td></tr>
+<tr><td class="text-muted">Kasir</td><td>{{ trx.user.nama if trx.user else '-' }}</td></tr>
+<tr><td class="text-muted">Metode Bayar</td><td>{{ trx.metode_bayar }}</td></tr>
+</table>
+</div></div></div>
+<div class="col-md-6">
+<div class="card"><div class="card-header">Rincian Pembayaran</div>
+<div class="card-body">
+<table class="table table-sm mb-0">
+<tr><td>Subtotal</td><td class="text-end">{{ trx.subtotal|format_rp }}</td></tr>
+<tr><td>Diskon Global</td><td class="text-end text-danger">-{{ trx.diskon_global|format_rp }}</td></tr>
+<tr class="fw-bold"><td>Total</td><td class="text-end">{{ trx.total|format_rp }}</td></tr>
+<tr><td>Bayar</td><td class="text-end">{{ trx.bayar|format_rp }}</td></tr>
+<tr><td>Kembalian</td><td class="text-end text-success">{{ trx.kembalian|format_rp }}</td></tr>
+</table>
+</div></div></div>
+<div class="col-12">
+<div class="card"><div class="card-header">Item Obat</div>
+<div class="table-responsive"><table class="table table-sm mb-0">
+<thead><tr><th>Obat</th><th>Jumlah</th><th>Harga</th><th>Diskon</th><th>Subtotal</th></tr></thead>
+<tbody>{% for d in trx.details.all() %}
+<tr><td>{{ d.obat.nama_generik if d.obat else '?' }}</td>
+    <td>{{ d.jumlah }}</td><td>{{ d.harga_jual|format_rp }}</td>
+    <td>{{ d.diskon }}%</td><td class="fw-bold">{{ d.subtotal|format_rp }}</td>
+</tr>{% endfor %}</tbody></table></div></div></div>
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}Laporan Penjualan{% endblock %}
+{% block content %}
+
+<h5 class="fw-bold mb-3"><i class="bi bi-graph-up me-2"></i>Laporan Penjualan</h5>
+
+<div class="card mb-3"><div class="card-body py-2">
+<form method="GET" class="row row-cols-auto g-2 align-items-end">
+    <div class="col"><label class="form-label small">Dari</label><input type="date" name="start" class="form-control form-control-sm" value="{{ start }}"></div>
+    <div class="col"><label class="form-label small">Sampai</label><input type="date" name="end" class="form-control form-control-sm" value="{{ end }}"></div>
+    <div class="col"><button class="btn btn-sm btn-primary"><i class="bi bi-search"></i> Tampilkan</button></div>
+    <div class="col"><a href="/mk/laporan/" class="btn btn-sm btn-outline-secondary">Hari Ini</a></div>
+</form></div></div>
+
+<div class="row g-2 g-md-3 mb-3">
+    <div class="col-6 col-md-3"><div class="stat-card text-center"><div class="stat-value text-success">{{ total_penjualan|format_rp }}</div><div class="stat-label">Total Penjualan</div></div></div>
+    <div class="col-6 col-md-3"><div class="stat-card text-center"><div class="stat-value">{{ jumlah_trx }}</div><div class="stat-label">Transaksi</div></div></div>
+    <div class="col-6 col-md-3"><div class="stat-card text-center"><div class="stat-value">{{ total_item }}</div><div class="stat-label">Item Terjual</div></div></div>
+    <div class="col-6 col-md-3"><div class="stat-card text-center"><div class="stat-value text-primary">{{ (total_penjualan / jumlah_trx)|round|format_rp if jumlah_trx else 'Rp 0' }}</div><div class="stat-label">Rata-rata / Trx</div></div></div>
+</div>
+
+<div class="row g-2 g-md-3 mb-3">
+    <div class="col-md-4"><div class="card h-100"><div class="card-header small">Per Metode Bayar</div>
+    <div class="list-group list-group-flush">{% for m,tot in metode.items() %}
+        <div class="list-group-item d-flex justify-content-between py-2"><span>{{ m }}</span><span class="fw-medium">{{ tot|format_rp }}</span></div>{% endfor %}</div></div></div>
+    <div class="col-md-4"><div class="card h-100"><div class="card-header small">Per Kasir</div>
+    <div class="list-group list-group-flush">{% for k,tot in per_kasir.items() %}
+        <div class="list-group-item d-flex justify-content-between py-2"><span>{{ k }}</span><span class="fw-medium">{{ tot|format_rp }}</span></div>{% endfor %}</div></div></div>
+    <div class="col-md-4"><div class="card h-100"><div class="card-header small">Top Obat Terjual</div>
+    <div class="list-group list-group-flush">{% for nama,jml in top_obat[:10] %}
+        <div class="list-group-item d-flex justify-content-between py-2"><span class="small">{{ nama }}</span><span class="fw-medium">{{ jml }}</span></div>{% endfor %}</div></div></div>
+</div>
+
+<div class="card"><div class="card-header small">Daftar Transaksi</div>
+<div class="table-responsive"><table class="table table-sm mb-0 align-middle">
+<thead class="table-light"><tr><th>No</th><th>Tanggal</th><th>Kasir</th><th>Item</th><th class="text-end">Total</th><th>Bayar</th><th class="text-center">Aksi</th></tr></thead>
+<tbody>{% for t in transaksi %}
+<tr><td><code class="small">{{ t.no_transaksi }}</code></td>
+    <td><small>{{ t.tanggal.strftime('%d/%m %H:%M') }}</small></td>
+    <td><small>{{ t.user.nama if t.user else '-' }}</small></td>
+    <td class="text-center">{{ t.details.count() }}</td>
+    <td class="text-end fw-medium">{{ t.total|format_rp }}</td>
+    <td><small>{{ t.metode_bayar }}</small></td>
+    <td class="text-center"><a href="/mk/kasir/transaksi/{{ t.id_transaksi }}" class="btn btn-sm btn-outline-info px-2 py-0"><i class="bi bi-eye"></i></a></td>
+</tr>{% else %}<tr><td colspan="7" class="text-center py-4 text-muted">Tidak ada transaksi</td></tr>{% endfor %}
+</tbody></table></div></div>
+{% endblock %}

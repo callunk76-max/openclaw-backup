@@ -1,0 +1,21 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Etiket - {{ resep.no_resep }}</title>
+<style>body{font-family:sans-serif;padding:20px;}.etiket{border:1px solid #000;padding:15px;width:280px;margin:0 auto;}
+h3{margin:0 0 5px;}.label{margin:3px 0;font-size:13px;}.val{font-weight:700;font-size:14px;}.aturan{font-style:italic;margin:5px 0;}</style></head>
+<body>
+<div class="etiket">
+<h3>Apotik Aramedica</h3>
+<p style="font-size:11px;margin:0 0 10px;">Jl. Contoh No.123 | SIPA: 2026.001</p>
+<div class="label">Pasien</div><div class="val">{{ resep.nama_pasien }}</div>
+<div class="label">Tanggal</div><div class="val">{{ resep.tanggal|format_tgl }}</div>
+{% for d in resep.details.all() %}
+<hr style="margin:8px 0">
+<div class="val">{{ d.obat.nama_generik if d.obat else '?' }} {{ d.jumlah }}</div>
+<div class="aturan">{{ d.aturan_pakai }}</div>
+<div class="label">Signa: <code>{{ d.signa }}</code></div>
+{% endfor %}
+<hr style="margin:8px 0">
+<p style="font-size:10px;text-align:center;">{{ resep.no_resep }}</p>
+</div>
+<script>window.print()</script>
+</body></html>
+{% endblock %}
