@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+{% block title %}{{ skpd }} - Data Pegawai{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/peg/"><i class="bi bi-house-door me-1"></i>Beranda</a></li>
+        <li class="breadcrumb-item active">{{ skpd }}</li>
+    </ol>
+</nav>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="card stat-card">
+            <div class="stat-number">{{ total }}</div>
+            <div class="stat-label"><i class="bi bi-people me-1"></i>Total Pegawai</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card stat-card">
+            <div class="stat-number"><span style="color:#60a5fa;">{{ skpd_l }}</span> <span style="color:#64748b;font-size:1.2rem;">|</span> <span style="color:#f472b6;">{{ skpd_p }}</span></div>
+            <div class="stat-label"><i class="bi bi-gender-ambiguous me-1"></i><span style="color:#60a5fa;">L</span> / <span style="color:#f472b6;">P</span></div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card stat-card">
+            <div class="stat-number">{{ gol_table|length }}</div>
+            <div class="stat-label"><i class="bi bi-layers me-1"></i>Golongan</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card stat-card">
+            <div class="stat-number" style="font-size:1.6rem;"><span style="color:#22c55e;">{{ skpd_aman }}</span> <span style="color:#64748b;">|</span> <span style="color:#eab308;">{{ skpd_dekat }}</span> <span style="color:#64748b;">|</span> <span style="color:#f97316;">{{ skpd_segera }}</span> <span style="color:#64748b;">|</span> <span style="color:#ef4444;text-decoration:line-through;">{{ skpd_sudah }}</span></div>
+            <div class="stat-label"><i class="bi bi-clock-history me-1"></i><span style="color:#22c55e;">Aman</span> / <span style="color:#eab308;">Dekat</span> / <span style="color:#f97316;">Segera</span> / <span style="color:#ef4444;text-decoration:line-through;">Pensiun</span></div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- Gol Distribution Chart -->
+    <div class="col-lg-5">
+        <div class="card">
+            <div class="card-header">
+                <i class="bi bi-pie-chart me-2"></i>Distribusi Golongan
+            </div>
+            <div class="card-body">
+                <canvas id="golChart" height="260"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gol Table -->
+    <div class="col-lg-7">
+        <div class="card">
+            <div class="card-header">
+                <i class="bi bi-bar-chart me-2"></i>Rincian Golongan
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Golongan</th>
+                                <th class="text-center">Jumlah</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for gol, info in gol_table %}
+                            <tr>
+                                <td><strong>{{ gol }}</strong></td>
+                                <td class="text-center">{{ info.total }}{% if info.pensiun > 0 %} <span style="color:#ef4444;font-size:0.75rem;">({{ info.pensiun }} ✂️)</span>{% endif %}</td>
+                                <td style="width:140px;">
+                                    <div class="progress-bar-container" style="display:flex;height:8px;">
+                                        {% set aktif_pct = ((info.total - info.pensiun) / total * 100)|int %}
+                                        {% if info.total - info.pensiun > 0 %}
+                                        <div class="progress-bar-fill bg-primary" style="width:{{ ((info.total - info.pensiun) / info.total * 100)|int }}%;border-radius:3px 0 0 3px;"></div>
+                                        {% endif %}
+                                        {% if info.pensiun > 0 %}
+                                        <div class="progress-bar-fill" style="width:{{ (info.pensiun / info.total * 100)|int }}%;background:#ef4444;opacity:0.5;border-radius:0 3px 3px 0;"></div>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Employee Table -->
+<div class="card mt-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <span><i class="bi bi-person-lines-fill me-2"></i>Daftar Pegawai</span>
+        <span class="text-secondary" style="font-size:0.8rem;">{{ total }} pegawai</span>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover" id="employeeTable">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nama</th>
+                        <th>NIP</th>
+                        <th>Golongan</th>
+                        <th>Jabatan</th>
+                        <th>Tgl Lahir</th>
+                        <th>JK</th>
+                        <th>TMT</th>
+                        <th class="text-center">Usia</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for e in pegawai %}
+                    <tr {% if e.status_pensiun == 'Sudah Pensiun' %}style="opacity:0.5;"{% endif %}>
+                        <td class="text-secondary" style="width:40px;{% if e.status_pensiun == 'Sudah Pensiun' %}text-decoration:line-through;{% endif %}">{{ loop.index }}</td>
+                        <td><strong style="color:#f1f5f9;{% if e.status_pensiun == 'Sudah Pensiun' %}text-decoration:line-through;{% endif %}">{{ e.nama }}</strong></td>
+                        <td style="font-family:monospace;font-size:0.8rem;color:#94a3b8;{% if e.status_pensiun == 'Sudah Pensiun' %}text-decoration:line-through;{% endif %}">{{ e.nip }}</td>
+                        <td{% if e.status_pensiun == 'Sudah Pensiun' %} style="opacity:0.5;"{% endif %}><span class="badge rounded-pill" style="background:rgba(99,102,241,0.15);color:#a5b4fc;">{{ e.golongan_pangkat }}{% if e.golongan_kode %} <span style="color:#64748b;">({{ e.golongan_kode }})</span>{% endif %}</span></td>
+                        <td style="max-width:200px;font-size:0.85rem;color:#cbd5e1;{% if e.status_pensiun == 'Sudah Pensiun' %}text-decoration:line-through;{% endif %}">{{ e.jabatan[:40] }}{% if e.jabatan|length > 40 %}...{% endif %}</td>
+                        <td style="font-size:0.85rem;color:#94a3b8;{% if e.status_pensiun == 'Sudah Pensiun' %}text-decoration:line-through;{% endif %}">{{ e.tgl_lahir }}</td>
+                        <td style="text-align:center;font-weight:700;{% if e.status_pensiun == 'Sudah Pensiun' %}opacity:0.4;{% endif %}"><span style="color:{% if e.jenis_kelamin == 'L' %}#60a5fa{% else %}#f472b6{% endif %};">{{ e.jenis_kelamin }}</span></td>
+                        <td style="font-size:0.85rem;color:#94a3b8;{% if e.status_pensiun == 'Sudah Pensiun' %}text-decoration:line-through;{% endif %}">{{ e.tmt }}</td>
+                        <td class="text-center" style="font-weight:700;font-size:0.9rem;">{{ e.usia }}</td>
+                        <td>
+                            {% if e.status_pensiun == 'Sudah Pensiun' %}
+                                <span class="badge rounded-pill" style="background:rgba(239,68,68,0.15);color:#ef4444;text-decoration:line-through;">☠ {{ e.tahun_pensiun }}</span>
+                            {% elif e.status_pensiun == 'Aman' %}
+                                <span class="badge rounded-pill" style="background:rgba(34,197,94,0.15);color:#22c55e;">🟢 Aman</span>
+                            {% elif e.status_pensiun == 'Dekat Pensiun' %}
+                                <span class="badge rounded-pill" style="background:rgba(234,179,8,0.15);color:#eab308;">🟡 {{ e.sisa_pensiun }} thn</span>
+                            {% elif e.status_pensiun == 'Segera Pensiun' %}
+                                <span class="badge rounded-pill" style="background:rgba(249,115,22,0.15);color:#f97316;">🔴 {{ e.sisa_pensiun }} thn</span>
+                            {% else %}
+                                <span class="text-secondary">-</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const golLabels = {{ gol_chart | map(attribute=0) | list | tojson }};
+const golValues = {{ gol_chart | map(attribute=1) | map(attribute='total') | list | tojson }};
+const golColors = ['#3b82f6','#8b5cf6','#ec4899','#f59e0b','#10b981','#6366f1','#14b8a6','#f97316','#ef4444'];
+
+new Chart(document.getElementById('golChart'), {
+    type: 'doughnut',
+    data: {
+        labels: golLabels,
+        datasets: [{
+            data: golValues,
+            backgroundColor: golColors.slice(0, golLabels.length),
+            borderWidth: 2,
+            borderColor: '#0f172a'
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'right',
+                labels: { color: '#94a3b8', font: { size: 10 }, padding: 8 }
+            }
+        }
+    }
+});
+</script>
+{% endblock %}

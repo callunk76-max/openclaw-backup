@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+{% block title %}{{ agency }} - Dashboard Kinerja{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/"><i class="bi bi-house-door me-1"></i>Beranda</a></li>
+        <li class="breadcrumb-item active">{{ agency }}</li>
+    </ol>
+</nav>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="card stat-card">
+            <div class="stat-number">{{ total }}</div>
+            <div class="stat-label">Total Pegawai</div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card stat-card">
+            <div class="stat-number">{{ avg_kinerja }}%</div>
+            <div class="stat-label">Rata-rata Kinerja</div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card stat-card">
+            <div class="stat-number">
+                {% set excellent = employees | selectattr('nilai', '>=', 95) | list | length %}
+                {% if excellent > 0 %}{{ excellent }}{% else %}0{% endif %}
+            </div>
+            <div class="stat-label">Pegawai Istimewa (≥95%)</div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- Distribution Chart -->
+    <div class="col-lg-5">
+        <div class="card">
+            <div class="card-header">
+                <i class="bi bi-pie-chart me-2"></i>Distribusi Golongan
+            </div>
+            <div class="card-body">
+                <canvas id="golChart" height="260"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Distribution Nilai -->
+    <div class="col-lg-7">
+        <div class="card">
+            <div class="card-header">
+                <i class="bi bi-bar-chart me-2"></i>Sebaran Nilai Kinerja
+            </div>
+            <div class="card-body">
+                <canvas id="nilaiChart" height="260"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Employee Table -->
+<div class="card mt-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <span><i class="bi bi-people me-2"></i>Daftar Pegawai</span>
+        <span class="text-secondary" style="font-size:0.8rem;">{{ total }} pegawai</span>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover" id="employeeTable">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nama</th>
+                        <th>NIP</th>
+                        <th>Golongan</th>
+                        <th>Jabatan</th>
+                        <th class="text-center">Target</th>
+                        <th class="text-center">Capaian</th>
+                        <th class="text-center">Nilai</th>
+                        <th>Ket</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for e in employees %}
+                    <tr>
+                        <td class="text-secondary">{{ loop.index }}</td>
+                        <td><strong>{{ e.nama }}</strong></td>
+                        <td style="font-family:monospace;font-size:0.8rem;">{{ e.nip }}</td>
+                        <td>{{ e.golongan[:20] }}{% if e.golongan|length > 20 %}...{% endif %}</td>
+                        <td style="max-width:250px;font-size:0.8rem;">{{ e.jabatan[:45] }}{% if e.jabatan|length > 45 %}...{% endif %}</td>
+                        <td class="text-center">{{ e.target }}</td>
+                        <td class="text-center">{{ e.capaian }}</td>
+                        <td class="text-center">
+                            {% if e.nilai > 0 %}
+                            <span class="badge-score 
+                                {% if e.nilai >= 95 %}badge-excellent
+                                {% elif e.nilai >= 90 %}badge-good
+                                {% elif e.nilai >= 80 %}badge-normal
+                                {% else %}badge-poor{% endif %}">
+                                {{ e.nilai }}%
+                            </span>
+                            {% else %}
+                            <span class="text-secondary">-</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ e.keterangan }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Golongan chart
+fetch('/api/agency/{{ agency|urlencode }}')
+    .then(r => r.json())
+    .then(data => {
+        // Golongan distribution
+        const gol = {};
+        data.employees.forEach(e => {
+            const g = (e.golongan || 'Unknown').split('/')[0].trim()
+                .replace('Pembina Tingkat I', 'Pembina')
+                .replace('Penata Tingkat I', 'Penata')
+                .replace('Penata Muda Tingkat I', 'Penata Muda')
+                .replace('Pengatur Tingkat I', 'Pengatur')
+                .replace('Pengatur Muda Tingkat I', 'Pengatur Muda');
+            gol[g] = (gol[g] || 0) + 1;
+        });
+
+        const golLabels = Object.keys(gol);
+        const golValues = Object.values(gol);
+        const golColors = ['#3b82f6','#8b5cf6','#ec4899','#f59e0b','#10b981','#6366f1','#14b8a6','#f97316'];
+
+        new Chart(document.getElementById('golChart'), {
+            type: 'doughnut',
+            data: {
+                labels: golLabels,
+                datasets: [{
+                    data: golValues,
+                    backgroundColor: golColors.slice(0, golLabels.length),
+                    borderWidth: 0,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                        labels: { color: '#94a3b8', font: { size: 10 }, padding: 8 }
+                    }
+                }
+            }
+        });
+
+        // Nilai distribution
+        const bins = {'≥95%': 0, '90-94%': 0, '80-89%': 0, '<80%': 0};
+        data.employees.forEach(e => {
+            if (e.nilai >= 95) bins['≥95%']++;
+            else if (e.nilai >= 90) bins['90-94%']++;
+            else if (e.nilai >= 80) bins['80-89%']++;
+            else if (e.nilai > 0) bins['<80%']++;
+        });
+
+        new Chart(document.getElementById('nilaiChart'), {
+            type: 'bar',
+            data: {
+                labels: Object.keys(bins),
+                datasets: [{
+                    label: 'Jumlah Pegawai',
+                    data: Object.values(bins),
+                    backgroundColor: ['#22c55e', '#3b82f6', '#eab308', '#ef4444'],
+                    borderRadius: 6,
+                    borderSkipped: false,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(255,255,255,0.04)' },
+                        ticks: { color: '#94a3b8', stepSize: 1 }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,623 @@
+PEMERINTAH KABUPATEN BULUKUMBA 
+SEKRETARIAH DAERAH 
+
+LPSE KABUPATEN BULUKUMBA 
+
+LAPORAN KEGIATAN 
+LAYANAN PENGADAAN 
+SECARA ELEKTRONIK 
+
+TRIWULAN I 
+
+PERIODE BULAN JANUARI S/D MARET 2025 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+LAPORAN KEGIATAN LAYANAN PENGADAAN SECARA ELEKTRONIK PENGADAAN BARANG DAN JASA  
+TRIWULAN I  
+
+PEMERINTAH KABUPATEN BULUKUMBA  2025 
+
+KATA PENGANTAR 
+
+Puji dan syukur kami panjatkan Kehadapan Tuhan Yang Maha Esa, karena berkat rahmat dan 
+
+taufik-Nya  Laporan  Kegiatan  Layanan  Pengadaan  Secara  Elektronik  Pemerintah  Kota  Bulukumba 
+
+Triwulan I Tahun 2025 dapat disusun.   
+
+Penyusunan  Laporan  Kegiatan  Layanan  Pengadaan  Secara  Elektronik  Pemerintah  
+
+Kabupaten Bulukumba Triwulan I Tahun 2025 bertujuan sebagai informasi tentang Pengadaan Barang dan 
+
+Jasa  Pemerintah  Kota  Bulukumba  pada  bulan  Januari  sampai  dengan  Maret  tahun  2025    yang 
+
+dilaksanakan oleh Bagian Pengadaan barang dan Jasa yang melaksanakan proses pengadaan dengan 
+
+metode  e-Purchasing,  Pengadaan  Langsung,  Penunjukan  langsung,  Tender/Seleksi.    Informasi  ini 
+
+juga dapat menjadi bahan evaluasi untuk menentukan kebijakan-kebijakan yang akan dilakukan agar 
+
+kegiatan  yang  telah  disusun  dapat  terlaksanan  sesuai  dengan  target  yang  diharapkan.      Data  dan 
+
+informasi akan selalu dilakukan pengkinian seiring dengan pelaksanaan kegiatan. 
+
+Kami menyadari sepenuhnya laporan ini disajikan masih perlu penyempurnaan terkait data 
+
+dan analisa agar lebih informatif lagi, untuk itu perlu adanya dukungan dari berbagai pihak terkait 
+
+yang dapat memberikan data dan informasi yang lebih kualitatif.   Semoga laporan ini bermanfaat 
+
+untuk pelaksanaan pembangunan Kabupaten Bulukumba. 
+
+Bulukumba,      April 2025 
+Kepala LPSE Kabupaten Bulukumba, 
+
+Kepala LPSE Kabupaten Bulukumba 
+- 
+NIP. - 
+
+i 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+LAPORAN KEGIATAN LAYANAN PENGADAAN SECARA ELEKTRONIK PENGADAAN BARANG DAN JASA  
+TRIWULAN I  
+
+PEMERINTAH KABUPATEN BULUKUMBA  2025 
+
+DAFTAR ISI 
+
+KATA PENGANTAR 
+
+.......................................................................................................... 
+
+DAFTAR ISI 
+
+...................................................................................................................... 
+
+BAB I.   PENDAHULUAN   
+
+................................................................................................. 
+
+A.  Latar Belakang   ................................................................................................ 
+
+B.  Laporan Penggunaan Aplikasi 
+
+........................................................................ 
+
+b.1. Penggunaan Aplikasi Pengadaan secara Penuh 
+
+....................................... 
+
+b.2. Perencanaan 
+
+........................................................................................... 
+
+b.3. Persiapan 
+
+................................................................................................ 
+
+b.4. Pemilihan 
+
+............................................................................................... 
+
+b.5. Kontrak 
+
+.................................................................................................. 
+
+b.6. Serah Terima  
+
+.......................................................................................... 
+
+C.  Monitoring 
+
+.................................................................................................... 
+
+c.1. Monitoring Perencanaan 
+
+......................................................................... 
+
+c.2. Monitoring Persiapan 
+
+.............................................................................. 
+
+c.3. Monitoring Pemilihan 
+
+............................................................................. 
+
+c.4. Monitoring Kontrak 
+
+................................................................................ 
+
+c.5. Monitoring Serah Terima 
+
+....................................................................... 
+
+BAB II.  PENUTUP  ……………………………………………………………………………………………… 
+
+Hal. 
+
+i. 
+
+ii. 
+
+1. 
+
+1. 
+
+1. 
+
+1. 
+
+1. 
+
+3. 
+
+3. 
+
+4. 
+
+4. 
+
+5. 
+
+5. 
+
+5. 
+
+6. 
+
+6. 
+
+6. 
+
+7. 
+
+ii 
+
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+LAPORAN KEGIATAN EVALUASI PENGADAAN BARANG DAN JASA TRIWULAN I  
+
+PEMERINTAH KABUPATEN BULUKUMBA  2025 
+
+  BAB I 
+
+PENDAHULUAN 
+
+A.  LATAR BELAKANG 
+
+Pelaksanaan  pengadaan  barang  dan  jasa  di  Kota  Bulukumba  sevara  penuh  sudah 
+
+menggunakan  Sistem Pengadaan Secara  Elektronik (SPE) mulai dari perencanaan, persiapan, 
+
+pemilihan,  kontrak,  sampai  dengan  serah  terima  hasil  pekerjaan.    Untuk  tahap  perencanaan, 
+
+aplikasi menggunakan SiRUP, LPSE, dan e-Katalog yang telah dikembangkan oleh LKPP. 
+
+Saat  ini  Bagian  Pengadaan  Barang  dan  Jasa  Kota  Bulukumba  telah  memiliki  aplikasi 
+
+berbasis web namun masih terbatas pada penayangan berita dan informasi terkait pengadaan 
+
+barang dan jasa.  Oleh sebab itu, laporan ini menggunakan data – data dari sistem informasi SPSE 
+
+dari  LKPP  yang  diolah  menjadi  informasi  dan  dapat  dimanfaatkan  dalam  pengambilan 
+
+keputusan. 
+
+Laporan yang disampaikan juga dapat menunjukkan akuntabilitas berupa proses kerja 
+
+khususnya LPSE Kabupaten Bulukumba, dan sebagai sarana untuk perbaikan atas hasil 
+
+yang dicapai setiap tahunnya.  
+
+B.  LAPORAN PEGGUNAAN APLIKASI 
+
+b.1.    Penggunaan Aplikasi Pengadaan secara Penuh 
+
+Kota  Bulukumba  telah  sepenuhnya  menggunakan  Sistem  Informasi  dalam  proses 
+
+pengadaan barang dan jasa.  Aplikasi SiRUP digunakan dalam tahap perencanaan pengadaan.  
+
+Aplikasi  LPSE  digunakan  dalam  tahapan  persiapan,  pemilihan  penyedia,  kontrak  dan  serah 
+
+terima.    Aplikasi  e-Katalog  dari  LKPP  digunakan  dalam  tahapan  pengadaan  barang  dan  jasa 
+
+melalui e-Purchasing.  Aplikasi SIKaP digunakan untuk monitoring pelaku usaha. 
+
+b.2.  Perencanaan 
+
+LPSE KABUPATEN BULUKUMBA I UNIT KERJA PENGADAAN BARANG/JASA 
+
+1 
+
+ 
+ 
+ 
+ 
+ 
+ 
+LAPORAN KEGIATAN EVALUASI PENGADAAN BARANG DAN JASA TRIWULAN I  
+
+PEMERINTAH KABUPATEN BULUKUMBA  2025 
+
+Pengumuman paket pekerjaan di Kabupaten Bulukumba menggunakan aplikasi SiRUP.  Hal ini 
+
+sesuai  dengan  amanat  Peraturan  Lembaga  Kebijakan  Pengadaan  Barang/Jasa  Pemerintah 
+
+Nomor 11 Tahun 2011 tentang Pedoman Perencanaan Pengadaan Barang/Jasa bahwa hasil akhir 
+
+perencanaan  berupa  RUP  (Rencana  Umum  Pengadaan)  harus  diumumkan  pada  aplikasi 
+
+tersebut. 
+
+Saat  ini  proses  perencanaan  pengadaan  berupa  penyusunan  dokumen  mulai  dari 
+
+identifikasi pengadaan barang/jasa, penetapan jenis barang/jasa, cara pengadaan, pemaketan 
+
+dan  konsolidasi,  waktu  pemanfaatan  barang/jasa,  dan  anggaran  masih  belum  menggunakan 
+
+sistem informasi.  Setelah hasil akhir perencanaan berupa RUP tersusun, kemudian diinput ke 
+
+dalam aplikasi SiRUP. 
+
+Pada  tahun  2025,  Bagian  Pengadaan  Barang  dan  Jasa  Kota  Bulukumba  melakukan 
+
+Sosialisasi  dan  Pendampingan  Pengisian  SiRUP  yang  melibatkan  seluruh admin SiRUP.    Hasil 
+
+dari kegiatan tersebut pada tahun anggaran 2025 pengisian SiRUP telah mencapai 100%.  Angka 
+
+tersebut berdasarkan besaran nilai pagu belanja Kabupaten Bulukumba sebesar Rp. 744,6 milyar. 
+
+LPSE KABUPATEN BULUKUMBA I UNIT KERJA PENGADAAN BARANG/JASA  2 
+
+ 
+ 
+ 
+ 
+LAPORAN KEGIATAN EVALUASI PENGADAAN BARANG DAN JASA TRIWULAN I  
+
+PEMERINTAH KABUPATEN BULUKUMBA  2025 
+
+Dari  gambar  diatas  diketahui  bahwa  total  paket  di  SiRUP  tercatat  sejumlah  8.018  dengan 
+
+distribusi  88,6%  paket  pengadaan  melalui  penyedia  dan  sisanya  melalui  swakelola.  
+
+Pencadangan paket untuk UMK mencapai 88% atau sebanyak 5.722 paket dan paket untuk PDN 
+
+sejumlah 7.344 paket dengan persentase 98%. 
+
+Dari sisi pagu paket per jenis pengadaan, Jasa Konstruksi merupakan paket dengan nilai tertinggi 
+
+yaitu lebih dari 300 milyar disusul Pengadaan Barang, Jasa Lainnya dan Jasa Konsultansi. 
+
+Informasi  pagu  dan  paket  per  metode  pengadaan  bahwa  tahun  2025  metode  pengadaan 
+
+terbanyak adalah e-Purchasing disusul tender, pengadaan langsung, pengecualian, seleksi dan 
+
+penunjukan langsung. 
+
+Informasi – informasi tersebut dapat dipergunakan LPSE Kabupaten Bulukumba untuk 
+
+merencanakan pelaksanaan pemilihan penyedia pada tahun 2025. 
+
+ b.3.  Persiapan 
+
+Tahapan persiapan pengadaan barang/jasa di Kabupaten Bulukumba menggunakan aplikasi 
+
+SPSE.    Tahapan  ini  dilakukan  oleh  Pejabat  Pembuat  Komitmen  dengan  masuk  ke  aplikasi 
+
+https://lpse.banjarbarukota.go.id/. 
+
+Tahapan 
+
+persiapan 
+
+pemilihan 
+
+untuk 
+
+paket 
+
+tender/seleksi/non tender telah menggunakan SPSE. 
+
+Pada  tahapan  ini  PPK  sudah  harus  mempersiapkan  dokumen  –  dokumen  Kerangka 
+
+Acuan Kerja/Spesifikasi Teknis, Harga Perkiraan Sendiri, dan Rancangan Kontrak.  Dokumen  – 
+
+dokumen  tersebut  disusunmenggunakan  aplikasi  pengolah  kata  dan  pengolah  angka  dan 
+
+kemudian diupload ke SPSE dalam bentuk pdf. 
+
+b.4.  Pemilihan 
+
+Pada  proses  pemilihan  penyedia,  Kota  Bulukumba  menggunakan  aplikasi  SPSE 
+
+sebagaimana pada tahap persiapan.  Proses pemilihan penyedia dilakukan oleh Pokja Pemilihan 
+
+atau  Pejabat  Pengadaan  dengan  terlebih  dahulu  masuk  ke  aplikasi  SPSE.    Saat  ini  Kota 
+
+Bulukumba terus mendorong penggunaan SPSE untuk pemilihan penyedia paket non tender di 
+
+seluruh SKPD di Kabupaten Bulukumba. 
+
+LPSE KABUPATEN BULUKUMBA I UNIT KERJA PENGADAAN BARANG/JASA 
+
+3 
+
+ 
+ 
+ 
+ 
+ 
+LAPORAN KEGIATAN EVALUASI PENGADAAN BARANG DAN JASA TRIWULAN I  
+
+PEMERINTAH KABUPATEN BULUKUMBA  2025 
+
+Berdasarkan data yang diperoleh melalui SPSE, dapat dianalisis seberapa baik proses pemilihan 
+
+penyedia di Kabupaten Bulukumba selama triwulan I periode Januari s/d Maret 2025.  Dari grafik diatas, 
+
+dapat  disimpulkan  bahwa  proses  tahapan  pengadaan  barang  dan  jasa  telah  berjalan  untuk 
+
+semua 
+
+jenis  pengadaan  dengan  rincian  nilai  pagu  yang  dikontrakkan  sebesar  Rp. 
+
+186.739.956.255, nilai realisasi UMKM sebesar Rp. 99.501.582.658, nilai realisasi PDN sebesar Rp. 
+
+187.538.995.066,  sehingga  didapat  nilai  efesiensi  sebesar  Rp.  28.610.641.161.    Kondisi  ini 
+
+diharapkan terus membaik kedepannya. 
+
+b.5.  Kontrak 
+
+Proses kontrak dilakukan oleh PPK dengan menggunakan aplikasi LPSE setelah proses 
+
+pemilihan penyedia selesai dilakukan oleh Pokja Pemilihan/Pejabat Pengadaan.  Setelah proses 
+
+pemilihan selesai, laporan hasil pemilihan disampaikan oleh Pejabat Pengadaan/Pokja Pemilihan 
+
+kepada  PPK  dan  kemudian  ditindaklanjuti  dengan  reviu  dan  penetapan  SPPBJ.    Kontrak 
+
+ditandatangani dan data – data kontrak kemudian diupload di SPSE oleh PPK. 
+
+Kendala utama dalam proses manajemen kontrak ini adalah jarang PPK yang mengisi 
+
+informasi SPPBJ, dan kontrak di SPSE.  LPSE Kabupaten Bulukumba meminta data – data 
+
+tersebut secara manual langsung kepada PPK. 
+
+Setelah  kontrak  ditandatangani,  proses  selanjutnya  adalah  pelaksanaan  kontrak  oleh 
+
+penyedia,  dan  PPK  melakukan  manajemen  kontrak  dengan  melakukan  pembayaran  dan 
+
+datanya dimasukkan ke dalam aplikasi SPSE. 
+
+b.6.  Serah Terima 
+
+Proses  serah  terima  pekerjaan  dilakukan  menggunakan  aplikasi  LPSE  oleh  Pejabat 
+
+Pembuat Komitmen (PPK).  Proses ini merupakan bagian dari proses manajemen kontrak yang 
+
+dilakukan oleh PPK.  Pada  tahapan ini, PPK mengadakan rapat dengan penyedia untuk serah 
+
+terima.    Pada  Tahapan  ini  pula  dilakukan  penilaian  penyedia  yang  hasilnya  diinput  ke  dalam 
+
+aplikasi SiKaP  melalui  akun  PPK  di  LPSE.   Pada  tahapan  serah  terima  pekerjaan  ini PPK  juga 
+
+melakukan  penilaian  kinerja  penyedia.  Hasil penilaian ini kemudian diinput  ke  dalam aplikasi 
+
+SiKaP oleh PPK melalui SPSE berdasarkan Peraturan LKPP Nomor 4 Tahun 2021. 
+
+LPSE KABUPATEN BULUKUMBA I UNIT KERJA PENGADAAN BARANG/JASA  4 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+LAPORAN KEGIATAN EVALUASI PENGADAAN BARANG DAN JASA TRIWULAN I  
+
+PEMERINTAH KABUPATEN BULUKUMBA  2025 
+
+C.  MONITORING 
+
+Tahapan monitoring atas seluruh tahapan pengadaan barang/jasa pemerintah dilakukan 
+
+oleh LPSE Kabupaten Bulukumba melalui aplikasi AMEL pada SPSE. 
+
+c.1.    Monitoring Perencanaan 
+
+Dalam tahap perencanaan, terdapat 7.418 paket penyedia dengan total pagu sebesar Rp. 
+
+660.734.555.533 dan 605 paket swakelola dengan total pagu sebesar Rp. 85.049.180.000 yang 
+
+telah diumumkan.  Paket penyedia menduduki pagu paling banyak yaitu 88,60%. 
+
+Dalam  pengadaan  melalui  penyedia,  e-Purchasing  merupakan  metode  pengadaan 
+
+dengan  pagu  paling  banyak  sebesar  63,55%.    Pagu  untuk  tender,  pengadaan  langsung, 
+
+pengecualian,  seleksi  dan  penunjukan 
+
+langsung  menduduki  urutan  selanjutnya  dengan 
+
+persentase berturut – turut: 14,37%, 12,16%, 8,03%, 1,52% dan 0,37%. 
+
+Pengadaan dengan metode e_Purchasing menghabiskan pagu paling banyak, sehingga 
+
+Bagian  Pengadaan  Barang  dan  Jasa  dapat  memberikan  perhatian  lebih  terhadap  metode 
+
+pengadaan  tersebut.    Bagian  Pengadaan  Barang  dan  Jasa  dapat  meningkatkan  kompetensi 
+
+pelaku pengadaan, khususnya PPK dalam melakukan perencanaan untuk pengadaan secara e-
+
+Purchasing. 
+
+c.2.  Monitoring Persiapan 
+
+Paket yang sdh masuk tahap persiapan berjumlah 533 paket dengan pagu sebesar Rp. 
+
+215.967.693.238.  Sepuluh paket terbesar pada tahap persiapan ini merupakan paket tender dan 
+
+e-Purchasing pada RSDI (blud), Dinkes, Dishub, DPUPR dan RSDI. 
+
+LPSE KABUPATEN BULUKUMBA I UNIT KERJA PENGADAAN BARANG/JASA  5 
+
+ 
+ 
+ 
+ 
+ 
+ 
+LAPORAN KEGIATAN EVALUASI PENGADAAN BARANG DAN JASA TRIWULAN I  
+
+PEMERINTAH KABUPATEN BULUKUMBA  2025 
+
+c.3.  Monitoring Pemilihan 
+
+Paket yang masuk tahap pemilihan penyedia berjumlah 532 paket dengan total pagu hps 
+
+sebesar Rp. 215.055.189.416.  Pada proses ini, paket terbesar yang sedang ditenderkan adalah 
+
+sebesar Rp. 15.994.820.000  pada Dinas Kesehatan. Paket lainnya yang bernilai lebih dari 4 milyar 
+
+merupakan paket dari RSDI (blud), Dishub, DPUPR dan RSDI. 
+
+c.4.  Monitoring Kontrak 
+
+Paket yang masuk dalam tahap kontrak berjumlah 493 paket dengan pagu total sebesar 
+
+Rp.  186.739.956.255,26.    Nilai  kontrak  tertinggi  adalah  paket  PENINGKATAN  EMBUNG 
+
+GUNUNG KUPANG (PAKET 10) menggunakan metode  e-Purchasing dengan jenis pengadaan 
+
+jasa konstruksi pada Dinas PUPR senilai Rp. 8.599.046.884.  Kemungkinan besar data kontrak 
+
+bisa berjumlah lebih banyak, namun karena banyak PPK yang tidak menginput data kontrak di 
+
+aplikasi  SPSE  maka  paket  pengadaan  tersebut  tidak  tercatat  dalam  monitoring  kontrak  di 
+
+aplikasi AMEL.  Masalah ini sudah coba diselesaikan dengan membuat surat edaran pengisian 
+
+data  kontrak  oleh  PPK.    Namun  hasilnya  belum  cukup  efektif.    Hal  ini  dapat  ditindaklanjuti 
+
+dengan melakukan pendampingan kepada PPK yang membutuhkan. 
+
+c.5  Monitoring Serah Terima 
+
+Data paket yang telah diserah terimakan adalah 76 paket dengan total pagu sebesar Rp. 
+
+5.651.403.542,00.    Paket  tersebut  merupakan  pengadaan  dengan  metode  e-Purchasing, 
+
+pengadaan langsung dan swakelola.  Belum ada data paket pengadaan dengan metode tender, 
+
+dikarenakan proses pemilihan masih berlangsung. 
+
+LPSE KABUPATEN BULUKUMBA I UNIT KERJA PENGADAAN BARANG/JASA  6 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+LAPORAN KEGIATAN EVALUASI PENGADAAN BARANG DAN JASA TRIWULAN I  
+
+PEMERINTAH KABUPATEN BULUKUMBA  2025 
+
+  BAB II 
+
+PENUTUP 
+
+Demikian 
+
+laporan  Kegiatan  Layanan  Pengadaan  Secara  Elektronik  Pemerintah  
+
+Kabupaten Bulukumba Triwulan I Tahun 2025 yang disusun berdasarkan data yang dihimpun dari bulan 
+
+Januari  hingga  Maret.    Pada  penyusunan  laporan  triwulan  berikutnya  akan  selalu  di  lakukan 
+
+pengkinian data dan informasi maupun kedalaman analisa dari berbagai aspek. 
+
+Semoga 
+
+laporan  Kegiatan  Layanan  Pengadaan  Secara  Elektronik  Pemerintah  
+
+Kota  Bulukumba  Triwulan  I  Tahun  2025  dapat  memberikan  manfaat  khususnya  Bagian 
+
+Pengadaan barang dan Jasa dan secara umum untuk unit kerja dan para pengambil kebijakan 
+
+untuk  dijadikan  input  dalam  penyusunan  kebijakan  pembangunan  di  periode  berikutnya, 
+
+sehingga program-kegiatan pembangunan di Kabupaten Bulukumba dapat dilaksanakan secara efektif 
+
+dan efisien sesuai dengan arah kebijakan yang tercantum pada dokumen perencanaan. 
+
+Bulukumba,      April 2025 
+Kepala LPSE Kabupaten Bulukumba, 
+
+Kepala LPSE Kabupaten Bulukumba 
+- 
+NIP. - 
+
+LPSE KABUPATEN BULUKUMBA I UNIT KERJA PENGADAAN BARANG/JASA 
+
+7 
+
+ 
+ 
+ 
+  
+ 
+ 
+ 
+

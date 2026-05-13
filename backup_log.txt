@@ -1135,3 +1135,163 @@ To github.com:callunk76-max/openclaw-backup.git
 ✅ Sent via Telegram. Message ID: 5135
 sending incremental file list
 MEMORY.md
+backup_log.txt
+App/
+App/aramedica/
+App/aramedica/app.py
+App/aramedica/app.py.bak.1778545902
+App/aramedica/pharmacy.db
+App/aramedica/static/
+App/aramedica/static/favicon.png
+App/aramedica/templates/
+App/aramedica/templates/index.html
+App/aramedica/templates/upload.html
+App/filebox/templates/index.html
+App/filebox/uploads/
+App/filebox/uploads/CCS_Dashboard_v2.mq4
+App/filebox/uploads/apotik.MD
+App/filebox/uploads/proactive-agent-3.1.0.zip
+App/mk/
+App/mk/app.py
+App/mk/config.py
+App/mk/models.py
+App/mk/seed_data.py
+App/mk/instance/
+App/mk/instance/aramedica.db
+App/mk/instance/aramedica.db-shm
+App/mk/instance/aramedica.db-wal
+App/mk/routes/
+App/mk/routes/auth.py
+App/mk/routes/dashboard.py
+App/mk/routes/kasir.py
+App/mk/routes/laporan.py
+App/mk/routes/master.py
+App/mk/routes/pembelian.py
+App/mk/routes/resep.py
+App/mk/routes/stok.py
+App/mk/static/
+App/mk/templates/
+App/mk/templates/base.html
+App/mk/templates/dashboard.html
+App/mk/templates/etiket.html
+App/mk/templates/hutang_list.html
+App/mk/templates/kartu_stok.html
+App/mk/templates/kasir_detail.html
+App/mk/templates/kasir_index.html
+App/mk/templates/kasir_struk.html
+App/mk/templates/kategori_satuan.html
+App/mk/templates/laporan_index.html
+App/mk/templates/laporan_shift.html
+App/mk/templates/laporan_stok.html
+App/mk/templates/login.html
+App/mk/templates/obat_form.html
+App/mk/templates/obat_list.html
+App/mk/templates/pelanggan_form.html
+App/mk/templates/pelanggan_list.html
+App/mk/templates/pembelian_form.html
+App/mk/templates/pembelian_list.html
+App/mk/templates/resep_detail.html
+App/mk/templates/resep_form.html
+App/mk/templates/resep_list.html
+App/mk/templates/stok_index.html
+App/mk/templates/stok_masuk.html
+App/mk/templates/stok_opname.html
+App/mk/templates/supplier_form.html
+App/mk/templates/supplier_list.html
+App/mk/templates/user_form.html
+App/mk/templates/user_list.html
+App/sirup_bulukumba/
+App/sirup_bulukumba/bulukumba.db
+App/sirup_bulukumba/visitor_count.json
+App/tokodewi/
+Trading/
+memory/
+memory/2026-05-12-backup-restore-setup.md
+memory/2026-05-12.md
+skills/
+skills/proactive-agent/
+skills/proactive-agent/SKILL.md
+skills/proactive-agent/_meta.json
+skills/proactive-agent/.clawhub/
+skills/proactive-agent/assets/
+skills/proactive-agent/assets/AGENTS.md
+skills/proactive-agent/assets/HEARTBEAT.md
+skills/proactive-agent/assets/MEMORY.md
+skills/proactive-agent/assets/ONBOARDING.md
+skills/proactive-agent/assets/SOUL.md
+skills/proactive-agent/assets/TOOLS.md
+skills/proactive-agent/assets/USER.md
+skills/proactive-agent/references/
+skills/proactive-agent/references/onboarding-flow.md
+skills/proactive-agent/references/security-patterns.md
+skills/proactive-agent/scripts/
+skills/proactive-agent/scripts/security-audit.sh
+
+sent 7,060,354 bytes  received 1,587 bytes  4,707,960.67 bytes/sec
+total size is 98,778,381  speedup is 13.99
+[master 31a288c] Daily Backup from Cuy - 2026-05-13 03:00
+ 70 files changed, 7088 insertions(+), 919 deletions(-)
+ create mode 100644 App/aramedica/app.py.bak.1778545902
+ create mode 100644 App/aramedica/static/favicon.png
+ create mode 100644 App/filebox/uploads/CCS_Dashboard_v2.mq4
+ create mode 100644 App/filebox/uploads/apotik.MD
+ create mode 100644 App/filebox/uploads/proactive-agent-3.1.0.zip
+ create mode 100644 App/mk/config.py
+ create mode 100644 App/mk/instance/aramedica.db-shm
+ create mode 100644 App/mk/instance/aramedica.db-wal
+ create mode 100644 App/mk/routes/auth.py
+ create mode 100644 App/mk/routes/dashboard.py
+ create mode 100644 App/mk/routes/kasir.py
+ create mode 100644 App/mk/routes/laporan.py
+ create mode 100644 App/mk/routes/master.py
+ create mode 100644 App/mk/routes/pembelian.py
+ create mode 100644 App/mk/routes/resep.py
+ create mode 100644 App/mk/routes/stok.py
+ create mode 100644 App/mk/templates/etiket.html
+ create mode 100644 App/mk/templates/hutang_list.html
+ create mode 100644 App/mk/templates/kartu_stok.html
+ create mode 100644 App/mk/templates/kasir_detail.html
+ create mode 100644 App/mk/templates/kasir_index.html
+ create mode 100644 App/mk/templates/kasir_struk.html
+ create mode 100644 App/mk/templates/kategori_satuan.html
+ create mode 100644 App/mk/templates/laporan_index.html
+ create mode 100644 App/mk/templates/laporan_shift.html
+ create mode 100644 App/mk/templates/laporan_stok.html
+ create mode 100644 App/mk/templates/login.html
+ create mode 100644 App/mk/templates/obat_form.html
+ create mode 100644 App/mk/templates/obat_list.html
+ create mode 100644 App/mk/templates/pelanggan_form.html
+ create mode 100644 App/mk/templates/pelanggan_list.html
+ create mode 100644 App/mk/templates/pembelian_form.html
+ create mode 100644 App/mk/templates/pembelian_list.html
+ create mode 100644 App/mk/templates/resep_detail.html
+ create mode 100644 App/mk/templates/resep_form.html
+ create mode 100644 App/mk/templates/resep_list.html
+ create mode 100644 App/mk/templates/stok_index.html
+ create mode 100644 App/mk/templates/stok_masuk.html
+ create mode 100644 App/mk/templates/stok_opname.html
+ create mode 100644 App/mk/templates/supplier_form.html
+ create mode 100644 App/mk/templates/supplier_list.html
+ create mode 100644 App/mk/templates/user_form.html
+ create mode 100644 App/mk/templates/user_list.html
+ create mode 100644 memory/2026-05-12-backup-restore-setup.md
+ create mode 100644 memory/2026-05-12.md
+ create mode 100644 skills/proactive-agent/SKILL.md
+ create mode 100644 skills/proactive-agent/_meta.json
+ create mode 100644 skills/proactive-agent/assets/AGENTS.md
+ create mode 100644 skills/proactive-agent/assets/HEARTBEAT.md
+ create mode 100644 skills/proactive-agent/assets/MEMORY.md
+ create mode 100644 skills/proactive-agent/assets/ONBOARDING.md
+ create mode 100644 skills/proactive-agent/assets/SOUL.md
+ create mode 100644 skills/proactive-agent/assets/TOOLS.md
+ create mode 100644 skills/proactive-agent/assets/USER.md
+ create mode 100644 skills/proactive-agent/references/onboarding-flow.md
+ create mode 100644 skills/proactive-agent/references/security-patterns.md
+ create mode 100644 skills/proactive-agent/scripts/security-audit.sh
+To github.com:callunk76-max/openclaw-backup.git
+   1edc6e8..31a288c  master -> master
+[session-write-lock] releasing lock held for 41159ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 5296
+sending incremental file list
+./
+Laporan_Kegiatan_LPSE_Bulukumba.docx

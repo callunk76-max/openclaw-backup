@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+{% block title %}Data Pegawai - Pemkab Bulukumba{% endblock %}
+
+{% block content %}
+<!-- Search -->
+<div class="position-relative mb-4" style="max-width: 500px;">
+    <i class="bi bi-search search-icon"></i>
+    <input type="text" class="search-box" id="searchInput" 
+           placeholder="Cari nama atau NIP..." autocomplete="off">
+    <div id="searchResults" class="card position-absolute w-100 mt-1" style="display:none;z-index:1000;max-height:400px;overflow-y:auto;"></div>
+</div>
+
+<!-- Stats -->
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="card stat-card">
+            <div class="stat-number">{{ "{:,}".format(total_pegawai) }}</div>
+            <div class="stat-label"><i class="bi bi-people me-1"></i>Total Pegawai</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card stat-card">
+            <div class="stat-number"><span style="color:#60a5fa;">{{ "{:,}".format(total_l) }}</span> <span style="color:#64748b;font-size:1.2rem;">|</span> <span style="color:#f472b6;">{{ "{:,}".format(total_p) }}</span></div>
+            <div class="stat-label"><i class="bi bi-gender-ambiguous me-1"></i><span style="color:#60a5fa;">L</span> / <span style="color:#f472b6;">P</span></div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card stat-card">
+            <div class="stat-number">{{ total_skpd }}</div>
+            <div class="stat-label"><i class="bi bi-building me-1"></i>SKPD / Instansi</div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card stat-card">
+            <div class="stat-number" style="font-size:1.6rem;"><span style="color:#22c55e;">{{ pensiun_aman }}</span> <span style="color:#64748b;">|</span> <span style="color:#eab308;">{{ pensiun_dekat }}</span> <span style="color:#64748b;">|</span> <span style="color:#f97316;">{{ pensiun_segera }}</span> <span style="color:#64748b;">|</span> <span style="color:#ef4444;text-decoration:line-through;">{{ pensiun_sudah }}</span></div>
+            <div class="stat-label"><i class="bi bi-clock-history me-1"></i><span style="color:#22c55e;">Aman</span> / <span style="color:#eab308;">Dekat</span> / <span style="color:#f97316;">Segera</span> / <span style="color:#ef4444;text-decoration:line-through;">Pensiun</span></div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- Agency List -->
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-header">
+                <i class="bi bi-list-ul me-2"></i>Daftar SKPD / Instansi
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>SKPD / Instansi</th>
+                                <th class="text-center">Pegawai</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for a in skpd_list %}
+                            <tr>
+                                <td class="text-secondary">{{ loop.index }}</td>
+                                <td><a href="/peg/skpd/{{ a.skpd | urlencode }}" class="agency-link">{{ a.skpd }}</a></td>
+                                <td class="text-center"><span class="badge rounded-pill" style="background:rgba(59,130,246,0.15);color:#93c5fd;">{{ a.total }}</span></td>
+                                <td class="text-end">
+                                    <a href="/peg/skpd/{{ a.skpd | urlencode }}" class="btn btn-sm" style="background:rgba(59,130,246,0.1);color:#93c5fd;border:1px solid rgba(59,130,246,0.2);">
+                                        Detail <i class="bi bi-arrow-right ms-1"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gol Distribution -->
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header">
+                <i class="bi bi-pie-chart me-2"></i>Distribusi Golongan
+            </div>
+            <div class="card-body">
+                <canvas id="golChart" height="280"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Gol Chart
+const golLabels = {{ gol_distribution | map(attribute=0) | list | tojson }};
+const golValues = {{ gol_distribution | map(attribute=1) | map(attribute='count') | list | tojson }};
+const golColors = ['#3b82f6','#8b5cf6','#ec4899','#f59e0b','#10b981','#6366f1','#14b8a6','#f97316','#ef4444','#84cc16'];
+
+new Chart(document.getElementById('golChart'), {
+    type: 'doughnut',
+    data: {
+        labels: golLabels,
+        datasets: [{
+            data: golValues,
+            backgroundColor: golColors.slice(0, golLabels.length),
+            borderWidth: 2,
+            borderColor: '#0f172a'
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'bottom',
+                labels: { color: '#94a3b8', font: { size: 11 }, padding: 8 }
+            }
+        }
+    }
+});
+
+// Search
+const searchInput = document.getElementById('searchInput');
+const resultsDiv = document.getElementById('searchResults');
+let debounceTimer;
+
+searchInput.addEventListener('input', () => {
+    clearTimeout(debounceTimer);
+    const q = searchInput.value.trim();
+    if (q.length < 2) { resultsDiv.style.display = 'none'; return; }
+    
+    debounceTimer = setTimeout(() => {
+        fetch('/peg/api/search?q=' + encodeURIComponent(q))
+            .then(r => r.json())
+            .then(data => {
+                if (data.results.length === 0) {
+                    resultsDiv.innerHTML = '<div class="p-3 text-secondary text-center">Tidak ada hasil</div>';
+                    resultsDiv.style.display = 'block';
+                    return;
+                }
+                let html = '<table class="table table-borderless mb-0"><tbody>';
+                data.results.forEach(r => {
+                    html += `<tr>
+                        <td>
+                            <strong style="color:#e2e8f0;">${r.nama}</strong><br>
+                            <span style="color:#64748b;font-size:0.8rem;font-family:monospace;">${r.nip}</span>
+                            <span style="color:#64748b;font-size:0.8rem;"> · ${r.skpd}</span>
+                        </td>
+                        <td class="text-end align-middle">
+                            <span style="color:#94a3b8;font-size:0.8rem;">${r.golongan || '-'}</span>
+                        </td>
+                    </tr>`;
+                });
+                html += '</tbody></table>';
+                resultsDiv.innerHTML = html;
+                resultsDiv.style.display = 'block';
+            });
+    }, 400);
+});
+
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('#searchInput') && !e.target.closest('#searchResults')) {
+        resultsDiv.style.display = 'none';
+    }
+});
+</script>
+{% endblock %}
