@@ -1,0 +1,32 @@
+{
+  "mql5_free_products": [
+    "Error: Too many arguments. If you need to pass more than 1 argument to the function wrap them in an object."
+  ],
+  "mql5_code_base": [
+    "Error: Too many arguments. If you need to pass more than 1 argument to the function wrap them in an object."
+  ],
+  "github_pine_indicators": [
+    "Error: Too many arguments. If you need to pass more than 1 argument to the function wrap them in an object."
+  ],
+  "github_mt4_eas": [
+    "Error: Too many arguments. If you need to pass more than 1 argument to the function wrap them in an object."
+  ],
+  "github_algo_trading": [
+    "Error: Too many arguments. If you need to pass more than 1 argument to the function wrap them in an object."
+  ],
+  "github_defi_bots": [
+    "Error: Too many arguments. If you need to pass more than 1 argument to the function wrap them in an object."
+  ],
+  "meteora_pools": [
+    "Error: Too many arguments. If you need to pass more than 1 argument to the function wrap them in an object."
+  ],
+  "coingecko_trending": [
+    "Error: Too many arguments. If you need to pass more than 1 argument to the function wrap them in an object."
+  ],
+  "defillama_yields": [
+    "Error: Too many arguments. If you need to pass more than 1 argument to the function wrap them in an object."
+  ],
+  "dexscreener_trending": [
+    "Error: page.goto: Target page, context or browser has been closed\nCall log:\n  - navigating to \"https://dexs"
+  ]
+}

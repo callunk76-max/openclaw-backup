@@ -16,6 +16,14 @@
     "code-quality-guard": {
       "version": "1.0.0",
       "installedAt": 1777524979357
+    },
+    "polyclaw": {
+      "version": "1.0.2",
+      "installedAt": 1778741606716
+    },
+    "playwright-mcp": {
+      "version": "1.0.0",
+      "installedAt": 1778759163933
     }
   }
 }
