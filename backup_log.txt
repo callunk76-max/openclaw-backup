@@ -9045,3 +9045,453 @@ To github.com:callunk76-max/openclaw-backup.git
 sending incremental file list
 ./
 TODO.md
+backup_log.txt
+signal-gold.md
+.clawhub/lock.json
+App/sirup_bulukumba/visitor_count.json
+memory/
+memory/2026-05-14-ai4trade-login.md
+memory/2026-05-14.md
+skills/
+skills/playwright-mcp/
+skills/playwright-mcp/SKILL.md
+skills/playwright-mcp/_meta.json
+skills/playwright-mcp/crd-connect.js
+skills/playwright-mcp/crd-connect2.js
+skills/playwright-mcp/examples.py
+skills/playwright-mcp/package-lock.json
+skills/playwright-mcp/package.json
+skills/playwright-mcp/trading-scout-v2.js
+skills/playwright-mcp/trading-scout-v2.json
+skills/playwright-mcp/trading-scout.js
+skills/playwright-mcp/.clawhub/
+skills/playwright-mcp/.clawhub/origin.json
+skills/playwright-mcp/node_modules/
+skills/playwright-mcp/node_modules/.package-lock.json
+skills/playwright-mcp/node_modules/.bin/
+skills/playwright-mcp/node_modules/.bin/playwright -> ../playwright/cli.js
+skills/playwright-mcp/node_modules/.bin/playwright-core -> ../playwright-core/cli.js
+skills/playwright-mcp/node_modules/playwright-core/
+skills/playwright-mcp/node_modules/playwright-core/LICENSE
+skills/playwright-mcp/node_modules/playwright-core/NOTICE
+skills/playwright-mcp/node_modules/playwright-core/README.md
+skills/playwright-mcp/node_modules/playwright-core/ThirdPartyNotices.txt
+skills/playwright-mcp/node_modules/playwright-core/browsers.json
+skills/playwright-mcp/node_modules/playwright-core/cli.js
+skills/playwright-mcp/node_modules/playwright-core/index.d.ts
+skills/playwright-mcp/node_modules/playwright-core/index.js
+skills/playwright-mcp/node_modules/playwright-core/index.mjs
+skills/playwright-mcp/node_modules/playwright-core/package.json
+skills/playwright-mcp/node_modules/playwright-core/bin/
+skills/playwright-mcp/node_modules/playwright-core/bin/install_media_pack.ps1
+skills/playwright-mcp/node_modules/playwright-core/bin/install_webkit_wsl.ps1
+skills/playwright-mcp/node_modules/playwright-core/bin/reinstall_chrome_beta_linux.sh
+skills/playwright-mcp/node_modules/playwright-core/bin/reinstall_chrome_beta_mac.sh
+skills/playwright-mcp/node_modules/playwright-core/bin/reinstall_chrome_beta_win.ps1
+skills/playwright-mcp/node_modules/playwright-core/bin/reinstall_chrome_stable_linux.sh
+skills/playwright-mcp/node_modules/playwright-core/bin/reinstall_chrome_stable_mac.sh
+skills/playwright-mcp/node_modules/playwright-core/bin/reinstall_chrome_stable_win.ps1
+skills/playwright-mcp/node_modules/playwright-core/bin/reinstall_msedge_beta_linux.sh
+skills/playwright-mcp/node_modules/playwright-core/bin/reinstall_msedge_beta_mac.sh
+skills/playwright-mcp/node_modules/playwright-core/bin/reinstall_msedge_beta_win.ps1
+skills/playwright-mcp/node_modules/playwright-core/bin/reinstall_msedge_dev_linux.sh
+skills/playwright-mcp/node_modules/playwright-core/bin/reinstall_msedge_dev_mac.sh
+skills/playwright-mcp/node_modules/playwright-core/bin/reinstall_msedge_dev_win.ps1
+skills/playwright-mcp/node_modules/playwright-core/bin/reinstall_msedge_stable_linux.sh
+skills/playwright-mcp/node_modules/playwright-core/bin/reinstall_msedge_stable_mac.sh
+skills/playwright-mcp/node_modules/playwright-core/bin/reinstall_msedge_stable_win.ps1
+skills/playwright-mcp/node_modules/playwright-core/lib/
+skills/playwright-mcp/node_modules/playwright-core/lib/bootstrap.js
+skills/playwright-mcp/node_modules/playwright-core/lib/coreBundle.js
+skills/playwright-mcp/node_modules/playwright-core/lib/package.js
+skills/playwright-mcp/node_modules/playwright-core/lib/serverRegistry.js
+skills/playwright-mcp/node_modules/playwright-core/lib/serverRegistry.js.LICENSE
+skills/playwright-mcp/node_modules/playwright-core/lib/utilsBundle.js
+skills/playwright-mcp/node_modules/playwright-core/lib/utilsBundle.js.LICENSE
+skills/playwright-mcp/node_modules/playwright-core/lib/xdg-open
+skills/playwright-mcp/node_modules/playwright-core/lib/entry/
+skills/playwright-mcp/node_modules/playwright-core/lib/entry/cliDaemon.js
+skills/playwright-mcp/node_modules/playwright-core/lib/entry/dashboardApp.js
+skills/playwright-mcp/node_modules/playwright-core/lib/entry/mcp.js
+skills/playwright-mcp/node_modules/playwright-core/lib/entry/oopBrowserDownload.js
+skills/playwright-mcp/node_modules/playwright-core/lib/server/
+skills/playwright-mcp/node_modules/playwright-core/lib/server/deviceDescriptorsSource.json
+skills/playwright-mcp/node_modules/playwright-core/lib/server/chromium/
+skills/playwright-mcp/node_modules/playwright-core/lib/server/chromium/appIcon.png
+skills/playwright-mcp/node_modules/playwright-core/lib/server/electron/
+skills/playwright-mcp/node_modules/playwright-core/lib/server/electron/loader.js
+skills/playwright-mcp/node_modules/playwright-core/lib/tools/
+skills/playwright-mcp/node_modules/playwright-core/lib/tools/cli-client/
+skills/playwright-mcp/node_modules/playwright-core/lib/tools/cli-client/channelSessions.js
+skills/playwright-mcp/node_modules/playwright-core/lib/tools/cli-client/cli.js
+skills/playwright-mcp/node_modules/playwright-core/lib/tools/cli-client/help.json
+skills/playwright-mcp/node_modules/playwright-core/lib/tools/cli-client/minimist.js
+skills/playwright-mcp/node_modules/playwright-core/lib/tools/cli-client/output.js
+skills/playwright-mcp/node_modules/playwright-core/lib/tools/cli-client/program.js
+skills/playwright-mcp/node_modules/playwright-core/lib/tools/cli-client/registry.js
+skills/playwright-mcp/node_modules/playwright-core/lib/tools/cli-client/session.js
+skills/playwright-mcp/node_modules/playwright-core/lib/tools/cli-client/skill/
+skills/playwright-mcp/node_modules/playwright-core/lib/tools/cli-client/skill/SKILL.md
+skills/playwright-mcp/node_modules/playwright-core/lib/tools/cli-client/skill/references/
+skills/playwright-mcp/node_modules/playwright-core/lib/tools/cli-client/skill/references/element-attributes.md
+skills/playwright-mcp/node_modules/playwright-core/lib/tools/cli-client/skill/references/playwright-tests.md
+skills/playwright-mcp/node_modules/playwright-core/lib/tools/cli-client/skill/references/request-mocking.md
+skills/playwright-mcp/node_modules/playwright-core/lib/tools/cli-client/skill/references/running-code.md
+skills/playwright-mcp/node_modules/playwright-core/lib/tools/cli-client/skill/references/session-management.md
+skills/playwright-mcp/node_modules/playwright-core/lib/tools/cli-client/skill/references/spec-driven-testing.md
+skills/playwright-mcp/node_modules/playwright-core/lib/tools/cli-client/skill/references/storage-state.md
+skills/playwright-mcp/node_modules/playwright-core/lib/tools/cli-client/skill/references/test-generation.md
+skills/playwright-mcp/node_modules/playwright-core/lib/tools/cli-client/skill/references/tracing.md
+skills/playwright-mcp/node_modules/playwright-core/lib/tools/cli-client/skill/references/video-recording.md
+skills/playwright-mcp/node_modules/playwright-core/lib/tools/dashboard/
+skills/playwright-mcp/node_modules/playwright-core/lib/tools/dashboard/appIcon.png
+skills/playwright-mcp/node_modules/playwright-core/lib/tools/trace/
+skills/playwright-mcp/node_modules/playwright-core/lib/tools/trace/SKILL.md
+skills/playwright-mcp/node_modules/playwright-core/lib/tools/utils/
+skills/playwright-mcp/node_modules/playwright-core/lib/tools/utils/extension.js
+skills/playwright-mcp/node_modules/playwright-core/lib/tools/utils/socketConnection.js
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/dashboard/
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/dashboard/index.html
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/dashboard/playwright-logo.svg
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/dashboard/assets/
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/dashboard/assets/codicon-DCmgc-ay.ttf
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/dashboard/assets/firefox-1bWoP6pv.svg
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/dashboard/assets/firefox-beta-k3eOH_eK.svg
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/dashboard/assets/firefox-nightly-Cp5nfeDT.svg
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/dashboard/assets/index-BY2S1tHT.css
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/dashboard/assets/index-DpEq2p62.js
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/dashboard/assets/safari-na3_-uQk.svg
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/htmlReport/
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/htmlReport/index.html
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/htmlReport/report.css
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/htmlReport/report.js
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/recorder/
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/recorder/index.html
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/recorder/playwright-logo.svg
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/recorder/assets/
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/recorder/assets/codeMirrorModule-BHYmBp6h.js
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/recorder/assets/codeMirrorModule-DYBRYzYX.css
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/recorder/assets/codicon-DCmgc-ay.ttf
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/recorder/assets/index-4ZiSSCmn.css
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/recorder/assets/index-DA10QRaq.js
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/traceViewer/
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/traceViewer/codeMirrorModule.DYBRYzYX.css
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/traceViewer/codicon.DCmgc-ay.ttf
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/traceViewer/defaultSettingsView.BDKsFU3c.css
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/traceViewer/index.BCnMPevh.js
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/traceViewer/index.CzXZzn5A.css
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/traceViewer/index.html
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/traceViewer/manifest.webmanifest
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/traceViewer/playwright-logo.svg
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/traceViewer/snapshot.html
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/traceViewer/snapshot.v8KI4P3m.js
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/traceViewer/sw.bundle.js
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/traceViewer/uiMode.Btcz36p_.css
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/traceViewer/uiMode.C2Efnu2P.js
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/traceViewer/uiMode.html
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/traceViewer/xtermModule.DYP7pi_n.css
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/traceViewer/assets/
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/traceViewer/assets/codeMirrorModule-Ds_H_9Yq.js
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/traceViewer/assets/defaultSettingsView-D31xz8zv.js
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/traceViewer/assets/urlMatch-BYQrIQwR.js
+skills/playwright-mcp/node_modules/playwright-core/lib/vite/traceViewer/assets/xtermModule-CsJ4vdCR.js
+skills/playwright-mcp/node_modules/playwright-core/types/
+skills/playwright-mcp/node_modules/playwright-core/types/protocol.d.ts
+skills/playwright-mcp/node_modules/playwright-core/types/structs.d.ts
+skills/playwright-mcp/node_modules/playwright-core/types/types.d.ts
+skills/playwright-mcp/node_modules/playwright/
+skills/playwright-mcp/node_modules/playwright/LICENSE
+skills/playwright-mcp/node_modules/playwright/NOTICE
+skills/playwright-mcp/node_modules/playwright/README.md
+skills/playwright-mcp/node_modules/playwright/ThirdPartyNotices.txt
+skills/playwright-mcp/node_modules/playwright/cli.js
+skills/playwright-mcp/node_modules/playwright/index.d.ts
+skills/playwright-mcp/node_modules/playwright/index.js
+skills/playwright-mcp/node_modules/playwright/index.mjs
+skills/playwright-mcp/node_modules/playwright/jsx-runtime.js
+skills/playwright-mcp/node_modules/playwright/jsx-runtime.mjs
+skills/playwright-mcp/node_modules/playwright/package.json
+skills/playwright-mcp/node_modules/playwright/test.d.ts
+skills/playwright-mcp/node_modules/playwright/test.js
+skills/playwright-mcp/node_modules/playwright/test.mjs
+skills/playwright-mcp/node_modules/playwright/lib/
+skills/playwright-mcp/node_modules/playwright/lib/errorContext.js
+skills/playwright-mcp/node_modules/playwright/lib/globals.js
+skills/playwright-mcp/node_modules/playwright/lib/index.js
+skills/playwright-mcp/node_modules/playwright/lib/isomorphic.js
+skills/playwright-mcp/node_modules/playwright/lib/isomorphic.js.txt
+skills/playwright-mcp/node_modules/playwright/lib/package.js
+skills/playwright-mcp/node_modules/playwright/lib/program.js
+skills/playwright-mcp/node_modules/playwright/lib/util.js
+skills/playwright-mcp/node_modules/playwright/lib/agents/
+skills/playwright-mcp/node_modules/playwright/lib/agents/agentParser.js
+skills/playwright-mcp/node_modules/playwright/lib/agents/copilot-setup-steps.yml
+skills/playwright-mcp/node_modules/playwright/lib/agents/generateAgents.js
+skills/playwright-mcp/node_modules/playwright/lib/agents/playwright-test-coverage.prompt.md
+skills/playwright-mcp/node_modules/playwright/lib/agents/playwright-test-generate.prompt.md
+skills/playwright-mcp/node_modules/playwright/lib/agents/playwright-test-generator.agent.md
+skills/playwright-mcp/node_modules/playwright/lib/agents/playwright-test-heal.prompt.md
+skills/playwright-mcp/node_modules/playwright/lib/agents/playwright-test-healer.agent.md
+skills/playwright-mcp/node_modules/playwright/lib/agents/playwright-test-plan.prompt.md
+skills/playwright-mcp/node_modules/playwright/lib/agents/playwright-test-planner.agent.md
+skills/playwright-mcp/node_modules/playwright/lib/cli/
+skills/playwright-mcp/node_modules/playwright/lib/cli/reportActions.js
+skills/playwright-mcp/node_modules/playwright/lib/cli/testActions.js
+skills/playwright-mcp/node_modules/playwright/lib/common/
+skills/playwright-mcp/node_modules/playwright/lib/common/index.js
+skills/playwright-mcp/node_modules/playwright/lib/common/index.js.txt
+skills/playwright-mcp/node_modules/playwright/lib/loader/
+skills/playwright-mcp/node_modules/playwright/lib/loader/loaderProcessEntry.js
+skills/playwright-mcp/node_modules/playwright/lib/loader/loaderProcessEntry.js.txt
+skills/playwright-mcp/node_modules/playwright/lib/matchers/
+skills/playwright-mcp/node_modules/playwright/lib/matchers/expect.js
+skills/playwright-mcp/node_modules/playwright/lib/matchers/expect.js.LICENSE
+skills/playwright-mcp/node_modules/playwright/lib/matchers/expect.js.txt
+skills/playwright-mcp/node_modules/playwright/lib/mcp/
+skills/playwright-mcp/node_modules/playwright/lib/mcp/test/
+skills/playwright-mcp/node_modules/playwright/lib/mcp/test/browserBackend.js
+skills/playwright-mcp/node_modules/playwright/lib/mcp/test/generatorTools.js
+skills/playwright-mcp/node_modules/playwright/lib/mcp/test/plannerTools.js
+skills/playwright-mcp/node_modules/playwright/lib/mcp/test/seed.js
+skills/playwright-mcp/node_modules/playwright/lib/mcp/test/streams.js
+skills/playwright-mcp/node_modules/playwright/lib/mcp/test/testBackend.js
+skills/playwright-mcp/node_modules/playwright/lib/mcp/test/testContext.js
+skills/playwright-mcp/node_modules/playwright/lib/mcp/test/testTool.js
+skills/playwright-mcp/node_modules/playwright/lib/mcp/test/testTools.js
+skills/playwright-mcp/node_modules/playwright/lib/runner/
+skills/playwright-mcp/node_modules/playwright/lib/runner/index.js
+skills/playwright-mcp/node_modules/playwright/lib/runner/index.js.txt
+skills/playwright-mcp/node_modules/playwright/lib/transform/
+skills/playwright-mcp/node_modules/playwright/lib/transform/babelBundle.js
+skills/playwright-mcp/node_modules/playwright/lib/transform/babelBundle.js.LICENSE
+skills/playwright-mcp/node_modules/playwright/lib/transform/babelBundle.js.txt
+skills/playwright-mcp/node_modules/playwright/lib/transform/esmLoader.js
+skills/playwright-mcp/node_modules/playwright/lib/transform/esmLoader.js.LICENSE
+skills/playwright-mcp/node_modules/playwright/lib/transform/esmLoader.js.txt
+skills/playwright-mcp/node_modules/playwright/lib/worker/
+skills/playwright-mcp/node_modules/playwright/lib/worker/workerProcessEntry.js
+skills/playwright-mcp/node_modules/playwright/lib/worker/workerProcessEntry.js.txt
+skills/playwright-mcp/node_modules/playwright/types/
+skills/playwright-mcp/node_modules/playwright/types/test.d.ts
+skills/playwright-mcp/node_modules/playwright/types/testReporter.d.ts
+skills/polyclaw/
+skills/polyclaw/SKILL.md
+skills/polyclaw/_meta.json
+skills/polyclaw/.clawhub/
+skills/polyclaw/.clawhub/origin.json
+skills/polyclaw/references/
+skills/polyclaw/references/api-reference.md
+skills/polyclaw/references/launch-guide.md
+skills/polyclaw/references/moltbook-posting.md
+skills/polyclaw/references/trading-guide.md
+skills/polyclaw/scripts/
+skills/polyclaw/scripts/check-skill.sh
+skills/polyclaw/scripts/register.sh
+skills/polyclaw/scripts/sync-skill.sh
+
+sent 18,294,956 bytes  received 4,985 bytes  12,199,960.67 bytes/sec
+total size is 289,594,348  speedup is 15.82
+[master 455797a] Daily Backup from Cuy - 2026-05-15 03:00
+ 199 files changed, 360667 insertions(+), 1 deletion(-)
+ create mode 100644 TODO.md
+ create mode 100644 memory/2026-05-14-ai4trade-login.md
+ create mode 100644 memory/2026-05-14.md
+ create mode 100644 signal-gold.md
+ create mode 100644 skills/playwright-mcp/.clawhub/origin.json
+ create mode 100644 skills/playwright-mcp/SKILL.md
+ create mode 100644 skills/playwright-mcp/_meta.json
+ create mode 100644 skills/playwright-mcp/crd-connect.js
+ create mode 100644 skills/playwright-mcp/crd-connect2.js
+ create mode 100644 skills/playwright-mcp/examples.py
+ create mode 120000 skills/playwright-mcp/node_modules/.bin/playwright
+ create mode 120000 skills/playwright-mcp/node_modules/.bin/playwright-core
+ create mode 100644 skills/playwright-mcp/node_modules/.package-lock.json
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/LICENSE
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/NOTICE
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/README.md
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/ThirdPartyNotices.txt
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/bin/install_media_pack.ps1
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/bin/install_webkit_wsl.ps1
+ create mode 100755 skills/playwright-mcp/node_modules/playwright-core/bin/reinstall_chrome_beta_linux.sh
+ create mode 100755 skills/playwright-mcp/node_modules/playwright-core/bin/reinstall_chrome_beta_mac.sh
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/bin/reinstall_chrome_beta_win.ps1
+ create mode 100755 skills/playwright-mcp/node_modules/playwright-core/bin/reinstall_chrome_stable_linux.sh
+ create mode 100755 skills/playwright-mcp/node_modules/playwright-core/bin/reinstall_chrome_stable_mac.sh
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/bin/reinstall_chrome_stable_win.ps1
+ create mode 100755 skills/playwright-mcp/node_modules/playwright-core/bin/reinstall_msedge_beta_linux.sh
+ create mode 100755 skills/playwright-mcp/node_modules/playwright-core/bin/reinstall_msedge_beta_mac.sh
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/bin/reinstall_msedge_beta_win.ps1
+ create mode 100755 skills/playwright-mcp/node_modules/playwright-core/bin/reinstall_msedge_dev_linux.sh
+ create mode 100755 skills/playwright-mcp/node_modules/playwright-core/bin/reinstall_msedge_dev_mac.sh
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/bin/reinstall_msedge_dev_win.ps1
+ create mode 100755 skills/playwright-mcp/node_modules/playwright-core/bin/reinstall_msedge_stable_linux.sh
+ create mode 100755 skills/playwright-mcp/node_modules/playwright-core/bin/reinstall_msedge_stable_mac.sh
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/bin/reinstall_msedge_stable_win.ps1
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/browsers.json
+ create mode 100755 skills/playwright-mcp/node_modules/playwright-core/cli.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/index.d.ts
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/index.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/index.mjs
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/bootstrap.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/coreBundle.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/entry/cliDaemon.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/entry/dashboardApp.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/entry/mcp.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/entry/oopBrowserDownload.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/package.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/server/chromium/appIcon.png
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/server/deviceDescriptorsSource.json
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/server/electron/loader.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/serverRegistry.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/serverRegistry.js.LICENSE
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/tools/cli-client/channelSessions.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/tools/cli-client/cli.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/tools/cli-client/help.json
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/tools/cli-client/minimist.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/tools/cli-client/output.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/tools/cli-client/program.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/tools/cli-client/registry.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/tools/cli-client/session.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/tools/cli-client/skill/SKILL.md
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/tools/cli-client/skill/references/element-attributes.md
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/tools/cli-client/skill/references/playwright-tests.md
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/tools/cli-client/skill/references/request-mocking.md
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/tools/cli-client/skill/references/running-code.md
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/tools/cli-client/skill/references/session-management.md
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/tools/cli-client/skill/references/spec-driven-testing.md
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/tools/cli-client/skill/references/storage-state.md
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/tools/cli-client/skill/references/test-generation.md
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/tools/cli-client/skill/references/tracing.md
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/tools/cli-client/skill/references/video-recording.md
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/tools/dashboard/appIcon.png
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/tools/trace/SKILL.md
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/tools/utils/extension.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/tools/utils/socketConnection.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/utilsBundle.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/utilsBundle.js.LICENSE
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/vite/dashboard/assets/codicon-DCmgc-ay.ttf
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/vite/dashboard/assets/firefox-1bWoP6pv.svg
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/vite/dashboard/assets/firefox-beta-k3eOH_eK.svg
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/vite/dashboard/assets/firefox-nightly-Cp5nfeDT.svg
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/vite/dashboard/assets/index-BY2S1tHT.css
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/vite/dashboard/assets/index-DpEq2p62.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/vite/dashboard/assets/safari-na3_-uQk.svg
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/vite/dashboard/index.html
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/vite/dashboard/playwright-logo.svg
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/vite/htmlReport/index.html
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/vite/htmlReport/report.css
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/vite/htmlReport/report.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/vite/recorder/assets/codeMirrorModule-BHYmBp6h.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/vite/recorder/assets/codeMirrorModule-DYBRYzYX.css
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/vite/recorder/assets/codicon-DCmgc-ay.ttf
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/vite/recorder/assets/index-4ZiSSCmn.css
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/vite/recorder/assets/index-DA10QRaq.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/vite/recorder/index.html
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/vite/recorder/playwright-logo.svg
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/vite/traceViewer/assets/codeMirrorModule-Ds_H_9Yq.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/vite/traceViewer/assets/defaultSettingsView-D31xz8zv.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/vite/traceViewer/assets/urlMatch-BYQrIQwR.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/vite/traceViewer/assets/xtermModule-CsJ4vdCR.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/vite/traceViewer/codeMirrorModule.DYBRYzYX.css
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/vite/traceViewer/codicon.DCmgc-ay.ttf
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/vite/traceViewer/defaultSettingsView.BDKsFU3c.css
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/vite/traceViewer/index.BCnMPevh.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/vite/traceViewer/index.CzXZzn5A.css
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/vite/traceViewer/index.html
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/vite/traceViewer/manifest.webmanifest
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/vite/traceViewer/playwright-logo.svg
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/vite/traceViewer/snapshot.html
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/vite/traceViewer/snapshot.v8KI4P3m.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/vite/traceViewer/sw.bundle.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/vite/traceViewer/uiMode.Btcz36p_.css
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/vite/traceViewer/uiMode.C2Efnu2P.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/vite/traceViewer/uiMode.html
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/lib/vite/traceViewer/xtermModule.DYP7pi_n.css
+ create mode 100755 skills/playwright-mcp/node_modules/playwright-core/lib/xdg-open
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/package.json
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/types/protocol.d.ts
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/types/structs.d.ts
+ create mode 100644 skills/playwright-mcp/node_modules/playwright-core/types/types.d.ts
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/LICENSE
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/NOTICE
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/README.md
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/ThirdPartyNotices.txt
+ create mode 100755 skills/playwright-mcp/node_modules/playwright/cli.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/index.d.ts
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/index.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/index.mjs
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/jsx-runtime.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/jsx-runtime.mjs
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/agents/agentParser.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/agents/copilot-setup-steps.yml
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/agents/generateAgents.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/agents/playwright-test-coverage.prompt.md
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/agents/playwright-test-generate.prompt.md
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/agents/playwright-test-generator.agent.md
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/agents/playwright-test-heal.prompt.md
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/agents/playwright-test-healer.agent.md
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/agents/playwright-test-plan.prompt.md
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/agents/playwright-test-planner.agent.md
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/cli/reportActions.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/cli/testActions.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/common/index.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/common/index.js.txt
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/errorContext.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/globals.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/index.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/isomorphic.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/isomorphic.js.txt
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/loader/loaderProcessEntry.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/loader/loaderProcessEntry.js.txt
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/matchers/expect.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/matchers/expect.js.LICENSE
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/matchers/expect.js.txt
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/mcp/test/browserBackend.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/mcp/test/generatorTools.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/mcp/test/plannerTools.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/mcp/test/seed.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/mcp/test/streams.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/mcp/test/testBackend.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/mcp/test/testContext.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/mcp/test/testTool.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/mcp/test/testTools.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/package.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/program.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/runner/index.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/runner/index.js.txt
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/transform/babelBundle.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/transform/babelBundle.js.LICENSE
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/transform/babelBundle.js.txt
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/transform/esmLoader.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/transform/esmLoader.js.LICENSE
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/transform/esmLoader.js.txt
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/util.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/worker/workerProcessEntry.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/lib/worker/workerProcessEntry.js.txt
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/package.json
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/test.d.ts
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/test.js
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/test.mjs
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/types/test.d.ts
+ create mode 100644 skills/playwright-mcp/node_modules/playwright/types/testReporter.d.ts
+ create mode 100644 skills/playwright-mcp/package-lock.json
+ create mode 100644 skills/playwright-mcp/package.json
+ create mode 100644 skills/playwright-mcp/trading-scout-v2.js
+ create mode 100644 skills/playwright-mcp/trading-scout-v2.json
+ create mode 100644 skills/playwright-mcp/trading-scout.js
+ create mode 100644 skills/polyclaw/.clawhub/origin.json
+ create mode 100644 skills/polyclaw/SKILL.md
+ create mode 100644 skills/polyclaw/_meta.json
+ create mode 100644 skills/polyclaw/references/api-reference.md
+ create mode 100644 skills/polyclaw/references/launch-guide.md
+ create mode 100644 skills/polyclaw/references/moltbook-posting.md
+ create mode 100644 skills/polyclaw/references/trading-guide.md
+ create mode 100644 skills/polyclaw/scripts/check-skill.sh
+ create mode 100644 skills/polyclaw/scripts/register.sh
+ create mode 100644 skills/polyclaw/scripts/sync-skill.sh
+To github.com:callunk76-max/openclaw-backup.git
+   e42790c..455797a  master -> master
+[session-write-lock] releasing lock held for 107566ms (max=15000ms): /root/.openclaw/agents/main/sessions/sessions.json.lock
+✅ Sent via Telegram. Message ID: 5554
+sending incremental file list

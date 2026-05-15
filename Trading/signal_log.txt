@@ -1010,3 +1010,144 @@ Deleted: 4807
 --- Fri May  8 11:00:01 PM CST 2026 ---
 Sent: 4817
 Deleted: 4812
+--- Fri May 15 10:08:16 AM CST 2026 ---
+[LEVEL 2] Running...
+[LEVEL 2] Sent: 5559
+--- Fri May 15 11:01:37 AM CST 2026 --- [BREAKOUT] Starting scan...
+[BREAKOUT] Sent: 5567 (breakouts: 0)
+--- Fri May 15 11:15:01 AM CST 2026 --- [BREAKOUT] Starting scan...
+[BREAKOUT] Sent: 5568 (breakouts: 0)
+--- Fri May 15 11:17:53 AM CST 2026 --- [BREAKOUT] Starting scan...
+[BREAKOUT] Sent: 5571 (breakouts: 0)
+--- Fri May 15 11:18:09 AM CST 2026 --- [BREAKOUT] Starting scan...
+[BREAKOUT] Deleted: 5571 ({"ok":true,"result":true})
+[BREAKOUT] Sent: 5572 (breakouts: 0)
+--- Fri May 15 11:30:01 AM CST 2026 --- [BREAKOUT] Starting scan...
+[BREAKOUT] Deleted: 5572 ({"ok":true,"result":true})
+[BREAKOUT] Sent: 5574 (breakouts: 0)
+--- Fri May 15 11:45:01 AM CST 2026 --- [BREAKOUT] Starting scan...
+[BREAKOUT] Deleted: 5574 ({"ok":true,"result":true})
+[BREAKOUT] Sent: 5577 (breakouts: 0)
+--- Fri May 15 12:00:01 PM CST 2026 --- [BREAKOUT] Starting scan...
+[BREAKOUT] Deleted: 5577 ({"ok":true,"result":true})
+Traceback (most recent call last):
+  File "/root/.openclaw/workspace/Trading/volume_breakout.py", line 364, in <module>
+    output = format_signal(results, breakouts, time_str, date_str)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/.openclaw/workspace/Trading/volume_breakout.py", line 295, in format_signal
+    lines.append(f"   🕯️ ${b['open']} → ${b['close']} (H:${b['high']} L:${b['low']})")
+                                          ~^^^^^^^^^
+KeyError: 'close'
+[BREAKOUT] ERROR: Empty signal
+--- Fri May 15 12:03:23 PM CST 2026 --- [DASHBOARD] Updating...
+[DASHBOARD] Updated OK (breakout exit: 0)
+--- Fri May 15 12:03:50 PM CST 2026 --- [DASHBOARD] Updating...
+[DASHBOARD] Updated OK (breakout exit: 0)
+--- Fri May 15 12:15:02 PM CST 2026 --- [DASHBOARD] Updating...
+[DASHBOARD] Updated OK (breakout exit: 0)
+--- Fri May 15 12:30:01 PM CST 2026 --- [DASHBOARD] Updating...
+Traceback (most recent call last):
+  File "/root/.openclaw/workspace/Trading/volume_breakout.py", line 413, in <module>
+    output = format_signal(results, breakouts, time_str, date_str)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/.openclaw/workspace/Trading/volume_breakout.py", line 295, in format_signal
+    lines.append(f"   🕯️ ${b['open']} → ${b['close']} (H:${b['high']} L:${b['low']})")
+                                          ~^^^^^^^^^
+KeyError: 'close'
+[DASHBOARD] ERROR: Empty output
+--- Fri May 15 12:45:01 PM CST 2026 --- [DASHBOARD] Updating...
+Traceback (most recent call last):
+  File "/root/.openclaw/workspace/Trading/volume_breakout.py", line 413, in <module>
+    output = format_signal(results, breakouts, time_str, date_str)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/.openclaw/workspace/Trading/volume_breakout.py", line 295, in format_signal
+    lines.append(f"   🕯️ ${b['open']} → ${b['close']} (H:${b['high']} L:${b['low']})")
+                                          ~^^^^^^^^^
+KeyError: 'close'
+[DASHBOARD] ERROR: Empty output
+--- Fri May 15 12:46:44 PM CST 2026 --- [DASHBOARD] Updating...
+Traceback (most recent call last):
+  File "/root/.openclaw/workspace/Trading/volume_breakout.py", line 413, in <module>
+    output = format_signal(results, breakouts, time_str, date_str)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/.openclaw/workspace/Trading/volume_breakout.py", line 295, in format_signal
+    lines.append(f"   🕯️ ${b['open']} → ${b['close']} (H:${b['high']} L:${b['low']})")
+                                          ~^^^^^^^^^
+KeyError: 'close'
+[DASHBOARD] ERROR: Empty output
+--- Fri May 15 12:46:58 PM CST 2026 --- [DASHBOARD] Updating...
+[DASHBOARD] Updated OK (breakout exit: 0)
+--- Fri May 15 12:47:12 PM CST 2026 --- [DASHBOARD] Updating...
+[DASHBOARD] Updated OK (breakout exit: 0)
+--- Fri May 15 12:52:59 PM CST 2026 --- [DASHBOARD] Updating...
+[DASHBOARD] Deleted breakout msg: 5577
+[DASHBOARD] BREAKOUT ALERT sent: 5585
+[DASHBOARD] Updated OK (breakout exit: 1)
+--- Fri May 15 12:56:40 PM CST 2026 --- [DASHBOARD] Updating...
+[DASHBOARD] Updated OK (breakout exit: 0)
+--- Fri May 15 01:00:01 PM CST 2026 --- [DASHBOARD] Updating...
+[DASHBOARD] Updated OK (breakout exit: 0)
+--- Fri May 15 01:15:01 PM CST 2026 --- [DASHBOARD] Updating...
+[DASHBOARD] Updated OK (breakout exit: 0)
+--- Fri May 15 01:30:02 PM CST 2026 --- [DASHBOARD] Updating...
+[DASHBOARD] Updated OK (breakout exit: 0)
+--- Fri May 15 01:42:25 PM CST 2026 --- [DASHBOARD] Updating...
+[DASHBOARD] Updated OK (breakout exit: 0)
+--- Fri May 15 01:45:01 PM CST 2026 --- [DASHBOARD] Updating...
+[DASHBOARD] Updated OK (breakout exit: 0)
+--- Fri May 15 02:00:01 PM CST 2026 --- [DASHBOARD] Updating...
+[DASHBOARD] Updated OK (breakout exit: 0)
+--- Fri May 15 02:15:01 PM CST 2026 --- [DASHBOARD] Updating...
+[DASHBOARD] Updated OK (breakout exit: 0)
+--- Fri May 15 02:30:01 PM CST 2026 --- [DASHBOARD] Updating...
+Traceback (most recent call last):
+  File "/root/.openclaw/workspace/Trading/volume_breakout.py", line 633, in <module>
+    output = format_signal(results, breakouts, time_str, date_str)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/.openclaw/workspace/Trading/volume_breakout.py", line 413, in format_signal
+    lines.append(f"   📏 Body: {rec['body_pct']}% | Vol: {rec['vol_ratio']}x MA20")
+                               ~~~^^^^^^^^^^^^
+KeyError: 'body_pct'
+Traceback (most recent call last):
+  File "/root/.openclaw/workspace/Trading/volume_breakout.py", line 633, in <module>
+    output = format_signal(results, breakouts, time_str, date_str)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/.openclaw/workspace/Trading/volume_breakout.py", line 413, in format_signal
+    lines.append(f"   📏 Body: {rec['body_pct']}% | Vol: {rec['vol_ratio']}x MA20")
+                               ~~~^^^^^^^^^^^^
+KeyError: 'body_pct'
+[DASHBOARD] ERROR: Empty output
+--- Fri May 15 02:45:01 PM CST 2026 --- [DASHBOARD] Updating...
+Traceback (most recent call last):
+  File "/root/.openclaw/workspace/Trading/volume_breakout.py", line 635, in <module>
+    output = format_signal(results, breakouts, time_str, date_str)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/.openclaw/workspace/Trading/volume_breakout.py", line 412, in format_signal
+    lines.append(f"   {dir_icon} **{rec['direction']}** @ ${rec['price']} | Skor: {rec['score']}")
+                                                                                   ~~~^^^^^^^^^
+KeyError: 'score'
+Traceback (most recent call last):
+  File "/root/.openclaw/workspace/Trading/volume_breakout.py", line 635, in <module>
+    output = format_signal(results, breakouts, time_str, date_str)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/.openclaw/workspace/Trading/volume_breakout.py", line 412, in format_signal
+    lines.append(f"   {dir_icon} **{rec['direction']}** @ ${rec['price']} | Skor: {rec['score']}")
+                                                                                   ~~~^^^^^^^^^
+KeyError: 'score'
+[DASHBOARD] ERROR: Empty output
+--- Fri May 15 10:00:01 PM CST 2026 --- [DASHBOARD] Updating...
+[DASHBOARD] Updated OK (breakout exit: 0)
+--- Fri May 15 10:15:02 PM CST 2026 --- [DASHBOARD] Updating...
+[DASHBOARD] Updated OK (breakout exit: 0)
+--- Fri May 15 10:30:02 PM CST 2026 --- [DASHBOARD] Updating...
+[DASHBOARD] Updated OK (breakout exit: 0)
+--- Fri May 15 10:45:02 PM CST 2026 --- [DASHBOARD] Updating...
+[DASHBOARD] Updated OK (breakout exit: 0)
+--- Fri May 15 11:00:01 PM CST 2026 --- [DASHBOARD] Updating...
+[DASHBOARD] Updated OK (breakout exit: 0)
+--- Fri May 15 11:15:01 PM CST 2026 --- [DASHBOARD] Updating...
+[DASHBOARD] Updated OK (breakout exit: 0)
+--- Fri May 15 11:30:01 PM CST 2026 --- [DASHBOARD] Updating...
+[DASHBOARD] Updated OK (breakout exit: 0)
+--- Fri May 15 11:45:01 PM CST 2026 --- [DASHBOARD] Updating...
+[DASHBOARD] Updated OK (breakout exit: 0)
